@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>전문가 인증</title>
+
+  <link rel="stylesheet" href="/static/css/user/edit.css">
+  <link rel="stylesheet" href="/static/css/main/common.css">
+  <link rel="stylesheet" href="/static/css/user/certify.css">
+
+  
+</head>
+<body>
+  <!--  자격증사진 자격증발급기관,자격증번호작성,경력 혹은 수상내역 작성 -->
+<div class="detail-container">
+  <div class="certify-container">
+    <div>
+      <h2>전문가 인증하기</h2>
+      <p>전문가로 활동하기 위해서는 인증이 필요합니다.</p>
+    </div>
+    <div class="sub-container">
+        <form name="certify" id="certify" class="certifyForm">
+            <div class="marginR-40">
+              <img  class="imgSize" ><!-- src"" = 기존 프로필이미지링크넣어야함 -->
+              <div class="file-upload">
+                <label for="fileInput">
+                  <div id="customButton" >전문가 활동 사진</div>
+                </label>
+                <input type="file"  id="fileInput" accept="image/*">
+              </div>
+            </div>
+            <div style="width: 100%;">
+              <div class="col underline">
+                <label for="proname" class="fontSize15 label">전문가 활동 이름</label>
+                <input type="text" id="proname" name="proName" class="form-control">
+                <p>* 전문가 활동시 사용할 이름을 작성해주세요.</p>
+              </div>
+        
+  
+              <!-- 주소 API -->
+              <div class="select-row underline">
+                <div class="width50">
+                  <label for="main-location" class="fontSize15 label">활동지역 대분류</label>
+                  <select id="main-location" aria-required="true" class="form-select">
+                    <option selected>도/특별시</option>
+                    <option value="1">서울특별시</option>
+                    <option value="2">경기도</option>
+                    <option value="3">경상북도</option>
+                    <option value="4">경상남도</option>
+                    <option value="5">충청북도</option>
+                  </select>  
+                </div>
+                <div class="width50">
+                  <label for="sub-location" class="fontSize15 label">활동지역 소분류</label>
+                    <select id="sub-location" aria-required="true" class="form-select">
+                      <option selected>시/군/구</option>
+                      <option value="1">서울특별시</option>
+                      <option value="2">경기도</option>
+                      <option value="3">경상북도</option>
+                      <option value="4">경상남도</option>
+                      <option value="5">충청북도</option>
+                    </select>  
+                </div>  
+              </div>
+    
+              <div class="col underline2">
+                <label for="category" class="fontSize15 label">제공 서비스</label>
+                <select name="category" aria-required="false" class="form-select">
+                  <option value="12">카테고리</option>
+                  <option value="1">이사/청소</option>
+                  <option value="2">설치/수리</option>
+                  <option value="3">인테리어</option>
+                  <option value="4">취미/자기개발</option>
+                  <option value="5">기타</option>
+                </select> 
+              </div>
+  
+              <div class="col underline2">
+                <label for="upload" class="fontSize15 label">자격증 사진첨부</label>
+                <input type="file" class="form-control" id="upload" name="files" multiple>
+              </div>
+
+              <div class="certi-con underline2">
+                <div class="certi-label" >
+                  <label for="certification-agency" class="fontSize15 label">자격증 발급기관/ </label>
+                  
+                  <label for="certification-num" class="fontSize15 label">자격증 번호</label>
+                </div>
+
+                <div class="certi-label">
+                  <input type="text" id="certification-agency" name="certification-num" class="form-control" style=" margin-right: 10px;" placeholder="자격증 발급기관을 입력하세요">
+                  <input type="text" id="certification-num" name="certification-num" class="form-control"
+                  placeholder="자격증 번호를 입력하세요">
+                </div>
+
+                <div class="certi-label">
+                  <input type="text" id="certification-agency" name="certification-num" class="form-control" style=" margin-right: 10px;" placeholder="자격증 발급기관을 입력하세요">
+                  <input type="text" id="certification-num" name="certification-num" class="form-control"
+                  placeholder="자격증 번호를 입력하세요">
+                </div>
+              </div>
+          
+          
+              <div class="height200">
+                <span for="career" class="fontSize15 label">경력 혹은 수상내역 작성</span>
+                <textarea maxlength="400" class="textarea"></textarea>
+                
+              </div>
+
+
+      
+
+  
+  
+  
+  
+              <div class="left">
+                <button type="submit">수정완료</button>
+              </div>
+
+            </div>
+
+
+        </form> <!-- 폼작성 끝 -->
+    </div><!-- 폼감싸는 div -->
+
+  </div> <!-- 메인 전체 컨테이너 중앙배치 -->
+
+</div><!-- 메인 전체 컨테이너 -->
+
+</body>
+</html>

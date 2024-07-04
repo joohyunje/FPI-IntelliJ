@@ -1,0 +1,110 @@
+div{
+  display: block;
+}
+
+h1{
+  margin: 0;
+  font-size: 40px;
+}
+/* 밑줄속성 */
+.underline{
+  border-bottom: .0625rem solid;
+  border-color: #f2f2f2;
+
+}
+.container{
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 40rem;
+  min-height: 100%;
+}
+.container>.underline{
+  margin-bottom: 0;
+}
+.mypage-menu{
+  margin-top: 0;
+  width: 100%;
+}
+
+.container-box, .coupon-icon{
+    position: relative;
+    /* font-size: .875rem; */
+    font-weight: 500;
+    line-height: normal;
+    /* color: #323232; */
+    border-radius: 8px;
+    border: .0625rem solid #f2f2f2;
+    background-color: #fafafa;
+    padding: 1rem 0 1rem 3rem;
+    margin-top: 1.375rem;
+}
+.coupon-icon{
+
+  &::before{
+    display: block;
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width:1.5rem;
+    height: 1.5rem;
+    left: 1rem;
+    background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTIxIDVhMSAxIDAgMDExIDF2My4xNWExIDEgMCAwMS0uMjIuNjI0bC0uNzguOTc2YTIuMDAxIDIuMDAxIDAgMDAwIDIuNWwuNzguOTc2YTEgMSAwIDAxLjIyLjYyNVYxOGExIDEgMCAwMS0xIDFIM2ExIDEgMCAwMS0xLTF2LTMuMTVhMSAxIDAgMDEuMjItLjYyNEwzIDEzLjI1YTIgMiAwIDAwMC0yLjVsLS43OC0uOTc2QTEgMSAwIDAxMiA5LjE0OVY2YTEgMSAwIDAxMS0xaDE4em0tNi43NSA4YTEuMjUgMS4yNSAwIDEwMCAyLjUgMS4yNSAxLjI1IDAgMDAwLTIuNXptMS4xMjYtMy44OTNhLjc1Ljc1IDAgMDAtMS4wNTYtLjA5MmwtNS43NDUgNC44MmEuNzUuNzUgMCAxMC45NjQgMS4xNWw1Ljc0NS00LjgyYS43NS43NSAwIDAwLjA5Mi0xLjA1OHpNOS41NSA4LjVhMS4yNSAxLjI1IDAgMTAwIDIuNSAxLjI1IDEuMjUgMCAwMDAtMi41eiIgZmlsbD0iIzMyMzIzMiIgZmlsbC1ydWxlPSJldmVub2RkIi8+PC9zdmc+) 50% no-repeat;} 
+
+}
+
+.user-name{
+  align-items: center;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+.main-list{
+  align-items: center;
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+/* li,li간의 위아래 여백  */
+.li-padding{
+  padding: 0.5rem 0 1rem 0;
+}
+/* 글씨간의 여백 */
+.padding08{
+  padding: 0 0.8rem 0 0;
+}
+
+.padding3{
+  padding: 3rem 0 0 0;
+}
+
+
+/* span한줄 정렬 */
+.oneline{
+  display: flex;
+  align-items:center;
+  flex:auto
+}
+
+
+.auto{
+  flex: auto;
+}
+
+.circle{
+  padding: .1875rem .625rem;
+  font-size: .75rem;
+  border-radius: 13px;
+  background-color:#8da4d0;
+  color: #fff;
+  font-weight: 500;
+  margin-right: .25rem;
+}
+.procircle{
+  background-color: #F8CACC;
+  color: #000000;
+}
+.circle span{
+  font-size:1rem;
+}

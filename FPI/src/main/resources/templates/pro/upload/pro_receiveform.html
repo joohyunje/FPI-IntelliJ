@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>서비스 올리기</title>
+  <link rel="stylesheet" href="/static/css/main/receiveform.css">
+  <link rel="stylesheet" href="/static/css/main/main.css">
+  <link rel="stylesheet" href="/static/css/user/certify.css">
+  <link rel="stylesheet" href="/static/css/common(2)/received_req_info.css">
+
+  
+
+</head>
+<body>
+  <div class="detail-container">
+    <div class="container">
+      <h2 class="pro-title">서비스</h2>
+      <div class="pro">
+        <!-- 작성자 프로필 뿌려줌 -->
+        <div class="request-info">
+          <div class="pro-info">
+            <div class="imgSize" style="margin-bottom: 20px;">
+                <img src="프로필사진" class="imgSize">
+            </div>
+            <div class="pro-name-rate">
+                  <div class="pro-name">FPI 건축</div>
+                  <div class="service-address">
+                    <div class="service-name">주택 건축</div>
+                    <div class="address">
+                      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMCAyMGgyMFYwSDB6Ii8+PGcgc3Ryb2tlPSIjNzM3MzczIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiI+PHBhdGggZD0iTTE2LjIxOCA3LjI3NGMwIDQuOTQzLTUuODMzIDEwLjIyNi01LjgzMyAxMC4yMjZTNC41NSAxMi41NDIgNC41NSA3LjI3NGMwLTMuMDk3IDIuNjEyLTUuNjA3IDUuODM0LTUuNjA3IDMuMjIxIDAgNS44MzMgMi41MSA1LjgzMyA1LjYwN3oiLz48cGF0aCBkPSJNMTIuNjI4IDcuOTE3YTIuMDg0IDIuMDg0IDAgMTEtNC4xNjctLjAwMSAyLjA4NCAyLjA4NCAwIDAxNC4xNjcgMHoiLz48L2c+PC9nPjwvc3ZnPg==" alt="">
+                      경북 포항시
+                    </div>
+                  </div>
+            </div>
+          </div>  
+        </div>  <!-- 작성자 프로필 뿌려주는거 끝 -->
+
+<!-- 폼 작성 -->
+        <form name="pro_recevieform" id="pro_recevieform" method="post" class="recevieform-container">
+          <div >
+            <table>		
+              <tbody>
+                <tr> 
+                  <th>제목</th>
+                  <td colspan="3">
+                    <input type="text"  maxlength="25">
+                  </td>
+                </tr>
+
+                <tr class="price"> 
+                  <th>요구금액</th>
+                  <td><input type="number" class="" placeholder="원하시는 금액을 입력하세요"></td>
+                  <th>가감금액</th>
+                  <td><input type="number" class="" placeholder="ex)10000 입력시 요구금액 +-10000원범위안에서 매칭" ></td>
+                </tr>
+                <tr> 
+                  <th>제공내용</th>
+                  <td colspan="3">
+                    <div class="wr_content ">
+                      <textarea class="textarea" maxlength="65536" style="width:97%;height:300px" placeholder="<다양한 회원에게 요청을 받고 싶다면??> 1.제공내용을 구체적으로 적으실 수록 회원의 서비스 요청률이 높습니다. 2.작업사진을 올리시면 회원의 서비스 요청률이 더 높아집니다."></textarea>
+                    </div>
+                  </td>
+                </tr>
+          
+                <tr>
+                  <th>카테고리</th>
+                  <td colspan="3" class="category-td">
+                      <label for="category" style="display: none;">관심 서비스</label>
+                      <select name="category" aria-required="false" class="form-select " >
+                        <option value="12">카테고리</option>
+                        <option value="1">이사/청소</option>
+                        <option value="2">설치/수리</option>
+                        <option value="3">인테리어</option>
+                        <option value="4">취미/자기개발</option>
+                        <option value="5">기타</option>
+                      </select> 
+                  </td>
+                </tr>
+                <tr>
+                  <th>첨부파일</th>
+                  <td colspan="3" class="category-td">
+                    <label for="upload" class="fontSize15 label" style="display: none;">작업사진첨부</label>
+                    <input type="file" class="pro-form-control" id="upload" name="files" multiple>
+                  </td>
+                </tr>
+                <tr>
+                      
+
+                <tr> 
+                <th>상세주소</th>
+                <td colspan="3"><input type="text" maxlength="255" placeholder="주소api가져와서 쓸곳"></td>
+                </tr>
+          
+            </table>    
+          </div>
+
+          <div class="left">
+            <button type="submit" >서비스 올리기</button>
+            <button type="submit" style="display: none;">서비스 수정하기</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+  
+</body>
+</html>

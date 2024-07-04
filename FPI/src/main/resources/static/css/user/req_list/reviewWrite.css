@@ -1,0 +1,197 @@
+body{
+    margin: 0;
+}
+ul, li {
+    list-style: none;
+}
+.review-header{
+    border-bottom: 1px solid #f2f2f2;
+    display:block;
+    margin-top: 0;
+    height: 80px;
+}
+
+.review-header-inner{
+    padding: 0 20px;
+    width: 500px;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.review-title{
+    padding: 24px 0;
+    color: #323232;
+}
+
+.review-title>h2{
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.44;
+    margin-top: 0;
+}
+
+.container{
+    max-width: 900px;
+    width: 100%;
+    padding: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+}
+
+.page-body{
+    padding: 20px 100px;
+    margin-left: 0;
+    margin-right: 0;
+    display: flex;
+    flex-wrap: wrap;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    
+}
+
+.review-input{
+    flex: 1 1 auto;
+    max-width: 650px;
+}
+
+.reviewer-info{
+    padding-bottom: 20px;
+    width: 100%;
+}
+
+.reviewer-info > img{
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+}
+
+.reviewer-name{
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 29px;
+}
+
+.review-title-wrapper{
+    display: flex;
+    align-items: center;
+    margin-top: 12px;
+    gap: 20px;
+}
+
+.review-title{
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.reviewr-name{
+    margin-right: 8px;
+    font-size: 16px;
+    line-height: 24px;
+    color: #323232;
+}
+
+#reviewTitle{
+    display: block;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+  font-size: 14px;
+  line-height: 24px;
+  color: #616161;
+  font-weight: 400;
+  width: 80%;
+  height: inherit;
+  padding: 8px 10px;
+  letter-spacing:5px;
+  &:hover,&:focus{
+    position: inherit;
+    border-color: #3ba3c7;
+  }
+  &:focus{
+    outline: none;
+  }
+}
+
+
+.review-content-body{
+    padding-bottom: 30px;
+}
+
+.review-content{
+    width: 100%;
+}
+
+.review-content > label{
+    margin-bottom: 16px;
+    margin-top: 0;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #323232;
+    letter-spacing: -0.5px;
+}
+
+.textarea{
+    overflow: auto;
+    outline: none;
+    width: 100%;
+    height: 85%;
+    border-color: #e0e0e0;
+    border-radius: 0.375em;
+    display: block;
+    cursor: text;
+    color: #303441;
+    padding: 14px;
+    font-size: 13px;
+    resize: none;
+    letter-spacing:1px;  
+    &:hover,&:focus{
+      position: inherit;
+      border-color: #3ba3c7;
+    }
+    &:focus{
+      outline: none;
+    }
+    
+  }
+
+.submit-btn {
+    display: flex;
+    justify-content: flex-end;
+}
+.btn{
+    padding: 10px 30px 10px 30px;
+    color: white;
+    background-color: #2caedd;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+.star-rating {
+    display: flex;
+    align-items: center;
+  }
+
+  .star {
+    appearance: none;
+    padding: 1px;
+  }
+
+  .star::after {
+    content: '☆';
+    color: hsl(60, 80%, 45%);
+    font-size: 20px;
+  }
+
+  .star:hover::after,
+  .star:has(~ .star:hover)::after,
+  .star:checked::after,
+  .star:has(~ .star:checked)::after {
+    content: '★';
+  }
+
+  .star:hover ~ .star::after {
+    content: '☆';
+  }

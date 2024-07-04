@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>리뷰 작성하기</title>
+    <link rel="stylesheet" href="/static/css/common(2)/reviewWrite.css">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/common(2)/font.css">
+</head>
+<body>
+    <div class="review-header">
+        <div class="review-header-inner">
+            <div class="review-title">
+                <h2>리뷰 작성하기</h2>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="page-body">
+            <form class="review-input">
+                <div class="request-info">
+                    <div class="reviewer-info">
+                        <div class="review-name-rate">
+                            <div class="reviewer-name user-name">주현제 님에게 작성하기</div>
+                            <div class="review-title-wrapper">
+                                <label class="review-title" for="reviewTitle">제목</label>
+                                <input type="text" id="reviewTitle">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-content-body">
+                        <div class="review-content">
+                            <label for="reviewContent">리뷰 내용</label>
+                            <textarea class="textarea" name="reviewContent" id="reviewContent" placeholder="리뷰 내용을 작성해주세요" rows="10"></textarea>
+                        </div>
+                    </div>
+                    <!-- 이부분은 다시 수정할 필요 있음!! 별 주기 -->
+                    <div class="star-rating">
+                        <span>별점</span>
+                        <input type="radio" class="star" value="1">
+                        <input type="radio" class="star" value="2">
+                        <input type="radio" class="star" value="3">
+                        <input type="radio" class="star" value="4">
+                        <input type="radio" class="star" value="5">
+                      </div>
+                </div>
+                <div class="submit-btn">
+                    <button type="submit" class="btn">등록</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

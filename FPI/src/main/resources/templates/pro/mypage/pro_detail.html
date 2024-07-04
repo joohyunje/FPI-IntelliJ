@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>전문가 정보 상세보기</title>
+  <link rel="stylesheet" href="/static/css/user/detail.css">
+  <link rel="stylesheet" href="/static/css/user/withdrawmodal.css">
+  <link rel="stylesheet" href="/static/css/main/common.css">
+
+  
+</head>
+<body>
+  <div class="detail-container">
+    <div class="container">
+
+      <!-- 좌측 메뉴 -->
+      <div class="aside">
+        <h1>계정 설정</h1>
+        <hr class="hr">
+        <a href="/templates/pro/pro_detail.html" style="font-weight: bold;">전문가 정보</a>
+        <a href="/templates/pro/pro_edit.html">전문가 정보 수정</a>
+        <button id="btn-modal">전문가 탈퇴</button>
+      </div>
+      <!-- 우측 정보수정 -->
+      <div class="marginL-40">
+        <h2>내 정보</h2>
+        <p>연락처는 매칭시 회원에게 공개 됩니다.</p>
+        <div class="sub-container">
+          <!-- 프로필사진 -->
+          <div class="marginR-40">
+            <img src="" class="imgSize" ><!-- src"" = 프로필이미지링크넣어야함 -->
+          </div>
+          <div>
+            <div class="underline">
+              <div class="fontSize15">전문가 활동 이름</div>
+              <p>이름뿌려줌</p>
+            </div>
+            <div class="underline">
+              <div class="fontSize15">전문가 활동 연락처</div>
+              <p>연락처뿌려줌</p>
+            </div>
+            <div class="underline">
+              <div class="fontSize15">이메일</div>
+              <p>회원 이메일과 동일하게 사용됩니다.</p>
+            </div>
+            <div class="underline">
+              <div class="fontSize15">활동 지역</div>
+              <div class="oneline">
+                <span>지역뿌려줌(시/도)</span>
+                <span>지역뿌려줌(군/구)</span>
+              </div>
+
+            </div>
+            <div class="underline">
+              <div class="fontSize15">제공서비스</div>
+              <p>제공서비스뿌려줌</p>
+            </div>
+            <div>
+              <div class="fontSize15">받은 별점 </div>
+              <p>받은 별점 평균 뿌려줌</p>
+            </div>
+        </div>
+
+  
+      </div>
+  
+    </div>
+
+  </div>
+  </div>
+
+  <div id=modal class="container">
+    <div class="container">
+      <div class="box-container">
+        <div class="box-header">전문가탈퇴</div>
+        <div class="box-content">
+          <div class="description">
+            <h3>정말로 전문가 탈퇴 하시겠습니까?</h3>
+            탈퇴시 입력하신 전문가 정보가 삭제되며
+            <br>
+            전문가 활동을 다시 원하실 경우
+            <br>
+            전문가 인증과정이 다시 이루어집니다.
+
+          </div>
+          <form action="#">
+            <div class="title">탈퇴하시려면 전문가 활동 이름을 작성해주세요</div>
+            <input class="pro-input-box input-box" name="text" placeholder="전문가 활동 이름 작성" type="text">
+
+
+            <!--모달 창 닫음 -->
+            <button type="button" id="close-modal"  class=" pro-btn btn">탈퇴하지 않겠습니다</button>
+            <!-- 탈퇴완료창->로그아웃&메인페이지로이동 -->
+            <a href="#" class="btn pro-btn">탈퇴하기</a>
+          </form>
+        </div> 
+      </div>
+    </div>
+  </div>
+  
+</body>
+
+<!-- 모달 중앙배치테스트 -->
+<script>
+  const modal=document.getElementById("modal")
+  function modalOn(){
+      modal.style.display="flex"
+
+  }
+  function isModalOn(){
+      return modal.style.display === "flex"
+  }
+  function modalOff() {
+      modal.style.display = "none"
+  }
+  // 모달창 보임
+  const btnModal = document.getElementById("btn-modal")
+  btnModal.addEventListener("click", e => {
+          modalOn()
+      })
+  // 모달창 닫음
+  const closeModal = document.getElementById("close-modal")
+  closeModal.addEventListener("click", e => {
+      modalOff()
+  })
+</script>
+</html>

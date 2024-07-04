@@ -1,0 +1,62 @@
+div{
+  display: block;
+}
+h1{
+  margin: 0;
+  font-size: 40px;
+}
+#main-body{
+  height: 100%;
+  position: relative;
+
+}
+/* 전체 내용중앙으로 배치 */
+.container{
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 40rem;
+  min-height: 100%;
+}
+.padding3{
+  padding: 3rem 0 0 0;
+  
+}
+/* 글씨 중앙정렬 */
+.center{
+  text-align: center !important;
+}
+
+.coupon {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.coupon h2 {
+  font-size: 22px;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.coupon p {
+  font-size: 16px;
+  margin-bottom: 15px;
+  color: #777;
+}
+/* 쿠폰박스 색상 */
+.coupon-box{
+  background-color: #f2f2f2;
+}
+
+.coupon-box > .container > h3{
+  margin: 15px 0 0 0;
+}
+.coupon-box > .container > ul > li{
+  margin-bottom: 10px;
+}

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>전문가정보 수정하기</title>
+  <link rel="stylesheet" href="/static/css/user/edit.css">
+  <link rel="stylesheet" href="/static/css/user/certify.css">
+  <link rel="stylesheet" href="/static/css/user/withdrawmodal.css">
+  <link rel="stylesheet" href="/static/css/main/common.css">
+
+  
+</head>
+<body>
+  <div class="detail-container">
+    <div class="container">
+      <!-- 좌측 메뉴 -->
+      <div class="aside">
+        <h1>계정 설정</h1>
+        <hr class="hr">
+        <a href="/templates/pro/pro_detail.html">전문가 정보</a>
+        <a href="/templates/pro/pro_edit.html" style="font-weight: bold;">전문가 정보 수정</a>
+        <button id="btn-modal">전문가 탈퇴</button>
+      </div>
+
+      <!-- 우측 정보수정 -->
+
+      <div class="marginL-40">
+        <h2>내 정보 수정</h2>
+        <p>연락처는 매칭시 회원에게 공개 됩니다.</p>
+        <div class="sub-container">
+          <div class="marginR-40">
+            <img  class="imgSize" ><!-- src"" = 기존 프로필이미지링크넣어야함 -->
+            
+            <!-- 프로필사진 변경버튼 -->
+            <div class="file-upload">
+              <button id="pro-customButton">프로필 사진 변경</button>
+              <input type="file" id="fileInput" accept="image/*">
+            </div>
+          </div>
+
+          <!-- 입력 폼 -->
+          <div style="width: 100%;">
+            <form name="proEdit" id="pro-edit">
+              <div class="col underline">
+                <label for="name" class="fontSize15 label">전문가 활동 이름</label>
+                <input type="text" id="username" name="username" class="form-control">
+                <p>* 전문가로 활동할 이름을 입력해주세요</p>
+              </div>
+        
+              <div class="col underline">
+                <label for="phonenumber" class="fontSize15 label">연락처</label>
+                <input type="text" id="phonenumber" name="phoneNumber" class="form-control">
+                <p>* 회원과 매칭시 연락할 전화번호를 입력해주세요</p>
+              </div>
+  
+              <div class="col underline">
+                <label for="email" class="fontSize15 label">이메일</label>
+                <input type="email" id="proname" name="proname" class="form-control" disabled>
+                <p>* 일반회원으로 전환하여 이메일을 변경하세요</p>
+              </div>
+
+              <!-- 주소 API -->
+              <div class="select-row underline">
+                <div class="width50">
+                  <label for="main-location" class="fontSize15 label">활동지역대분류</label>
+                  <select id="main-location" aria-required="true" class="form-select">
+                    <option selected>도/특별시</option>
+                    <option value="1">서울특별시</option>
+                    <option value="2">경기도</option>
+                    <option value="3">경상북도</option>
+                    <option value="4">경상남도</option>
+                    <option value="5">충청북도</option>
+                  </select>  
+                </div>
+                <div class="width50">
+                  <label for="sub-location" class="fontSize15 label">활동지역소분류</label>
+                    <select id="sub-location" aria-required="true" class="form-select">
+                      <option selected>시/군/구</option>
+                      <option value="1">서울특별시</option>
+                      <option value="2">경기도</option>
+                      <option value="3">경상북도</option>
+                      <option value="4">경상남도</option>
+                      <option value="5">충청북도</option>
+                    </select>  
+                </div>  
+              </div>
+    
+<!-- 카테고리 -->
+              <div class="col underline pro">
+                <label for="phonenumber" class="fontSize15 label">활동 서비스</label>
+                <select name="category" aria-required="false" class="form-select" style="margin-bottom: 17px;">
+                  <option value="12">카테고리</option>
+                  <option value="1">이사/청소</option>
+                  <option value="2">설치/수리</option>
+                  <option value="3">인테리어</option>
+                  <option value="4">취미/자기개발</option>
+                  <option value="5">기타</option>
+                </select> 
+              </div>
+
+              <div class="col underline2">
+                <label for="upload" class="fontSize15 label">자격증 사진첨부</label>
+                <input type="file" class="form-control" id="upload" name="files" multiple>
+              </div>
+
+              <div class="certi-con underline2">
+                <div class="certi-label" >
+                  <label for="certification-agency" class="fontSize15 label">자격증 발급기관/ </label>
+                  
+                  <label for="certification-num" class="fontSize15 label">자격증 번호</label>
+                </div>
+
+                <div class="certi-label">
+                  <input type="text" id="certification-agency" name="certification-num" class="form-control" style=" margin-right: 10px;" placeholder="자격증 발급기관을 입력하세요">
+                  <input type="text" id="certification-num" name="certification-num" class="form-control"
+                  placeholder="자격증 번호를 입력하세요">
+                </div>
+                
+                <div class="certi-label">
+                  <input type="text" id="certification-agency" name="certification-num" class="form-control" style=" margin-right: 10px;" placeholder="자격증 발급기관을 입력하세요">
+                  <input type="text" id="certification-num" name="certification-num" class="form-control"
+                  placeholder="자격증 번호를 입력하세요">
+                </div>
+              </div>
+          
+          
+              <div class="height200">
+                <span for="career" class="fontSize15 label">경력 혹은 수상내역 작성</span>
+                <textarea maxlength="400" class="textarea"></textarea>
+                
+              </div>
+
+              <div class="left">
+                <button type="submit" class="probtn">수정완료</button>
+
+              </div>
+
+            </form>
+    
+          </div> <!-- 입력폼 끝 -->
+
+        </div> <!-- 우측 폼컨테이너박스 -->
+  
+    </div> <!-- 전체 컨테이너,내용물 중앙 배치-->
+
+  </div> <!-- 메인을 감싸는 컨테이너 -->
+
+  <!-- 전문가 탈퇴모달 -->
+  <div id=modal class="container">
+    <div class="container">
+      <div class="box-container">
+        <div class="box-header">전문가탈퇴</div>
+        <div class="box-content">
+          <div class="description">
+            <h3>정말로 전문가 탈퇴 하시겠습니까?</h3>
+            탈퇴시 입력하신 전문가 정보가 삭제되며
+            <br>
+            전문가 활동을 다시 원하실 경우
+            <br>
+            전문가 인증과정이 다시 이루어집니다.
+
+          </div>
+          <form action="#">
+            <div class="title">탈퇴하시려면 전문가 활동 이름을 작성해주세요</div>
+            <input class="pro-input-box input-box" name="text" placeholder="전문가 활동 이름 작성" type="text">
+
+
+            <!--모달 창 닫음 -->
+            <button type="button" id="close-modal"  class=" pro-btn btn">탈퇴하지 않겠습니다</button>
+            <!-- 탈퇴완료창->로그아웃&메인페이지로이동 -->
+            <a href="#" class="btn pro-btn">탈퇴하기</a>
+          </form>
+        </div> 
+      </div>
+    </div>
+  </div>  
+  
+</body>
+
+<!-- 모달 중앙배치테스트 -->
+<script>
+  const modal=document.getElementById("modal")
+  function modalOn(){
+      modal.style.display="flex"
+
+  }
+  function isModalOn(){
+      return modal.style.display === "flex"
+  }
+  function modalOff() {
+      modal.style.display = "none"
+  }
+  // 모달창 보임
+  const btnModal = document.getElementById("btn-modal")
+  btnModal.addEventListener("click", e => {
+          modalOn()
+      })
+  // 모달창 닫음
+  const closeModal = document.getElementById("close-modal")
+  closeModal.addEventListener("click", e => {
+      modalOff()
+  })
+// 프로필 사진변경 버튼 디자인, 인풋누르면 디자인한 버튼 눌림
+  document.getElementById('pro-customButton').addEventListener('click', function() {
+    document.getElementById('fileInput').click();
+  });
+</script>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>회원정보 수정하기</title>
+  <link rel="stylesheet" href="/static/css/user/edit.css">
+  <link rel="stylesheet" href="/static/css/user/certify.css">
+  <link rel="stylesheet" href="/static/css/user/withdrawmodal.css">
+  <link rel="stylesheet" href="/static/css/main/common.css">
+  
+  <!-- j쿼리 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+</head>
+<body>
+  <div class="detail-container">
+    <div class="container">
+      <!-- 좌측 사이드 -->
+      <div class="aside">
+        <h1>계정 설정</h1>
+        <hr class="hr">
+        <a href="/templates/user/user_detail.html">회원 정보</a>
+        <a  style="font-weight: bold;">회원 정보 수정</a>
+        <button id="btn-modal">회원 탈퇴</button>
+      </div>
+
+      <!-- 우측 정보수정 -->
+
+      <div class="marginL-40">
+        <h2>내 정보 수정</h2>
+        <p>연락처는 매칭시 전문가에게 공개 됩니다.</p>
+        <div class="sub-container">
+          <div class="marginR-40">
+            <img  class="imgSize" ><!-- src"" = 기존 프로필이미지링크넣어야함 -->
+            
+            <div class="file-upload">
+              <button id="customButton">프로필 사진 변경</button>
+              <input type="file" id="fileInput" accept="image/*">
+            </div>
+          </div>
+          <div style="width: 100%;">
+
+            <!-- 이메일에 readonly속성, 소셜로그인시 (디폴트값) -->
+            <!-- 만약 폼로그인 기능이 구현된다면 readonly속성 없애면됨  -->
+            <form name="userEdit" id="user-edit">
+              <div class="col underline">
+                <label for="name" class="fontSize15 label">이름</label>
+                <input type="text" id="username" name="username" class="form-control" disabled>
+                <p>* 이름은 수정이 불가능합니다</p>
+              </div>
+        
+              <div class="col underline">
+                <label for="phonenumber" class="fontSize15 label">연락처</label>
+                <input type="text" id="phonenumber" name="phoneNumber" class="form-control">
+                <p>* 전문가와 매칭시 연락할 전화번호를 입력해주세요</p>
+              </div>
+  
+              <div class="col underline">
+                <label for="email" class="fontSize15 label">이메일</label>
+                <input type="email" id="phonenumber" name="phoneNumber" class="form-control" readonly>
+                <p>* 소셜 로그인을 통해 가입한 경우 이메일을 변경할 수 없습니다.</p>
+              </div>
+
+              <!-- 주소 API -->
+              <div class="lo-con underline2">
+                  <label for="sido" class="fontSize15 label">지역</label>
+
+                  <div style="display: flex;">
+                    <select name="sido" id="sido" class="form-select" style="margin-right: 10px;"></select>
+                    <select name="gugun" id="gugun" aria-required="true" class="form-select">
+                    </select>  
+                  </div>
+              </div>
+    
+              <div class="col underline">
+                <label for="category" class="fontSize15 label">관심 서비스</label>
+                <select name="category" aria-required="false" class="form-select" style="margin-bottom: 17px;">
+                  <option value="12">카테고리</option>
+                  <option value="1">이사/청소</option>
+                  <option value="2">설치/수리</option>
+                  <option value="3">인테리어</option>
+                  <option value="4">취미/자기개발</option>
+                  <option value="5">기타</option>
+                </select> 
+              </div>
+              <div class="left">
+                <button type="submit">수정완료</button>
+              </div>
+
+            </form> <!-- 폼작성 끝 -->
+    
+          </div> <!-- 폼 컨테이너 -->
+
+      </div> <!-- 우측전체 컨테이너 -->
+  
+    </div> <!-- 메인 전체 컨테이너 중앙배치 -->
+
+  </div><!-- 메인 전체 컨테이너 -->
+
+  <!-- 회원탈퇴모달 -->
+  <div id=modal class="container">
+    <div class="box-container">
+      <div class="box-header">회원탈퇴</div>
+        <div class="box-content">
+          <div class="description">
+            <h3>정말로 회원탈퇴 하시겠습니까?</h3>
+            탈퇴시 모든 개인정보가 삭제되며
+            <br>
+            보유하신 포인트는 환불되지 않습니다
+          </div>
+          <form action="#">
+            <div class="title">탈퇴하시려면 본인 이름을 작성해주세요</div>
+            <input class="input-box" name="text" placeholder="본인이름 작성" type="text">
+
+          <!--모달 창 닫음 -->
+          <button type="button" id="close-modal"  class="btn">탈퇴하지 않겠습니다</button>
+          <!-- 탈퇴완료창->로그아웃&메인페이지로이동 -->
+          <a href="#" class="btn">탈퇴하기</a>
+          </form>
+      </div> 
+    </div>
+  
+    <script src="location.js"></script>
+</body>
+
+<!-- 모달 중앙배치테스트 -->
+<script>
+  const modal=document.getElementById("modal")
+  function modalOn(){
+      modal.style.display="flex"
+
+  }
+  function isModalOn(){
+      return modal.style.display === "flex"
+  }
+  function modalOff() {
+      modal.style.display = "none"
+  }
+  // 모달창 보임
+  const btnModal = document.getElementById("btn-modal")
+  btnModal.addEventListener("click", e => {
+          modalOn()
+      })
+  // 모달창 닫음
+  const closeModal = document.getElementById("close-modal")
+  closeModal.addEventListener("click", e => {
+      modalOff()
+  })
+// 프로필 사진변경 버튼 디자인, 인풋누르면 디자인한 버튼 눌림
+  document.getElementById('customButton').addEventListener('click', function() {
+    document.getElementById('fileInput').click();
+  });
+</script>
+
+</html>
