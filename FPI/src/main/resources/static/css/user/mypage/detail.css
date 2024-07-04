@@ -1,0 +1,98 @@
+button{
+  border-style: none;
+  background-color: white;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+}
+.detail-container {
+  width: 100%;
+}
+.detail-container > .container{
+  display: flex;
+  width: 1200px;
+  padding: 0 16px;
+  margin: 40px auto;
+  min-height: 600px;
+}
+.aside{
+  display: flex;
+  width: 300px;
+  flex-direction: column;
+}
+.aside h1{
+  margin: 0.3rem 0 0.7rem 0;
+}
+.aside a,.aside button{
+  padding: 8px 20px;
+  font-size: 17px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  &:hover{
+    font-weight: 700;}
+}
+
+.marginL-40{
+  margin-left: 40px;
+}
+.marginL-40 >p {
+  margin: 0px 0px 24px;
+  padding: 12px;
+  border-radius: 8px;
+  background: rgb(242, 242, 242);
+  color: rgb(115, 115, 115);
+  font-size: 14px;
+  font-weight: bold;
+}
+.marginR-40{
+  margin-right: 40px;
+}
+
+.hr{
+  height: 1px;
+  margin: 15px 0;
+  border: none;
+  flex-shrink: 0;
+  background-color: #e4e5ed;
+  background-color: #303441;
+  height: 2px;
+
+}
+.container .sub-container{
+  margin-top: 20px;
+  padding: 40px;
+  border: 1px solid rgb(228, 229, 237);
+  border-radius: 10px;
+  display: flex;
+  min-width: 800px;
+}
+.sub-container .underline{
+  width: 600px;
+  border-bottom: .0625rem solid;
+  border-color: #f2f2f2;
+  margin-bottom: 0.7rem;
+}
+.fontSize15{
+  font-size: 15px;
+  font-weight: 700;
+}
+.imgSize{
+  width: 120px;
+  height: 120px;
+  border: 1px solid rgb(228, 229, 237);
+  border-radius: 5px;
+}
+/* span한줄 정렬 */
+.oneline{
+  margin: 1rem 0 ;
+  display: flex;
+  align-items:center;
+  flex:auto
+}
+.oneline > span{
+  margin-right: 10px;
+}

@@ -1,0 +1,155 @@
+/*       서치창 , 카테고리 이미지 부분         */
+.mainbody{
+  margin-top: 50px;
+  display: flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items:center;
+}
+.input-area{
+  margin:20px 0 10px 0;
+}
+.search{
+  left:40px;
+  position:relative;
+  color: #9aa0a6;
+}
+.input-box{
+  width:1000px;
+  height:60px;
+  border-radius: 24px;
+  border:1px solid #dfe1e5;
+  text-align: left;
+  font-size: 18px;
+  padding-left:50px;
+  padding-right: 100px;
+  &:hover,&:focus{
+    position: inherit;
+    border-color: #8da4d0;
+  }
+  &:focus{
+    outline: none;
+  }
+}
+/* 서치창 끝 */
+
+/* 카테고리 목록 가로로 나열 */
+.category-container{
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items:stretch;
+}
+.category{
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+  margin:8px 0;
+  position:relative;
+  display: flex;
+  /* justify-content: center; */
+  align-items:center;
+  &:hover{
+    border-radius: 8%;
+    background: #8da5d051;
+    /* padding: 0.7em; */
+  }
+}
+
+.category >a{
+  padding: 0;
+}
+.category-icon{
+  margin-bottom:0;
+  width: 100px;
+  height: 100px;
+  padding: 0;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+}
+.category-icon  div img{
+  width: 100%;
+  height: 100%;
+}
+.categoryName{
+  display:block;
+  text-align: center;
+  margin: 0;
+  font-size: 1rem;
+}
+.col-sm-6{
+  margin: 10px 0 15px 0;
+}
+
+/*         견적요청 슬라이드 시작           */
+
+@media screen and (min-width:1025px){
+  
+  .page-wrapper{
+    position:relative;
+    margin-top: 5px 0;
+  }
+  .post-slider{
+    width:70%;
+    margin:0px auto;
+    position:relative;
+  }
+  /* 좌우 화살표 위치조정 */
+  .post-slider .next{
+    position:absolute;
+    top:50%;
+    right:0px;
+    font-size:2em;
+    color:gray;
+    cursor: pointer;
+  }
+  .post-slider .prev{
+    position:absolute;
+    top:50%;
+    left:0px;
+    font-size:2em;
+    color:gray;
+      cursor: pointer;
+  }
+  /* 슬라이드 안 각각 이미지,콘텐트 */
+  .post-slider .post-wrapper{
+    width:95%;
+    height:350px;
+    margin:0px auto;
+    overflow: hidden;
+    padding:10px 0px 10px 0px;
+  }
+  /* 슬라이더 카드 */
+  .post-slider .post-wrapper .post{
+    border: 1px solid black; 
+    margin:0px 10px;
+    min-height: 275px;
+    display:inline-block;
+    background:white;
+    border-radius: 5px;
+    /* width:500px !important; */
+  }
+  /* 슬라이더 이미지크기 */
+  .post-slider .post-wrapper .post .slider-image{
+    width:100%;
+    height:175px;
+    border-top-left-radius:5px;
+    border-top-right-radius:5px;
+  } 
+  /* 슬라이더 이미지 아래 문구 */
+  .post-slider .post-wrapper .post .post-info{
+    font-size:15px;
+    height:30%;
+    padding-left:10px;
+    margin-top: 10px;
+  }
+  
+  .post-icon{
+    height:10%;
+  }
+  
+}

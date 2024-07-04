@@ -1,0 +1,103 @@
+.btn{
+    cursor: pointer;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    user-select: none;
+    padding: 11px 0px;
+    margin-top: 24px;
+    background-color: #2099bb;
+    color: #fff;
+    border: #2099bb;
+    width: 100%;
+    font-size: 16px;
+    line-height: 26px;
+    font-weight: 400;
+    text-decoration: none;
+    border-radius: 8px;
+  }
+
+.cancle-declare-btn{
+    display: flex;
+    margin-bottom: 0;
+    gap: 0.5px;
+}
+
+#modal.modal-overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(67, 63, 63, 0.8);     
+}
+#modal .modal-window {
+    background: rgb(251, 251, 251);      
+    width: 400px;
+    position: relative; 
+    border-radius: 8px;
+}
+.title{
+    display: flex !important;
+    width: 100% !important;
+    justify-content: space-between;
+    padding-left: 0 !important;
+    align-items: center;
+}
+.title > h2 {
+    margin-left: 10px;
+}
+
+#modal .title {
+    padding-left: 10px;
+    display: inline;
+    color: rgb(0, 0, 0);
+    
+}
+#modal .title h2 {
+    display: inline;
+    
+}
+#modal .close-area {
+    display: inline;
+    float: right;
+    padding-right: 10px;
+    cursor: pointer;
+    color: rgb(0, 0, 0);
+}
+
+#modal .content {
+    margin-top: 20px;
+    padding: 0px 10px;
+    color: rgb(0, 0, 0);
+}
+
+.check-text{
+    margin-right: 5px;
+}
+
+.check-text > textarea {
+    overflow: auto;
+    outline: none;
+    width: 100%;
+    height: 85%;
+    border-color: #e0e0e0;
+    border-radius: 0.375em;
+    display: block;
+    cursor: text;
+    color: #303441;
+    font-size: 13px;
+    resize: none;
+    letter-spacing:1px;  
+    &:hover,&:focus{
+        position: inherit;
+        border-color: #3ba3c7;
+    }
+    &:focus{
+        outline: none;
+    }
+}

@@ -1,0 +1,165 @@
+.detail-container {
+  width: 100%;
+}
+.detail-container > .container{
+  width: 1200px;
+  padding: 0 16px;
+  margin: 40px auto;
+  min-height: 600px;
+}
+.detail-container > .container .title{
+  display: inline-block;
+    font-size: 30px;
+    color: #000;
+    font-weight: 700;
+    margin-bottom: 30px;
+    border-top: 5px solid #8da4d0;
+    padding-top: 15px;
+}
+.detail-container > .container .pro-title{
+  display: inline-block;
+    font-size: 30px;
+    color: #000;
+    font-weight: 700;
+    margin-bottom: 30px;
+    border-top: 5px solid #f8cacc;
+    padding-top: 15px;
+}
+
+.pro .request-info .pro-info{
+  padding-bottom: 30px;
+}
+
+.request-info{
+  /* display: flex; */
+  margin:0 1rem;
+}
+
+.form-container {
+  width: 100%;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+table th, table td {
+  padding: 9px;
+  border: 1px solid #ddd;
+  /* text-align: left; */
+}
+table th {
+  background-color: #f2f2f2;
+}
+
+.recevieform-container input{
+  width: 98%;
+  padding: 8px;
+  margin: 4px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  letter-spacing : 0.08rem;
+  word-spacing : .2rem;
+    &:hover,&:focus{
+    position: inherit;
+    border-color: #8da4d0;
+  }
+  &:focus{
+    outline: none;
+  }
+}
+#pro_recevieform input,#pro_recevieform select,#pro_recevieform textarea, #pro_receviemodal input, #pro_receviemodal textarea{    
+  &:hover,&:focus{
+  position: inherit;
+  border-color: #f8cacc;
+}}
+
+#pro_recevieform button,#pro_receviemodal  button{
+  background-color:  #f8cacc !important;
+  border: 1px solid  #f8cacc !important;
+  color: #323232 !important;
+  &:hover{
+    font-weight: 600;
+    border: 1px solid #d0aaac !important;
+  }
+}
+
+
+.recevieform-container .price td{
+  padding: 8px 20px 8px 12px ;
+}
+
+.category-td .form-select{
+  width: 100%;
+  background:url('/static/img/arrow.svg') no-repeat 98% 50%/15px auto;
+}
+
+
+/* input number타입 화살표없앰 */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+/* edit에서 일부만 가져옴 */
+.imgSize{
+  width: 120px;
+  height: 120px;
+  border: 1px solid rgb(228, 229, 237);
+  border-radius: 5px;
+}
+.form-select{
+  display: block;
+  width: 98%;
+  padding: .375rem 2.25rem .375rem .75rem;
+  font-size: 1rem;
+  border-color: #e0e0e0;
+  border-radius: 0.375em;
+  appearance: none;
+  background:url('/static/img/arrow.svg') no-repeat 97% 50%/15px auto;
+  &:hover,&:focus{
+    position: inherit;
+    border-color: #93A9D1;
+  }
+  &:focus{
+    outline: none;
+  }
+
+}
+/* 버튼 왼쪽하단위치 */
+.left{
+  display: flex;
+  justify-content: flex-end;
+  margin: 30px 0 0 0 !important;
+
+}
+/* 수정완료 버튼 디자인 */
+.left >button{
+  border-style: none;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  border-radius: 4px;
+  padding: 11px 5px;
+  background-color: #93A9D1;
+  color: #fff;
+  border:1px solid #7a8eb5;
+  font-size: 16px;
+  line-height: 26px;
+  font-weight:500;
+  
+  &:hover{
+    color: rgb(255, 255, 255);
+    font-weight: 700;
+  }
+}

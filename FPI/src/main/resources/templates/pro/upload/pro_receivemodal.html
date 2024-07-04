@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>서비스 제공 모달</title>
+  <link rel="stylesheet" href="/static/css/user/withdrawmodal.css">
+  <link rel="stylesheet" href="/static/css/main/common.css">
+  <link rel="stylesheet" href="/static/css/user/edit.css">
+  <link rel="stylesheet" href="/static/css/common(2)/received_req_info.css">
+  <link rel="stylesheet" href="/static/css/user/certify.css">
+  <link rel="stylesheet" href="/static/css/main/receiveform.css">
+
+
+
+</head>
+<body>
+  <!-- <div id=modal class="container"> -->
+  <div class="container">
+    <div class="container">
+      <div class="box-container">
+        <div class="box-header">견적서</div>
+        <div class="box-content">
+          <div class="description">
+            <div class="pro-name user-name">주현제</div>
+            <div class="address" style="margin-top: 10px;">
+              <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMCAyMGgyMFYwSDB6Ii8+PGcgc3Ryb2tlPSIjNzM3MzczIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiI+PHBhdGggZD0iTTE2LjIxOCA3LjI3NGMwIDQuOTQzLTUuODMzIDEwLjIyNi01LjgzMyAxMC4yMjZTNC41NSAxMi41NDIgNC41NSA3LjI3NGMwLTMuMDk3IDIuNjEyLTUuNjA3IDUuODM0LTUuNjA3IDMuMjIxIDAgNS44MzMgMi41MSA1LjgzMyA1LjYwN3oiLz48cGF0aCBkPSJNMTIuNjI4IDcuOTE3YTIuMDg0IDIuMDg0IDAgMTEtNC4xNjctLjAwMSAyLjA4NCAyLjA4NCAwIDAxNC4xNjcgMHoiLz48L2c+PC9nPjwvc3ZnPg==" alt="">
+              경북 포항시
+          </div>
+          </div>
+          <form action="#" name="pro_receviemodal" id="pro_receviemodal" class="pro" method="post">
+            <div class="title">견적을 보내면 회원이 수락시 연락처가 공개됩니다.</div>
+            <div class="col underline">
+              <label for="price" class="fontSize15 label">견적 금액 (원)</label>
+              <input type="number" id="pro_receive_modal" name="price_input" class="form-control" placeholder="정확한금액을 입력하세요">
+            </div>
+            <div class="">
+              <textarea class="textarea" maxlength="65536" style="width:100%;height:300px" placeholder="견적과 서비스에 대한 내용을 구체적으로 적으실 수록 회원의 수락률이 높습니다."></textarea>
+            </div>
+
+
+            <!--모달 창 닫음 -->
+            <button type="submit" id="close-modal"  class="btn">견적 보내기</button>
+
+          </form>
+        </div> 
+      </div>
+    </div>
+  </div>  
+  
+</body>
+</html>

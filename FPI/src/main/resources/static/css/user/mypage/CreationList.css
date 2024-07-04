@@ -1,0 +1,259 @@
+/*  ------------------------------------------------------------------------------------------------  */
+
+* {
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #ffffff;
+    color: #363a3c;
+    font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+header a{
+    color: #ced0db;
+    text-decoration: none;
+    background-color: transparent;
+    border: 0;
+    display: inline-block;
+    font-size: 14px;
+    padding: 0 20px 0 0;
+    width: auto;
+}
+
+ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+input{
+    color: inherit;
+    font: inherit;
+    margin: 0;
+}
+
+input{
+    line-height: normal;
+}
+
+input{
+    color: #000;
+    font-size: 14px;
+}
+
+input{
+    font-weight: 300;
+    maxwidth: 100px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border .12s ease-in-out;
+}
+
+h1{
+    font-size:32px;
+}
+
+
+/*  ------------------------------------윗쪽작은부분----------------------------------------------------  */
+
+.main{
+
+    padding: 0 0 20px;
+    width: 100%;
+    background-color: #fff;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    justify-content: center;
+}
+
+.main-container{
+    grid-column: 2 / span 3;
+    margin: 10px auto;
+    padding: 0;
+    width: 100%;
+}
+
+
+.main-container-title{
+}
+
+.main-container-title-container{
+    letter-spacing: -0.25px;
+}
+
+.title{
+    position: relative;
+    margin: 0 0 0;
+    overflow: hidden;
+    padding: 0 20px;
+    height: 45px;
+    background: #484848;
+    border-radius: 10px;
+    line-height: 45px;
+    color: #fff;
+    font-size: 20px;
+
+}
+
+.title::before{
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: -12px;
+    z-index: 0;
+    width: 50%;
+    height: 45px;
+    background: #383838;
+    transform: skewX(-43deg);
+}
+.title span{
+    position: relative;
+    z-index: 1;
+}
+
+.main-container-list{
+    display: block;
+    padding-top: 20px;
+}
+
+/*  ------------------------------------분류 부분----------------------------------------------------  */
+
+.tab-btn-container{
+    margin-top: 60px;
+    font-size: .875rem;
+    font-weight: 700;
+    line-height: 1.57143;
+    letter-spacing: -.01875rem;
+}
+
+.btn{
+    background: none;
+    border: none;
+    padding: 0;
+    color: #a9a9a9;
+    font: inherit;
+    margin-right: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn:last-child{
+    margin-right: 0;
+}
+
+.btn.active{
+    color: #2d2d2d;
+    border-bottom: 2px solid #2d2d2d;
+}
+
+/*  ------------------------------------메인 부분----------------------------------------------------  */
+
+.main-container-list{
+    font-size: 13px;
+}
+.list-container{
+    margin: 0 0 30px 0;
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+.list-container thead tr{
+    border-bottom: 1px solid #ebebeb;
+}
+
+.list-container thead tr th{
+    padding: 8px 5px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 13px;
+}
+
+.list-container tbody tr{
+    border-bottom: 1px solid #ebebeb;
+}
+
+.list-container tbody tr td{
+    padding: 8px 5px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 13px;
+}
+
+.list-title{
+    text-align: left;
+}
+
+.list-title a{
+    display: block;
+    text-align: left;
+    vertical-align: middle;
+    font-size: 13px;
+}
+
+.no-content-container{
+    margin: 11.25rem 0;
+    text-align: center
+}
+
+.no-content-container i{
+    display: inline-block;
+}
+
+.no-content-container i img{
+    width: 100%;
+    height: 100%;
+}
+
+.no-content-container h3{
+    margin-top: .75rem;
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.list-number{
+    position: relative;
+    width: 100%;
+    margin-top: 15px;
+    display: flex;
+    place-content: center;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.page-item a{
+    color: #363a3c;
+}
+.pagination .page-item {
+    margin: 0 5px;
+}
+.pagination .page-item .page-link {
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #4CAF50;
+    border: 1px solid #ddd;
+}
+.pagination .page-item .page-link:hover {
+    background-color: #ddd;
+}
+.pagination .page-item.active .page-link {
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #4CAF50;
+}
+.pagination .page-item.disabled .page-link {
+    color: #ccc;
+    pointer-events: none;
+    border: 1px solid #ddd;
+}

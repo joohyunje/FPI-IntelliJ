@@ -1,0 +1,467 @@
+body{
+    margin: 0;
+}
+ul, li {
+    list-style: none;
+}
+.request-header{
+    border-bottom: 1px solid #f2f2f2;
+    display:block;
+    margin-top: 0;
+    height: 80px;
+}
+
+.request-header-inner{
+    padding: 0 20px;
+    width: 500px;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* 받은 요청, 보낸 요청 제목 */
+.service-title{
+    padding: 24px 0;
+    color: #323232;
+}
+
+.service-title>h2{
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.44;
+    margin: 0;
+    margin-top: 5px;
+}
+
+/* 받고 보낸 날짜 */
+.received-date{
+    display: flex;
+    margin-left: 24px;
+    margin-top: 0;
+    align-items: center;
+}
+
+.date-badge{
+    width: 50px;
+    height: 18px;
+    padding: 5px 3px 0px 16px;
+    border-radius: 9px;
+    background-color: #f2f2f2;
+    font-size: 10px;
+    color: #737373;
+    font-weight: 400;
+    margin: 0 6px 3px 0;
+}
+.date{
+    height: 20px;
+    font-size: 14px;
+    color: #737373;
+}
+
+.container{
+    max-width: 1170px;
+    width: 100%;
+    padding: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+}
+
+.page-body{
+    padding: 0 100px;
+    margin-left: 0;
+    margin-right: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.info{
+    flex: 1 1 auto;
+    max-width: 650px;
+}
+
+.pro-info{
+    padding-bottom: 48px;
+    width: 100%;
+}
+
+.pro-pic{
+    width: 70px;
+    height: 70px;
+    border-radius: 18px;
+}
+
+/* 이미즈 크기를 맞춰 놓으려고 하는데 크기 맞추기가 잘 안되네용.. */
+.pro-info > img{
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+}
+
+.pro-name{
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 29px;
+}
+
+.service-address{
+    display: flex;
+    align-items: center;
+    margin-top: 12px;
+}
+
+.service-name{
+    margin-right: 8px;
+    font-size: 16px;
+    line-height: 24px;
+    color: #323232;
+}
+
+.address{
+    position: relative;
+    padding-left: 23px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #737373;
+    letter-spacing: -0.3px;
+}
+
+.address > img{
+    position: absolute;
+    left: 1px;
+}
+
+.pro-rate{
+    display: flex;
+    height: 88px;
+    margin-top: 26px;
+    background-color: #fafafa;
+    border-radius: 8px;
+}
+
+.hired-cnt{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: #323232;
+}
+
+.pro-rate-title{
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.pro-rate-info{
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.rate{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: #323232;
+}
+
+.pro-rate-info>img{
+    display: block;
+    height: 20px;
+    margin-right: 4px;
+}
+
+.count{
+    display: flex;
+    align-items: flex-end;
+    height: 80%;
+    font-size: 12px;
+    font-weight: 400;
+    color: #737373;
+}
+
+.request-content-body{
+    padding-bottom: 60px;
+    margin-bottom: 60px;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+
+.request-content{
+    width: 100%;
+}
+
+.request-content > h2{
+    margin-bottom: 16px;
+    margin-top: 0;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.5;
+    color: #323232;
+    letter-spacing: -0.5px;
+}
+
+.request-content > div{
+    position: relative;
+    font-size: 16px;
+    color: #737373;
+    letter-spacing: -0.2px;
+    line-height: 1.5;
+    white-space: pre-line;
+}
+
+.carrer-body{
+    width: 100%;
+    margin-top: 60px;
+}
+
+.carrer-header{
+    display: flex;
+    align-items: center;
+}
+
+.carrer-content > ul {
+    margin-top: 0;
+}
+
+.carrer-content > ul > li {
+    color: #737373;
+    margin-bottom: 5px;
+}
+
+.certificate-image{
+    width: 100%;
+    margin-top: 60px;
+}
+
+.certificate-image > h2{
+    margin-bottom: 16px;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.5;
+    color: #323232;
+    letter-spacing: -.5px;
+}
+
+.image-veiwer{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.image-veiwer> li{
+    flex: 0 0 20%;
+    max-width: 50%;
+    padding: 0 7px;
+    margin-bottom: 15px;
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+}
+
+.image-veiwer > li > img{
+    background-size: cover;
+    background-position: 50% 50%;
+    border: 1px solid #f2f2f2;
+    border-radius: 8px;
+    width: 180px;
+    position: relative;
+}
+
+.pro-photos{
+    padding-bottom:60px;
+    margin-bottom: 60px;
+    margin-top: 60px;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+
+.photos-container > h2 {
+    margin-bottom: 16px;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.5;
+    color: #323232;
+    letter-spacing: -.5px;
+}
+
+.reviews{
+    padding-bottom:60px;
+    margin-bottom: 60px;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+
+.reviews > h2 {
+    margin-bottom: 16px;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.5;
+    color: #323232;
+    letter-spacing: -.5px;
+}
+
+.summary{
+    display: inline-block;
+}
+
+.avg {
+    float: left;
+    margin-right: 15px;
+    font-size: 40px;
+    font-weight: 500;
+    line-height: 1.45;
+    color: #323232;
+    letter-spacing: -0.8px;
+}
+
+.review-star{
+    position: relative;
+    top: 13px;
+    display: inline-block;
+    font-size: 14px;
+    line-height: 1.43;
+    color: #737373;
+    letter-spacing: -0.2px;
+}
+
+.review-star > ul{
+    margin-top: 10px;
+    display: table-row;
+}
+
+.review-star > ul > li{
+    margin-right: 4px;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.review-star > ul > li > img {
+    width: 20px;
+    height: 18px;
+    margin-right: 4px;
+}
+
+.review-container{
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 0;
+    margin-top: 0;
+    padding: 0;
+}
+
+.review-container > li {
+    position: relative;
+    float: left;
+    width: 100%;
+}
+
+.reviewr-name{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 8px;
+    margin-top: 50px;
+}
+
+.reviewr-name > span{
+    overflow: hidden;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 700;
+    color: #323232;
+}
+
+.service-score{
+    display: flex;
+    align-items: center;
+    height: 20px;
+    margin: 16px 0 4px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.service-score > p {
+    margin: 0 8px 0 0;
+}
+
+.service-score > img {
+    width: 16px;
+    height: 16px;
+    margin-top: -2px;
+    margin-right: 4px;
+}
+
+.review-content{
+    line-height: 1.57;
+}
+
+.review-content > p{
+    margin: 0;
+    font-size: 14px;
+    white-space: pre-wrap;
+}
+
+.review-date{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 16px;
+}
+
+.request-price-side{
+    flex: 1 1 auto;
+    max-width: 280px;
+    padding-left: 40px;
+    padding-right: 0;
+    position: relative;
+    width: 100%;
+}
+
+.side-wrapper{
+    position: sticky;
+    top: 104px;
+    padding: 15px;
+    border:  1px solid #f2f2f2;
+    border-radius: 12px;
+}
+
+.request-price{
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.63;
+    letter-spacing: -.3px;
+    color: #323232;
+    margin-bottom: 16px;
+    word-break: break-word;
+}
+
+.accept-cancle-btn{
+    display: flex;
+    justify-content: space-between;
+}
+
+.accept-cancle-btn > button{
+    flex: 1;
+    cursor: pointer;
+    font-weight: 500px;
+    color: #fff;
+    background-color: #8da4d0;
+    text-align: center;
+    vertical-align: center;
+    padding: 11px 12px;
+    text-decoration: none;
+    border-radius: 4px;
+    border: 1px solid #7a8eb5;
+}
+
+.btn-cancle{
+    background-color: #F8CACC !important;
+    border: 1px solid #d0aaac !important;
+    color: #323232 !important;
+}
