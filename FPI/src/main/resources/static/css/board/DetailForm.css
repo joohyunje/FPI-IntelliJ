@@ -69,7 +69,13 @@ li{
     width: 100%;
     border-bottom: 1px solid #ccc;
     margin-bottom: 20px;
+    justify-content: space-between;
 }
+
+.like-comment-icon-box{
+    display: flex;
+}
+
 .like-icon{
     cursor: pointer;
     display: flex;
@@ -91,6 +97,37 @@ li{
     font-size: .875rem;
     font-weight: 500;
     color: #6a7685;
+}
+
+.edit-button{
+    margin-right:5px;
+    float: right;
+    width: 3.75rem;
+    padding: .3125rem .5rem;
+    color: #000000;
+    background-color: #eafaf9;
+    border: 0;
+    border-radius: 6px;
+    font-size: .6rem;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: -.01875rem;
+    cursor: pointer;
+}
+
+.delete-button{
+    float: right;
+    width: 3.75rem;
+    padding: .3125rem .5rem;
+    color: #000000;
+    background-color: #F8CACC;
+    border: 0;
+    border-radius: 6px;
+    font-size: .6rem;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: -.01875rem;
+    cursor: pointer;
 }
 
 .comment-container{
@@ -179,7 +216,7 @@ li{
     letter-spacing: 0;
 }
 
-.delete-button{
+.delete-icon{
     cursor: pointer;
     margin: 7px 0 0 5px;
 }
