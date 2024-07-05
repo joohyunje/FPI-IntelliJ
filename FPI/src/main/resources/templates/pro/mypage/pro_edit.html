@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>전문가정보 수정하기</title>
-  <link rel="stylesheet" href="/static/css/user/edit.css">
-  <link rel="stylesheet" href="/static/css/user/certify.css">
-  <link rel="stylesheet" href="/static/css/user/withdrawmodal.css">
+  <link rel="stylesheet" href="/static/css/user/mypage/edit.css">
+  <link rel="stylesheet" href="/static/css/user/mypage/certify.css">
+  <link rel="stylesheet" href="/static/css/user/mypage/withdrawmodal.css">
   <link rel="stylesheet" href="/static/css/main/common.css">
 
-  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
 </head>
 <body>
   <div class="detail-container">
@@ -61,30 +61,15 @@
               </div>
 
               <!-- 주소 API -->
-              <div class="select-row underline">
-                <div class="width50">
-                  <label for="main-location" class="fontSize15 label">활동지역대분류</label>
-                  <select id="main-location" aria-required="true" class="form-select">
-                    <option selected>도/특별시</option>
-                    <option value="1">서울특별시</option>
-                    <option value="2">경기도</option>
-                    <option value="3">경상북도</option>
-                    <option value="4">경상남도</option>
-                    <option value="5">충청북도</option>
+              <div class="lo-con underline2">
+                <label for="sido" class="fontSize15 label">지역</label>
+
+                <div style="display: flex;">
+                  <select name="sido" id="sido" class="form-select" style="margin-right: 10px;"></select>
+                  <select name="gugun" id="gugun" aria-required="true" class="form-select">
                   </select>  
                 </div>
-                <div class="width50">
-                  <label for="sub-location" class="fontSize15 label">활동지역소분류</label>
-                    <select id="sub-location" aria-required="true" class="form-select">
-                      <option selected>시/군/구</option>
-                      <option value="1">서울특별시</option>
-                      <option value="2">경기도</option>
-                      <option value="3">경상북도</option>
-                      <option value="4">경상남도</option>
-                      <option value="5">충청북도</option>
-                    </select>  
-                </div>  
-              </div>
+            </div>
     
 <!-- 카테고리 -->
               <div class="col underline pro">
@@ -175,6 +160,7 @@
       </div>
     </div>
   </div>  
+  <script src="/static/js/location.js"></script>
   
 </body>
 
