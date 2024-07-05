@@ -5,10 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>견적올리기</title>
   <link rel="stylesheet" href="/static/css/main/main.css">
+  <link rel="stylesheet" href="/static/css/main/common.css">
+
   <link rel="stylesheet" href="/static/css/user/certify.css">
   
   <link rel="stylesheet" href="/static/css/common(2)/received_req_info.css">
   <link rel="stylesheet" href="/static/css/main/receiveform.css">
+  <link rel="stylesheet" href="/static/css/main/select.css">
+
 
   
 
@@ -50,12 +54,12 @@
                   <th>요청금액</th>
                   <td><input type="number" class="" placeholder="원하시는 금액을 입력하세요"></td>
                   <th>가감금액</th>
-                  <td><input type="number" class="" placeholder="ex)10000 입력시 요청금액 +-10000원범위안에서 매칭" ></td>
+                  <td><input type="number"placeholder="ex)10000 입력시 요청금액 +-10000원범위안에서 매칭" ></td>
                 </tr>
                 <tr> 
                   <th>요청내용</th>
                   <td colspan="3">
-                    <div class="">
+                    <div class="recive-textarea">
                       <textarea class="textarea" maxlength="65536" style="width:97%;height:300px" placeholder="<다양한 전문가에게 요청을 받고 싶다면??> 1.요청내용을 구체적으로 적으실 수록 전문가의 요청률이 높습니다.2.정확한 견적요청을 위해 사진을 첨부해주세요"></textarea>
                     </div>
                   </td>
@@ -64,15 +68,66 @@
                 <tr>
                   <th>카테고리</th>
                   <td colspan="3" class="category-td">
-                      <label for="category" style="display: none;">관심 서비스</label>
-                      <select name="category" aria-required="false" class="form-select " >
-                        <option value="12">카테고리</option>
-                        <option value="1">이사/청소</option>
-                        <option value="2">설치/수리</option>
-                        <option value="3">인테리어</option>
-                        <option value="4">취미/자기개발</option>
-                        <option value="5">기타</option>
-                      </select> 
+                    <div class="dropdown">
+                      <button type="button" class="dropbtn spanline">
+                        <span class="dropbtn_content">서비스</span>
+                        <span class="dropbtn_click category-arrow" ></span>
+                      </button>
+                      <div class="dropdown-content">
+                        <div class="service1 category" >이사/청소</div>
+                        <div class="dropdown-service1 dropdown-service">
+                            <div class="services" onclick="showService(this.innerText)">이사</div>
+                            <div class="services" onclick="showService(this.innerText)">입주/집청소</div>
+                            <div class="services" onclick="showService(this.innerText)">가구/가구청소</div>
+                            <div class="services" onclick="showService(this.innerText)">특수 청소</div>
+                            <div class="services" onclick="showService(this.innerText)">철거/폐기</div>
+                        </div>
+                        <div class="service2 category">설치/수리</div>
+                        <div class="dropdown-service2 dropdown-service">
+                          <div class="services" onclick="showService(this.innerText)">가전제품</div>
+                          <div class="services" onclick="showService(this.innerText)">문/창문</div>
+                          <div class="services" onclick="showService(this.innerText)">수도/보일러/전기</div>
+                          <div class="services" onclick="showService(this.innerText)">가구</div>
+                          <div class="services" onclick="showService(this.innerText)">기타 설치/수리</div>
+                        </div>
+                        <div class="service3 category">인테리어</div>
+                        <div class="dropdown-service3 dropdown-service">
+                          <div class="services" onclick="showService(this.innerText)">종합 인테리어</div>
+                          <div class="services" onclick="showService(this.innerText)">부분 인테리어</div>
+                          <div class="services" onclick="showService(this.innerText)">바닥 시공</div>
+                          <div class="services" onclick="showService(this.innerText)">야외 시공</div>
+                          <div class="services" onclick="showService(this.innerText)">기타 시공</div>
+                        </div>
+                        <div class="service4 category">취미/자기계발</div>
+                        <div class="dropdown-service4 dropdown-service">
+                          <div class="services" onclick="showService(this.innerText)">악기</div>
+                          <div class="services" onclick="showService(this.innerText)">보컬</div>
+                          <div class="services" onclick="showService(this.innerText)">피트니스</div>
+                          <div class="services" onclick="showService(this.innerText)">스포츠</div>
+                          <div class="services" onclick="showService(this.innerText)">댄스</div>
+                          <div class="services" onclick="showService(this.innerText)">연기/마술</div>
+                          <div class="services" onclick="showService(this.innerText)">미술</div>
+                          <div class="services" onclick="showService(this.innerText)">사진/영상</div>
+                          <div class="services" onclick="showService(this.innerText)">투자</div>
+                          <div class="services" onclick="showService(this.innerText)">굥예</div>
+                          <div class="services" onclick="showService(this.innerText)">요리/조리</div>
+                          <div class="services" onclick="showService(this.innerText)">패션/미용</div>
+                          <div class="services" onclick="showService(this.innerText)">취업 준비 컨설팅</div>
+                          <div class="services" onclick="showService(this.innerText)">기타 취밈/자기계발</div>
+                        </div>
+                        <div class="service5 category">기타</div>
+                        <div class="dropdown-service5 dropdown-service">
+                          <div class="services" onclick="showService(this.innerText)">렌탈</div>
+                          <div class="services" onclick="showService(this.innerText)">심리</div>
+                          <div class="services" onclick="showService(this.innerText)">반려동물</div>
+                          <div class="services" onclick="showService(this.innerText)">번역 작업</div>
+                          <div class="services" onclick="showService(this.innerText)">여행</div>
+                          <div class="services" onclick="showService(this.innerText)">심부름</div>
+                          <div class="services" onclick="showService(this.innerText)">도우미</div>
+                          <div class="services" onclick="showService(this.innerText)">알바</div>
+                        </div>
+                      </div>
+                    </div> 
                   </td>
                 </tr>
                 <tr>
@@ -94,14 +149,14 @@
           </div>
 
           <div class="left">
-            <button type="submit">견적 요청하기</button>
-            <button type="submit" style="display: none;">견적 수정하기</button>
+            <button type="button">견적 요청하기</button>
+            <button type="button" style="display: none;">견적 수정하기</button>
           </div>
         </form>
       </div>
     </div>
-
   </div>
+  <script src="/templates/user/select.js"></script>
   
 </body>
 </html>

@@ -2,7 +2,7 @@
   width: 100%;
 }
 .detail-container > .container{
-  width: 1200px;
+  min-width: 1250px;
   padding: 0 16px;
   margin: 40px auto;
   min-height: 600px;
@@ -26,7 +26,7 @@
     padding-top: 15px;
 }
 
-.pro .request-info .pro-info{
+.detail-container > .container .pro-info{
   padding-bottom: 30px;
 }
 
@@ -57,8 +57,7 @@ table th {
 
 .recevieform-container input{
   width: 98%;
-  padding: 8px;
-  margin: 4px 0;
+  padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
   letter-spacing : 0.08rem;
@@ -71,22 +70,12 @@ table th {
     outline: none;
   }
 }
+
 #pro_recevieform input,#pro_recevieform select,#pro_recevieform textarea, #pro_receviemodal input, #pro_receviemodal textarea{    
   &:hover,&:focus{
   position: inherit;
   border-color: #f8cacc;
 }}
-
-#pro_recevieform button,#pro_receviemodal  button{
-  background-color:  #f8cacc !important;
-  border: 1px solid  #f8cacc !important;
-  color: #323232 !important;
-  &:hover{
-    font-weight: 600;
-    border: 1px solid #d0aaac !important;
-  }
-}
-
 
 .recevieform-container .price td{
   padding: 8px 20px 8px 12px ;
@@ -98,15 +87,6 @@ table th {
 }
 
 
-/* input number타입 화살표없앰 */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-input[type='number'] {
-  -moz-appearance: textfield;
-}
 
 /* edit에서 일부만 가져옴 */
 .imgSize{
@@ -162,4 +142,22 @@ input[type='number'] {
     color: rgb(255, 255, 255);
     font-weight: 700;
   }
+}
+#pro_recevieform .left >button,#pro_receviemodal .left >button{
+  background-color:  #f8cacc;
+  border: 1px solid  #f8cacc ;
+  color: #323232 !important;
+  &:hover{
+    font-weight: 600;
+    border: 1px solid #d0aaac ;
+  }
+}
+.recive-textarea textarea{
+  width: 98% !important;
+}
+.spanline{
+  display: flex !important;
+  align-items:center;
+  justify-content: space-between;
+
 }

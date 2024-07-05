@@ -1,0 +1,114 @@
+.dropdown{
+  position : relative;
+  display : inline-block;
+  width: 100%;
+}
+
+.dropbtn{
+  display : block;
+  border : 1px solid #ccc;
+  border-radius : 4px;
+  background-color: #fff;
+  font-weight: 400;
+  color : rgb(124, 124, 124);
+  padding : 12px;
+  width :98%;
+  text-align: left;
+  cursor : pointer;
+  font-size : 12px;
+  z-index :0;
+  position : relative;
+  &:hover,&:focus{
+    border-color: #8da4d0;
+  }
+}
+#pro_recevieform .dropbtn:hover,#pro_recevieform .dropbtn:focus{
+  border-color: #f8cacc;
+
+}
+.dropdown-content{
+  display : none;
+  font-weight: 400;
+  /* background-color: #fcfcfc; */
+  width: 98%;
+  /* border-radius: 2px; */
+  height : 200px;
+  overflow : scroll;
+  box-shadow: 8px 0px 20px 1px rgba(190, 190, 190, 0.6);
+}
+.dropdown-content::-webkit-scrollbar{
+  width : 5px;
+  height : 10px;
+}
+.dropdown-content::-webkit-scrollbar-thumb{
+  border-radius : 2px;
+  background-color :rgb(194, 194, 194)
+}
+
+.dropdown-content > .category{
+  text-decoration : none;
+  color : rgb(37, 37, 37);
+  font-size: 12px;
+  width: 100%;
+  height:40px;
+  margin: 0 !important;
+  padding : 12px 20px;
+}
+.dropdown-content > .category:hover{
+  background-color: rgb(226, 226, 226);
+  border-radius: 0 !important;
+}
+
+.dropdown-content.show{
+  display : block;
+}
+
+.dropdown-service{
+  display : none;
+  font-weight: 400;
+  background-color: #fcfcfc;
+  min-width : 240px;
+  border-radius: 2px;
+  overflow : scroll; 
+  width: 98% !important;
+  /* padding: 0 0 0 15px !important;    */
+
+  
+}
+.dropdown-service::-webkit-scrollbar-thumb{
+  background-color :rgb(194, 194, 194)
+}
+
+.dropdown-service > div{
+  display : block;
+  text-decoration : none;
+  color : rgb(37, 37, 37);
+  font-size: 12px;
+  padding : 10px 50px;
+}
+.dropdown-service > div:hover{
+  background-color: rgb(226, 226, 226);
+}
+
+.dropdown-service.show{
+  display : block;
+}
+
+
+/* 카테고리 화살표 위치 */
+.category-arrow{
+
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  border-color: #e0e0e0;
+  border-radius: 0.375em;
+  appearance: none;
+  background:url('/static/img/arrow.svg') no-repeat 97% 50%/15px auto;
+  &:hover,&:focus{
+    position: inherit;
+    border-color: #93A9D1;
+  }
+  &:focus{
+    outline: none;
+  }
+}
