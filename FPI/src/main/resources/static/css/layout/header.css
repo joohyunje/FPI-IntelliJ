@@ -78,6 +78,11 @@ header {
     margin-left: 1.125rem;
 }
 
+.logout-btn{
+    color: red;
+    font-size: 13px;
+}
+
 .search-bar-container {
     width: 280px;
     height: 40px;

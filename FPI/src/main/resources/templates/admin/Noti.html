@@ -7,28 +7,29 @@
     <link rel="stylesheet" href="../../static/css/admin/Noti.css">
 </head>
 <body>
-<div class="header">
-    <div class="in-header">
-        <div class="logo">
-            <a href="#">
-                <img src="https://help.soomgo.com/hc/theming_assets/01HZM2PTPGGCP4P9CXADCNWPWC" alt="로고">
-            </a>
-        </div>
-        <div class="nav-wrapper">
-            <a href="#">
-                공지사항
-            </a>
-            <a href="#">
-                <!--        자유게시판 될지도?      -->
-                자주묻는질문
-            </a>
-        </div>
 
+<header id="header">
+    <div class="global-nav-bar">
+        <div class="desktop-header">
+            <div class="header-left">
+                <img src="../../static/img/pro_logo.png" alt="로고" id="logo" style="width: 100px;height: 80px; margin:0  8px 5px 0 ;">
+            </div>
+
+            <div class="header-right">
+                <div class="nav-list">
+                    <span class="nav-item">
+                        <a href="#">공지사항</a>
+                    </span>
+                    <span class="nav-item right-item">
+                        <a href="#">FAQ</a>
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="container-divider"></div>
-    <div class="container-blank"></div>
-</div>
-<!--<div th:replace="~{/layout/header :: header}"></div>-->
+</header>
+
+
 <div class="main">
     <div class="main-container">
         <div class="main-container-title">
