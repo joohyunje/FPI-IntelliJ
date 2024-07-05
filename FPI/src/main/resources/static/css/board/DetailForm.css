@@ -93,20 +93,6 @@ li{
     color: #6a7685;
 }
 
-.star-icon{
-    display: flex;
-}
-
-.star-icon svg{
-    margin-right: .5rem;
-}
-
-.star-icon div{
-    font-size: .875rem;
-    font-weight: 500;
-    color: #6a7685;
-}
-
 .comment-container{
     display: flex;
     position: relative;
