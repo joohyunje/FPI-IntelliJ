@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>sendRequests</title>
-    <link rel="stylesheet" href="/static/css/common(2)/received_req_info.css">
+    <link rel="stylesheet" th:href="@{/css/user/req_list/received_req_info.css}">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/common(2)/font.css">
 </head>
@@ -11,11 +11,11 @@
     <div class="request-header">
         <div class="request-header-inner">
             <div class="service-title">
-                <h2>서비스 제목</h2>
+                <h2 th:text="${proRequest.userUploadTitle}">서비스 제목</h2>
             </div>
             <div class="received-date">
                 <div class="date-badge">보낸 날짜</div>
-                <div class="date">2024.06.27</div>
+                <div class="date" th:text="${proRequest.proRequestDate}">2024.06.27</div>
             </div>
         </div>
     </div>
@@ -29,24 +29,24 @@
                             <img src="https://dmmj3ljielax6.cloudfront.net/upload/requestForm/25f0e364-93ad-4d49-b710-3a2f073dc547.svg">
                         </div>
                         <div class="pro-name-rate">
-                            <div class="pro-name">FPI 건축</div>
+                            <div class="pro-name" th:text="${proRequest.proName}"></div>
                             <div class="service-address">
-                                <div class="service-name">주택 건축</div>
+                                <div class="service-name" th:text="${proRequest.serviceName}"></div>
                                 <div class="address">
                                     <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMCAyMGgyMFYwSDB6Ii8+PGcgc3Ryb2tlPSIjNzM3MzczIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiI+PHBhdGggZD0iTTE2LjIxOCA3LjI3NGMwIDQuOTQzLTUuODMzIDEwLjIyNi01LjgzMyAxMC4yMjZTNC41NSAxMi41NDIgNC41NSA3LjI3NGMwLTMuMDk3IDIuNjEyLTUuNjA3IDUuODM0LTUuNjA3IDMuMjIxIDAgNS44MzMgMi41MSA1LjgzMyA1LjYwN3oiLz48cGF0aCBkPSJNMTIuNjI4IDcuOTE3YTIuMDg0IDIuMDg0IDAgMTEtNC4xNjctLjAwMSAyLjA4NCAyLjA4NCAwIDAxNC4xNjcgMHoiLz48L2c+PC9nPjwvc3ZnPg==" alt="">
-                                    경북 포항시
+                                    <span th:text="${proRequest.region} + ' ' + ${proRequest.city}"></span>
                                 </div>
                             </div>
                             <div class="pro-rate">
                                 <div class="hired-cnt">
                                     <div class="pro-rate-title">고용 횟수</div>
-                                    <div class="pro-rate-info">15회</div>
+                                    <div class="pro-rate-info" th:text="${proRequest.empCnt}+'회'"></div>
                                 </div>
                                 <div class="rate">
                                     <div class="pro-rate-title">별점</div>
                                     <div class="pro-rate-info">
                                         <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=" alt="">
-                                        <span>4.5</span>
+                                        <span th:text="${proRequest.proStarRate}"></span>
                                         <span class="count">(15)</span>
                                     </div>
                                 </div>
@@ -57,24 +57,16 @@
                     <div class="request-content-body">
                         <div class="request-content">
                             <h2>요청 내용</h2>
-                            <div>소규모 부터 규모에 예외 없이
-                                신축, 증축, 용도변경, 실측, 건축물 현황도면 등록,
-                                위반건축물 (추인증축) 추인증축 허가 , 주택 및 상가 인테리어 등등
-                                건축 행정이 필요한 어떤 용역이든 수행 합니다.
-                                
-                                거품 없는 가격으로 진행 과정, 문제되는 사항 까지
-                                건축주 분들이 꼭 아셔야 하는 내용들을 자세하게 말씀 드립니다.
-                                
-                                다른 문의사항도 24시간 항시 대기중이니 언제든 연락 주시면 됩니다 !!
-                            </div>
+                            <div th:text="${proRequest.proRequestContent}"></div>
                         </div>
+<!--                        여기 다시 짜야함-->
                         <div class="carrer-body">
                             <div class="carrer-header">
                                 <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Ik0xMi42OCAzYzIuMTMzIDAgMy44OTggMS41NSAzLjg5OCAzLjUxMmwtLjAwMS40OTloNC4yODNjLjMyMSAwIC41ODcuMjQyLjYzMy41NTZsLjAwNy4wOTZ2MTEuNjg1YzAgLjM2LS4yODYuNjUyLS42NC42NTJIMy4xNGEuNjQ2LjY0NiAwIDAgMS0uNjQtLjY1MlY3LjY2M2MwLS4zNi4yODYtLjY1MS42NC0uNjUxbDQuMjgyLS4wMDF2LS40OTljMC0xLjkgMS42NTMtMy40MTIgMy42OTMtMy41MDdMMTEuMzIgM3pNNy45MTQgMTQuODM0SDMuNzc5djMuODYySDIwLjIydi0zLjg2MmgtNC4xMzV2Ljg1M2MwIC4zNi0uMjg2LjY1MS0uNjQuNjUxYS42NDQuNjQ0IDAgMCAxLS42MzItLjU1NWwtLjAwNy0uMDk2LS4wMDEtLjg1M0g5LjE5NHYuODUzYzAgLjM2LS4yODYuNjUxLS42NC42NTFhLjY0NC42NDQgMCAwIDEtLjYzMy0uNTU1bC0uMDA2LS4wOTYtLjAwMS0uODUzek0yMC4yMiA4LjMxNUgzLjc4bC0uMDAxIDUuMjE1aDQuMTM1di0uODUyYzAtLjM2LjI4Ny0uNjUyLjY0LS42NTIuMzIyIDAgLjU4OC4yNDEuNjMzLjU1NmwuMDA3LjA5NnYuODUyaDUuNjExdi0uODUyYzAtLjM2LjI4Ny0uNjUyLjY0LS42NTIuMzIyIDAgLjU4OC4yNDEuNjM0LjU1NmwuMDA2LjA5NnYuODUyaDQuMTM1VjguMzE1em0tNy41NC00LjAxMWgtMS4zNmMtMS40NjUgMC0yLjYxOCAxLjAxMi0yLjYxOCAyLjIwOHYuNWg2LjU5NnYtLjVjMC0xLjE0OC0xLjA2My0yLjEyNy0yLjQ0NC0yLjIwM2wtLjE3NC0uMDA1eiIgZmlsbD0iIzAwQzdBRSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=" alt="">
                                 <h3>경력</h3>
                             </div>
                             <div class="carrer-content">
-                                <ul>
+                                <ul >
                                     <li>경력 혹은 수상 내역</li>
                                     <li>경력 혹은 수상 내역</li>
                                     <li>경력 혹은 수상 내역</li>
@@ -106,76 +98,12 @@
                             </ul></div>
                         </div>
                     </div>
-                    <div class="reviews">
-                        <h2>리뷰</h2>
-                        <div class="review-list">
-                            <div class="summary">
-                                <div class="avg">4.5</div>
-                                <div class="review-star">
-                                    <ul>
-                                        <li>
-                                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=" alt="">
-                                        </li>
-                                        <li>
-                                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=" alt="">
-                                        </li>
-                                        <li>
-                                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=" alt="">
-                                        </li>
-                                        <li>
-                                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=" alt="">
-                                        </li>
-                                        <li>
-                                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=" alt="">
-                                        </li>
-                                    </ul>
-                                    <div>15개의 리뷰</div>
-                                </div>
-                            </div>
-                            <div>
-                                <ul class="review-container">
-                                    <li>
-                                        <div class="reviewr-name">
-                                            <span>주**</span>
-                                        </div>
-                                        <div class="service-score">
-                                            <p>제목</p>
-                                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=" alt="">
-                                            <span>4.5</span>
-                                        </div>
-                                        <div class="review-content">
-                                            <p>너무나도 친절하신 실장님 덕분에 필요한 부분 꼼꼼히 확인할 수 있었어요! 서툴고 모르는게 많은데도 찰떡같이 이해해서 센스있게 잘 처리해주셨어요. 적극적이고 열정적인 분이라 믿고 맡기기 좋아요 ㅎㅎ</p>
-                                        </div>
-                                        <div class="review-date">
-                                            <span class="date">2024.06.30</span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="reviewr-name">
-                                            <span>주**</span>
-                                        </div>
-                                        <div class="service-score">
-                                            <p>제목</p>
-                                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=" alt="">
-                                            <span>4.5</span>
-                                        </div>
-                                        <div class="review-content">
-                                            <p>너무나도 친절하신 실장님 덕분에 필요한 부분 꼼꼼히 확인할 수 있었어요! 서툴고 모르는게 많은데도 찰떡같이 이해해서 센스있게 잘 처리해주셨어요. 적극적이고 열정적인 분이라 믿고 맡기기 좋아요 ㅎㅎ</p>
-                                        </div>
-                                        <div class="review-date">
-                                            <span class="date">2024.06.30</span>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="request-price-side">
                 <div class="side-wrapper">
                     <div class="request-price">
-                        <span>10000</span>
+                        <span th:text="${proRequest.proRequestPay}"></span>
                         <span>원에 요청을 보내셨습니다.</span>
 
                         <!-- 작업이 완료 되면 띄우도록 -->
