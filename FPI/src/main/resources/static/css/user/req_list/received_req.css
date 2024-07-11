@@ -29,8 +29,8 @@ body{
 
 /* 보낸 요청이나 받은게 없으면 flex로하고 none 은 주석 그리고 밑에 grid-container도 none으로*/
 .no-req{
-    /* display: flex; */
-    display: none;
+     display: flex;
+    /*display: none;*/
     flex-wrap: wrap;
     margin-right: -.9375rem;
     margin-left: -.9375rem;

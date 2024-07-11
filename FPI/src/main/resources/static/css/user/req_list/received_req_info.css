@@ -306,10 +306,6 @@ ul, li {
     letter-spacing: -.5px;
 }
 
-.summary{
-    display: inline-block;
-}
-
 .avg {
     float: left;
     margin-right: 15px;
