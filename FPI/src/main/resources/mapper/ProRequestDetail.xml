@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.fpi.mapper.pro.ProMapper">
+
+    <select id="selectProReqDetail" resultType="ProRequestDetailDTO">
+        SELECT TPR.PRO_REQUEST_ID, TPR.PRO_REQUEST_DATE, TC.CATEGORY_NAME
+             , TS.SERVICE_NAME, TL.REGION, TL.CITY, TPR.PRO_REQUEST_CONTENT
+             , TPC.AWARD , TP.PRO_STAR_RATE, TPR.PRO_REQUEST_PROGRESS, TBL_USER_UPLOAD.USER_UPLOAD_TITLE
+             , tp.PRO_NAME, tp.EMP_CNT, tp.PRO_ID
+        FROM TBL_PRO_REQUEST TPR
+                 INNER JOIN TBL_USER_UPLOAD
+                            ON TPR.USER_UPLOAD_ID = TBL_USER_UPLOAD.USER_UPLOAD_ID
+                 INNER JOIN TBL_SERVICE ts
+                            ON TBL_USER_UPLOAD.SERVICE_ID = TS.SERVICE_ID
+                 INNER JOIN TBL_CATEGORY tc
+                            ON TS.CATEGORY_ID = TC.CATEGORY_ID
+                 INNER JOIN TBL_PRO tp
+                            ON TP.PRO_ID = TPR.PRO_ID
+                 INNER JOIN TBL_LOCATION tl
+                            ON TP.LOCATION_ID = TL.LOCATION_ID
+                 INNER JOIN TBL_PRO_CAREERINFO tpc
+                            ON TPC.PRO_ID = TP.PRO_ID
+        WHERE TPR.PRO_REQUEST_ID = #{proRequestId}
+    </select>
+
+
+
+<!--    리뷰 가져오기 -->
+    <select id="selectProReview" resultType="proReviewListDto">
+        SELECT tpr.PRO_ID, tpr.USER_ID, tu.USER_NAME, tpr.PRO_REVIEW_TITLE, tpr.PRO_REVIEW_CONTENT, tpr.PRO_REVIEW_RATE, tpr.PRO_REVIEW_DATE
+        FROM TBL_PRO_REVIEW tpr
+                 INNER JOIN TBL_USER tu
+                            ON TPR.USER_ID = TU.USER_ID
+        WHERE TPR.PRO_ID = #{proId}
+    </select>
+
+</mapper>

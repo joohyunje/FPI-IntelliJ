@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>received_req</title>
-    <link rel="stylesheet" href="/static/css/common(2)/received_req.css">
-    <link rel="stylesheet" href="/static/css/common(2)/pagination.css">
+    <link rel="stylesheet" th:href="@{/css/user/req_list/received_req.css}">
+    <link rel="stylesheet" th:href="@{/css/user/req_list/pagination.css}">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/common(2)/font.css">
+<!--    <link rel="stylesheet" th:href="@{/css/user/font.css}">-->
 </head>
 <body>
 <div id="body">
@@ -15,50 +15,168 @@
             <span>받은 요청</span>
         </h1>
         <div class="sorting-options">
-            <select name="sorting-options" id="sort-option">
-                <option value="">정렬 방식 선택</option>
-                <option value="newest">최신순</option>
-                <option value="oldest">오래된 순</option>
-            </select>
+            <input type="radio" id="sort-received-newest" name="sort-received-option" value="newest">
+            <label for="sort-received-newest">최신순</label>
+
+            <input type="radio" id="sort-received-oldest" name="sort-received-option" value="oldest" >
+            <label for="sort-received-oldest">오래된 순</label>
         </div>
         <div>
-            <div class="no-req">
-                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDgwIDgwIj4KICAgIDxkZWZzPgogICAgICAgIDxsaW5lYXJHcmFkaWVudCBpZD0icHJlZml4X19hIiB4MT0iMCUiIHgyPSIxMDAlIiB5MT0iNTAlIiB5Mj0iNTAlIj4KICAgICAgICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwQzdBRSIvPgogICAgICAgICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM0Q0M4RTUiLz4KICAgICAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPC9kZWZzPgogICAgPGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8Y2lyY2xlIGN4PSI0MCIgY3k9IjQwIiByPSI0MCIgZmlsbD0idXJsKCNwcmVmaXhfX2EpIiBmaWxsLW9wYWNpdHk9Ii41Ii8+CiAgICAgICAgPHBhdGggZD0iTTE2IDY0TDY0IDY0IDY0IDE2IDE2IDE2eiIvPgogICAgICAgIDxwYXRoIHN0cm9rZT0iI0ZGRiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSIzIiBkPSJNNDAgMjJjNC4wOCAwIDcuNDQ2IDMuMDU0IDcuOTM4IDdINTJjMS42NTcgMCAzIDEuMzQzIDMgM3YyM2MwIDEuNjU3LTEuMzQzIDMtMyAzSDI4Yy0xLjY1NyAwLTMtMS4zNDMtMy0zVjMyYzAtMS42NTcgMS4zNDMtMyAzLTNoNC4wNjJjLjQ5Mi0zLjk0NiAzLjg1OC03IDcuOTM4LTd6Ii8+CiAgICAgICAgPGNpcmNsZSBjeD0iMzkuOTUiIGN5PSIyOC43NSIgcj0iMS43NSIgZmlsbD0iI0ZGRiIvPgogICAgICAgIDxwYXRoIHN0cm9rZT0iI0ZGRiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2Utd2lkdGg9IjMiIGQ9Ik0zMiAzOEw0OCAzOE0zMiA0NEw0OCA0NE0zMiA1MEw0MSA1MCIvPgogICAgPC9nPgo8L3N2Zz4K">
-                <h3>받은 요청이 없습니다</h3>
-                <p>요청서를 작성하고 <br>전문가의 견적을 받아보세요.</p>
-                <div class="send-btn">
-                    <a href="#">
-                        <span>요청서 보내기</span>
-                    </a>
-                </div>
+            <div class="no-req no-received">
+
             </div>
-            <div class="yes-req grid-container">
-                <!-- 여기서 부터가 한 칸안에 들어가는 곳!! -->
-                <!-- 여기 칸에 들어가는대로 다 넣으면 됨! -->
-                <div class="grid-requests-container">
+            <div class="yes-req grid-container received">
+<!--                 여기서 부터가 한 칸안에 들어가는 곳!! -->
+<!--                 여기 칸에 들어가는대로 다 넣으면 됨! -->
+
+            </div>
+            <!-- 만약 요청이 없다면 안뜨도록 해야함 -->
+            <ul class="pagination received-pagination">
+
+            </ul>
+        </div>
+    </div>
+    
+    <div class="container">
+        <h1 class="page-h1">
+            <span>보낸 요청</span>
+        </h1>
+        <div class="sorting-options">
+            <input type="radio" id="sort-send-newest" name="sort-send-option" value="newest">
+            <label for="sort-send-newest">최신순</label>
+
+            <input type="radio" id="sort-send-oldest" name="sort-send-option" value="oldest" >
+            <label for="sort-send-oldest">오래된 순</label>
+        </div>
+        <div>
+            <div class="no-req no-send">
+
+            </div>
+            <div class="yes-req grid-container send">
+                <!-- 여기서부터가 한칸입니다 -->
+
+            </div>
+            <!-- 만약 요청이 없다면 안뜨도록 해야함 -->
+            <ul class="pagination send-pagination">
+
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    const receivedPageSize = 6;
+    let receivedSortOption = '';
+
+
+
+    window.onload = function(){
+        getReceivedList(1);
+        getSendList(1);
+    }
+
+    function formatDate(dateString) {
+        const now = new Date();
+        const commentDate = new Date(dateString); // 문자열을 Date 객체로 변환
+
+        const nowYear = now.getFullYear();
+        const nowMonth = now.getMonth();
+        const nowDate = now.getDate();
+
+        const commentYear = commentDate.getFullYear();
+        const commentMonth = commentDate.getMonth();
+        const commentDateDate = commentDate.getDate();
+
+        let displayText = "";
+
+        // 년, 월, 일이 모두 같은 경우 "오늘"로 표시
+        // if (nowYear === commentYear && nowMonth === commentMonth && nowDate === commentDateDate) {
+        //     displayText = "오늘";
+        // } else {
+        // 그 외의 경우, 정해진 포맷으로 표시
+        const yy = commentYear.toString().slice(-2); // 마지막 두 자리를 가지고 옴.
+        const M = commentMonth + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
+        const d = commentDateDate;
+        const HH = commentDate.getHours().toString().padStart(2, '0');
+        const mm = commentDate.getMinutes().toString().padStart(2, '0'); // 두자리 수 일 때 앞에 0을 붙임.
+
+        displayText = `${yy}.${M}.${d}`;
+        // }
+        return displayText;
+    }
+
+    function getReceivedList(page){
+        $.ajax({
+            method : 'get',
+            url : '/userRest/received',
+            data : {
+                page : page,
+                size : receivedPageSize,
+                sort : receivedSortOption
+            },
+            success:function (data){
+                let receivedArea = $('.no-received');
+
+                receivedArea.empty();
+
+                // 리스트 뿌려주는 함수.
+                if(data.length === 0){
+                    receivedArea.append(
+                        `<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDgwIDgwIj4KICAgIDxkZWZzPgogICAgICAgIDxsaW5lYXJHcmFkaWVudCBpZD0icHJlZml4X19hIiB4MT0iMCUiIHgyPSIxMDAlIiB5MT0iNTAlIiB5Mj0iNTAlIj4KICAgICAgICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwQzdBRSIvPgogICAgICAgICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM0Q0M4RTUiLz4KICAgICAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPC9kZWZzPgogICAgPGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8Y2lyY2xlIGN4PSI0MCIgY3k9IjQwIiByPSI0MCIgZmlsbD0idXJsKCNwcmVmaXhfX2EpIiBmaWxsLW9wYWNpdHk9Ii41Ii8+CiAgICAgICAgPHBhdGggZD0iTTE2IDY0TDY0IDY0IDY0IDE2IDE2IDE2eiIvPgogICAgICAgIDxwYXRoIHN0cm9rZT0iI0ZGRiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSIzIiBkPSJNNDAgMjJjNC4wOCAwIDcuNDQ2IDMuMDU0IDcuOTM4IDdINTJjMS42NTcgMCAzIDEuMzQzIDMgM3YyM2MwIDEuNjU3LTEuMzQzIDMtMyAzSDI4Yy0xLjY1NyAwLTMtMS4zNDMtMy0zVjMyYzAtMS42NTcgMS4zNDMtMyAzLTNoNC4wNjJjLjQ5Mi0zLjk0NiAzLjg1OC03IDcuOTM4LTd6Ii8+CiAgICAgICAgPGNpcmNsZSBjeD0iMzkuOTUiIGN5PSIyOC43NSIgcj0iMS43NSIgZmlsbD0iI0ZGRiIvPgogICAgICAgIDxwYXRoIHN0cm9rZT0iI0ZGRiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2Utd2lkdGg9IjMiIGQ9Ik0zMiAzOEw0OCAzOE0zMiA0NEw0OCA0NE0zMiA1MEw0MSA1MCIvPgogICAgPC9nPgo8L3N2Zz4K">
+                        <h3>받은 요청이 없습니다</h3>
+                        <p>요청서를 작성하고 <br>전문가의 견적을 받아보세요.</p>
+                        <div class="send-btn">
+                            <a href="#">
+                                <span>요청서 보내기</span>
+                            </a>
+                        </div>`
+                    );
+                }
+                renderReceivedRequest(data.content);
+                renderReceivedPagination(data);
+            },
+            error:function (){
+                console.error('실패')
+            }
+        })
+    }
+
+    $('input[name="sort-received-option"]').change(function (){
+        receivedSortOption = $(this).val();
+        getReceivedList(1);
+    })
+
+    function renderReceivedRequest(requests){
+        const receivedRequestContainer = $('.received');
+        receivedRequestContainer.empty();
+
+        requests.forEach(function(requests) {
+
+            let requestBox = `<div class="grid-requests-container">
                     <div class="grid-requests">
                         <div class="requests-header">
-                            <div>서비스 제목</div>
+                            <div>${requests.userUploadTitle}</div>
                             <div class="userInfo">
-                                <div>주현제</div>
+                                <div>${requests.proName}</div>
                                 <img src="https://dmmj3ljielax6.cloudfront.net/upload/requestForm/25f0e364-93ad-4d49-b710-3a2f073dc547.svg">
                             </div>
                         </div>
                         <div class="requests-body">
                             <div class="request-date-cnt">
-                                <div>24.06.07</div>
-                                <div>10회 고용됨</div>
+                                <div>${formatDate(requests.proRequestDate)}</div>
+                                <div>${requests.empCnt}회 고용됨</div>
                                 <div>
                                     <!-- 여기 페이지에서 모든 요청들을 전문가의 별점!! -->
-                                    4.5
+                                    ${requests.proStarRate}
                                     <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=" alt="">
-                                </div> 
+                                </div>
                             </div>
                             <div>
                                 <progress
                                 class="progress"
                                 id="progress"
-                                value="50"
+                                    value="50"
                                 min="0"
                                 max="100"
                                 ></progress>
@@ -69,37 +187,133 @@
                                 </div>
                             </div>
                             <!-- 전문가가 내가 올린 요청을 보고 제시한 금액 -->
-                            <div class="price">10000원</div>
+                            <div class="price">${requests.proRequestPay}원</div>
                             <div class="button-wrapper">
-                                <a href="user_received_req_info.html">자세히 보기</a>
+                                <a href="/user/proDetail/${requests.proRequestId}">자세히 보기</a>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="grid-requests-container">
+                </div>`;
+            receivedRequestContainer.append(requestBox);
+        });
+    }
+
+    function renderReceivedPagination(pagination) {
+        const receivedPaginationContainer = $('.received-pagination');
+        receivedPaginationContainer.empty();
+
+        // 이전 버튼
+        const prevDisabled = pagination.currentPage === 1 ? 'disabled' : '';
+        receivedPaginationContainer.append(`
+            <li class="page-item ${prevDisabled}">
+                <a class="page-link received-link" href="#" aria-label="Previous" data-page="${pagination.currentPage - 1}">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        `);
+
+        for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+            const activeClass = pagination.currentPage === i ? 'active' : '';
+            receivedPaginationContainer.append(`
+            <li class="page-item ${activeClass}">
+                <a class="page-link received-link" href="#" data-page="${i}">${i}</a>
+            </li>
+        `);
+        }
+
+        const nextDisabled = pagination.currentPage === pagination.totalPages ? 'disabled' : '';
+        receivedPaginationContainer.append(`
+            <li class="page-item ${nextDisabled}">
+                <a class="page-link received-link" href="#" aria-label="Next" data-page="${pagination.currentPage + 1}">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        `);
+
+        // 페이지 클릭했을 때 실행할 함수.
+        $('.received-link').click(function(event) {
+            event.preventDefault();
+            const selectedReceivedPage = $(this).data('page');
+            getReceivedList(selectedReceivedPage);
+        });
+    }
+
+    const sendPageSize = 6;
+    let sendSortOption = '';
+
+    function getSendList(page){
+        $.ajax({
+            method : 'get',
+            url : '/userRest/send',
+            data : {
+                page : page,
+                size : sendPageSize,
+                sort : sendSortOption
+            },
+            success:function (data){
+                let sendArea = $('.no-send');
+
+                sendArea.empty();
+
+                // 리스트 뿌려주는 함수.
+                if(data.length === 0){
+                    sendArea.append(
+                        `<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDgwIDgwIj4KICAgIDxkZWZzPgogICAgICAgIDxsaW5lYXJHcmFkaWVudCBpZD0icHJlZml4X19hIiB4MT0iMCUiIHgyPSIxMDAlIiB5MT0iNTAlIiB5Mj0iNTAlIj4KICAgICAgICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwQzdBRSIvPgogICAgICAgICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM0Q0M4RTUiLz4KICAgICAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPC9kZWZzPgogICAgPGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8Y2lyY2xlIGN4PSI0MCIgY3k9IjQwIiByPSI0MCIgZmlsbD0idXJsKCNwcmVmaXhfX2EpIiBmaWxsLW9wYWNpdHk9Ii41Ii8+CiAgICAgICAgPHBhdGggZD0iTTE2IDY0TDY0IDY0IDY0IDE2IDE2IDE2eiIvPgogICAgICAgIDxwYXRoIHN0cm9rZT0iI0ZGRiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSIzIiBkPSJNNDAgMjJjNC4wOCAwIDcuNDQ2IDMuMDU0IDcuOTM4IDdINTJjMS42NTcgMCAzIDEuMzQzIDMgM3YyM2MwIDEuNjU3LTEuMzQzIDMtMyAzSDI4Yy0xLjY1NyAwLTMtMS4zNDMtMy0zVjMyYzAtMS42NTcgMS4zNDMtMyAzLTNoNC4wNjJjLjQ5Mi0zLjk0NiAzLjg1OC03IDcuOTM4LTd6Ii8+CiAgICAgICAgPGNpcmNsZSBjeD0iMzkuOTUiIGN5PSIyOC43NSIgcj0iMS43NSIgZmlsbD0iI0ZGRiIvPgogICAgICAgIDxwYXRoIHN0cm9rZT0iI0ZGRiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2Utd2lkdGg9IjMiIGQ9Ik0zMiAzOEw0OCAzOE0zMiA0NEw0OCA0NE0zMiA1MEw0MSA1MCIvPgogICAgPC9nPgo8L3N2Zz4K">
+                        <h3>보낸 요청이 없습니다</h3>
+                        <p>전문가를 찾아 <br>전문가에게 요청을 보내보세요.</p>
+                        <div class="send-btn">
+                            <a href="#">
+                                <span>전문가 찾으러 가기</span>
+                            </a>
+                        </div>`
+                    );
+                }
+
+                // 리스트 뿌려주는 함수.
+                renderSendRequest(data.content);
+                renderSendPagination(data);
+            },
+            error:function (){
+                console.error('실패')
+            }
+        })
+    }
+
+    $('input[name="sort-send-option"]').change(function (){
+        sendSortOption = $(this).val();
+        getSendList(1);
+    })
+
+    function renderSendRequest(requests){
+        const sendRequestContainer = $('.send');
+        sendRequestContainer.empty();
+
+        requests.forEach(function(requests) {
+
+            let requestBox = `<div class="grid-requests-container">
                     <div class="grid-requests">
                         <div class="requests-header">
-                            <div>서비스 제목</div>
+                            <div>${requests.proUploadTitle}</div>
                             <div class="userInfo">
-                                <div>주현제</div>
+                                <div>${requests.proName}</div>
                                 <img src="https://dmmj3ljielax6.cloudfront.net/upload/requestForm/25f0e364-93ad-4d49-b710-3a2f073dc547.svg">
                             </div>
                         </div>
                         <div class="requests-body">
                             <div class="request-date-cnt">
-                                <div>24.06.07</div>
-                                <div>10회 고용됨</div>
+                                <div>${formatDate(requests.userRequestDate)}</div>
+                                <div>${requests.empCnt}회 고용됨</div>
                                 <div>
                                     <!-- 여기 페이지에서 모든 요청들을 전문가의 별점!! -->
-                                    4.5
+
                                     <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=" alt="">
-                                </div> 
+                                </div>
                             </div>
                             <div>
                                 <progress
                                 class="progress"
                                 id="progress"
-                                value="50"
+                                    value="50"
                                 min="0"
                                 max="100"
                                 ></progress>
@@ -109,308 +323,56 @@
                                     <div>처리완료</div>
                                 </div>
                             </div>
-                            <div class="price">10000원</div>
+                            <!-- 전문가가 내가 올린 요청을 보고 제시한 금액 -->
+                            <div class="price">${requests.userRequestPay}원</div>
                             <div class="button-wrapper">
-                                <a href="user_received_req_info.html">자세히 보기</a>
+                                <a href="/user/userDetail/${requests.userRequestId}">자세히 보기</a>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="grid-requests-container">
-                    <div class="grid-requests">
-                        <div class="requests-header">
-                            <div>서비스 제목</div>
-                            <div class="userInfo">
-                                <div>주현제</div>
-                                <img src="https://dmmj3ljielax6.cloudfront.net/upload/requestForm/25f0e364-93ad-4d49-b710-3a2f073dc547.svg">
-                            </div>
-                        </div>
-                        <div class="requests-body">
-                            <div class="request-date-cnt">
-                                <div>24.06.07</div>
-                                <div>10회 고용됨</div>
-                                <div>
-                                    <!-- 여기 페이지에서 모든 요청들을 전문가의 별점!! -->
-                                    4.5
-                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=" alt="">
-                                </div> 
-                            </div>
-                            <div>
-                                <progress
-                                class="progress"
-                                id="progress"
-                                value="50"
-                                min="0"
-                                max="100"
-                                ></progress>
-                                <div class="progress-info">
-                                    <div>요청 진행중</div>
-                                    <div>작업 진행중</div>
-                                    <div>처리완료</div>
-                                </div>
-                            </div>
-                            <div class="price">10000원</div>
-                            <div class="button-wrapper">
-                                <a href="user_received_req_info.html">자세히 보기</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="grid-requests-container">
-                    <div class="grid-requests">
-                        <div class="requests-header">
-                            <div>서비스 제목</div>
-                            <div class="userInfo">
-                                <div>주현제</div>
-                                <img src="https://dmmj3ljielax6.cloudfront.net/upload/requestForm/25f0e364-93ad-4d49-b710-3a2f073dc547.svg">
-                            </div>
-                        </div>
-                        <div class="requests-body">
-                            <div class="request-date-cnt">
-                                <div>24.06.07</div>
-                                <div>10회 고용됨</div>
-                                <div>
-                                    <!-- 여기 페이지에서 모든 요청들을 전문가의 별점!! -->
-                                    4.5
-                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=" alt="">
-                                </div> 
-                            </div>
-                            <div>
-                                <progress
-                                class="progress"
-                                id="progress"
-                                value="50"
-                                min="0"
-                                max="100"
-                                ></progress>
-                                <div class="progress-info">
-                                    <div>요청 진행중</div>
-                                    <div>작업 진행중</div>
-                                    <div>처리완료</div>
-                                </div>
-                            </div>
-                            <div class="price">10000원</div>
-                            <div class="button-wrapper">
-                                <a href="user_received_req_info.html">자세히 보기</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-            <!-- 만약 요청이 없다면 안뜨도록 해야함 -->
-            <ul class="pagination">
-                <li href="#">&laquo;</a>
-                <li href="#">1</a>
-                <li href="#" class="active">2</a>
-                <li href="#">3</a>
-                <li href="#">4</a>
-                <li href="#">5</a>
-                <li href="#">6</a>
-                <li href="#">&raquo;</a>
-            </ul>
-        </div>
-    </div>
-    
-    <div class="container">
-        <h1 class="page-h1">
-            <span>보낸 요청</span>
-        </h1>
-        <div class="sorting-options">
-            <select name="sorting-options" id="sort-option">
-                <option value="">정렬 방식 선택</option>
-                <option value="newest">최신순</option>
-                <option value="oldest">오래된 순</option>
-            </select>
-        </div>
-        <div>
-            <div class="no-req">
-                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDgwIDgwIj4KICAgIDxkZWZzPgogICAgICAgIDxsaW5lYXJHcmFkaWVudCBpZD0icHJlZml4X19hIiB4MT0iMCUiIHgyPSIxMDAlIiB5MT0iNTAlIiB5Mj0iNTAlIj4KICAgICAgICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwQzdBRSIvPgogICAgICAgICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM0Q0M4RTUiLz4KICAgICAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPC9kZWZzPgogICAgPGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8Y2lyY2xlIGN4PSI0MCIgY3k9IjQwIiByPSI0MCIgZmlsbD0idXJsKCNwcmVmaXhfX2EpIiBmaWxsLW9wYWNpdHk9Ii41Ii8+CiAgICAgICAgPHBhdGggZD0iTTE2IDY0TDY0IDY0IDY0IDE2IDE2IDE2eiIvPgogICAgICAgIDxwYXRoIHN0cm9rZT0iI0ZGRiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSIzIiBkPSJNNDAgMjJjNC4wOCAwIDcuNDQ2IDMuMDU0IDcuOTM4IDdINTJjMS42NTcgMCAzIDEuMzQzIDMgM3YyM2MwIDEuNjU3LTEuMzQzIDMtMyAzSDI4Yy0xLjY1NyAwLTMtMS4zNDMtMy0zVjMyYzAtMS42NTcgMS4zNDMtMyAzLTNoNC4wNjJjLjQ5Mi0zLjk0NiAzLjg1OC03IDcuOTM4LTd6Ii8+CiAgICAgICAgPGNpcmNsZSBjeD0iMzkuOTUiIGN5PSIyOC43NSIgcj0iMS43NSIgZmlsbD0iI0ZGRiIvPgogICAgICAgIDxwYXRoIHN0cm9rZT0iI0ZGRiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2Utd2lkdGg9IjMiIGQ9Ik0zMiAzOEw0OCAzOE0zMiA0NEw0OCA0NE0zMiA1MEw0MSA1MCIvPgogICAgPC9nPgo8L3N2Zz4K">
-                <h3>보낸 요청이 없습니다</h3>
-                <p>전문가를 찾아 <br>전문가에게 요청을 보내보세요.</p>
-                <div class="send-btn">
-                    <a href="#">
-                        <span>전문가 찾으러 가기</span>
-                    </a>
-                </div>
-            </div>
-            <div class="yes-req grid-container">
-                <!-- 여기서부터가 한칸입니다 -->
-                <div class="grid-requests-container">
-                    <div class="grid-requests">
-                        <div class="requests-header">
-                            <div>요청 제목</div>
-                            <div class="userInfo">
-                                <div>주현제</div>
-                                <img src="https://dmmj3ljielax6.cloudfront.net/upload/requestForm/25f0e364-93ad-4d49-b710-3a2f073dc547.svg">
-                            </div>
-                        </div>
-                        <div class="requests-body">
-                            <div class="request-date-cnt">
-                                <div>24.06.07</div>
-                                <div>10회 고용됨</div>
-                                <div>
-                                    <!-- 여기 페이지에서 모든 요청들을 전문가의 별점!! -->
-                                    4.5
-                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=" alt="">
-                                </div> 
-                            </div>
-                            <div>
-                                <progress
-                                class="progress"
-                                id="progress"
-                                value="50"
-                                min="0"
-                                max="100"
-                                ></progress>
-                                <div class="progress-info">
-                                    <div>요청 진행중</div>
-                                    <div>작업 진행중</div>
-                                    <div>처리완료</div>
-                                </div>
-                            </div>
-                            <!-- 회원이 전문가의 서비스를 보고 제시한 금액 -->
-                            <div class="price">20000원</div>
-                            <div class="button-wrapper">
-                                <a href="user_send_req_info.html">자세히 보기</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="grid-requests-container">
-                    <div class="grid-requests">
-                        <div class="requests-header">
-                            <div>요청 제목</div>
-                            <div class="userInfo">
-                                <div>주현제</div>
-                                <img src="https://dmmj3ljielax6.cloudfront.net/upload/requestForm/25f0e364-93ad-4d49-b710-3a2f073dc547.svg">
-                            </div>
-                        </div>
-                        <div class="requests-body">
-                            <div class="request-date-cnt">
-                                <div>24.06.07</div>
-                                <div>10회 고용됨</div>
-                                <div>
-                                    <!-- 여기 페이지에서 모든 요청들을 전문가의 별점!! -->
-                                    4.5
-                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=" alt="">
-                                </div> 
-                            </div>
-                            <div>
-                                <progress
-                                class="progress"
-                                id="progress"
-                                value="50"
-                                min="0"
-                                max="100"
-                                ></progress>
-                                <div class="progress-info">
-                                    <div>요청 진행중</div>
-                                    <div>작업 진행중</div>
-                                    <div>처리완료</div>
-                                </div>
-                            </div>
-                            <div class="price">20000원</div>
-                            <div class="button-wrapper">
-                                <a href="user_send_req_info.html">자세히 보기</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="grid-requests-container">
-                    <div class="grid-requests">
-                        <div class="requests-header">
-                            <div>요청 제목</div>
-                            <div class="userInfo">
-                                <div>주현제</div>
-                                <img src="https://dmmj3ljielax6.cloudfront.net/upload/requestForm/25f0e364-93ad-4d49-b710-3a2f073dc547.svg">
-                            </div>
-                        </div>
-                        <div class="requests-body">
-                            <div class="request-date-cnt">
-                                <div>24.06.07</div>
-                                <div>10회 고용됨</div>
-                                <div>
-                                    <!-- 여기 페이지에서 모든 요청들을 전문가의 별점!! -->
-                                    4.5
-                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=" alt="">
-                                </div> 
-                            </div>
-                            <div>
-                                <progress
-                                class="progress"
-                                id="progress"
-                                value="50"
-                                min="0"
-                                max="100"
-                                ></progress>
-                                <div class="progress-info">
-                                    <div>요청 진행중</div>
-                                    <div>작업 진행중</div>
-                                    <div>처리완료</div>
-                                </div>
-                            </div>
-                            <div class="price">20000원</div>
-                            <div class="button-wrapper">
-                                <a href="user_send_req_info.html">자세히 보기</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="grid-requests-container">
-                    <div class="grid-requests">
-                        <div class="requests-header">
-                            <div>요청 제목</div>
-                            <div class="userInfo">
-                                <div>주현제</div>
-                                <img src="https://dmmj3ljielax6.cloudfront.net/upload/requestForm/25f0e364-93ad-4d49-b710-3a2f073dc547.svg">
-                            </div>
-                        </div>
-                        <div class="requests-body">
-                            <div class="request-date-cnt">
-                                <div>24.06.07</div>
-                                <div>10회 고용됨</div>
-                                <div>
-                                    <!-- 여기 페이지에서 모든 요청들을 전문가의 별점!! -->
-                                    4.5
-                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=" alt="">
-                                </div> 
-                            </div>
-                            <div>
-                                <progress
-                                class="progress"
-                                id="progress"
-                                value="50"
-                                min="0"
-                                max="100"
-                                ></progress>
-                                <div class="progress-info">
-                                    <div>요청 진행중</div>
-                                    <div>작업 진행중</div>
-                                    <div>처리완료</div>
-                                </div>
-                            </div>
-                            <div class="price">20000원</div>
-                            <div class="button-wrapper">
-                                <a href="user_send_req_info.html">자세히 보기</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- 만약 요청이 없다면 안뜨도록 해야함 -->
-            <ul class="pagination">
-                <li href="#">&laquo;</a>
-                <li href="#">1</a>
-                <li href="#" class="active">2</a>
-                <li href="#">3</a>
-                <li href="#">4</a>
-                <li href="#">5</a>
-                <li href="#">6</a>
-                <li href="#">&raquo;</a>
-            </ul>
-        </div>
-    </div>
-</div>
-</body>
+                </div>`;
+            sendRequestContainer.append(requestBox);
+        });
+    }
+
+    function renderSendPagination(pagination) {
+        const sendPaginationContainer = $('.send-pagination');
+        sendPaginationContainer.empty();
+
+        // 이전 버튼
+        const sendPrevDisabled = pagination.currentPage === 1 ? 'disabled' : '';
+        sendPaginationContainer.append(`
+            <li class="page-item ${sendPrevDisabled}">
+                <a class="page-link send-link" href="#" aria-label="Previous" data-page="${pagination.currentPage - 1}">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        `);
+
+        for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+            const sendActiveClass = pagination.currentPage === i ? 'active' : '';
+            sendPaginationContainer.append(`
+            <li class="page-item ${sendActiveClass}">
+                <a class="page-link send-link" href="#" data-page="${i}">${i}</a>
+            </li>
+        `);
+        }
+
+        const sendNextDisabled = pagination.currentPage === pagination.totalPages ? 'disabled' : '';
+        sendPaginationContainer.append(`
+            <li class="page-item ${sendNextDisabled}">
+                <a class="page-link send-link" href="#" aria-label="Next" data-page="${pagination.currentPage + 1}">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        `);
+
+        // 페이지 클릭했을 때 실행할 함수.
+        $('.send-link').click(function(event) {
+            event.preventDefault();
+            const selectedSendPage = $(this).data('page');
+            getSendList(selectedSendPage);
+        });
+    }
+</script>
 </html>

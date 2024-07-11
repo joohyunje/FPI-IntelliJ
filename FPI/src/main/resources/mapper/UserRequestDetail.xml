@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.fpi.mapper.user.UserMapper">
+
+    <select id="selectUserReqDetail" resultType="UserRequestDetailDTO">
+        SELECT TUR.USER_REQUEST_ID, TUR.USER_REQUEST_DATE, TC.CATEGORY_NAME
+             , TS.SERVICE_NAME, TL.REGION, TL.CITY, TUR.USER_REQUEST_CONTENT
+             ,TU.USER_STAR_RATE, TUR.USER_REQUEST_PROGRESS,TU.USER_NAME, TU.USER_ID
+             , TBL_PRO_UPLOAD.PRO_UPLOAD_TITLE, TUR.USER_REQUEST_PAY
+        FROM TBL_USER_REQUEST TUR
+                 INNER JOIN TBL_PRO_UPLOAD
+                            ON TUR.PRO_UPLOAD_ID = TBL_PRO_UPLOAD.PRO_UPLOAD_ID
+                 INNER JOIN TBL_SERVICE ts
+                            ON TBL_PRO_UPLOAD.SERVICE_ID = TS.SERVICE_ID
+                 INNER JOIN TBL_CATEGORY tc
+                            ON TS.CATEGORY_ID = TC.CATEGORY_ID
+                 INNER JOIN TBL_USER TU
+                            ON TU.USER_ID = TUR.USER_ID
+                 INNER JOIN TBL_LOCATION tl
+                            ON TU.LOCATION_ID = TL.LOCATION_ID
+        WHERE TUR.USER_REQUEST_ID = #{userRequestId}
+    </select>
+
+
+
+<!--    리뷰 가져오기 -->
+    <select id="selectUserReview" resultType="userReviewListDto">
+        SELECT tur.USER_ID, tur.PRO_ID, tp.PRO_NAME, tur.USER_REVIEW_TITLE, tur.USER_REVIEW_CONTENT, tur.USER_REVIEW_RATE, tur.USER_REVIEW_DATE
+        FROM TBL_USER_REVIEW tur
+                 INNER JOIN TBL_PRO tp
+                            ON TUR.USER_ID = TP.PRO_ID
+        WHERE TUR.USER_ID = #{userId}
+    </select>
+
+</mapper>
