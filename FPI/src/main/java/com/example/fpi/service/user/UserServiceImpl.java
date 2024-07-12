@@ -1,9 +1,6 @@
 package com.example.fpi.service.user;
 
-import com.example.fpi.domain.dto.user.UserReceivedReqListDTO;
-import com.example.fpi.domain.dto.user.UserRequestDetailDTO;
-import com.example.fpi.domain.dto.user.UserReviewListDTO;
-import com.example.fpi.domain.dto.user.UserSendReqListDTO;
+import com.example.fpi.domain.dto.user.*;
 import com.example.fpi.domain.util.PagedResponse;
 import com.example.fpi.mapper.user.UserMapper;
 import lombok.RequiredArgsConstructor;
@@ -53,4 +50,17 @@ public class UserServiceImpl implements UserService {
     public List<UserReviewListDTO> selectUserReview(String userId) {
         return userMapper.selectUserReview(userId);
     }
+//유저 정보 조회
+    @Override
+    public UserDTO detailUser(String userId) {
+        return userMapper.detailUser(userId);
+    }
+
+
+//    유저 정보 삭제
+    @Override
+    public void deleteUser(String userId,String userName) {
+        userMapper.deleteUser(userId,userName);
+    }
+
 }

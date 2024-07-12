@@ -18,6 +18,9 @@ button{
   margin: 40px auto;
   min-height: 600px;
 }
+.detail-container #modal{
+  margin: 0px auto;
+}
 .aside{
   display: flex;
   width: 300px;

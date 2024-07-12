@@ -1,9 +1,6 @@
 package com.example.fpi.service.pro;
 
-import com.example.fpi.domain.dto.pro.ProReceivedReqListDTO;
-import com.example.fpi.domain.dto.pro.ProRequestDetailDTO;
-import com.example.fpi.domain.dto.pro.ProReviewListDTO;
-import com.example.fpi.domain.dto.pro.ProSendReqListDTO;
+import com.example.fpi.domain.dto.pro.*;
 import com.example.fpi.domain.util.PagedResponse;
 import org.springframework.stereotype.Service;
 
@@ -24,4 +21,9 @@ public interface ProService {
 
 //    전문가가 받은 리뷰 목록
     List<ProReviewListDTO> selectProReview(Long proId);
+
+//    전문가정보 상세보기
+    ProDTO detailPro(String userId);
+//  전문가 정보 삭제
+    void deletePro(Long proId,String proName);
 }

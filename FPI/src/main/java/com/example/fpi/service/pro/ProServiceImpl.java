@@ -1,9 +1,6 @@
 package com.example.fpi.service.pro;
 
-import com.example.fpi.domain.dto.pro.ProReceivedReqListDTO;
-import com.example.fpi.domain.dto.pro.ProRequestDetailDTO;
-import com.example.fpi.domain.dto.pro.ProReviewListDTO;
-import com.example.fpi.domain.dto.pro.ProSendReqListDTO;
+import com.example.fpi.domain.dto.pro.*;
 import com.example.fpi.domain.util.PagedResponse;
 import com.example.fpi.mapper.pro.ProMapper;
 import lombok.RequiredArgsConstructor;
@@ -53,4 +50,18 @@ public class ProServiceImpl implements ProService {
     public List<ProReviewListDTO> selectProReview(Long proId) {
         return proMapper.selectProReview(proId);
     }
+
+//    전문가 상세정보 조회
+    @Override
+    public ProDTO detailPro(String userId) {
+        Long proId = proMapper.selectProId(userId);
+        return proMapper.detailPro(proId);
+    }
+//전문가 정보 삭제
+    @Override
+    public void deletePro(Long proId, String proName) {
+        proMapper.deletePro(proId, proName);
+    }
+
+
 }

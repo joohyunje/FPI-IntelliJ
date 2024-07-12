@@ -1,9 +1,6 @@
 package com.example.fpi.service.user;
 
-import com.example.fpi.domain.dto.user.UserReceivedReqListDTO;
-import com.example.fpi.domain.dto.user.UserRequestDetailDTO;
-import com.example.fpi.domain.dto.user.UserReviewListDTO;
-import com.example.fpi.domain.dto.user.UserSendReqListDTO;
+import com.example.fpi.domain.dto.user.*;
 import com.example.fpi.domain.util.PagedResponse;
 import org.springframework.stereotype.Service;
 
@@ -25,4 +22,9 @@ public interface UserService {
 
     //    유저가 받은 리뷰 목록보기
     List<UserReviewListDTO> selectUserReview(String userId);
+
+//    유저정보 상세보기
+    UserDTO detailUser(String userId);
+//    유저 정보 삭제
+    void deleteUser(String userId,String userName);
 }

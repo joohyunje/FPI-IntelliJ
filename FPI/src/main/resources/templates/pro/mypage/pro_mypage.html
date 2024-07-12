@@ -1,22 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/static/css/user/mypage.css">
-  <link rel="stylesheet" href="/static/css/main/common.css">
+  <link rel="stylesheet" th:href="@{/css/user/mypage/mypage.css}">
+  <link rel="stylesheet" th:href="@{/css/main/common.css}">
+  <link rel="stylesheet" th:href="@{/css/layout/header.css}">
 
 
   <title>전문가 마이페이지</title>
 </head>
 <body>
+<div th:replace="~{/layout/proheader :: header}"></div>
     <div class="container">
         <div class="padding3">
           <h1>마이페이지</h1>
         </div>
         <ul class="underline">
           <li class="li-padding ">
-            <a href="/templates/pro/pro_detail.html" class="oneline"> <!-- 개인정보 상세보기 페이지 -->
+            <a th:href="@{/pro/mypage/detail/{proId}(proId=${detail.proId})}" class="oneline"> <!-- 개인정보 상세보기 페이지 -->
               <div class="auto">개인정보 상세보기</div>
               <div>
                 <img src="https://assets.cdn.soomgo.com/icons/icon-mypage-list-arrow.svg">
@@ -32,7 +34,7 @@
               <div class="auto">보유 포인트</div>
               <div class="circle procircle">
                 <!-- ? : 보유캐시 뿌려주는곳 -->
-                <span>?</span> 
+                <span th:text="${detail.userCash}">?</span>
                 <span>캐시</span>
               </div>
             </li>

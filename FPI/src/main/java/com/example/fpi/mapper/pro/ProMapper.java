@@ -1,9 +1,6 @@
 package com.example.fpi.mapper.pro;
 
-import com.example.fpi.domain.dto.pro.ProReceivedReqListDTO;
-import com.example.fpi.domain.dto.pro.ProRequestDetailDTO;
-import com.example.fpi.domain.dto.pro.ProReviewListDTO;
-import com.example.fpi.domain.dto.pro.ProSendReqListDTO;
+import com.example.fpi.domain.dto.pro.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -32,4 +29,13 @@ public interface ProMapper {
 
 //    전문가가 받은 리뷰 목록 조회
     List<ProReviewListDTO> selectProReview(Long proId);
+
+
+    //    <!--    마이페이지 전문가정보 상세보기-->
+    ProDTO detailPro(Long proId);
+
+//    유저아이디를 입력받아 프로아이디 알아내기
+    Long selectProId(String userId);
+    //    전문가 탈퇴
+    void deletePro(Long proId,String proName);
 }
