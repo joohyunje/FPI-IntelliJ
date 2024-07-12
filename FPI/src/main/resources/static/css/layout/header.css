@@ -158,3 +158,8 @@ header {
 .header-button:hover {
     background-color: #009c87;
 }
+.header_oneline{
+    display: flex;
+    align-items:center;
+    flex:auto
+}

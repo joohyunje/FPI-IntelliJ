@@ -66,6 +66,7 @@
     transition: all .3s;
     -webkit-transition: all .3s;
     padding: 24px 12px 8px 12px;
+    margin-bottom: 10px ;
     &:hover,&:focus{
       position: inherit;
       z-index: 15;

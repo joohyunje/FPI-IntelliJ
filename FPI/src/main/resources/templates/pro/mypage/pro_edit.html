@@ -18,8 +18,8 @@
       <div class="aside">
         <h1>계정 설정</h1>
         <hr class="hr">
-        <a href="/templates/pro/pro_detail.html">전문가 정보</a>
-        <a href="/templates/pro/pro_edit.html" style="font-weight: bold;">전문가 정보 수정</a>
+        <a th:href="@{/pro/mypage/detail/{proId}(proId=${detail.proId})}">전문가 정보</a>
+<!--        <a th:href="@{/pro/mypage/edit/{proId}(proId=${edit.proId})}" style="font-weight: bold;">전문가 정보 수정</a>-->
         <button id="btn-modal">전문가 탈퇴</button>
       </div>
 
@@ -43,20 +43,20 @@
           <div style="width: 100%;">
             <form name="proEdit" id="pro-edit">
               <div class="col underline">
-                <label for="name" class="fontSize15 label">전문가 활동 이름</label>
+                <label for="username" class="fontSize15 label">전문가 활동 이름</label>
                 <input type="text" id="username" name="username" class="form-control">
                 <p>* 전문가로 활동할 이름을 입력해주세요</p>
               </div>
         
               <div class="col underline">
-                <label for="phonenumber" class="fontSize15 label">연락처</label>
-                <input type="text" id="phonenumber" name="phoneNumber" class="form-control">
+                <label for="phoneNumber" class="fontSize15 label">연락처</label>
+                <input type="text" id="phoneNumber" name="phoneNumber" class="form-control">
                 <p>* 회원과 매칭시 연락할 전화번호를 입력해주세요</p>
               </div>
   
               <div class="col underline">
                 <label for="email" class="fontSize15 label">이메일</label>
-                <input type="email" id="proname" name="proname" class="form-control" disabled>
+                <input type="email" id="email" name="email" class="form-control" disabled>
                 <p>* 일반회원으로 전환하여 이메일을 변경하세요</p>
               </div>
 
@@ -73,8 +73,8 @@
     
 <!-- 카테고리 -->
               <div class="col underline pro">
-                <label for="phonenumber" class="fontSize15 label">활동 서비스</label>
-                <select name="category" aria-required="false" class="form-select" style="margin-bottom: 17px;">
+                <label for="category" class="fontSize15 label">활동 서비스</label>
+                <select name="category" id="category" aria-required="false" class="form-select" style="margin-bottom: 17px;">
                   <option value="12">카테고리</option>
                   <option value="1">이사/청소</option>
                   <option value="2">설치/수리</option>
@@ -101,12 +101,7 @@
                   <input type="text" id="certification-num" name="certification-num" class="form-control"
                   placeholder="자격증 번호를 입력하세요">
                 </div>
-                
-                <div class="certi-label">
-                  <input type="text" id="certification-agency" name="certification-num" class="form-control" style=" margin-right: 10px;" placeholder="자격증 발급기관을 입력하세요">
-                  <input type="text" id="certification-num" name="certification-num" class="form-control"
-                  placeholder="자격증 번호를 입력하세요">
-                </div>
+
               </div>
           
           
@@ -132,64 +127,50 @@
   </div> <!-- 메인을 감싸는 컨테이너 -->
 
   <!-- 전문가 탈퇴모달 -->
-  <div id=modal class="container">
-    <div class="container">
-      <div class="box-container">
-        <div class="box-header">전문가탈퇴</div>
-        <div class="box-content">
-          <div class="description">
-            <h3>정말로 전문가 탈퇴 하시겠습니까?</h3>
-            탈퇴시 입력하신 전문가 정보가 삭제되며
-            <br>
-            전문가 활동을 다시 원하실 경우
-            <br>
-            전문가 인증과정이 다시 이루어집니다.
+    <div id=modal class="container">
+      <div class="container">
+        <div class="box-container">
+          <div class="box-header">전문가탈퇴</div>
+          <div class="box-content">
+            <div class="description">
+              <h3>정말로 전문가 탈퇴 하시겠습니까?</h3>
+              탈퇴시 입력하신 전문가 정보가 삭제되며
+              <br>
+              전문가 활동을 다시 원하실 경우
+              <br>
+              전문가 인증과정이 다시 이루어집니다.
 
+            </div>
+            <form method="post" id="deleteForm" th:action="@{/pro/mypage/delete}">
+              <input type="hidden" th:field="${detail.proId}"  name="proId">
+              <div class="title">탈퇴하시려면 전문가 활동 이름을 작성해주세요</div>
+              <input class="pro-input-box input-box" name="text" placeholder="전문가 활동 이름 작성" type="text">
+
+
+              <!--모달 창 닫음 -->
+              <button type="button" id="close-modal"  class=" pro-btn btn">탈퇴하지 않겠습니다</button>
+              <!-- 탈퇴완료창->로그아웃&메인페이지로이동 -->
+              <a href="#" class="btn pro-btn">탈퇴하기</a>
+            </form>
           </div>
-          <form action="#">
-            <div class="title">탈퇴하시려면 전문가 활동 이름을 작성해주세요</div>
-            <input class="pro-input-box input-box" name="text" placeholder="전문가 활동 이름 작성" type="text">
-
-
-            <!--모달 창 닫음 -->
-            <button type="button" id="close-modal"  class=" pro-btn btn">탈퇴하지 않겠습니다</button>
-            <!-- 탈퇴완료창->로그아웃&메인페이지로이동 -->
-            <a href="#" class="btn pro-btn">탈퇴하기</a>
-          </form>
-        </div> 
-      </div>
+          </div>
+        </div>
     </div>
-  </div>  
+  </div>
+
   <script src="/static/js/location.js"></script>
-  
+
+  <script src="/js/deleteuser.js"></script>
+
 </body>
-
-<!-- 모달 중앙배치테스트 -->
-<script>
-  const modal=document.getElementById("modal")
-  function modalOn(){
-      modal.style.display="flex"
-
-  }
-  function isModalOn(){
-      return modal.style.display === "flex"
-  }
-  function modalOff() {
-      modal.style.display = "none"
-  }
-  // 모달창 보임
-  const btnModal = document.getElementById("btn-modal")
-  btnModal.addEventListener("click", e => {
-          modalOn()
-      })
-  // 모달창 닫음
-  const closeModal = document.getElementById("close-modal")
-  closeModal.addEventListener("click", e => {
-      modalOff()
-  })
-// 프로필 사진변경 버튼 디자인, 인풋누르면 디자인한 버튼 눌림
-  document.getElementById('pro-customButton').addEventListener('click', function() {
-    document.getElementById('fileInput').click();
-  });
+<!--이름불일치시 알림창-->
+<script th:if="${error}">
+  document.getElementById("modal").style.display="flex"
+  const proInput = document.querySelector('#modal .pro-input-box');
+  proInput.style.borderColor='red';
+  const p = document.querySelector('#modal .error');
+  p.style.display="flex";
 </script>
+
+
 </html>

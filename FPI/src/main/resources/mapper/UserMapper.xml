@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.fpi.mapper.user.UserMapper">
+<!--    마이페이지 내정보 상세보기-->
+    <select id="detailUser">
+        SELECT u1.*, c.category_name
+        FROM (SELECT u.user_id, u.user_name, u.phone_number, u.user_img, u.email, u.user_cash, u.user_star_rate, l.region, l.city, cl.category_id
+              FROM tbl_user u
+              JOIN tbl_location l ON u.location_id = l.location_id
+              JOIN tbl_category_list cl ON u.user_id = cl.user_id
+             ) u1
+             JOIN tbl_category c ON u1.category_id = c.category_id
+        WHERE u1.user_id = #{userId}
+    </select>
+
+
+<!--    회원가입 사용자 정보 조회-->
+    <select id="findByUserId">
+        select * from tbl_user
+        where user_id =#{userId}
+    </select>
+<!--    회원가입,OAuth내 정보 저장-->
+    <insert id="saveUser">
+        insert into tbl_user (user_id,user_name,user_img,provider,role)
+        values (#{userId},#{userName},#{userImg},#{provider},#{role})
+    </insert>
+<!--    회원가입시 입력 폼-->
+    <update id="updateUser">
+        update tbl_user
+        set user_name = #{userName},PHONE_NUMBER = #{phoneNumber},email=#{email},ROLE = #{role},location_id=#{locationId}
+        where user_id =#{userId}
+    </update>
+
+<!--    회원 탈퇴-->
+<delete id="deleteUser">
+    delete from tbl_user
+    where user_id=#{userId} and user_name = #{userName}
+</delete>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--    마이페이지 내정보 수정하기-->
+    <update id = "editUser">
+        update tbl_user
+        set phone_number = #{phone_number}, email = #{email},location_id = #{locationId}
+        where user_id=#{user_id}
+    </update>
+    <update id="editCategory">
+        update tbl_category_list
+        set category_id = #{categoryId}
+        where user_id = #{userId}
+    </update>
+</mapper>

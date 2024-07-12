@@ -19,8 +19,8 @@
       <div class="aside">
         <h1>계정 설정</h1>
         <hr class="hr">
-        <a href="/templates/user/user_detail.html">회원 정보</a>
-        <a  style="font-weight: bold;">회원 정보 수정</a>
+        <a th:href="@{/user/detail}">회원 정보</a>
+        <a th:href="@{/user/edit/}" style="font-weight: bold;">회원 정보 수정</a>
         <button id="btn-modal">회원 탈퇴</button>
       </div>
 
@@ -42,10 +42,10 @@
 
             <!-- 이메일에 readonly속성, 소셜로그인시 (디폴트값) -->
             <!-- 만약 폼로그인 기능이 구현된다면 readonly속성 없애면됨  -->
-            <form name="userEdit" id="user-edit">
+            <form method="post" name="userEdit" id="user-edit" th:action="@{/user/mypage/edit}" th:object="${edit}">
               <div class="col underline">
-                <label for="name" class="fontSize15 label">이름</label>
-                <input type="text" id="username" name="username" class="form-control" disabled>
+                <label for="username" class="fontSize15 label">이름</label>
+                <input type="text" id="username" name="username" class="form-control"  th:field="*{userName}"  disabled>
                 <p>* 이름은 수정이 불가능합니다</p>
               </div>
         
@@ -57,25 +57,25 @@
   
               <div class="col underline">
                 <label for="email" class="fontSize15 label">이메일</label>
-                <input type="email" id="phonenumber" name="phoneNumber" class="form-control" readonly>
-                <p>* 소셜 로그인을 통해 가입한 경우 이메일을 변경할 수 없습니다.</p>
+                <input type="email" id="email" name="phoneNumber" class="form-control" >
+<!--                <p>* 소셜 로그인을 통해 가입한 경우 이메일을 변경할 수 없습니다.</p>-->
               </div>
 
-              <!-- 주소 API -->
+
               <div class="lo-con underline2">
-                  <label for="sido" class="fontSize15 label">지역</label>
+                  <label for="region" class="fontSize15 label">지역</label>
 
                   <div style="display: flex;">
-                    <select name="sido" id="sido" class="form-select" style="margin-right: 10px;"></select>
-                    <select name="gugun" id="gugun" aria-required="true" class="form-select">
+                    <select name="region" id="region" class="form-select" style="margin-right: 10px;"></select>
+                    <select name="city" id="city" aria-required="true" class="form-select">
                     </select>  
                   </div>
               </div>
     
               <div class="col underline">
                 <label for="category" class="fontSize15 label">관심 서비스</label>
-                <select name="category" aria-required="false" class="form-select" style="margin-bottom: 17px;">
-                  <option value="12">카테고리</option>
+                <select name="category" id="category" aria-required="false" class="form-select" style="margin-bottom: 17px;">
+                  <option value="none">카테고리</option>
                   <option value="1">이사/청소</option>
                   <option value="2">설치/수리</option>
                   <option value="3">인테리어</option>
@@ -88,68 +88,50 @@
               </div>
 
             </form> <!-- 폼작성 끝 -->
-    
           </div> <!-- 폼 컨테이너 -->
-
       </div> <!-- 우측전체 컨테이너 -->
-  
     </div> <!-- 메인 전체 컨테이너 중앙배치 -->
-
   </div><!-- 메인 전체 컨테이너 -->
+  </div>
 
-  <!-- 회원탈퇴모달 -->
-  <div id=modal class="container">
-    <div class="box-container">
-      <div class="box-header">회원탈퇴</div>
-        <div class="box-content">
-          <div class="description">
-            <h3>정말로 회원탈퇴 하시겠습니까?</h3>
-            탈퇴시 모든 개인정보가 삭제되며
-            <br>
-            보유하신 포인트는 환불되지 않습니다
+    <!-- 회원탈퇴모달 -->
+    <div id=modal class="container">
+      <div class="box-container">
+        <div class="box-header">회원탈퇴</div>
+          <div class="box-content">
+            <div class="description">
+              <h3>정말로 회원탈퇴 하시겠습니까?</h3>
+              탈퇴시 모든 개인정보가 삭제되며
+              <br>
+              보유하신 포인트는 환불되지 않습니다
+            </div>
+            <form method="post" id="deleteForm" th:action="@{/user/mypage/delete}">
+              <input class="userId" type="hidden" th:field="${detail.userId}"  name="userId" style="display: none !important;" >
+              <div class="title">탈퇴하시려면 본인 이름을 작성해주세요</div>
+              <input class="input-box" name="userName" placeholder="본인이름 작성" type="text">
+
+            <!--모달 창 닫음 -->
+            <button type="button" id="close-modal"  class="btn">탈퇴하지 않겠습니다</button>
+            <!-- 탈퇴완료창->로그아웃&메인페이지로이동 -->
+            <a href="#" class="btn">탈퇴하기</a>
+            </form>
           </div>
-          <form action="#">
-            <div class="title">탈퇴하시려면 본인 이름을 작성해주세요</div>
-            <input class="input-box" name="text" placeholder="본인이름 작성" type="text">
-
-          <!--모달 창 닫음 -->
-          <button type="button" id="close-modal"  class="btn">탈퇴하지 않겠습니다</button>
-          <!-- 탈퇴완료창->로그아웃&메인페이지로이동 -->
-          <a href="#" class="btn">탈퇴하기</a>
-          </form>
-      </div> 
+      </div>
     </div>
   
     <script src="/static/js/location.js"></script>
+
+    <script src="/js/deleteuser.js"></script>
+
 </body>
 
-<!-- 모달 중앙배치테스트 -->
-<script>
-  const modal=document.getElementById("modal")
-  function modalOn(){
-      modal.style.display="flex"
-
-  }
-  function isModalOn(){
-      return modal.style.display === "flex"
-  }
-  function modalOff() {
-      modal.style.display = "none"
-  }
-  // 모달창 보임
-  const btnModal = document.getElementById("btn-modal")
-  btnModal.addEventListener("click", e => {
-          modalOn()
-      })
-  // 모달창 닫음
-  const closeModal = document.getElementById("close-modal")
-  closeModal.addEventListener("click", e => {
-      modalOff()
-  })
-// 프로필 사진변경 버튼 디자인, 인풋누르면 디자인한 버튼 눌림
-  document.getElementById('customButton').addEventListener('click', function() {
-    document.getElementById('fileInput').click();
-  });
+<!--이름불일치시 모달스타일변경-->
+<script th:if="${error}">
+  document.getElementById("modal").style.display="flex"
+  const proInput = document.querySelector('#modal .pro-input-box');
+  proInput.style.borderColor='red';
+  const p = document.querySelector('#modal .error');
+  p.style.display="flex";
 </script>
 
 </html>

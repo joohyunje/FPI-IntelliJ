@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.fpi.mapper.main.FormMapper">
+<!--    카테고리value값 매칭해서 카테고리list에 추가-->
+
+    <insert id="insertCategoryList">
+        insert into tbl_category_list(CATEGORY_LIST_ID,CATEGORY_ID,USER_ID)
+        values (SEQ_CATEGORY_LIST.nextval,#{categoryId},#{userId})
+    </insert>
+    <select id="getCaSeq">
+        select SEQ_CATEGORY_LIST.nextval from dual
+    </select>
+
+<!--    지역 아이디 조회 후 없으면 추가하기위해 아래 쿼리들이 필요-->
+    <select id="selectLocation">
+        select location_id
+        from tbl_location
+        where region = #{region} and city=#{city}
+    </select>
+    <insert id="insertLocation">
+        insert into tbl_location(location_id,region,city)
+        values (SEQ_LOCATION.nextval,#{region},#{city})
+    </insert>
+    <!--    다음시퀀스가져옴-->
+    <select id="getLoSeq">
+        select SEQ_LOCATION.nextval from dual
+    </select>
+</mapper>
