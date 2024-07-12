@@ -1,8 +1,11 @@
 package com.example.fpi.controller.user;
 
+import com.example.fpi.domain.dto.user.CouponDTO;
+import com.example.fpi.domain.dto.user.CouponListDTO;
 import com.example.fpi.domain.dto.user.UserDTO;
 import com.example.fpi.domain.oauth.CustomOAuth2User;
 import com.example.fpi.domain.vo.user.UserVO;
+import com.example.fpi.service.user.CouponService;
 import com.example.fpi.service.user.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/user")
 @RequiredArgsConstructor
@@ -19,6 +24,7 @@ public class UserMypageController {
     private final UserService userService;
     private final UserDTO userDTO;
     private final UserVO userVO;
+    private final CouponService couponService;
 
     //    마이페이지
     @GetMapping("/mypage")
@@ -41,8 +47,15 @@ public class UserMypageController {
     }
 
     @GetMapping("/couponlist")
-    public String coupon(@AuthenticationPrincipal CustomOAuth2User customOAuth2User){
+    public String coupon(@AuthenticationPrincipal CustomOAuth2User customOAuth2User,Model model){
         String userId = customOAuth2User.getUserId();
+
+
+        System.out.println(couponService.couponInfo(userId));
+        List<CouponListDTO> coupons = couponService.couponInfo(userId);
+
+        model.addAttribute("coupons",coupons);
+        System.out.println(coupons);
 
         return "user/mypage/coupon";
     }
