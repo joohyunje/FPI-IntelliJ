@@ -6,8 +6,10 @@ import com.example.fpi.domain.dto.user.UserDTO;
 import com.example.fpi.domain.oauth.CustomOAuth2User;
 import com.example.fpi.domain.vo.user.UserVO;
 import com.example.fpi.mapper.main.FormMapper;
+import com.example.fpi.mapper.user.CouponMapper;
 import com.example.fpi.mapper.user.UserMapper;
 import com.example.fpi.service.main.FormService;
+import com.example.fpi.service.user.CouponService;
 import com.example.fpi.service.user.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,7 @@ public class MainLoginController {
     private final  UserMapper userMapper;
     private final FormService formService;
     private final UserService userService;
+    private final CouponService couponService;
 
 
     @GetMapping()
@@ -60,7 +63,7 @@ public class MainLoginController {
         userDTO.setLocationId(formService.selectLocation(region,city));
         formService.insertCategoryList(category,customOAuth2User.getUserId());
         userMapper.updateUser(UserVO.toEntity(userDTO));
-
+        couponService.userCoupon(userDTO.getUserId());
 //        홈페이지가 바뀔때 헤더에서 계속 가지고 있어야 하기 때문에 db에 담긴 이름을 세션에 담아줌
         session.setAttribute("loginName", userService.getUserName(userDTO.getUserId()));
 

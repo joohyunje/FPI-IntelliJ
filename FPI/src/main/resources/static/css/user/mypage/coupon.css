@@ -49,6 +49,9 @@ h1{
   margin-bottom: 15px;
   color: #777;
 }
+.coupon .oneline{
+  display: flex;
+}
 /* 쿠폰박스 색상 */
 .coupon-box{
   background-color: #f2f2f2;
