@@ -40,6 +40,12 @@ public class UserMypageController {
 
     }
 
+    @GetMapping("/couponlist")
+    public String coupon(@AuthenticationPrincipal CustomOAuth2User customOAuth2User){
+        String userId = customOAuth2User.getUserId();
+
+        return "user/mypage/coupon";
+    }
 
     //    유저정보 수정 폼으로 이동
     @GetMapping("/edit")

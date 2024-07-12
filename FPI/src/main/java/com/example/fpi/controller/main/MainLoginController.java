@@ -40,7 +40,7 @@ public class MainLoginController {
     }
 
     @PostMapping("/sign")
-    public String sign(@RequestParam("userName") String userName, // form 에서 입력한 내 이름
+    public String sign(@RequestParam("userName") String userName, // form에서 입력한 이름
                        @RequestParam("phoneNumber") String phoneNumber,
                        @RequestParam("email") String email,
                        @RequestParam("region") String region,
@@ -61,7 +61,7 @@ public class MainLoginController {
         formService.insertCategoryList(category,customOAuth2User.getUserId());
         userMapper.updateUser(UserVO.toEntity(userDTO));
 
-//        홈페이지가 바뀔때 헤더에서 계속 가지고 있어야 하기 때문에 세션에 담아줌
+//        홈페이지가 바뀔때 헤더에서 계속 가지고 있어야 하기 때문에 db에 담긴 이름을 세션에 담아줌
         session.setAttribute("loginName", userService.getUserName(userDTO.getUserId()));
 
         return "redirect:/main";
