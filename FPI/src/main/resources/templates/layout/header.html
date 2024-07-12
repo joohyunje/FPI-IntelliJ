@@ -37,7 +37,7 @@
 
 
                         <div class="header_oneline">
-                            <span th:text="${#authentication.getPrincipal().getName()}" class="nav-item left-items"></span>
+                            <span th:text="${session.loginName}" class="nav-item left-items"></span>
                             <span class="nav-item">님</span>
                         </div>
                     </a>

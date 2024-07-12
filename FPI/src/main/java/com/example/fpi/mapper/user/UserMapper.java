@@ -34,6 +34,7 @@ public interface UserMapper {
 
     //    회원정보 상세보기
     UserDTO detailUser(String userId);
+
     //회원 탈퇴
     void deleteUser(String userId,String userName);
 

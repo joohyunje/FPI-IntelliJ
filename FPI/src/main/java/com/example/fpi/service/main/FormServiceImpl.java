@@ -18,7 +18,7 @@ import java.util.List;
 public class FormServiceImpl implements FormService {
     private final FormMapper formMapper;
 
-//    지역아이디 조회하여 없으면 지역카테고리에 데이터 추가 후 지역아이디 가져옴
+//    지역아이디 조회하여 없으면 지역테이블에 데이터 추가 후 지역아이디 가져옴
     @Override
     public Long selectLocation(String region, String city) {
         Long locationId = formMapper.selectLocation(region, city);
@@ -32,7 +32,7 @@ public class FormServiceImpl implements FormService {
             LocationVO locationVO = LocationVO.toEntity(locationDTO);
             formMapper.insertLocation(locationVO);
 
-            return nextval;
+            return nextval+1;
 
 
 
@@ -42,7 +42,7 @@ public class FormServiceImpl implements FormService {
 
 
     }
-
+// 유저와 프로가 선택한 카테고리를 카테고리테이블에 정보 입력
     @Override
     public void insertCategoryList(Long categoryId,String userId) {
         Long nextval = formMapper.getCaSeq();

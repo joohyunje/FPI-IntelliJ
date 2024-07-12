@@ -40,23 +40,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <!--    마이페이지 내정보 수정하기-->
     <update id = "editUser">
         update tbl_user
