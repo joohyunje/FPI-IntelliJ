@@ -1,8 +1,7 @@
 package com.example.fpi.domain.oauth;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
@@ -15,11 +14,12 @@ import java.util.Map;
 @Getter
 //모든 필드에 대한 매개변수를 갖는 생성자를 생성,초기화 생성자임
 @AllArgsConstructor
+@ToString
 public class CustomOAuth2User implements OAuth2User {
 
     private final OAuth2User oauth2User;
     private final String userId;
-    private final String userName;
+    private final String userName; // 카카오 설정 이름
     private final String userImg;
 
     @Override
@@ -39,4 +39,5 @@ public class CustomOAuth2User implements OAuth2User {
     public String getId() {
         return userId;
     }
+
 }

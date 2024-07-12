@@ -53,14 +53,26 @@ public class UserServiceImpl implements UserService {
 //유저 정보 조회
     @Override
     public UserDTO detailUser(String userId) {
+
         return userMapper.detailUser(userId);
+    }
+
+
+//    유저 삭제 시, 이름 입력 비교를 위해
+//    DB에서 이름을 가져오기
+    @Override
+    public String getUserName(String userId) {
+        return userMapper.findByUserId(userId).getUserName();
     }
 
 
 //    유저 정보 삭제
     @Override
     public void deleteUser(String userId,String userName) {
+
         userMapper.deleteUser(userId,userName);
     }
+    
+
 
 }

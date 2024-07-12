@@ -2,7 +2,9 @@ package com.example.fpi.controller.user;
 
 import com.example.fpi.domain.dto.user.UserDTO;
 import com.example.fpi.domain.oauth.CustomOAuth2User;
+import com.example.fpi.domain.vo.user.UserVO;
 import com.example.fpi.service.user.UserService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -16,8 +18,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class UserMypageController {
     private final UserService userService;
     private final UserDTO userDTO;
+    private final UserVO userVO;
 
-//    마이페이지
+    //    마이페이지
     @GetMapping("/mypage")
     public String mypage(@AuthenticationPrincipal CustomOAuth2User customOAuth2User, Model model) {
 //        현재사용자의 인증객체 가져옴
@@ -53,14 +56,15 @@ public class UserMypageController {
     @PostMapping("/delete")
     public String delete(@RequestParam String userId,
                          @RequestParam String userName,
-                         RedirectAttributes redirectAttributes) {
+                         RedirectAttributes redirectAttributes,
+                         HttpSession session) {
 
-        String dbUserName = userDTO.getUserName();
-
+        String dbUserName = userService.getUserName(userId);
 
         //        db에 저장된 이름이랑 받아온 input에 입력된 이름이랑 비교
         if (userName.equals(dbUserName)) {
             userService.deleteUser(userId,userName);
+            session.invalidate();
             return "redirect:/main";
         } else {
             //            일치하지않을때 에러모달 띄우기 위한 코드

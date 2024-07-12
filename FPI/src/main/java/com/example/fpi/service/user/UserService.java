@@ -2,6 +2,7 @@ package com.example.fpi.service.user;
 
 import com.example.fpi.domain.dto.user.*;
 import com.example.fpi.domain.util.PagedResponse;
+import com.example.fpi.mapper.user.UserMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
 @Service
 public interface UserService {
 
-//    REST
+    //    REST
     // 동적 쿼리
 //    받은 요청 목록
     PagedResponse<UserReceivedReqListDTO> selectReceivedReq(int page, int pageSize, String sort);
@@ -25,6 +26,11 @@ public interface UserService {
 
 //    유저정보 상세보기
     UserDTO detailUser(String userId);
+
+    //    유저 삭제 시, 이름 입력 비교를 위해
+//    DB에서 이름을 가져오기
+    String getUserName(String userId);
+
 //    유저 정보 삭제
     void deleteUser(String userId,String userName);
 }
