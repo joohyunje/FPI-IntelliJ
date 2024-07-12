@@ -4,6 +4,7 @@ import com.example.fpi.domain.dto.user.UserDTO;
 import com.example.fpi.domain.oauth.CustomOAuth2User;
 import com.example.fpi.mapper.user.UserMapper;
 import com.example.fpi.service.user.CustomOAuth2UserService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -63,10 +64,13 @@ public class SecurityConfig {
         return (request, response, auth) -> {
             CustomOAuth2User customOAuth2User = (CustomOAuth2User) auth.getPrincipal();
             UserDTO user = userMapper.findByUserId(customOAuth2User.getUserId());
+            HttpSession session = request.getSession();
             if(user.getRole().equals("new")){
                 response.sendRedirect("/main/sign");
             }
             else {
+//                홈페이지 이동시 헤더에서 계속 정보를 가지고 있어야 하기 때문에 session에 담아줌
+                session.setAttribute("loginName", userMapper.findByUserId(user.getUserId()).getUserName());
                 response.sendRedirect("/main");
             }
         };

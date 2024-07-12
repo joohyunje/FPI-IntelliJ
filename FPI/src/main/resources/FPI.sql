@@ -467,6 +467,9 @@ DROP SEQUENCE SEQ_COUPON;
 
 -- drop table
 
+delete from tbl_user
+where user_id='3614057925' and user_name = '민정';
+
 
 
 
