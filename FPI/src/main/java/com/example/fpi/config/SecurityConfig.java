@@ -48,7 +48,7 @@ public class SecurityConfig {
                                 .logoutSuccessHandler((request, response, authentication)->{
 //                            앱키 : REST API키 복붙
                                     String clientId="6d8634b2b70d1f0713825ca4b0c881e6";
-                                    String logoutRedirectUri="http://localhost:8070";
+                                    String logoutRedirectUri="http://localhost:8070/main";
                                     String logoutUri="https://kauth.kakao.com/oauth/logout?client_id="
                                             + clientId + "&logout_redirect_uri=" + logoutRedirectUri;
                                     response.sendRedirect(logoutUri);

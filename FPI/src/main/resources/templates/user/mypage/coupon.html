@@ -1,44 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>쿠폰함</title>
-  <link rel="stylesheet" href="/static/css/user/mypage/coupon.css">
-  <link rel="stylesheet" href="/static/css/user/mypage/common.css">
+  <link rel="stylesheet" th:href="@{/css/user/mypage/coupon.css}">
+  <link rel="stylesheet" th:href="@{/css/main/common.css}">
+  <link rel="stylesheet" th:href="@{/css/layout/header.css}">
 </head>
 <body>
-  <div id="main-body">
+  <div th:replace="~{/layout/header :: header}"></div>
+  <div id="main-body" >
     <div class="container">
       <div class="padding3">
         <h1>쿠폰함</h1>
       </div>
       <!-- 발급된 쿠폰이 없을때,있으면 hidden -->
-      <div class="center padding3">
+      <div class="center padding3" id="noCoupon" >
         <i>
           <img src="https://assets.cdn.soomgo.com/icons/icon-coupon-empty.svg">
         </i>
         <h3>사용 가능한 쿠폰이 없습니다</h3>
       </div>
-      
-      <!-- 발급된 쿠폰 뿌려줌,없으면 hidden -->
-      <div class="coupon-container">
+
+      <div class="coupon-container" id="YesCoupon" th:each="coupon : ${coupons}" th:object="${coupon}">
         <div class="coupon">
-            <h2>10000원 할인 쿠폰</h2> <!-- 쿠폰내용 -->
-            <p>사용 기한: 2024-12-31</p> <!-- 쿠폰유효기간 -->
-        </div>
-        <div class="coupon">
-            <h2>5,000원 할인 쿠폰</h2>
-            <p>사용 기한: 2024-12-31</p>
+          <div class="oneline">
+            <h2 th:text="*{discount}">10000</h2>
+            <h2>원 할인 쿠폰</h2> <!-- 쿠폰내용 -->
+          </div>
+          <div class="oneline" >
+            <div class="oneline" style="margin-right: 5rem;">
+              <p>쿠폰번호:&ensp;</p>
+              <p style="letter-spacing:1px;" th:utext="*{couponNumber}">123456789qwe</p>
+            </div>
+            <div class="oneline">
+              <p>사용기간:&ensp;</p>
+              <p style="letter-spacing:1px;" th:utext="*{#temporals.format(couponDate, 'yyyy년 MM월 dd일')}">2024-12-31</p>
+            </div>
+          </div>
+
         </div>
       </div>
-    </div>
 
+
+    </div>
     <!-- 발급된 쿠폰유무상관없이 보여줌 -->
     <div class="coupon-box">
       <div class="container">
         <h3>쿠폰이용안내</h3>
-        <ul> 
+        <ul>
           <li>회원가입한 회원만 이용할 수 있습니다.</li>
           <li>지급된 쿠폰은 타 회원에게 양도하거나, 현금 환급이 불가합니다.</li>
           <li>거래금액, 서비스 등 조건이 맞는 쿠폰만 사용할 수 있습니다.</li>
@@ -47,7 +58,6 @@
         </ul>
       </div>
     </div>
-
-  </div>  
+  </div>
 </body>
 </html>
