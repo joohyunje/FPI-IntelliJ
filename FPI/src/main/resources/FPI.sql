@@ -472,7 +472,23 @@ where user_id='3614057925' and user_name = '민정';
 
 
 
-
+SELECT *
+FROM (
+         SELECT ROWNUM AS RN, request.*
+         FROM (
+                  SELECT PRO_REQUEST_ID, PRO_REQUEST_PAY, PRO_REQUEST_DATE , PRO_REQUEST_PROGRESS, NVL(PR.PRO_STAR_RATE, '0') AS pro_Star_Rate, PR.PRO_NAME, PR.EMP_CNT, TBL_USER_UPLOAD.USER_UPLOAD_TITLE
+                  FROM TBL_PRO_REQUEST
+                           INNER JOIN TBL_USER_UPLOAD
+                                      ON TBL_PRO_REQUEST.USER_UPLOAD_ID = TBL_USER_UPLOAD.USER_UPLOAD_ID
+                           INNER JOIN TBL_PRO pr
+                                      ON TBL_PRO_REQUEST.PRO_ID = PR.PRO_ID
+                  WHERE TBL_USER_UPLOAD.USER_ID = '3619331702'
+                  ORDER BY
+                      PRO_REQUEST_DATE DESC
+              ) request
+         WHERE rownum <= 6
+     )
+WHERE rn > 0;
 
 
 

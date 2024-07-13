@@ -201,7 +201,7 @@ input:read-only{
   border-color: #e0e0e0;
   border-radius: 0.375em;
   appearance: none;
-  background:url("static/img/arrow.png") no-repeat 97% 50%/15px auto;
+  background:url("static/img/arrow.svg") no-repeat 97% 50%/15px auto;
   &:hover,&:focus{
     position: inherit;
     border-color: #93A9D1;

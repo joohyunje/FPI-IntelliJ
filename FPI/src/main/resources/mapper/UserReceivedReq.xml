@@ -47,7 +47,7 @@
                                               ON TBL_PRO_REQUEST.USER_UPLOAD_ID = TBL_USER_UPLOAD.USER_UPLOAD_ID
                                    INNER JOIN TBL_PRO pr
                                               ON TBL_PRO_REQUEST.PRO_ID = PR.PRO_ID
-                          WHERE TBL_USER_UPLOAD.USER_ID = 1
+                          WHERE TBL_USER_UPLOAD.USER_ID = #{userId}
                           ORDER BY
                                 <choose>
                                     <when test="sort == 'oldest'">PRO_REQUEST_DATE ASC</when>

@@ -2,7 +2,6 @@ package com.example.fpi.service.user;
 
 import com.example.fpi.domain.dto.user.*;
 import com.example.fpi.domain.util.PagedResponse;
-import com.example.fpi.mapper.user.UserMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +12,7 @@ public interface UserService {
     //    REST
     // 동적 쿼리
 //    받은 요청 목록
-    PagedResponse<UserReceivedReqListDTO> selectReceivedReq(int page, int pageSize, String sort);
+    PagedResponse<UserReceivedReqListDTO> selectReceivedReq(String userId, int page, int pageSize, String sort);
 
 //    보낸 요청 목록
     PagedResponse<UserSendReqListDTO> selectSendReq(int page, int pageSize, String sort);

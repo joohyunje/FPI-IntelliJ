@@ -20,7 +20,7 @@ public interface UserMapper {
 //  REST
     // 동적 쿼리
 //    받은 요청 목록
-    List<UserReceivedReqListDTO> selectReceivedReq(int startRow, int endRow, String sort);
+    List<UserReceivedReqListDTO> selectReceivedReq(String userId, int startRow, int endRow, String sort);
 
 //    보낸 요청 목록
     List<UserSendReqListDTO> selectSendReq(int startRow, int endRow, String sort);

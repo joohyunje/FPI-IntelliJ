@@ -16,15 +16,14 @@ public class UserServiceImpl implements UserService {
 
     //    받은 요청 목록
     @Override
-    public PagedResponse<UserReceivedReqListDTO> selectReceivedReq(int page, int pageSize, String sort) {
+    public PagedResponse<UserReceivedReqListDTO> selectReceivedReq(String userId, int page, int pageSize, String sort) {
         int startRow = (page - 1) * pageSize;
         int endRow = page * pageSize;
 
         int totalRequest = userMapper.countReceivedRequest();
         int totalPages = (int) Math.ceil((double)totalRequest/pageSize);
 
-        List<UserReceivedReqListDTO> requests = userMapper.selectReceivedReq(startRow, endRow, sort);
-        System.out.println(requests.get(0));
+        List<UserReceivedReqListDTO> requests = userMapper.selectReceivedReq(userId, startRow, endRow, sort);
         return new PagedResponse<>(requests, page, totalPages, pageSize, totalRequest);
     }
     //  보낸 요청 목록
