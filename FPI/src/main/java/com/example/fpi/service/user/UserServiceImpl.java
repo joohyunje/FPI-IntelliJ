@@ -2,6 +2,7 @@ package com.example.fpi.service.user;
 
 import com.example.fpi.domain.dto.user.*;
 import com.example.fpi.domain.util.PagedResponse;
+import com.example.fpi.domain.vo.user.UserVO;
 import com.example.fpi.mapper.user.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -72,7 +73,11 @@ public class UserServiceImpl implements UserService {
 
         userMapper.deleteUser(userId,userName);
     }
-    
+// 전문가 탈퇴시 approval 변경
+    @Override
+    public void editApproval(String userId) {
+        userMapper.editApproval(userId);
+    }
 
 
 }

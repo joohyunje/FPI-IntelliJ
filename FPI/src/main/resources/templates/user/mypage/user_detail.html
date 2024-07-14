@@ -56,7 +56,9 @@
             </div>
             <div>
               <div class="fontSize15">받은 별점 </div>
-              <p th:text="*{userStarRate}">받은 별점 평균 뿌려줌</p>
+<!--              th:if="${star == null}"-->
+              <p th:if="*{userStarRate == null}">받은 별점이 없습니다.</p>
+              <p th:text="*{userStarRate}" th:unless="*{userStarRate == null}">받은 별점 평균 뿌려줌</p>
             </div>
         </div>
       </div>

@@ -36,6 +36,10 @@ public interface ProMapper {
 
 //    유저아이디를 입력받아 프로아이디 알아내기
     Long selectProId(String userId);
+
     //    전문가 탈퇴
     void deletePro(Long proId,String proName);
+
+//    탈퇴시 전문가 이름필요
+    String selectProName(Long proId);
 }

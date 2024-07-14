@@ -45,4 +45,6 @@ public interface UserMapper {
     //회원가입 폼
     void updateUser(UserVO vo);
 
+    void editApproval(String userId);
+
 }

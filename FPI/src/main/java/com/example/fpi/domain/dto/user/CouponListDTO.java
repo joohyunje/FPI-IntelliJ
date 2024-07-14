@@ -1,6 +1,7 @@
 package com.example.fpi.domain.dto.user;
 
 import lombok.Data;
+import lombok.ToString;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;

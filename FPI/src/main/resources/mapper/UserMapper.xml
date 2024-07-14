@@ -5,7 +5,7 @@
 <!--    마이페이지 내정보 상세보기-->
     <select id="detailUser">
         SELECT u1.*, c.category_name
-        FROM (SELECT u.user_id, u.user_name, u.phone_number, u.user_img, u.email, u.user_cash, u.user_star_rate, l.region, l.city, cl.category_id
+        FROM (SELECT u.user_id, u.user_name, u.phone_number, u.user_img, u.email, u.user_cash, u.user_star_rate, u.user_Pro_Approval,l.region, l.city, cl.category_id
               FROM tbl_user u
               JOIN tbl_location l ON u.location_id = l.location_id
               JOIN tbl_category_list cl ON u.user_id = cl.user_id
@@ -28,15 +28,22 @@
 <!--    회원가입시 입력 폼-->
     <update id="updateUser">
         update tbl_user
-        set user_name = #{userName},PHONE_NUMBER = #{phoneNumber},email=#{email},ROLE = #{role},location_id=#{locationId}
+        set user_name = #{userName},PHONE_NUMBER = #{phoneNumber},email=#{email},ROLE = #{role},location_id=#{locationId},user_cash=0,USER_PRO_APPROVAL='NO'
         where user_id =#{userId}
     </update>
 
-<!--    회원 탈퇴-->
-<delete id="deleteUser">
-    delete from tbl_user
-    where user_id=#{userId} and user_name = #{userName}
-</delete>
+    <!--    회원 탈퇴-->
+    <delete id="deleteUser">
+        delete from tbl_user
+        where user_id=#{userId} and user_name = #{userName}
+    </delete>
+
+    <!--    전문가에서 회원탈퇴시 유저의 USER_PRO_APPROVAL 를 no로 변경해줘야 함,헤더부분때문에!-->
+    <update id="editApproval">
+        update TBL_USER
+        set USER_PRO_APPROVAL = 'NO'
+        where USER_ID =#{userId}
+    </update>
 
 
 

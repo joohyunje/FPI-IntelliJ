@@ -4,6 +4,7 @@ import com.example.fpi.domain.dto.user.UserDTO;
 import com.example.fpi.domain.oauth.CustomOAuth2User;
 import com.example.fpi.mapper.user.UserMapper;
 import com.example.fpi.service.user.CustomOAuth2UserService;
+import com.example.fpi.service.user.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +21,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 public class SecurityConfig {
     private final CustomOAuth2UserService customOAuth2UserService;
     private final UserMapper userMapper;
+    private final UserService userService;
 
 
 
@@ -69,8 +71,10 @@ public class SecurityConfig {
                 response.sendRedirect("/main/sign");
             }
             else {
-//                홈페이지 이동시 헤더에서 계속 정보를 가지고 있어야 하기 때문에 session에 담아줌
+//                홈페이지 이동시 헤더에서 계속 정보를 가지고 있어야 하기 때문에 로그인시 session에 담아줌
                 session.setAttribute("loginName", userMapper.findByUserId(user.getUserId()).getUserName());
+//                전문가전환 버튼유무에 필요
+                session.setAttribute("userProApproval",userService.detailUser(user.getUserId()).getUserProApproval());
                 response.sendRedirect("/main");
             }
         };

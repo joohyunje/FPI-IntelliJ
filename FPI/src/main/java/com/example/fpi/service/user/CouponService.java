@@ -10,11 +10,11 @@ import java.util.List;
 
 public interface CouponService {
 //    쿠폰 유무에 따라 화면 달라짐
-    int couponCount(String userId);
+    int useCouponCount(String userId);
 //    쿠폰 지급
     void userCoupon(String userId);
 
-    List<CouponListDTO> couponInfo(String userId);
+    List<CouponDTO> couponlist(String userId);
 
 
 }

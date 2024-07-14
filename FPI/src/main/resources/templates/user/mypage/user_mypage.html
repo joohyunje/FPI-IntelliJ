@@ -11,107 +11,111 @@
 
   <title>회원 마이페이지</title>
 </head>
-<body>
-<div th:replace="~{/layout/header :: header}"></div>
-    <div class="container">
-        <div class="padding3">
-          <h1>마이페이지</h1>
-        </div>
-        <ul class="underline">
-          <li class="main-list li-padding">계정 설정</li>
-          
-          <li class="li-padding">
-            <a th:href="@{/user/detail}"  class="oneline">
-              <div class="auto">회원정보 상세보기</div>
-              <div>
-                <img src="https://assets.cdn.soomgo.com/icons/icon-mypage-list-arrow.svg">
-              </div>
-            </a>
-          </li>
-          
-          <li class="li-padding ">
-            <a href="/templates/user/user_edit.html" class="oneline"> <!-- 개인정보 수정 페이지 -->
-              <div class="auto">회원정보 수정하기</div>
-              <div>
-                <img src="https://assets.cdn.soomgo.com/icons/icon-mypage-list-arrow.svg">
-              </div>
-            </a>
-          </li>
-        </ul>
+  <body>
+    <div th:replace="~{/layout/header :: header}"></div>
+      <div class="container">
+          <div class="padding3">
+            <h1>마이페이지</h1>
+          </div>
 
-        <div class="mypage-menu">
           <ul class="underline">
-            <li class="main-list li-padding">전문가 인증</li>
-            <li class="li-padding ">
-              <!-- 전문가인증작성페이지 -->
-              <a href="/templates/user/certify.html" class="oneline">
-                <div class="auto">전문가 인증하기</div>
-                <div>
-                  <img src="https://assets.cdn.soomgo.com/icons/icon-mypage-list-arrow.svg">
-                </div>
-              </a>
+            <li class="main-list li-padding">계정 설정</li>
 
+            <li class="li-padding">
+              <a th:href="@{/user/detail}"  class="oneline">
+                <div class="auto">회원정보 상세보기</div>
+                <div>
+                  <img src="https://assets.cdn.soomgo.com/icons/icon-mypage-list-arrow.svg">
+                </div>
+              </a>
             </li>
-          </ul>
-          <ul class="underline">
-            <li class="main-list li-padding">내 지갑</li>
-            <li class="li-padding oneline">
-              <div class="auto">보유 포인트</div>
-              <div class="circle">
-                <!-- ? : 보유캐시 뿌려주는곳 -->
-                <span th:text="${mypage.userCash}">?</span>
-                <span>캐시</span>
-              </div>
-            </li>
-          
+
             <li class="li-padding ">
-              <!-- 포인트충전api -->
-              <a href="#" class="oneline">
-                <div class="auto">포인트 충전</div>
-                <div>
-                  <img src="https://assets.cdn.soomgo.com/icons/icon-mypage-list-arrow.svg">
-                </div>
-              </a>
-              <!-- 쿠폰리스트뿌려주는 페이지 -->
-              <a th:href="@{/user/couponlist}">
-                <div class="coupon-icon">보유 쿠폰함</div>
-              </a>
-            </li>
-            
-          </ul>
-          <ul class="underline">
-            <li class="main-list li-padding">활동 내역</li>
-            <!-- 내가 쓴 게시글목록 이동 -->
-            <li class="li-padding">
-              <a href="#" class="oneline">
-                <div class="auto">내가 쓴 게시글</div>
-                <div>
-                  <img src="https://assets.cdn.soomgo.com/icons/icon-mypage-list-arrow.svg">
-                </div>
-              </a>
-            </li>
-            <!-- 내가 쓴 댓글목록 이동 -->
-            <li class="li-padding">
-              <a href="#" class="oneline">
-                <div class="auto">내가 쓴 댓글</div>
-                <div>
-                  <img src="https://assets.cdn.soomgo.com/icons/icon-mypage-list-arrow.svg">
-                </div>
-              </a>
-            </li>
-            <!-- 내가 쓴 리뷰목록 이동 -->
-            <li class="li-padding">
-              <a href="#" class="oneline">
-                <div class="auto">내가 쓴 리뷰</div>
+              <a href="/templates/user/user_edit.html" class="oneline"> <!-- 개인정보 수정 페이지 -->
+                <div class="auto">회원정보 수정하기</div>
                 <div>
                   <img src="https://assets.cdn.soomgo.com/icons/icon-mypage-list-arrow.svg">
                 </div>
               </a>
             </li>
           </ul>
-        </div>
+
+
+          <div class="mypage-menu">
+  <!--          전문가 인증 안된회원에게만 보여줌-->
+            <ul class="underline" th:if="${session.userProApproval.equals('NO')}">
+              <li class="main-list li-padding">전문가 인증</li>
+              <li class="li-padding ">
+                <!-- 전문가인증작성페이지 -->
+                <a href="/templates/user/certify.html" class="oneline">
+                  <div class="auto">전문가 인증하기</div>
+                  <div>
+                    <img src="https://assets.cdn.soomgo.com/icons/icon-mypage-list-arrow.svg">
+                  </div>
+                </a>
+
+              </li>
+            </ul>
+
+            <ul class="underline">
+              <li class="main-list li-padding">내 지갑</li>
+              <li class="li-padding oneline">
+                <div class="auto">보유 포인트</div>
+                <div class="circle">
+                  <!-- ? : 보유캐시 뿌려주는곳 -->
+                  <span th:text="${mypage.userCash}">?</span>
+                  <span>캐시</span>
+                </div>
+              </li>
+
+              <li class="li-padding ">
+                <!-- 포인트충전api -->
+                <a href="#" class="oneline">
+                  <div class="auto">포인트 충전</div>
+                  <div>
+                    <img src="https://assets.cdn.soomgo.com/icons/icon-mypage-list-arrow.svg">
+                  </div>
+                </a>
+                <!-- 쿠폰리스트뿌려주는 페이지 -->
+                <a th:href="@{/user/couponlist}">
+                  <div class="coupon-icon">보유 쿠폰함</div>
+                </a>
+              </li>
+            </ul>
+
+            <ul class="underline">
+              <li class="main-list li-padding">활동 내역</li>
+              <!-- 내가 쓴 게시글목록 이동 -->
+              <li class="li-padding">
+                <a href="#" class="oneline">
+                  <div class="auto">내가 쓴 게시글</div>
+                  <div>
+                    <img src="https://assets.cdn.soomgo.com/icons/icon-mypage-list-arrow.svg">
+                  </div>
+                </a>
+              </li>
+              <!-- 내가 쓴 댓글목록 이동 -->
+              <li class="li-padding">
+                <a href="#" class="oneline">
+                  <div class="auto">내가 쓴 댓글</div>
+                  <div>
+                    <img src="https://assets.cdn.soomgo.com/icons/icon-mypage-list-arrow.svg">
+                  </div>
+                </a>
+              </li>
+              <!-- 내가 쓴 리뷰목록 이동 -->
+              <li class="li-padding">
+                <a href="#" class="oneline">
+                  <div class="auto">내가 쓴 리뷰</div>
+                  <div>
+                    <img src="https://assets.cdn.soomgo.com/icons/icon-mypage-list-arrow.svg">
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
 
       </div>
-  
-</body>
+
+  </body>
 </html>

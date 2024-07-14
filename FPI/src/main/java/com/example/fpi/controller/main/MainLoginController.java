@@ -64,8 +64,10 @@ public class MainLoginController {
         formService.insertCategoryList(category,customOAuth2User.getUserId());
         userMapper.updateUser(UserVO.toEntity(userDTO));
         couponService.userCoupon(userDTO.getUserId());
-//        홈페이지가 바뀔때 헤더에서 계속 가지고 있어야 하기 때문에 db에 담긴 이름을 세션에 담아줌
+//        홈페이지가 바뀔때 헤더에서 계속 가지고 있어야 하기 때문에 회원가입 시 db에 담긴 이름을 세션에 담아줌
         session.setAttribute("loginName", userService.getUserName(userDTO.getUserId()));
+//        전문가 전환 버튼에 필요
+        session.setAttribute("userProApproval","NO");
 
         return "redirect:/main";
 
