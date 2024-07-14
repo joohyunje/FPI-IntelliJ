@@ -32,7 +32,7 @@
             <div class="header-right" sec:authorize="isAuthenticated()">
                 <div class="nav-list">
                     <a th:href="@{/user/requests}"><span class="nav-item left-items">보낸요청/받은요청</span></a>
-                    <a th:href="@{/pro/mypage/delete}"><span class="nav-item left-items">전문가 전환</span></a>
+                    <a th:unless="${session.userProApproval.equals('NO')}" th:href="@{/pro/mypage}"><span class="nav-item left-items">전문가 전환</span></a>
                     <a th:href="@{/user/mypage}" >
 
 

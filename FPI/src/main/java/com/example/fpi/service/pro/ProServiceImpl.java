@@ -51,16 +51,25 @@ public class ProServiceImpl implements ProService {
         return proMapper.selectProReview(proId);
     }
 
-//    전문가 상세정보 조회
-    @Override
-    public ProDTO detailPro(String userId) {
-        Long proId = proMapper.selectProId(userId);
-        return proMapper.detailPro(proId);
-    }
-
+    //전문가전환시 유저아이디통해서 전문가아이디 가져옴
     @Override
     public Long selectProId(String userId) {
         return proMapper.selectProId(userId);
+    }
+
+
+
+    //    전문가 삭제 시, 이름 입력 비교를 위해
+//    DB에서 이름을 가져오기
+
+
+
+
+    //    전문가 상세정보 조회
+    @Override
+    public ProDTO detailPro(Long proId) {
+        return proMapper.detailPro(proId);
+
     }
 
     //전문가 정보 삭제
@@ -68,6 +77,11 @@ public class ProServiceImpl implements ProService {
     public void deletePro(Long proId, String proName) {
 
         proMapper.deletePro(proId, proName);
+    }
+// 전문가 삭제시 이름비교 위해 필요
+    @Override
+    public String getProName(Long proId) {
+        return proMapper.selectProName(proId);
     }
 
     //    전문가 경력 가져오기

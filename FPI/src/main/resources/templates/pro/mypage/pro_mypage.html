@@ -18,7 +18,7 @@
         </div>
         <ul class="underline">
           <li class="li-padding ">
-            <a th:href="@{/pro/mypage/detail/{proId}(proId=${detail.proId})}" class="oneline"> <!-- 개인정보 상세보기 페이지 -->
+            <a th:href="@{/pro/detail}" class="oneline"> <!-- 개인정보 상세보기 페이지 -->
               <div class="auto">개인정보 상세보기</div>
               <div>
                 <img src="https://assets.cdn.soomgo.com/icons/icon-mypage-list-arrow.svg">
@@ -34,7 +34,7 @@
               <div class="auto">보유 포인트</div>
               <div class="circle procircle">
                 <!-- ? : 보유캐시 뿌려주는곳 -->
-                <span th:text="${detail.userCash}">?</span>
+                <span th:text="${mypage.userCash}">?</span>
                 <span>캐시</span>
               </div>
             </li>

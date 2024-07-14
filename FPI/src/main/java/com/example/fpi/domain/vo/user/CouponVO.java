@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 @Component
 @Getter
 @NoArgsConstructor
-@ToString
 public class CouponVO {
     private int couponId;
     private String couponNumber;

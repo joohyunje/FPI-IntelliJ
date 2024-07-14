@@ -6,15 +6,16 @@
     <select id="couponCount">
         select count(*)
         from tbl_coupon
-        where USER_ID = #{userId}
+        where USER_ID = #{userId} and state ='NO'
     </select>
 <!--   쿠폰 생성,쿠폰 유효기간은 3달-->
     <insert id="makeCoupon">
         insert into tbl_coupon
         values (SEQ_COUPON.nextval,#{couponNumber},add_months(sysdate,+3),default,#{discount},#{userId})
     </insert>
-    <!--    쿠폰리스트에 뿌려주기 위해 필요-->
-    <select id="couponInfo" resultType="CouponListDTO">
+
+    <!--    쿠폰페이지에 뿌려주기 위해 필요-->
+    <select id="couponInfo" resultType="CouponDTO">
         select *
         from TBL_COUPON
         where USER_ID=#{userId}

@@ -32,4 +32,7 @@ public interface UserService {
 
 //    유저 정보 삭제
     void deleteUser(String userId,String userName);
+
+//    전문가 탈퇴시 approval변경
+    void editApproval(String userId);
 }

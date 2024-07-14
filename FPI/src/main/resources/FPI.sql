@@ -469,6 +469,19 @@ DROP SEQUENCE SEQ_COUPON;
 
 delete from tbl_user
 where user_id='3614057925' and user_name = '민정';
+SELECT p1.*, c.category_name
+FROM (SELECT p.pro_id, p.pro_name, p.phone_number, p.pro_img, p.emp_cnt,u.email, u.user_cash, p.pro_star_rate, l.region, l.city, cl.category_id
+      FROM tbl_pro p
+               JOIN tbl_location l ON p.location_id = l.location_id
+               JOIN tbl_category_list cl ON p.pro_id = cl.pro_id
+               JOIN tbl_user u ON p.user_id = u.user_id
+     ) p1
+         JOIN tbl_category c ON p1.category_id = c.category_id
+WHERE p1.pro_id = 1
+
+
+
+
 
 
 -- 현제 test 했던 공간

@@ -16,10 +16,18 @@
 
     </select>
 
+<!--    유저에서 전문가 전환이 되기때문에 por_id가져오기 위해서 필요-->
     <select id="selectProId">
         select pro_id
         from tbl_pro
         where user_id=#{userId}
+    </select>
+
+<!--    탈퇴시 폼에서 입력한 이름과 같은지 비교하기 위해서 필요-->
+    <select id="selectProName">
+        select PRO_NAME
+        from tbl_pro
+        where PRO_ID =#{proId}
     </select>
 <!--    전문가 탈퇴-->
     <delete id="deletePro">

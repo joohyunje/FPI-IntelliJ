@@ -22,7 +22,7 @@
       <div class="aside">
         <h1>계정 설정</h1>
         <hr class="hr">
-        <a th:href="@{/pro/mypage/detail/{proId}(proId=${detail.proId})}" style="font-weight: bold;">전문가 정보</a>
+        <a th:href="@{/pro/mypage/detail}" style="font-weight: bold;">전문가 정보</a>
         <a href="/templates/pro/pro_edit.html">전문가 정보 수정</a>
         <button id="btn-modal">전문가 탈퇴</button>
       </div>
@@ -62,12 +62,14 @@
             </div>
             <div class="underline">
               <div class="fontSize15">고용횟수</div>
-              <span th:text="*{empCnt}">고용횟수뿌려줌</span>
-              <span>회</span>
+              <p th:if="*{empCnt == 0}">아직 서비스를 제공한 적이 없습니다.</p>
+              <span th:unless="*{empCnt == 0}" th:text="*{empCnt}">고용횟수뿌려줌</span>
+              <span th:unless="*{empCnt == 0}">회</span>
             </div>
             <div>
               <div class="fontSize15">받은 별점 </div>
-              <p th:text="*{proStarRate}">받은 별점 평균 뿌려줌</p>
+              <p th:if="*{proStarRate == null}">받은 별점이 없습니다.</p>
+              <p th:text="*{proStarRate}" th:unless="*{proStarRate == null}">받은 별점 평균 뿌려줌</p>
             </div>
         </div>
 
@@ -95,9 +97,9 @@
             전문가 인증과정이 다시 이루어집니다.
 
           </div>
-          <form method="post" id="deleteForm" th:action="@{/pro/mypage/delete}">
+          <form method="post" id="deleteForm" th:action="@{/pro/delete}">
+            <input class="proId" type="hidden" th:field="${detail.proId}"  name="proId">
             <div class="title">탈퇴하시려면 전문가 활동 이름을 작성해주세요</div>
-            <input type="hidden" th:field="${detail.proId}"  name="proId">
             <input class="pro-input-box input-box" name="proName" placeholder="전문가 활동 이름 작성" type="text">
             <p class="error">이름이 일치하지 않습니다.</p>
 
@@ -106,21 +108,21 @@
             <!--모달 창 닫음 -->
             <button type="button" id="close-modal"  class=" pro-btn btn">탈퇴하지 않겠습니다</button>
             <!-- 탈퇴완료창->로그아웃&메인페이지로이동 -->
-            <button type="submit" class="btn pro-btn">탈퇴하기</button>
+            <button type="submit" class="btn pro-btn" onclick="deleteForm()">탈퇴하기</button>
           </form>
         </div> 
       </div>
     </div>
   </div>
 
-  <script src="/js/deleteuser.js"></script>
+  <script src="/js/deletepro.js"></script>
 
 </body>
 
 <!--이름불일치시 알림창-->
 <script th:if="${error}">
     document.getElementById("modal").style.display="flex"
-    const proInput = document.querySelector('#modal .pro-input-box');
+    const proInput = document.querySelector('#modal #deleteForm .pro-input-box');
     proInput.style.borderColor='red';
     const p = document.querySelector('#modal .error');
     p.style.display="flex";
