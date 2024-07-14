@@ -27,4 +27,43 @@
         where pro_id=#{proId} and pro_name = #{proName}
     </delete>
 
+<!--    전문가가 올리 견적 목록   -->
+    <select id="selectProUploadList" resultType="ProUploadListDTO">
+        SELECT *
+        FROM (
+            SELECT ROWNUM AS RN, UPLOAD.*
+            FROM (
+                select TPU.PRO_UPLOAD_ID, TPU.PRO_ID, tpu.PRO_UPLOAD_TITLE, tpu.PRO_UPLOAD_DATE, tp.PRO_STAR_RATE, tp.PRO_NAME, ts.SERVICE_NAME
+                from TBL_PRO_UPLOAD TPU
+                    inner join TBL_PRO TP
+                    on TPU.PRO_ID = TP.PRO_ID
+                    inner join TBL_SERVICE TS
+                    on tpu.SERVICE_ID = ts.SERVICE_ID
+        <where>
+            <if test = "search != null">
+                tpu.PRO_UPLOAD_TITLE LIKE '%' || #{search} || '%'
+            </if>
+        </where>
+                ORDER BY
+                PRO_UPLOAD_DATE DESC
+            ) UPLOAD
+        WHERE ROWNUM &lt;= #{endRow}
+        )
+        WHERE rn &gt; #{startRow}
+
+    </select>
+
+<!--    전문가가 올린 견적 갯수  -->
+    <select id="countProUpload">
+        select count(*)
+        from TBL_PRO_UPLOAD
+        <where>
+            <if test = "search != null">
+                PRO_UPLOAD_TITLE LIKE '%' || #{search} || '%'
+            </if>
+        </where>
+    </select>
+
+
+
 </mapper>

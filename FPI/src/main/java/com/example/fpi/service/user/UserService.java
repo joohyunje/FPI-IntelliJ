@@ -15,7 +15,7 @@ public interface UserService {
     PagedResponse<UserReceivedReqListDTO> selectReceivedReq(String userId, int page, int pageSize, String sort);
 
 //    보낸 요청 목록
-    PagedResponse<UserSendReqListDTO> selectSendReq(int page, int pageSize, String sort);
+    PagedResponse<UserSendReqListDTO> selectSendReq(String userId, int page, int pageSize, String sort);
 
     //    유저가 보낸 요청 상세보기
     UserRequestDetailDTO selectUserReqDetail(Long userRequestId);

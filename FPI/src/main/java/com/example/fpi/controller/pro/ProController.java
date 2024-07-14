@@ -1,5 +1,6 @@
 package com.example.fpi.controller.pro;
 
+import com.example.fpi.domain.dto.pro.ProCareerInfoListDTO;
 import com.example.fpi.domain.dto.pro.ProRequestDetailDTO;
 import com.example.fpi.domain.dto.user.UserRequestDetailDTO;
 import com.example.fpi.service.pro.ProService;
@@ -10,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/pro")
@@ -29,8 +32,10 @@ public class ProController {
     public String proReqDetail(@PathVariable("proRequestId") Long proRequestId, Model model) {
 
         ProRequestDetailDTO proRequest = proService.selectProReqDetail(proRequestId);
+        List<ProCareerInfoListDTO> careerInfo = proService.selectProCareer(proRequestId);
 
         model.addAttribute("proRequest", proRequest);
+        model.addAttribute("careerInfo", careerInfo);
 
         return "/pro/req_list/pro_send_req_info";
 

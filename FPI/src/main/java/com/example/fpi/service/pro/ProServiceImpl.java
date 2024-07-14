@@ -16,27 +16,27 @@ public class ProServiceImpl implements ProService {
 
     //    받은 요청 목록
     @Override
-    public PagedResponse<ProReceivedReqListDTO> selectReceivedReq(int page, int pageSize, String sort) {
+    public PagedResponse<ProReceivedReqListDTO> selectReceivedReq(Long proId, int page, int pageSize, String sort) {
         int startRow = (page - 1) * pageSize;
         int endRow = page * pageSize;
 
-        int totalRequest = proMapper.countReceivedRequest();
+        int totalRequest = proMapper.countReceivedRequest(proId);
         int totalPages = (int) Math.ceil((double)totalRequest/pageSize);
 
-        List<ProReceivedReqListDTO> requests = proMapper.selectReceivedReq(startRow, endRow, sort);
+        List<ProReceivedReqListDTO> requests = proMapper.selectReceivedReq(proId, startRow, endRow, sort);
 
         return new PagedResponse<>(requests, page, totalPages, pageSize, totalRequest);
     }
     //  보낸 요청 목록
     @Override
-    public PagedResponse<ProSendReqListDTO> selectSendReq(int page, int pageSize, String sort) {
+    public PagedResponse<ProSendReqListDTO> selectSendReq(Long proId, int page, int pageSize, String sort) {
         int startRow = (page - 1) * pageSize;
         int endRow = page * pageSize;
 
-        int totalRequest = proMapper.countSendRequest();
+        int totalRequest = proMapper.countSendRequest(proId);
         int totalPages = (int) Math.ceil((double)totalRequest/pageSize);
 
-        List<ProSendReqListDTO> requests = proMapper.selectSendReq(startRow, endRow, sort);
+        List<ProSendReqListDTO> requests = proMapper.selectSendReq(proId, startRow, endRow, sort);
 
         return new PagedResponse<>(requests, page, totalPages, pageSize, totalRequest);
     }
@@ -57,10 +57,38 @@ public class ProServiceImpl implements ProService {
         Long proId = proMapper.selectProId(userId);
         return proMapper.detailPro(proId);
     }
-//전문가 정보 삭제
+
+    @Override
+    public Long selectProId(String userId) {
+        return proMapper.selectProId(userId);
+    }
+
+    //전문가 정보 삭제
     @Override
     public void deletePro(Long proId, String proName) {
+
         proMapper.deletePro(proId, proName);
+    }
+
+    //    전문가 경력 가져오기
+    @Override
+    public List<ProCareerInfoListDTO> selectProCareer(Long proRequestId) {
+        return proMapper.selectProCareer(proRequestId);
+    }
+
+//  전문가 찾기
+    @Override
+    public PagedResponse<ProUploadListDTO> selectProUploadList(int page, int pageSize, String search) {
+
+        int startRow = (page - 1) * pageSize;
+        int endRow = page * pageSize;
+
+        int totalUploads = proMapper.countProUpload(search);
+        int totalPages = (int) Math.ceil((double)totalUploads/pageSize);
+
+        List<ProUploadListDTO> uploads = proMapper.selectProUploadList(startRow, endRow, search);
+
+        return new PagedResponse<>(uploads, page, totalPages, pageSize, totalUploads);
     }
 
 

@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
         int startRow = (page - 1) * pageSize;
         int endRow = page * pageSize;
 
-        int totalRequest = userMapper.countReceivedRequest();
+        int totalRequest = userMapper.countReceivedRequest(userId);
         int totalPages = (int) Math.ceil((double)totalRequest/pageSize);
 
         List<UserReceivedReqListDTO> requests = userMapper.selectReceivedReq(userId, startRow, endRow, sort);
@@ -28,14 +28,14 @@ public class UserServiceImpl implements UserService {
     }
     //  보낸 요청 목록
     @Override
-    public PagedResponse<UserSendReqListDTO> selectSendReq(int page, int pageSize, String sort) {
+    public PagedResponse<UserSendReqListDTO> selectSendReq(String userId, int page, int pageSize, String sort) {
         int startRow = (page - 1) * pageSize;
         int endRow = page * pageSize;
 
-        int totalRequest = userMapper.countSendRequest();
+        int totalRequest = userMapper.countSendRequest(userId);
         int totalPages = (int) Math.ceil((double)totalRequest/pageSize);
 
-        List<UserSendReqListDTO> requests = userMapper.selectSendReq(startRow, endRow, sort);
+        List<UserSendReqListDTO> requests = userMapper.selectSendReq(userId, startRow, endRow, sort);
 
         return new PagedResponse<>(requests, page, totalPages, pageSize, totalRequest);
     }
@@ -49,6 +49,7 @@ public class UserServiceImpl implements UserService {
     public List<UserReviewListDTO> selectUserReview(String userId) {
         return userMapper.selectUserReview(userId);
     }
+
 //유저 정보 조회
     @Override
     public UserDTO detailUser(String userId) {

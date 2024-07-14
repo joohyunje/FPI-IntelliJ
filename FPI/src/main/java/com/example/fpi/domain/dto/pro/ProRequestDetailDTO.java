@@ -18,7 +18,6 @@ public class ProRequestDetailDTO {
     private String city;
     private String proRequestContent;
     private String userUploadTitle;
-    private String award;
     private Long empCnt;
     private String proName;
     private Long proStarRate;

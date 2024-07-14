@@ -2,10 +2,12 @@ package com.example.fpi.controller.pro;
 
 import com.example.fpi.domain.dto.pro.ProReceivedReqListDTO;
 import com.example.fpi.domain.dto.pro.ProSendReqListDTO;
+import com.example.fpi.domain.oauth.CustomOAuth2User;
 import com.example.fpi.domain.util.PagedResponse;
 import com.example.fpi.service.pro.ProService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,10 +21,12 @@ public class ProRestController {
     private final ProService proService;
 
     @GetMapping("/received")
-    public ResponseEntity<PagedResponse<ProReceivedReqListDTO>> getReceivedRequestsList(@RequestParam(defaultValue = "1") int page,
+    public ResponseEntity<PagedResponse<ProReceivedReqListDTO>> getReceivedRequestsList(@AuthenticationPrincipal CustomOAuth2User customOAuth2User,
+                                                                                        @RequestParam(defaultValue = "1") int page,
                                                                                         @RequestParam(defaultValue = "6") int size,
                                                                                         @RequestParam(defaultValue = "") String sort) {
-
+        String userId = customOAuth2User.getUserId();
+        Long proId = proService.selectProId(userId);
 
 //        PagedResponse<BoardListDTO> sortedBoards = switch (sort){
 //            case "oldest" -> boardService.selectAllByDateASC(page, size);
@@ -30,14 +34,17 @@ public class ProRestController {
 //            default -> boardService.selectAllByDateDESC(page, size);
 //        };
 
-        return ResponseEntity.ok(proService.selectReceivedReq(page, size, sort));
+        return ResponseEntity.ok(proService.selectReceivedReq(proId, page, size, sort));
     }
 
     @GetMapping("/send")
-    public ResponseEntity<PagedResponse<ProSendReqListDTO>> getSendRequestsList(@RequestParam(defaultValue = "1") int page,
+    public ResponseEntity<PagedResponse<ProSendReqListDTO>> getSendRequestsList(@AuthenticationPrincipal CustomOAuth2User customOAuth2User,
+                                                                                @RequestParam(defaultValue = "1") int page,
                                                                                 @RequestParam(defaultValue = "6") int size,
                                                                                 @RequestParam(defaultValue = "") String sort) {
 
+        String userId = customOAuth2User.getUserId();
+        Long proId = proService.selectProId(userId);
 
 //        PagedResponse<BoardListDTO> sortedBoards = switch (sort){
 //            case "oldest" -> boardService.selectAllByDateASC(page, size);
@@ -45,7 +52,7 @@ public class ProRestController {
 //            default -> boardService.selectAllByDateDESC(page, size);
 //        };
 
-        return ResponseEntity.ok(proService.selectSendReq(page, size, sort));
+        return ResponseEntity.ok(proService.selectSendReq(proId, page, size, sort));
     }
 
 

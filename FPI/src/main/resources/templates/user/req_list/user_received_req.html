@@ -5,7 +5,7 @@
     <title>received_req</title>
     <link rel="stylesheet" th:href="@{/css/user/req_list/received_req.css}">
     <link rel="stylesheet" th:href="@{/css/user/req_list/pagination.css}">
-    <link rel="stylesheet" th:href="@{/css/main/main.css}">
+<!--    <link rel="stylesheet" th:href="@{/css/main/main.css}">-->
     <link rel="stylesheet" th:href="@{/css/main/common.css}">
     <link rel="stylesheet" th:href="@{/css/layout/header.css}">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
@@ -124,7 +124,6 @@
 
                 receivedArea.empty();
                 console.log(data)
-                console.log(data.length)
 
                 if(data.content.length === 0){
                     receivedArea.append(
@@ -208,6 +207,8 @@
     function renderReceivedPagination(pagination) {
         const receivedPaginationContainer = $('.received-pagination');
         receivedPaginationContainer.empty();
+        console.log(pagination.startPage);
+        console.log(pagination.endPage);
 
         // 이전 버튼
         const prevDisabled = pagination.currentPage === 1 ? 'disabled' : '';
