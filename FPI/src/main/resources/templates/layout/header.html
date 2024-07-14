@@ -17,7 +17,7 @@
               </a>
                 <div class="nav-list">
                     <a href="/templates/main/user_receiveform.html"><span class="nav-item">견적요청</span></a>
-                    <a th:href="@{/pro/mypage}"><span class="nav-item left-items">전문가찾기</span></a>
+                    <a th:href="@{/user/proFind}"><span class="nav-item left-items">전문가찾기</span></a>
                     <a href="/templates/common(1)/Community.html"><span class="nav-item left-items">커뮤니티</span></a>
                 </div>
             </div>
@@ -31,7 +31,7 @@
             </div>
             <div class="header-right" sec:authorize="isAuthenticated()">
                 <div class="nav-list">
-                    <a href="/templates/common(2)/pro_received_req.html"><span class="nav-item left-items">보낸요청/받은요청</span></a>
+                    <a th:href="@{/user/requests}"><span class="nav-item left-items">보낸요청/받은요청</span></a>
                     <a th:unless="${session.userProApproval.equals('NO')}" th:href="@{/pro/mypage}"><span class="nav-item left-items">전문가 전환</span></a>
                     <a th:href="@{/user/mypage}" >
 

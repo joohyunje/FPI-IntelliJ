@@ -5,10 +5,13 @@
     <title>requests</title>
     <link rel="stylesheet" th:href="@{/css/user/req_list/received_req_info.css}">
     <link rel="stylesheet" th:href="@{/css/user/req_list/cancle_declare.css}">
+    <link rel="stylesheet" th:href="@{/css/main/common.css}">
+    <link rel="stylesheet" th:href="@{/css/layout/header.css}">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
 <!--    <link rel="stylesheet" href="/static/css/common(2)/font.css">-->
 </head>
 <body>
+<div th:replace="~{/layout/header :: header}"></div>
     <div class="request-header">
         <div class="request-header-inner">
             <div class="service-title">

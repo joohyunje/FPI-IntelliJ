@@ -31,7 +31,7 @@
                                  ON TBL_PRO_REQUEST.USER_UPLOAD_ID = TBL_USER_UPLOAD.USER_UPLOAD_ID
                       INNER JOIN TBL_PRO pr
                                  ON TBL_PRO_REQUEST.PRO_ID = PR.PRO_ID
-             WHERE TBL_USER_UPLOAD.USER_ID = 1)
+             WHERE TBL_USER_UPLOAD.USER_ID = #{userId})
     </select>
 
 
@@ -47,7 +47,7 @@
                                               ON TBL_PRO_REQUEST.USER_UPLOAD_ID = TBL_USER_UPLOAD.USER_UPLOAD_ID
                                    INNER JOIN TBL_PRO pr
                                               ON TBL_PRO_REQUEST.PRO_ID = PR.PRO_ID
-                          WHERE TBL_USER_UPLOAD.USER_ID = 1
+                          WHERE TBL_USER_UPLOAD.USER_ID = #{userId}
                           ORDER BY
                                 <choose>
                                     <when test="sort == 'oldest'">PRO_REQUEST_DATE ASC</when>
@@ -71,7 +71,7 @@
                                         ON TBL_USER_REQUEST.PRO_UPLOAD_ID = TBL_PRO_UPLOAD.PRO_UPLOAD_ID
                                 INNER JOIN TBL_PRO PR
                                         ON TBL_PRO_UPLOAD.PRO_ID = PR.PRO_ID
-                        WHERE TBL_USER_REQUEST.USER_ID = 1
+                        WHERE TBL_USER_REQUEST.USER_ID = #{userId}
                         ORDER BY
                                 <choose>
                                     <when test="sort == 'oldest'">USER_REQUEST_DATE ASC</when>
@@ -91,7 +91,7 @@
                                  ON TBL_USER_REQUEST.PRO_UPLOAD_ID = TBL_PRO_UPLOAD.PRO_UPLOAD_ID
                       INNER JOIN TBL_PRO PR
                                  ON TBL_PRO_UPLOAD.PRO_ID = PR.PRO_ID
-             WHERE TBL_USER_REQUEST.USER_ID = 1)
+             WHERE TBL_USER_REQUEST.USER_ID = #{userId})
     </select>
 
 

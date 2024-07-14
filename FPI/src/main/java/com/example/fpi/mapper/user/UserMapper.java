@@ -11,19 +11,19 @@ public interface UserMapper {
 
 
 //    유저가 받은 요청 갯수
-    int countReceivedRequest();
+    int countReceivedRequest(String userId);
 
 //    유저가 보낸 요청 갯수
-    int countSendRequest();
+    int countSendRequest(String userId);
 
 
 //  REST
     // 동적 쿼리
 //    받은 요청 목록
-    List<UserReceivedReqListDTO> selectReceivedReq(int startRow, int endRow, String sort);
+    List<UserReceivedReqListDTO> selectReceivedReq(String userId, int startRow, int endRow, String sort);
 
 //    보낸 요청 목록
-    List<UserSendReqListDTO> selectSendReq(int startRow, int endRow, String sort);
+    List<UserSendReqListDTO> selectSendReq(String userId, int startRow, int endRow, String sort);
 
 //    유저가 보낸 요청 상세보기
     UserRequestDetailDTO selectUserReqDetail(Long userRequestId);

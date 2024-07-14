@@ -1,5 +1,6 @@
 package com.example.fpi.controller.user;
 
+import com.example.fpi.domain.dto.pro.ProCareerInfoListDTO;
 import com.example.fpi.domain.dto.pro.ProRequestDetailDTO;
 import com.example.fpi.domain.dto.user.UserRequestDetailDTO;
 import com.example.fpi.service.pro.ProService;
@@ -10,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -54,7 +57,14 @@ public class UserController {
 
         ProRequestDetailDTO proRequest = proService.selectProReqDetail(proRequestId);
 
+        List<ProCareerInfoListDTO> careerInfo = proService.selectProCareer(proRequestId);
+
+        System.out.println(proRequestId);
+        System.out.println(careerInfo);
+
+
         model.addAttribute("proRequest", proRequest);
+        model.addAttribute("careerInfo", careerInfo);
 
         return "/user/req_list/user_received_req_info";
 
@@ -71,4 +81,11 @@ public class UserController {
         return "/user/req_list/user_send_req_info";
 
     }
+
+    @GetMapping("/proFind")
+    public String uploadRest() {
+        return "user/profind/FindPro";
+    }
+
+
 }

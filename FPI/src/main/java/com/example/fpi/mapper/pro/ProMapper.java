@@ -10,19 +10,19 @@ public interface ProMapper {
 
 
 //    전문가가 받은 요청 갯수
-    int countReceivedRequest();
+    int countReceivedRequest(Long proId);
 
 //    전문가가 보낸 요청 갯수
-    int countSendRequest();
+    int countSendRequest(Long proId);
 
 
 //  REST
     // 동적 쿼리
 //    받은 요청 목록
-    List<ProReceivedReqListDTO> selectReceivedReq(int startRow, int endRow, String sort);
+    List<ProReceivedReqListDTO> selectReceivedReq(Long proId, int startRow, int endRow, String sort);
 
 //    보낸 요청 목록
-    List<ProSendReqListDTO> selectSendReq(int startRow, int endRow, String sort);
+    List<ProSendReqListDTO> selectSendReq(Long proId, int startRow, int endRow, String sort);
 
 //    전문가가 보낸 요청 상세보기
     ProRequestDetailDTO selectProReqDetail(Long proRequestId);
@@ -40,6 +40,14 @@ public interface ProMapper {
     //    전문가 탈퇴
     void deletePro(Long proId,String proName);
 
+    //    전문가 경력 가져오기
+    List<ProCareerInfoListDTO> selectProCareer(Long proRequestId);
+
+//    전뭄가 찾기 동적
+    List<ProUploadListDTO> selectProUploadList(int startRow, int endRow, String search);
+
+//    전문가 찾기 갯수 동적
+    int countProUpload(String search);
 //    탈퇴시 전문가 이름필요
     String selectProName(Long proId);
 }
