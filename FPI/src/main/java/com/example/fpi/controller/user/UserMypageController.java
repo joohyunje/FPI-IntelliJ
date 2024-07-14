@@ -5,6 +5,7 @@ import com.example.fpi.domain.dto.user.CouponListDTO;
 import com.example.fpi.domain.dto.user.UserDTO;
 import com.example.fpi.domain.oauth.CustomOAuth2User;
 import com.example.fpi.domain.vo.user.UserVO;
+import com.example.fpi.mapper.user.CouponMapper;
 import com.example.fpi.service.user.CouponService;
 import com.example.fpi.service.user.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -25,6 +26,7 @@ public class UserMypageController {
     private final UserDTO userDTO;
     private final UserVO userVO;
     private final CouponService couponService;
+    private final CouponMapper couponMapper;
 
     //    마이페이지
     @GetMapping("/mypage")
@@ -49,10 +51,14 @@ public class UserMypageController {
     @GetMapping("/couponlist")
     public String coupon(@AuthenticationPrincipal CustomOAuth2User customOAuth2User,Model model){
         String userId = customOAuth2User.getUserId();
+        System.out.println();
 
+        List<CouponDTO> coupons = couponService.couponlist(userId);
 
-        System.out.println(couponService.couponInfo(userId));
-        List<CouponListDTO> coupons = couponService.couponInfo(userId);
+        for(CouponDTO coupon : coupons){
+            coupon.setCount(couponService.useCouponCount(userId));
+        }
+
 
         model.addAttribute("coupons",coupons);
         System.out.println(coupons);
@@ -83,6 +89,8 @@ public class UserMypageController {
         //        db에 저장된 이름이랑 받아온 input에 입력된 이름이랑 비교
         if (userName.equals(dbUserName)) {
             userService.deleteUser(userId,userName);
+//            헤더에서 이걸 이용해서 이름을 읽어들이기때문에
+//            탈퇴후 헤더에서도 이름을 삭제해주기 위해 session을 비워줘야함
             session.invalidate();
             return "redirect:/main";
         } else {

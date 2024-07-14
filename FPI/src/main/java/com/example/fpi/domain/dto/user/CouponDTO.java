@@ -14,4 +14,5 @@ public class CouponDTO {
     private String state;
     private int discount;
     private String userId;
+    private int count;
 }

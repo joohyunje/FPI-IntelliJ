@@ -15,5 +15,8 @@ public interface CouponMapper {
     void makeCoupon(CouponVO couponVO);
 
 //    화면에 뿌려줄 쿠폰정보 가져옴
-    List<CouponListDTO> couponInfo(String userId);
+    List<CouponDTO> couponInfo(String userId);
+
+
+
 }
