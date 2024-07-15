@@ -5,13 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>전문가 인증</title>
 
-  <link rel="stylesheet" href="/static/css/user/mypage/edit.css">
-  <link rel="stylesheet" href="/static/css/main/common.css">
-  <link rel="stylesheet" href="/static/css/user/mypage/certify.css">
+  <link rel="stylesheet" th:href="@{/css/user/mypage/edit.css}">
+  <link rel="stylesheet" th:href="@{/css/main/common.css}">
+  <link rel="stylesheet" th:href="@{/css/user/mypage/certify.css}">
+  <link rel="stylesheet" th:href="@{/css/layout/header.css}">
 
-  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+
 </head>
 <body>
+<div th:replace="~{/layout/header :: header}"></div>
   <!--  자격증사진 자격증발급기관,자격증번호작성,경력 혹은 수상내역 작성 -->
 <div class="detail-container">
   <div class="certify-container">
@@ -22,7 +27,7 @@
     <div class="sub-container">
         <form name="certify" id="certify" class="certifyForm">
             <div class="marginR-40">
-              <img  class="imgSize" ><!-- src"" = 기존 프로필이미지링크넣어야함 -->
+              <img  class="imgSize" >
               <div class="file-upload">
                 <label for="fileInput">
                   <div id="customButton" >전문가 활동 사진</div>
@@ -30,50 +35,39 @@
                 <input type="file"  id="fileInput" accept="image/*">
               </div>
             </div>
+
             <div style="width: 100%;">
               <div class="col underline">
-                <label for="proname" class="fontSize15 label">전문가 활동 이름</label>
-                <input type="text" id="proname" name="proName" class="form-control">
+                <label for="proName" class="fontSize15 label">전문가 활동 이름</label>
+                <input type="text" id="proName" name="proName" class="form-control">
                 <p>* 전문가 활동시 사용할 이름을 작성해주세요.</p>
+              </div>
+
+
+              <div class="col underline">
+                <label for="phoneNumber" class="fontSize15 label">전문가 활동 이름</label>
+                <input type="tel" maxlength="11" id="phoneNumber" name="proName" class="form-control" placeholder="01012345678">
+                <p>* 회원과 매칭시 연락할 전화번호를 숫자로만 입력해주세요. </p>
               </div>
         
   
-              <!-- 주소 API -->
-              <div class="select-row underline">
-                <div class="width50">
-                  <label for="main-location" class="fontSize15 label">활동지역 대분류</label>
-                  <select id="main-location" aria-required="true" class="form-select">
-                    <option selected>도/특별시</option>
-                    <option value="1">서울특별시</option>
-                    <option value="2">경기도</option>
-                    <option value="3">경상북도</option>
-                    <option value="4">경상남도</option>
-                    <option value="5">충청북도</option>
-                  </select>  
-                </div>
-                <div class="width50">
-                  <label for="sub-location" class="fontSize15 label">활동지역 소분류</label>
-                    <select id="sub-location" aria-required="true" class="form-select">
-                      <option selected>시/군/구</option>
-                      <option value="1">서울특별시</option>
-                      <option value="2">경기도</option>
-                      <option value="3">경상북도</option>
-                      <option value="4">경상남도</option>
-                      <option value="5">충청북도</option>
-                    </select>  
-                </div>  
+              <!-- 주소  -->
+              <div style="display: flex; margin-bottom:5px ; ">
+                <select name="region" id="region" class="form-select" style="margin-right: 10px;"></select>
+                <select name="city" id="city" aria-required="true" class="form-select">
+                </select>
               </div>
     
               <div class="col underline2">
-                <label for="category" class="fontSize15 label">제공 서비스</label>
-                <select name="category" aria-required="false" class="form-select">
-                  <option value="12">카테고리</option>
+                <label for="category" class="fontSize15 label">관심 서비스</label>
+                <select name="category" id="category" aria-required="false" class="form-select" style="margin-bottom: 17px;">
+                  <option value="none">카테고리</option>
                   <option value="1">이사/청소</option>
                   <option value="2">설치/수리</option>
                   <option value="3">인테리어</option>
                   <option value="4">취미/자기개발</option>
                   <option value="5">기타</option>
-                </select> 
+                </select>
               </div>
   
               <div class="col underline2">
@@ -93,12 +87,6 @@
                   <input type="text" id="certification-num" name="certification-num" class="form-control"
                   placeholder="자격증 번호를 입력하세요">
                 </div>
-
-                <div class="certi-label">
-                  <input type="text" id="certification-agency" name="certification-num" class="form-control" style=" margin-right: 10px;" placeholder="자격증 발급기관을 입력하세요">
-                  <input type="text" id="certification-num" name="certification-num" class="form-control"
-                  placeholder="자격증 번호를 입력하세요">
-                </div>
               </div>
           
           
@@ -108,26 +96,18 @@
                 
               </div>
 
-
-      
-
-  
-  
-  
-  
               <div class="left">
-                <button type="button">수정완료</button>
+                <button type="button">인증하기</button>
               </div>
 
             </div>
-
-
         </form> <!-- 폼작성 끝 -->
     </div><!-- 폼감싸는 div -->
 
   </div> <!-- 메인 전체 컨테이너 중앙배치 -->
 
 </div><!-- 메인 전체 컨테이너 -->
+<script th:src="@{/js/location.js}"></script>
 
 </body>
 </html>

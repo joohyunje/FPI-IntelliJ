@@ -1,3 +1,16 @@
+
+// 회원가입 폼 제출
+function OAuthForm(){
+    var OAuthform =document.getElementById("OAuthform").submit();
+    OAuthform.addEventListener("submit", function (){
+        var region = document.getElementById("region").value;
+        var city = document.getElementById("city").value;
+        var category = document.getElementById("category").value;
+    });
+
+}
+
+
 // 삭제 폼 제출
 function deleteForm(){
     var deleteForm =document.getElementById("deleteForm").submit();
@@ -36,13 +49,4 @@ function deleteForm(){
         modalOff()
     })
 
-function OAuthForm(){
-    // 회원가입 폼 제출
-    var OAuthform =document.getElementById("OAuthform").submit();
-    OAuthform.addEventListener("submit", function (){
-        var region = document.getElementById("region").value;
-        var city = document.getElementById("city").value;
-        var category = document.getElementById("category").value;
-    });
 
-}

@@ -47,7 +47,7 @@
               <li class="main-list li-padding">전문가 인증</li>
               <li class="li-padding ">
                 <!-- 전문가인증작성페이지 -->
-                <a href="/templates/user/certify.html" class="oneline">
+                <a th:href="@{/user/certify}" class="oneline">
                   <div class="auto">전문가 인증하기</div>
                   <div>
                     <img src="https://assets.cdn.soomgo.com/icons/icon-mypage-list-arrow.svg">
@@ -116,6 +116,27 @@
           </div>
 
       </div>
+<!--  카카오페이 충전 모달,카카오페이api로 넘겨줄 충전금액 적을것임-->
+<!--    <div id=modal class="container">-->
+<!--      <div class="box-container">-->
+<!--        <div class="box-header">포인트충전</div>-->
+<!--        <div class="box-content">-->
+<!--          <div class="description">-->
+<!--            <h3>포인트 충전은 카카오페이로 진행됩니다.</h3>-->
+<!--            충전하실 포인트 금액을 입력해주세요-->
+<!--          </div>-->
+<!--          <form method="post" id="deleteForm" th:action="@{/user/delete}">-->
+<!--            <div class="title">카카오페이로 충전하실 금액을 입력해주세요</div>-->
+<!--            <input class="input-box" name="point" placeholder="충전하실 금액을 입력해주세요" type="number">-->
+
+<!--            &lt;!&ndash; 충전하기API &ndash;&gt;-->
+<!--            <button type="submit" class="btn" onclick="paybtn()">충전하기</button>-->
+<!--            &lt;!&ndash;모달 창 닫음 &ndash;&gt;-->
+<!--            <button type="button" id="close-modal"  class="btn">취소</button>-->
+<!--          </form>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
 
   </body>
 </html>

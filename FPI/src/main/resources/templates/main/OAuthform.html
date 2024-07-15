@@ -10,54 +10,52 @@
   <title>로그인</title>
 </head> 
 <body>
-        <div class="login-main">
-            
-            <div class="login-container">
-              <div class="login-box">
-                <div class="txt txt-sz24">간편회원가입</div>
-                <form th:action="@{/main/sign}" name="OAuthform" id="OAuthform" method="post">
-                  <div class="input-box">
-                    <input class= "login-input" maxlength="100" name="userName" type="text" required>
-                    <label>이름</label>
-                  </div>
-                  <div class="input-box">
-                    <input class= "login-input" maxlength="11" name="phoneNumber" type="tel" required>
-                    <label>연락처</label>
-                  </div>
-                  <div class="input-box">
-                    <input class= "login-input"  name="email" type="text" required>
-                    <label>이메일</label>
-                  </div>
-                  <div class="lo-con underline2">
-                    <label for="region" class="fontSize15 label">지역</label>
+      <div class="login-main">
 
-                    <div style="display: flex; margin-bottom:5px ; ">
-                      <select name="region" id="region" class="form-select" style="margin-right: 10px;"></select>
-                      <select name="city" id="city" aria-required="true" class="form-select">
-                      </select>
-                    </div>
-                  </div>
+          <div class="login-container">
+            <div class="login-box">
+              <div class="txt txt-sz24">간편회원가입</div>
+              <form th:action="@{/main/sign}" name="OAuthform" id="OAuthform" method="post">
+                <div class="input-box">
+                  <input class= "login-input" maxlength="100" name="userName" type="text" required>
+                  <label>이름</label>
+                </div>
+                <div class="input-box">
+                  <input class= "login-input" maxlength="11" name="phoneNumber" type="tel" required>
+                  <label>연락처</label>
+                </div>
+                <div class="input-box">
+                  <input class= "login-input"  name="email" type="text" required>
+                  <label>이메일</label>
+                </div>
+                <div class="lo-con underline2">
+                  <label for="region" class="fontSize15 label">지역</label>
 
-                <div class="col underline">
-                  <label for="category" class="fontSize15 label">관심 서비스</label>
-                  <select name="category" id="category" aria-required="false" class="form-select" style="margin-bottom: 17px;">
-                    <option value="none">카테고리</option>
-                    <option value="1">이사/청소</option>
-                    <option value="2">설치/수리</option>
-                    <option value="3">인테리어</option>
-                    <option value="4">취미/자기개발</option>
-                    <option value="5">기타</option>
-                  </select>
+                  <div style="display: flex; margin-bottom:5px ; ">
+                    <select name="region" id="region" class="form-select" style="margin-right: 10px;"></select>
+                    <select name="city" id="city" aria-required="true" class="form-select">
+                    </select>
+                  </div>
                 </div>
 
-
-
-                  <button type="submit" class="btn login-btn btn-11-24" onclick="OAuthForm()">회원가입</button>
-        
-                </form>
+              <div class="col underline">
+                <label for="category" class="fontSize15 label">관심 서비스</label>
+                <select name="category" id="category" aria-required="false" class="form-select" style="margin-bottom: 17px;">
+                  <option value="none">카테고리</option>
+                  <option value="1">이사/청소</option>
+                  <option value="2">설치/수리</option>
+                  <option value="3">인테리어</option>
+                  <option value="4">취미/자기개발</option>
+                  <option value="5">기타</option>
+                </select>
               </div>
+
+                <button type="button" class="btn login-btn btn-11-24" onclick="OAuthForm()">회원가입</button>
+
+              </form>
             </div>
-        </div>
+          </div>
+      </div>
     <script th:src="@{/js/location.js}"></script>
 </body>
 

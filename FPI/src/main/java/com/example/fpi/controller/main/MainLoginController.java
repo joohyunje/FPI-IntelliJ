@@ -61,7 +61,10 @@ public class MainLoginController {
         userDTO.setCity(city);
         userDTO.setCategoryId(category);
         userDTO.setLocationId(formService.selectLocation(region,city));
+
+//        OAuth 가입 필수 폼입력시 카테고리리스트 테이블에 정보 추가
         formService.insertCategoryList(category,customOAuth2User.getUserId());
+//       입력한 정보를 회원테이블에 업데이트
         userMapper.updateUser(UserVO.toEntity(userDTO));
         couponService.userCoupon(userDTO.getUserId());
 //        홈페이지가 바뀔때 헤더에서 계속 가지고 있어야 하기 때문에 회원가입 시 db에 담긴 이름을 세션에 담아줌

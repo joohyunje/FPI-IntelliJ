@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.fpi.mapper.user.CertifyMapper">
+<!--    <select id=""-->
+
+    <insert id="addPro">
+        insert into TBL_PRO (PRO_ID, PRO_NAME, PHONE_NUMBER, PRO_IMG, PRO_STAR_RATE, EMP_CNT, LOCATION_ID, USER_ID)
+        values (SEQ_PRO.nextval,PRO_NAME=#{proName},PHONE_NUMBER=#{phoneNumber},PRO_IMG=#{proImg},0,0,LOCATION_ID=#{locationId},USER_ID=#{userId})
+    </insert>
+    <insert id="addCardInfo">
+        insert into TBL_PRO_CARDINFO
+        values (SEQ_PRO_INFO.nextval,certi_organ=#{certifyOrgan},certi_num=#{certifyNumber},pro_id=#{proId})
+    </insert>
+    <insert id="addCardInfoFile">
+        insert into TBL_CARDINFO_FILE
+        values (SEQ_FILE.nextval,CARDINFO_FILE_ROUTE=#{cardInfoFileRoute},CARDINFO_FILE_ORIGINAL=#{cardInfoFileOriginal},CARDINFO_FILE_SAVED=#{cardInfoFileSaved},CARDINFO_ID=#{cardInfoId})
+    </insert>
+    <insert id="addCareerInfo">
+        insert into TBL_PRO_CAREERINFO
+        values (SEQ_PRO_INFO.nextval,AWARD=#{award},pro_id=#{proId})
+    </insert>
+
+</mapper>
+

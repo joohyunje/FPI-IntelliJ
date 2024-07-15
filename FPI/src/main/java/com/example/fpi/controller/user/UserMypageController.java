@@ -1,11 +1,13 @@
 package com.example.fpi.controller.user;
 
+import com.example.fpi.domain.dto.certify.CertifyDTO;
 import com.example.fpi.domain.dto.user.CouponDTO;
 import com.example.fpi.domain.dto.user.CouponListDTO;
 import com.example.fpi.domain.dto.user.UserDTO;
 import com.example.fpi.domain.oauth.CustomOAuth2User;
 import com.example.fpi.domain.vo.user.UserVO;
 import com.example.fpi.mapper.user.CouponMapper;
+import com.example.fpi.mapper.user.UserMapper;
 import com.example.fpi.service.user.CouponService;
 import com.example.fpi.service.user.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -27,6 +29,7 @@ public class UserMypageController {
     private final UserVO userVO;
     private final CouponService couponService;
     private final CouponMapper couponMapper;
+    private final UserMapper userMapper;
 
     //    마이페이지
     @GetMapping("/mypage")
@@ -48,6 +51,7 @@ public class UserMypageController {
 
     }
 
+//    쿠폰함
     @GetMapping("/couponlist")
     public String coupon(@AuthenticationPrincipal CustomOAuth2User customOAuth2User,Model model){
         String userId = customOAuth2User.getUserId();
@@ -75,9 +79,22 @@ public class UserMypageController {
         return "user/mypage/user_edit";
     }
 
+//    전문가 인증폼으로 가기
+    @GetMapping("/certify")
+    public String certify() {
+        return "user/mypage/certify";
+    }
+
+//    @PostMapping("/certify")
+//    public String certify(@AuthenticationPrincipal CustomOAuth2User customOAuth2User, Model model) {
+//        CertifyDTO certifyDTO = new CertifyDTO();
+//        certifyDTO.setUserId(customOAuth2User.getUserId());
+////        certifyDTO.
+//    }
+
+
 
     //유저 탈퇴
-
     @PostMapping("/delete")
     public String delete(@RequestParam String userId,
                          @RequestParam String userName,
@@ -99,5 +116,7 @@ public class UserMypageController {
             return "redirect:/user/detail";
         }
     }
+
+
 
 }
