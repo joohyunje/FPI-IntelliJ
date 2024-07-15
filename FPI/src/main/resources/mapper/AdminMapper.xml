@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.fpi.mapper.main.FormMapper">
+
+<!--    Noti 부분     -->
+
+    <!--  Noti 게시글 목록 가져오기  -->
+    <select id="NotiSelectAll" resultType="NotiDTO">
+        SELECT *
+        FROM (
+                 SELECT ROWNUM AS RN, NOTI.*
+                 FROM (
+                          SELECT
+                              NOTI_ID,
+                              NOTI_TITLE,
+                              NOTI_CONTENT,
+                              NOTI_REGISTER_DATE,
+                              NOTI_UPDATE_DATE,
+                          ORDER BY
+                              NOTI_REGISTER_DATE DESC
+                      ) NOTI
+                 WHERE ROWNUM &lt;= #{endRow}
+             )
+        WHERE rn &gt; #{startRow}
+    </select>
+
+    <!-- Noti 총 게시글의 갯수  -->
+    <select id="countNoti">
+        select count(*)
+        from tbl_Noti
+    </select>
+
+    <!--  Noti 게시글 상세보기  -->
+    <select id="selectNotiDetail" resultType="NotiDetailDTO">
+        SELECT
+            NOTI_ID,
+            NOTI_TITLE,
+            NOTI_CONTENT,
+            NOTI_REGISTER_DATE,
+            NOTI_UPDATE_DATE,
+        FROM TBL_NOTI
+        where NOTI_ID = #{notiId}
+    </select>
+
+<!--    insert에 사용    -->
+    <select id="getSeq" resultType="long">
+        select SEQ_ADMIN.nextval from dual
+    </select>
+<!--    작성  -->
+    <insert id="saveNoti">
+        insert into TBL_NOTI
+        values(#{notiId}, #{notiTitle}, #{notiContent}, sysdate, sysdate)
+    </insert>
+<!--    수정  -->
+    <update id="updateNoti">
+        update tbl_noti
+        set NOTI_TITLE = #{notiTitle},
+            NOTI_CONTENT = #{notiContent},
+            NOTI_UPDATE_DATE = sysdate
+        where NOTI_ID = #{notiId}
+    </update>
+
+    <!--  Noti 게시글 삭제하기  -->
+    <delete id="deleteBoard">
+        delete from TBL_NOTI
+        where NOTI_ID = #{notiId}
+    </delete>
+
+
+
+
+
+    <!--    FAQ 부분      -->
+
+    <!--  FAQ 게시글 목록 가져오기  -->
+    <select id="FAQSelectAll" resultType="FAQDTO">
+        SELECT *
+        FROM (
+                 SELECT ROWNUM AS RN, FAQ.*
+                 FROM (
+                          SELECT
+                              FAQ_ID,
+                              FAQ_TITLE,
+                              FAQ_CONTENT,
+                              FAQ_REGISTER_DATE,
+                              FAQ_UPDATE_DATE,
+                          ORDER BY
+                              FAQ_REGISTER_DATE DESC
+                      ) FAQ
+                 WHERE ROWNUM &lt;= #{endRow}
+             )
+        WHERE rn &gt; #{startRow}
+    </select>
+
+    <!--  FAQ 총 게시글의 갯수  -->
+    <select id="countFAQ">
+        select count(*)
+        from tbl_FAQ
+    </select>
+
+
+</mapper>
