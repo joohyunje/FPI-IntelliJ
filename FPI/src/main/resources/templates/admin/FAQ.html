@@ -3,34 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>FAQ</title>
-    <link rel="stylesheet" href="../../static/css/admin/Header.css">
-    <link rel="stylesheet" href="../../static/css/admin/FAQ.css">
+    <link rel="stylesheet" th:href="@{/css/admin/Noti.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/Header.css}">
 </head>
 <body>
-<header id="header">
-    <div class="global-nav-bar">
-        <div class="desktop-header">
-            <div class="header-left">
-                <img src="../../static/img/pro_logo.png" alt="로고" id="logo" style="width: 100px;height: 80px; margin:0  8px 5px 0 ;">
-            </div>
+<div th:replace="~{/Header :: header}"></div>
 
-            <div class="header-right">
-                <div class="nav-list">
-                    <span class="nav-item">
-                        <a href="#">공지사항</a>
-                    </span>
-                    <span class="nav-item right-item">
-                        <a href="#">FAQ</a>
-                    </span>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
-<!--<div th:replace="~{/layout/header :: header}"></div>-->
+<!--<header id="header">-->
+<!--    <div class="global-nav-bar">-->
+<!--        <div class="desktop-header">-->
+<!--            <div class="header-left">-->
+<!--                <img src="../../static/img/pro_logo.png" alt="로고" id="logo" style="width: 100px;height: 80px; margin:0  8px 5px 0 ;">-->
+<!--            </div>-->
+
+<!--            <div class="header-right">-->
+<!--                <div class="nav-list">-->
+<!--                    <span class="nav-item">-->
+<!--                        <a href="#">공지사항</a>-->
+<!--                    </span>-->
+<!--                    <span class="nav-item right-item">-->
+<!--                        <a href="#">FAQ</a>-->
+<!--                    </span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</header>-->
+
 <div class="main">
     <div class="main-container">
-
 
         <div class="main-container-title">
             <div class="main-container-title-container">
