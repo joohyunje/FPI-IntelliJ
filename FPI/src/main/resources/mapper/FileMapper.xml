@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.fpi.mapper.file.FileMapper">
+
+
+    <!--   전문가 견적 작성시 첨부파일 추가-->
+    <insert id="insertProUploadFile">
+        INSERT INTO TBL_PRO_UPLOAD_FILE (PRO_UPLOAD_FILE_ID, PRO_UPLOAD_FILE_ORIGINAL, PRO_UPLOAD_FILE_SAVED, PRO_UPLOAD_ID)
+        VALUES (SEQ_FILE.nextval, #{proUploadFileOriginal}, #{proUploadFileSaved}, #{proUploadId})
+    </insert>
+
+    <!--  전문가가 올린 견적 번호로 첨부파일들 가져오기  -->
+    <select id="selectProUploadFileList" resultType="ProUploadFileDTO">
+        select
+            PRO_UPLOAD_ID,
+            PRO_UPLOAD_FILE_ORIGINAL,
+            PRO_UPLOAD_FILE_SAVED,
+            PRO_UPLOAD_ID
+        from
+            TBL_PRO_UPLOAD_FILE
+        where PRO_UPLOAD_ID = #{proUploadId}
+    </select>
+</mapper>
+
+
+
+

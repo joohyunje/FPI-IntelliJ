@@ -32,8 +32,11 @@ public interface ProService {
 //  전문가 정보 삭제
     void deletePro(Long proId,String proName);
 
-//    전문가 경력 가져오기
-    List<ProCareerInfoListDTO> selectProCareer(Long proRequestId);
+    //  올린견적으로  전문가 경력 가져오기
+    List<ProCareerInfoListDTO> selectProCareerByUp(Long proUploadId);
+
+//   요청으로 전문가 경력 가져오기
+    List<ProCareerInfoListDTO> selectProCareerByReq(Long proRequestId);
 
 //    전문가 찾기
     PagedResponse<ProUploadListDTO> selectProUploadList(int page, int pageSize, String search);
@@ -42,4 +45,11 @@ public interface ProService {
 //  전문가 정보 삭제
 //    탈퇴시 이름 비교위해서 필요
     String getProName(Long proId);
+
+    //    전문가가 올리 견적 상세보기
+    ProUploadDetailDTO selectProUploadDetail(Long proUploadId);
+
+//    견적 올리기
+//    시퀀스 가져오기
+    void saveProUpload(ProUploadDTO proUpload);
 }

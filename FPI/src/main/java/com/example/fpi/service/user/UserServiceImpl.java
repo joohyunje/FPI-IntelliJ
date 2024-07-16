@@ -2,7 +2,6 @@ package com.example.fpi.service.user;
 
 import com.example.fpi.domain.dto.user.*;
 import com.example.fpi.domain.util.PagedResponse;
-import com.example.fpi.domain.vo.user.UserVO;
 import com.example.fpi.mapper.user.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -77,6 +76,24 @@ public class UserServiceImpl implements UserService {
     @Override
     public void editApproval(String userId) {
         userMapper.editApproval(userId);
+    }
+
+    @Override
+    public PagedResponse<UserUploadListDTO> selectUserUploadList(int page, int pageSize, String search) {
+        int startRow = (page - 1) * pageSize;
+        int endRow = page * pageSize;
+
+        int totalUploads = userMapper.countUserUpload(search);
+        int totalPages = (int) Math.ceil((double)totalUploads/pageSize);
+
+        List<UserUploadListDTO> uploads = userMapper.selectUserUploadList(startRow, endRow, search);
+
+        return new PagedResponse<>(uploads, page, totalPages, pageSize, totalUploads);
+    }
+
+    @Override
+    public UserUploadDetailDTO selectUserUploadDetail(Long userUploadId) {
+        return userMapper.selectUserUploadDetail(userUploadId);
     }
 
 

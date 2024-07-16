@@ -78,16 +78,39 @@ public class ProServiceImpl implements ProService {
 
         proMapper.deletePro(proId, proName);
     }
-// 전문가 삭제시 이름비교 위해 필요
+
+
+
+    // 전문가 삭제시 이름비교 위해 필요
     @Override
     public String getProName(Long proId) {
         return proMapper.selectProName(proId);
     }
 
-    //    전문가 경력 가져오기
+//    전문가가 올린 견적 상세보기
     @Override
-    public List<ProCareerInfoListDTO> selectProCareer(Long proRequestId) {
-        return proMapper.selectProCareer(proRequestId);
+    public ProUploadDetailDTO selectProUploadDetail(Long proUploadId) {
+        return proMapper.selectProUploadDetail(proUploadId);
+    }
+
+//  전문가 견적 작성하기
+    @Override
+    public void saveProUpload(ProUploadDTO proUpload) {
+        Long proUploadId = proMapper.getUploadSeq();
+        proUpload.setProUploadId(proUploadId);
+        proMapper.saveProUpload(proUpload);
+    }
+
+    //    올린 견적으로 경력 가져오기
+    @Override
+    public List<ProCareerInfoListDTO> selectProCareerByUp(Long proUploadId) {
+        return proMapper.selectProCareerByUp(proUploadId);
+    }
+
+    //  요청으로  전문가 경력 가져오기
+    @Override
+    public List<ProCareerInfoListDTO> selectProCareerByReq(Long proRequestId) {
+        return proMapper.selectProCareerByReq(proRequestId);
     }
 
 //  전문가 찾기

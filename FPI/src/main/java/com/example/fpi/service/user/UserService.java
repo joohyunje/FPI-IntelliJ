@@ -35,4 +35,10 @@ public interface UserService {
 
 //    전문가 탈퇴시 approval변경
     void editApproval(String userId);
+
+    //    회원 찾기
+    PagedResponse<UserUploadListDTO> selectUserUploadList(int page, int pageSize, String search);
+
+    //    유저가 올리 견적 상세보기
+    UserUploadDetailDTO selectUserUploadDetail(Long userUploadId);
 }
