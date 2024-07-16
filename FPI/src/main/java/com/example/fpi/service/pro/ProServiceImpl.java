@@ -59,9 +59,6 @@ public class ProServiceImpl implements ProService {
 
 
 
-    //    전문가 삭제 시, 이름 입력 비교를 위해
-//    DB에서 이름을 가져오기
-
 
 
 

@@ -38,11 +38,11 @@
             <div class="oneline" >
               <div class="oneline" style="margin-right: 5rem;">
                 <p>쿠폰번호:&ensp;</p>
-                <p style="letter-spacing:1px;" th:text="*{couponNumber}">123456789qwe</p>
+                <p style="letter-spacing:1px;" th:text="*{couponNum}">123456789qwe</p>
               </div>
               <div class="oneline">
                 <p>사용기간:&ensp;</p>
-                <p style="letter-spacing:1px;" th:text="*{#temporals.format(couponDate, 'yyyy년 MM월 dd일')}">2024-12-31</p>
+                <p style="letter-spacing:1px;" th:text="*{#temporals.format(couponValDate, 'yyyy년 MM월 dd일')}">2024-12-31</p>
               </div>
             </div>
           </div>

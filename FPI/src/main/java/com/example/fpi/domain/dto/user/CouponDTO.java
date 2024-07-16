@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
 @Data
 public class CouponDTO {
     private int couponId;
-    private String couponNumber;
-    private LocalDateTime couponDate;
+    private String couponNum;
+    private LocalDateTime couponValDate;
     private String state;
     private int discount;
     private String userId;

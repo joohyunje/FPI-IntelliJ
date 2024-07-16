@@ -49,7 +49,7 @@ public class CouponServiceImpl implements CouponService {
                 sb.append(ch);
 
             }
-            couponDTO.setCouponNumber(sb.toString()); //쿠폰번호가 저장
+            couponDTO.setCouponNum(sb.toString()); //쿠폰번호가 저장
             couponDTO.setUserId(userId);
 
 //            값을 랜덤하게 가져옴

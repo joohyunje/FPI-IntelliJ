@@ -1,3 +1,5 @@
+// 카테고리 안에 서비스 select js
+
 let service1 = 0;
 let service2 = 0;
 let service3 = 0;

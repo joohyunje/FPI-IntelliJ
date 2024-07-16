@@ -53,8 +53,8 @@ public class SecurityConfig {
                                     String logoutRedirectUri="http://localhost:8070/main";
                                     String logoutUri="https://kauth.kakao.com/oauth/logout?client_id="
                                             + clientId + "&logout_redirect_uri=" + logoutRedirectUri;
+//                                    request.getSession().invalidate();
                                     response.sendRedirect(logoutUri);
-
                                 })
                 )
 
@@ -75,7 +75,7 @@ public class SecurityConfig {
                 session.setAttribute("loginName", userMapper.findByUserId(user.getUserId()).getUserName());
 //                전문가전환 버튼유무에 필요
                 session.setAttribute("userProApproval",userService.detailUser(user.getUserId()).getUserProApproval());
-                response.sendRedirect("/main");
+                response.sendRedirect("/main/user");
             }
         };
     }
