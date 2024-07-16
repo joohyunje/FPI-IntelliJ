@@ -2,15 +2,15 @@ package com.example.fpi.controller.pro;
 
 import com.example.fpi.domain.dto.pro.ProCareerInfoListDTO;
 import com.example.fpi.domain.dto.pro.ProRequestDetailDTO;
+import com.example.fpi.domain.dto.pro.ProUploadDTO;
 import com.example.fpi.domain.dto.user.UserRequestDetailDTO;
+import com.example.fpi.domain.dto.user.UserUploadDetailDTO;
 import com.example.fpi.service.pro.ProService;
 import com.example.fpi.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class ProController {
     public String proReqDetail(@PathVariable("proRequestId") Long proRequestId, Model model) {
 
         ProRequestDetailDTO proRequest = proService.selectProReqDetail(proRequestId);
-        List<ProCareerInfoListDTO> careerInfo = proService.selectProCareer(proRequestId);
+        List<ProCareerInfoListDTO> careerInfo = proService.selectProCareerByReq(proRequestId);
 
         model.addAttribute("proRequest", proRequest);
         model.addAttribute("careerInfo", careerInfo);
@@ -51,5 +51,38 @@ public class ProController {
 
         return "/pro/req_list/pro_received_req_info";
 
+    }
+
+//    회원 찾기
+    @GetMapping("/userFind")
+    public String uploadRest() {
+        return "pro/userfind/FindUser";
+    }
+
+//    회원 찾기를 통해 유저가 올리 견적 상세보기
+    @GetMapping("/uploadDetail/{userUploadId}")
+    public String uploadDetail(@PathVariable("userUploadId") Long userUploadId, Model model) {
+        UserUploadDetailDTO Upload = userService.selectUserUploadDetail(userUploadId);
+
+        model.addAttribute("userUpload", Upload);
+
+        return "/pro/userfind/userFind_info";
+    }
+
+//    전문가 견적 작성하기
+    @GetMapping("/upload")
+    public String uploadForm(Model model) {
+        model.addAttribute("proUpload", new ProUploadDTO());
+
+        return "/pro/upload/pro_receiveform";
+    }
+
+    @PostMapping("/upload")
+    public String upload(ProUploadDTO proUpload, @RequestParam("proId") Long proId) {
+
+        proUpload.setProId(proId);
+
+
+        return "redirect:/main";
     }
 }

@@ -2,6 +2,7 @@ package com.example.fpi.controller.user;
 
 import com.example.fpi.domain.dto.pro.ProCareerInfoListDTO;
 import com.example.fpi.domain.dto.pro.ProRequestDetailDTO;
+import com.example.fpi.domain.dto.pro.ProUploadDetailDTO;
 import com.example.fpi.domain.dto.user.UserRequestDetailDTO;
 import com.example.fpi.service.pro.ProService;
 import com.example.fpi.service.user.UserService;
@@ -57,7 +58,7 @@ public class UserController {
 
         ProRequestDetailDTO proRequest = proService.selectProReqDetail(proRequestId);
 
-        List<ProCareerInfoListDTO> careerInfo = proService.selectProCareer(proRequestId);
+        List<ProCareerInfoListDTO> careerInfo = proService.selectProCareerByReq(proRequestId);
 
         System.out.println(proRequestId);
         System.out.println(careerInfo);
@@ -87,5 +88,19 @@ public class UserController {
         return "user/profind/FindPro";
     }
 
+    //    전문가 찾기를 통해 전문가가 올리 견적 상세보기
+    @GetMapping("/uploadDetail/{proUploadId}")
+    public String uploadDetail(@PathVariable("proUploadId") Long proUploadId, Model model) {
+        ProUploadDetailDTO Upload = proService.selectProUploadDetail(proUploadId);
+
+        List<ProCareerInfoListDTO> careerInfo = proService.selectProCareerByUp(proUploadId);
+
+
+        model.addAttribute("careerInfo", careerInfo);
+
+        model.addAttribute("proUpload", Upload);
+
+        return "/user/profind/proFind_info";
+    }
 
 }
