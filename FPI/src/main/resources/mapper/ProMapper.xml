@@ -72,6 +72,48 @@
         </where>
     </select>
 
+    <!-- 견적으로  전문가 경력 가져오기-->
+    <select id="selectProCareerByUp" resultType="ProCareerInfoListDTO">
+        select tpc.PRO_ID, tpc.AWARD, tpc.CAREERINFO_ID
+        from TBL_PRO_CAREERINFO TPC
+                 inner join TBL_PRO_UPLOAD TPU
+                            on TPU.PRO_ID = TPC.PRO_ID
+        where TPU.PRO_UPLOAD_ID = #{proUploadId}
+    </select>
+
+    <!--    전문가가 올리 견적 상세보기  -->
+    <select id="selectProUploadDetail" resultType="ProUploadDetailDTO">
+        SELECT TPU.PRO_UPLOAD_ID, TPU.PRO_UPLOAD_DATE, TC.CATEGORY_NAME
+             , TS.SERVICE_NAME, TL.REGION, TL.CITY, TPU.PRO_UPLOAD_CONTENT
+             ,TP.PRO_STAR_RATE, TPU.PRO_UPLOAD_ADDRESS,TPU.PRO_UPLOAD_PAY_RANGE
+             ,TP.PRO_NAME, TP.PRO_ID,TPU.PRO_UPLOAD_TITLE, TPU.PRO_UPLOAD_PAY, TP.EMP_CNT
+        FROM TBL_PRO_UPLOAD TPU
+                 INNER JOIN TBL_SERVICE ts
+                            ON TPU.SERVICE_ID = TS.SERVICE_ID
+                 INNER JOIN TBL_CATEGORY tc
+                            ON TS.CATEGORY_ID = TC.CATEGORY_ID
+                 INNER JOIN TBL_PRO TP
+                            ON TP.PRO_ID = TPU.PRO_ID
+                 INNER JOIN TBL_LOCATION tl
+                            ON TP.LOCATION_ID = TL.LOCATION_ID
+        WHERE TPU.PRO_UPLOAD_ID = #{proUploadId}
+    </select>
+
+
+
+<!--    전문가 견적 올리기-->
+<!--    전문가 견적 올리 다음 시퀀스 가져오기-->
+    <select id="getUploadSeq" resultType="long">
+        select SEQ_UPLOAD.nextval from dual
+    </select>
+
+<!--    견적 작성 쿼리문-->
+    <insert id="saveProUpload">
+        insert into TBL_PRO_UPLOAD
+        values (#{proUploadId}, #{proUploadTitle}, #{proUploadContent}, #{proUploadPay},
+                #{proUploadPayRange}, sysdate, #{proUploadAddress}, #{proId}, #{serviceId})
+    </insert>
+
 
 
 </mapper>

@@ -83,5 +83,23 @@ public class UserServiceImpl implements UserService {
         userMapper.editApproval(userId);
     }
 
+    @Override
+    public PagedResponse<UserUploadListDTO> selectUserUploadList(int page, int pageSize, String search) {
+        int startRow = (page - 1) * pageSize;
+        int endRow = page * pageSize;
+
+        int totalUploads = userMapper.countUserUpload(search);
+        int totalPages = (int) Math.ceil((double)totalUploads/pageSize);
+
+        List<UserUploadListDTO> uploads = userMapper.selectUserUploadList(startRow, endRow, search);
+
+        return new PagedResponse<>(uploads, page, totalPages, pageSize, totalUploads);
+    }
+
+    @Override
+    public UserUploadDetailDTO selectUserUploadDetail(Long userUploadId) {
+        return userMapper.selectUserUploadDetail(userUploadId);
+    }
+
 
 }

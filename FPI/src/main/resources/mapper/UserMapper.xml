@@ -45,18 +45,71 @@
         where USER_ID =#{userId}
     </update>
 
-
-
-
 <!--    마이페이지 내정보 수정하기-->
     <update id = "editUser">
         update tbl_user
         set phone_number = #{phone_number}, email = #{email},location_id = #{locationId}
         where user_id=#{user_id}
     </update>
+
     <update id="editCategory">
         update tbl_category_list
         set category_id = #{categoryId}
         where user_id = #{userId}
     </update>
+
+    <!--    유저가 올리 견적 목록   -->
+    <select id="selectUserUploadList" resultType="UserUploadListDTO">
+        SELECT *
+        FROM (
+            SELECT ROWNUM AS RN, UPLOAD.*
+            FROM (
+                    select TUU.USER_UPLOAD_ID, TUU.USER_ID, TUU.USER_UPLOAD_TITLE, TUU.USER_UPLOAD_DATE, TU.USER_STAR_RATE, TU.USER_NAME, ts.SERVICE_NAME
+                    from TBL_USER_UPLOAD TUU
+                    inner join TBL_USER TU
+                    on TUU.USER_ID = TU.USER_ID
+                    inner join TBL_SERVICE TS
+                    on tuu.SERVICE_ID = ts.SERVICE_ID
+                    <where>
+                        <if test = "search != null">
+                            TUU.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%'
+                        </if>
+                    </where>
+                    ORDER BY
+                    USER_UPLOAD_DATE DESC
+                ) UPLOAD
+            WHERE ROWNUM &lt;= #{endRow}
+        )
+        WHERE rn &gt; #{startRow}
+
+    </select>
+
+    <!--    유저가 올린 견적 갯수  -->
+    <select id="countUserUpload">
+        select count(*)
+        from TBL_USER_UPLOAD
+        <where>
+            <if test = "search != null">
+                USER_UPLOAD_TITLE LIKE '%' || #{search} || '%'
+            </if>
+        </where>
+    </select>
+
+<!--    유저가 올리 견적 상세보기  -->
+    <select id="selectUserUploadDetail" resultType="UserUploadDetailDTO">
+        SELECT TUU.USER_UPLOAD_ID, TUU.USER_UPLOAD_DATE, TC.CATEGORY_NAME
+             , TS.SERVICE_NAME, TL.REGION, TL.CITY, TUU.USER_UPLOAD_CONTENT
+             ,TU.USER_STAR_RATE, TUU.USER_UPLOAD_ADDRESS,TUU.USER_UPLOAD_PAY_RANGE
+             ,TU.USER_NAME, TU.USER_ID,TUU.USER_UPLOAD_TITLE, TUU.USER_UPLOAD_PAY
+        FROM TBL_USER_UPLOAD TUU
+                 INNER JOIN TBL_SERVICE ts
+                            ON TUU.SERVICE_ID = TS.SERVICE_ID
+                 INNER JOIN TBL_CATEGORY tc
+                            ON TS.CATEGORY_ID = TC.CATEGORY_ID
+                 INNER JOIN TBL_USER TU
+                            ON TU.USER_ID = TUU.USER_ID
+                 INNER JOIN TBL_LOCATION tl
+                            ON TU.LOCATION_ID = TL.LOCATION_ID
+        WHERE TUU.USER_UPLOAD_ID = #{userUploadId}
+    </select>
 </mapper>

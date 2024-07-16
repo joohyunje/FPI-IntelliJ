@@ -32,6 +32,15 @@ public interface UserMapper {
 //    유저가 받은 리뷰 목록보기
     List<UserReviewListDTO> selectUserReview(String userId);
 
+    //    전뭄가 찾기 동적
+    List<UserUploadListDTO> selectUserUploadList(int startRow, int endRow, String search);
+
+    //    전문가 찾기 갯수 동적
+    int countUserUpload(String search);
+
+//    유저가 올리 견적 상세보기
+    UserUploadDetailDTO selectUserUploadDetail(Long userUploadId);
+
 
     //    회원정보 상세보기
     UserDTO detailUser(String userId);

@@ -189,14 +189,15 @@
 
         uploads.forEach(function(upload) {
             let uploadRow = `<li class="feed-item">
-                            <a href="#">
+                            <a href="/user/uploadDetail/${upload.proUploadId}">
                                 <div class="feed-container">
                                     <div class="item-wrapper">
                                         <h3 class="item-title">
                                             ${upload.proName}
+                                            <div> ${upload.serviceName}</div>
                                         </h3>
                                         <p class="item-content">
-                                            ${upload.proUploadTitle} ${upload.serviceName}
+                                            ${upload.proUploadTitle}
                                         </p>
                                     </div>
                                     <img width="80" height="80" src="https://e7.pngegg.com/pngimages/982/97/png-clipart-computer-icons-camera-iphone-graphy-camera-photography-camera-icon.png" alt="img">
