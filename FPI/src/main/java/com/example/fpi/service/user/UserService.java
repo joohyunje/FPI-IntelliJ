@@ -30,6 +30,9 @@ public interface UserService {
 //    DB에서 이름을 가져오기
     String getUserName(String userId);
 
+//    수정하기로 정보 담아서 이동
+    UserDTO editUser(String userId);
+
 //    유저 정보 삭제
     void deleteUser(String userId,String userName);
 

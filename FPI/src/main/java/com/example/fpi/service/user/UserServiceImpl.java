@@ -2,6 +2,7 @@ package com.example.fpi.service.user;
 
 import com.example.fpi.domain.dto.user.*;
 import com.example.fpi.domain.util.PagedResponse;
+//import com.example.fpi.domain.vo.user.UserVO;
 import com.example.fpi.mapper.user.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -53,7 +54,6 @@ public class UserServiceImpl implements UserService {
 //유저 정보 조회
     @Override
     public UserDTO detailUser(String userId) {
-
         return userMapper.detailUser(userId);
     }
 
@@ -65,8 +65,13 @@ public class UserServiceImpl implements UserService {
         return userMapper.findByUserId(userId).getUserName();
     }
 
+    @Override
+    public UserDTO editUser(String userId) {
+        return userMapper.findByUserId(userId);
+    }
 
-//    유저 정보 삭제
+
+    //    유저 정보 삭제
     @Override
     public void deleteUser(String userId,String userName) {
 

@@ -7,7 +7,7 @@
   justify-content: center;
   width: 900px;
   /* padding: 0 16px; */
-  margin: 40px auto;
+  margin: 30px auto;
   min-height: 800px;
 
   & >div>h2+p{
@@ -81,7 +81,7 @@
   overflow: auto;
   outline: none;
   width: 100%;
-  height: 85%;
+  height: 84%;
   border-color: #e0e0e0;
   border-radius: 0.375em;
   display: block;
@@ -99,4 +99,17 @@
     outline: none;
   }
   
+}
+#proImg{
+  width: 120px;
+  height: 120px;
+  border: 1px solid rgb(228, 229, 237);
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: #fff;
+
+}
+#proImg img {
+  max-width: 100%;
+  max-height: 100%;
 }

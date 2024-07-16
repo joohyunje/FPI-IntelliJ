@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.fpi.mapper.user.CertifyMapper">
+<!--    <select id=""-->
+
+    <insert id="addPro">
+        insert into TBL_PRO (PRO_ID, PRO_NAME, PHONE_NUMBER, PRO_IMG, PRO_STAR_RATE, EMP_CNT, LOCATION_ID, USER_ID)
+        values (SEQ_PRO.nextval,PRO_NAME=#{proName},PHONE_NUMBER=#{phoneNumber},PRO_IMG=#{proImg},0,0,LOCATION_ID=#{locationId},USER_ID=#{userId})
+    </insert>
+    <insert id="addCardInfo">
+        insert into TBL_PRO_CARDINFO
+        values (SEQ_INFO.nextval,certi_organ=#{certifyOrgan},certi_num=#{certifyNumber},pro_id=#{proId})
+    </insert>
+    <insert id="addCardInfoFile">
+        insert into TBL_CARDINFO_FILE
+        values (SEQ_FILE.nextval,CARDINFO_FILE_ROUTE=#{cardInfoFileRoute},CARDINFO_FILE_ORIGINAL=#{cardInfoFileOriginal},CARDINFO_FILE_SAVED=#{cardInfoFileSaved},CARDINFO_ID=#{cardInfoId})
+    </insert>
+    <insert id="addCareerInfo">
+        insert into TBL_PRO_CAREERINFO
+        values (SEQ_INFO.nextval,AWARD=#{award},pro_id=#{proId})
+    </insert>
+    <insert id=" insertProCategory">
+        insert into TBL_CATEGORY_LIST(category_list_id, category_id, pro_id)
+        values (SEQ_CATEGORY_LIST.nextval,CATEGORY_ID=#{categoryId},PRO_ID=#{proId})
+    </insert>
+
+    <update id="updateApproval">
+        update tbl_user
+        set USER_PRO_APPROVAL = "YES"
+        where user_id =#{userId}
+
+    </update>
+
+
+<!--    외부에서 전문가 인증하기 폼을 못들어가게 하기 위해 해당 정보를 따로 dto에 담아서 보내기 위해 필요-->
+    <select id="selectCertify">
+        select pro.*,files.CARDINFO_FILE_ORIGINAL,files.CARDINFO_FILE_ROUTE,files.CARDINFO_FILE_SAVED
+        from(select p.PRO_ID,p.PRO_NAME,p.PHONE_NUMBER,p.PRO_IMG,p.LOCATION_ID,p.USER_ID,card.CARDINFO_ID,card.CERTI_NUM,card.CERTI_ORGAN,career.AWARD,category.CATEGORY_ID
+             from tbl_pro p
+                      join TBL_CARDINFO card on p.PRO_ID=card.PRO_ID
+                      join TBL_CAREERINFO career on p.PRO_ID = career.PRO_ID
+                      join TBL_CATEGORY_LIST category on p.PRO_ID = category.PRO_ID )pro
+                join TBL_CARDINFO_FILE files
+                     on pro.CARDINFO_ID =files.CARDINFO_ID
+        where pro.USER_ID = #{userId}
+    </select>
+
+<!--    시퀀스 테이블들의  값 가져올때 사용-->
+    <select id="getProSeq">
+        select SEQ_PRO.nextval from dual
+    </select>
+
+    <select id="getInfoSeq">
+        select SEQ_INFO.nextval from dual
+    </select>
+
+    <select id="getFileSeq">
+        select SEQ_FILE.nextval from dual
+    </select>
+
+</mapper>
+

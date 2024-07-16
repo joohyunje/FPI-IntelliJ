@@ -14,6 +14,7 @@ public interface CouponService {
 //    쿠폰 지급
     void userCoupon(String userId);
 
+//    쿠폰리스트 보여줌
     List<CouponDTO> couponlist(String userId);
 
 

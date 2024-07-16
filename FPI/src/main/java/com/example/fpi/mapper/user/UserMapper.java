@@ -1,6 +1,7 @@
 package com.example.fpi.mapper.user;
 
 import com.example.fpi.domain.dto.user.*;
+import com.example.fpi.domain.vo.main.CategoryListVO;
 import com.example.fpi.domain.vo.user.UserVO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -55,5 +56,9 @@ public interface UserMapper {
     void updateUser(UserVO vo);
 
     void editApproval(String userId);
+
+//    유저정보 수정
+    void editUser(UserVO vo);
+    void editCategory(CategoryListVO vo);
 
 }

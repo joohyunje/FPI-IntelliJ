@@ -24,12 +24,24 @@ public class ProMypageController {
     private final ProMapper proMapper;
     private final ProDTO proDTO;
 
-    @GetMapping("/mypage")
-    public String mypage(@AuthenticationPrincipal CustomOAuth2User customOAuth2User, Model model) {
+    @GetMapping("/main")
+    public String promain() {
+        return "main/main";
+    }
+
+
+
+        @GetMapping("/mypage")
+    public String mypage(@AuthenticationPrincipal CustomOAuth2User customOAuth2User, Model model, HttpSession session) {
         String userId= customOAuth2User.getUserId();
         Long proId = proService.selectProId(userId);
 
-        model.addAttribute("mypage",proService.detailPro(proId));
+        ProDTO pro = proService.detailPro(proId);
+
+        session.removeAttribute("loginName");
+
+        session.setAttribute("proName", pro.getProName());
+        model.addAttribute("mypage", pro);
         return "pro/mypage/pro_mypage";
 
     }

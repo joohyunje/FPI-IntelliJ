@@ -63,4 +63,5 @@ public interface ProMapper {
     int countProUpload(String search);
 //    탈퇴시 전문가 이름필요
     String selectProName(Long proId);
+
 }
