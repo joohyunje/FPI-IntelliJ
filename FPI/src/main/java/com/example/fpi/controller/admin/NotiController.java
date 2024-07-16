@@ -11,18 +11,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/Noti")
+@RequestMapping("/admin")
 @RequiredArgsConstructor
 public class NotiController {
+
     private final AdminService adminService;
 
     @GetMapping("/Noti")
     public String list(@RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
-                       @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+                       @RequestParam(value = "pageSize", defaultValue = "5") int pageSize,
                        Model model) {
 
-        int totalBoards = adminService.getNotiListCount();
-        int totalPages = (int) Math.ceil((double)totalBoards/pageSize);
+        int totalNotis = adminService.getNotiListCount();
+        int totalPages = (int) Math.ceil((double)totalNotis/pageSize);
 
         List<NotiDTO> notis = adminService.getNotiList(pageNo, pageSize);
 
@@ -38,7 +39,7 @@ public class NotiController {
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
 
-        return "/admin/Noti";
+        return "admin/Noti";
     }
 
     // Noti 상세보기
@@ -46,8 +47,11 @@ public class NotiController {
     public String detail(@PathVariable("notiId") Long notiId, Model model) {
 
         NotiDetailDTO noti = adminService.getNotiById(notiId);
+        List<NotiDTO> notiRecent = adminService.getRecentList();
 
+        System.out.println(adminService.getRecentList());
         model.addAttribute("noti", noti);
+        model.addAttribute("notiRecent", notiRecent);
 
         return "admin/NotiDetail";
     }
@@ -66,7 +70,6 @@ public class NotiController {
 
         return "redirect:/admin/NotiDetail/" + noti.getNotiId();
     }
-
 
     // 삭제하기
     @PostMapping("/delete/{notiId}")
