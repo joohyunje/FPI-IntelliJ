@@ -93,7 +93,7 @@ public class MainLoginController {
 //        전문가 전환 버튼에 필요
         session.setAttribute("userProApproval","NO");
 
-        return "redirect:/main";
+        return "redirect:/main/user";
 
     }
     @GetMapping("login")
