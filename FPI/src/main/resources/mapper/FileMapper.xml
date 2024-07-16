@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.fpi.mapper.FileMapper">
+<!--    프로활동사진 추가-->
+    <insert id="addProImg">
+        INSERT INTO TBL_PRP (pro_img)
+        VALUES #{proImg}
+    </insert>
+</mapper>

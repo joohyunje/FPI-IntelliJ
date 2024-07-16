@@ -11,22 +11,22 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 public class CardInfoVO {
     private Long cardInfoId;
-    private String certifyOrgan;
-    private String certifyNumber;
+    private String certiOrgan;
+    private String certiNum;
     private Long proId;
 
     @Builder
-    public CardInfoVO(Long cardInfoId, String certifyOrgan, String certifyNumber, Long proId) {
+    public CardInfoVO(Long cardInfoId, String certiOrgan, String certiNum, Long proId) {
         this.cardInfoId = cardInfoId;
-        this.certifyOrgan = certifyOrgan;
-        this.certifyNumber = certifyNumber;
+        this.certiOrgan = certiOrgan;
+        this.certiNum = certiNum;
         this.proId = proId;
     }
 
     public static CardInfoVO toEntity(CardInfoDTO cardInfoDTO) {
         return CardInfoVO.builder().cardInfoId(cardInfoDTO.getCardInfoId())
-                .certifyOrgan(cardInfoDTO.getCertifyOrgan())
-                .certifyNumber(cardInfoDTO.getCertifyNumber())
+                .certiOrgan(cardInfoDTO.getCertiOrgan())
+                .certiNum(cardInfoDTO.getCertiNum())
                 .proId(cardInfoDTO.getProId())
         .build();
     }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Data
 public class CardInfoDTO {
     private Long cardInfoId;
-    private String certifyOrgan;
-    private String certifyNumber;
+    private String certiOrgan;
+    private String certiNum;
     private Long proId;
 }

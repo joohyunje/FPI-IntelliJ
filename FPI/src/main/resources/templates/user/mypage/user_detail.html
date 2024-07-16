@@ -79,7 +79,7 @@
               보유하신 포인트는 환불되지 않습니다
             </div>
             <form method="post" id="deleteForm" th:action="@{/user/delete}">
-              <input class="userId" type="hidden" th:field="${detail.userId}"  name="userId" style="display: none !important;" >
+              <input class="userId" type="hidden" th:value="${detail.userId}"  name="userId" style="display: none !important;" >
               <div class="title">탈퇴하시려면 본인 이름을 작성해주세요</div>
               <input class="input-box" name="userName" placeholder="본인이름 작성" type="text">
               <p class="error">이름이 일치하지 않습니다.</p>
@@ -94,7 +94,7 @@
     </div>
 
 
-    <script src="/js/deleteuser.js"></script>
+    <script src="/js/user.js"></script>
 
 </body>
 <!--이름불일치시 모달스타일변경-->

@@ -32,8 +32,8 @@ public class CouponVO {
     public static CouponVO toEntity(CouponDTO dto){
         return CouponVO.builder()
                 .couponId(dto.getCouponId())
-                .couponNumber(dto.getCouponNumber())
-                .couponDate(dto.getCouponDate())
+                .couponNumber(dto.getCouponNum())
+                .couponDate(dto.getCouponValDate())
                 .state(dto.getState())
                 .discount(dto.getDiscount())
                 .userId(dto.getUserId())

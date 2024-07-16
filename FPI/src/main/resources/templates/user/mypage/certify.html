@@ -25,9 +25,10 @@
       <p>전문가로 활동하기 위해서는 인증이 필요합니다.</p>
     </div>
     <div class="sub-container">
-        <form name="certify" id="certify" class="certifyForm">
+        <form name="certify" id="CertifyForm" class="certifyForm"  enctype="multipart/form-data" th:object="${certify}" th:action="@{/user/certify}">
             <div class="marginR-40">
-              <img  class="imgSize" >
+              <div id="proImg"></div>
+<!--              <img  class="imgSize" id="proImg">-->
               <div class="file-upload">
                 <label for="fileInput">
                   <div id="customButton" >전문가 활동 사진</div>
@@ -39,14 +40,14 @@
             <div style="width: 100%;">
               <div class="col underline">
                 <label for="proName" class="fontSize15 label">전문가 활동 이름</label>
-                <input type="text" id="proName" name="proName" class="form-control">
+                <input type="text" id="proName" name="proName" class="form-control" th:field="*{proName}">
                 <p>* 전문가 활동시 사용할 이름을 작성해주세요.</p>
               </div>
 
 
               <div class="col underline">
                 <label for="phoneNumber" class="fontSize15 label">전문가 활동 이름</label>
-                <input type="tel" maxlength="11" id="phoneNumber" name="proName" class="form-control" placeholder="01012345678">
+                <input type="tel" maxlength="11" id="phoneNumber" name="phoneNumber" class="form-control" placeholder="01012345678" th:field="*{phoneNumber}">
                 <p>* 회원과 매칭시 연락할 전화번호를 숫자로만 입력해주세요. </p>
               </div>
         
@@ -77,27 +78,27 @@
 
               <div class="certi-con underline2">
                 <div class="certi-label" >
-                  <label for="certification-agency" class="fontSize15 label">자격증 발급기관/ </label>
+                  <label for="certiOrgan" class="fontSize15 label">자격증 발급기관/ </label>
                   
-                  <label for="certification-num" class="fontSize15 label">자격증 번호</label>
+                  <label for="certiNum" class="fontSize15 label">자격증 번호</label>
                 </div>
 
                 <div class="certi-label">
-                  <input type="text" id="certification-agency" name="certification-num" class="form-control" style=" margin-right: 10px;" placeholder="자격증 발급기관을 입력하세요">
-                  <input type="text" id="certification-num" name="certification-num" class="form-control"
-                  placeholder="자격증 번호를 입력하세요">
+                  <input type="text" id="certiOrgan" name="certiOrgan" class="form-control" style=" margin-right: 10px;" placeholder="자격증 발급기관을 입력하세요" th:field="*{certiOrgan}">
+                  <input type="text" id="certiNum" name="certiNum" class="form-control"
+                  placeholder="자격증 번호를 입력하세요" th:field="*{certiNum}">
                 </div>
               </div>
           
           
               <div class="height200">
                 <span for="career" class="fontSize15 label">경력 혹은 수상내역 작성</span>
-                <textarea maxlength="400" class="textarea"></textarea>
-                
+                <textarea maxlength="400" class="textarea" th:field="*{award}"></textarea>
+
               </div>
 
               <div class="left">
-                <button type="button">인증하기</button>
+                <button type="button" onclick="CertifyForm()">인증하기</button>
               </div>
 
             </div>
@@ -107,7 +108,11 @@
   </div> <!-- 메인 전체 컨테이너 중앙배치 -->
 
 </div><!-- 메인 전체 컨테이너 -->
+<script th:src="@{/js/user.js}"></script>
+<script th:src="@{/js/file.js}"></script>
+
 <script th:src="@{/js/location.js}"></script>
+
 
 </body>
 </html>

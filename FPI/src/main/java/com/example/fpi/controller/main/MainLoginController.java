@@ -1,20 +1,21 @@
 package com.example.fpi.controller.main;
 
-import com.example.fpi.domain.dto.main.CategoryListDTO;
-import com.example.fpi.domain.dto.user.CategoryDTO;
+
 import com.example.fpi.domain.dto.user.UserDTO;
 import com.example.fpi.domain.oauth.CustomOAuth2User;
 import com.example.fpi.domain.vo.user.UserVO;
-import com.example.fpi.mapper.main.FormMapper;
-import com.example.fpi.mapper.user.CouponMapper;
+
+import com.example.fpi.mapper.pro.ProMapper;
 import com.example.fpi.mapper.user.UserMapper;
 import com.example.fpi.service.main.FormService;
+import com.example.fpi.service.pro.ProService;
 import com.example.fpi.service.user.CouponService;
 import com.example.fpi.service.user.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,13 +28,33 @@ public class MainLoginController {
     private final FormService formService;
     private final UserService userService;
     private final CouponService couponService;
+    private final ProService proService;
+    private final ProMapper proMapper;
 
 
-    @GetMapping()
-    public String index() {
+    @GetMapping(value = {"/{status}", ""})
+    public String index(@AuthenticationPrincipal CustomOAuth2User customOAuth2User,
+                        @PathVariable(required = false) String status,
+                        Model model,
+                        HttpSession session) {
+
+        if(customOAuth2User != null){
+            String userId = customOAuth2User.getUserId();
+            if(status.equals("pro")){
+                session.removeAttribute("loginName");
+                session.setAttribute("proName", proService.getProName(proService.selectProId(userId)));
+            }
+            else if(status.equals("user")){
+                session.removeAttribute("proName");
+                session.setAttribute("loginName", userService.detailUser(userId).getUserName());
+            }
+        }
+
 
         return "main/main";
     }
+
+
 
 
 
