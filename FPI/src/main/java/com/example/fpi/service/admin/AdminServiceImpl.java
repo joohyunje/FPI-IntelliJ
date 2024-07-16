@@ -1,14 +1,15 @@
 package com.example.fpi.service.admin;
 
 import com.example.fpi.domain.dto.admin.FAQDTO;
+import com.example.fpi.domain.dto.admin.FAQDetailDTO;
 import com.example.fpi.domain.dto.admin.NotiDTO;
 import com.example.fpi.domain.dto.admin.NotiDetailDTO;
+import com.example.fpi.domain.vo.admin.FAQVO;
 import com.example.fpi.domain.vo.admin.NotiVO;
 import com.example.fpi.mapper.admin.AdminMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -28,21 +29,8 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
-    public List<FAQDTO> getFAQList(int page, int pageSize) {
-        int startRow = (page - 1) * pageSize;
-        int endRow = page * pageSize;
-
-        return adminMapper.FAQSelectAll(startRow, endRow);
-    }
-
-    @Override
     public int getNotiListCount() {
         return adminMapper.countNoti();
-    }
-
-    @Override
-    public int getFAQListCount() {
-        return adminMapper.countFAQ();
     }
 
     @Override
@@ -51,7 +39,7 @@ public class AdminServiceImpl implements AdminService{
 
         return noti;
     }
-    
+
 
     @Override
     public NotiDetailDTO goUpdateNoti(Long notiId) {
@@ -78,4 +66,74 @@ public class AdminServiceImpl implements AdminService{
     public void deleteNoti(Long notiId) {
         adminMapper.deleteNoti(notiId);
     }
+
+    @Override
+    public List<NotiDTO> getRecentList() {
+        return adminMapper.selectRecentNoti();
+    }
+
+
+
+
+
+
+    @Override
+    public List<FAQDTO> getFAQList(int page, int pageSize) {
+        int startRow = (page - 1) * pageSize;
+        int endRow = page * pageSize;
+
+        return adminMapper.FAQSelectAll(startRow, endRow);
+    }
+
+
+    @Override
+    public int getFAQListCount() {
+        return adminMapper.countFAQ();
+    }
+
+    @Override
+    public FAQDetailDTO getFAQById(Long faqId) {
+        FAQDetailDTO faq = adminMapper.selectFAQDetail(faqId);
+
+        return faq;
+    }
+
+
+    @Override
+    public FAQDetailDTO goUpdateFAQ(Long faqId) {
+        return adminMapper.selectFAQDetail(faqId);
+    }
+
+
+    @Override
+    public void updateFAQ(FAQDTO faq) {
+        adminMapper.updateFAQ(FAQVO.toEntity(faq));
+
+        saveFAQ(faq);
+    }
+
+    @Override
+    @Transactional
+    public void saveFAQ(FAQDTO faq) {
+        Long faqId = adminMapper.getSeq();
+        faq.setFAQId(faqId);
+        adminMapper.saveFAQ(faq);
+    }
+
+    @Override
+    public void deleteFAQ(Long faqId) {
+        adminMapper.deleteFAQ(faqId);
+    }
+
+//    안씀
+//    @Override
+//    public List<FAQDTO> getRecentList() {
+//        return adminMapper.selectRecentFAQ();
+//    }
+
+
+
+
+
+
 }

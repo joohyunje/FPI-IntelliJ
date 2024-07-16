@@ -4,18 +4,19 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+// 상세보기에 들어갈거
 
 @Component
 @Data
-public class NotiDTO {
+public class FAQDetailDTO {
     // pk
-    private Long notiId;
+    private Long faqId;
     // 제목
-    private String notiTitle;
+    private String faqTitle;
     // 내용
-    private String notiContent;
+    private String faqContent;
     // 작성일
-    private LocalDateTime notiRegisterDate;
+    private LocalDateTime faqRegisterDate;
     // 수정일
-    private LocalDateTime notiUpdateDate;
+    private LocalDateTime faqUpdateDate;
 }

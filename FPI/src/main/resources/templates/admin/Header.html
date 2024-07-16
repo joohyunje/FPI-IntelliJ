@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Header</title>
@@ -12,15 +12,13 @@
                 <img th:src="@{/img/pro_logo.png}" alt="로고" id="logo" style="width: 100px;height: 80px; margin:0  8px 5px 0 ;">
             </div>
 
-            <a th:href="@{/board/list}">게시판 목록</a>
-
             <div class="header-right">
                 <div class="nav-list">
                     <span class="nav-item">
-                        <a th:href="@{/Noti}">공지사항</a>
+                        <a th:href="@{/admin/Noti}">공지사항</a>
                     </span>
                     <span class="nav-item right-item">
-                        <a th:href="@{/FAQ}">FAQ</a>
+                        <a th:href="@{/admin/FAQ}">FAQ</a>
                     </span>
                 </div>
             </div>
