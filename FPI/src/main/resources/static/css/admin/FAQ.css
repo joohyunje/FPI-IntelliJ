@@ -227,19 +227,21 @@ h1{
 .pagination .page-item .page-link {
     padding: 8px 16px;
     text-decoration: none;
-    color: #4CAF50;
+    color: #363a3c;
     border: 1px solid #ddd;
 }
 .pagination .page-item .page-link:hover {
     background-color: #ddd;
 }
 .pagination .page-item.active .page-link {
-    background-color: #4CAF50;
+    background-color: #363a3c;
     color: white;
-    border: 1px solid #4CAF50;
+    border: 1px solid #363a3c;
 }
+
 .pagination .page-item.disabled .page-link {
     color: #ccc;
     pointer-events: none;
+    cursor: not-allowed;
     border: 1px solid #ddd;
 }

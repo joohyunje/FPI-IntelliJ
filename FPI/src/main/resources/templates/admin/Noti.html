@@ -1,35 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
 <head>
     <meta charset="UTF-8">
     <title>공지게시판</title>
-    <link rel="stylesheet" th:href="@{/css/admin/Noti.css}">
     <link rel="stylesheet" th:href="@{/css/admin/Header.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/Noti.css}">
 </head>
 <body>
-<div th:replace="~{/Header :: header}"></div>
-
-<!--<header id="header">-->
-<!--    <div class="global-nav-bar">-->
-<!--        <div class="desktop-header">-->
-<!--            <div class="header-left">-->
-<!--                <img src="../../static/img/pro_logo.png" alt="로고" id="logo" style="width: 100px;height: 80px; margin:0  8px 5px 0 ;">-->
-<!--            </div>-->
-
-<!--            <div class="header-right">-->
-<!--                <div class="nav-list">-->
-<!--                    <span class="nav-item">-->
-<!--                        <a href="#">공지사항</a>-->
-<!--                    </span>-->
-<!--                    <span class="nav-item right-item">-->
-<!--                        <a href="#">FAQ</a>-->
-<!--                    </span>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</header>-->
-
+<div th:replace="~{/admin/Header :: header}"></div>
 
 <div class="main">
     <div class="main-container">
@@ -54,27 +32,30 @@
 
                 <tbody>
                     <tr th:each="noti : ${notis}" th:object="${noti}">
-                        <td th:text="*{NotiId}" class="list-num">1</td>
-                        <td class="list-title"><a th:href="@{/Notidetail/{NotiId}(NotiId=*{NotiId})}"></a></td>
-                        <td th:text="*{#temporals.format(boardUpdateDate, 'yy년 M월 d일 HH시 mm분')}" class="list-date"></td>
+                        <td th:text="*{notiId}" class="list-num"></td>
+                        <td class="list-title"><a th:text="*{notiTitle}" th:href="@{/admin/NotiDetail/{notiId}(notiId=*{notiId})}"></a></td>
+                        <td th:text="*{#temporals.format(NotiUpdateDate, 'MM-dd')}" class="list-date"></td>
                     </tr>
                 </tbody>
 
             </table>
+<!--            이건 일단 보류    -->
             <div class="write-box">
                 <a href="#">글쓰기</a>
             </div>
-            <ul class="list-number">
-                <li th:classappend="${startPage == 1} ? 'disabled' : ''" class="page-item">
-                    <a class="page-link" aria-label="Previous">
+<!--            이건 일단 보류    -->
+
+            <ul class="list-number pagination">
+                <li th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
+                    <a th:href="@{/admin/Noti(pageNo=${currentPage - 1}, pageSize=${pageSize})}" class="page-link" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <li th:each="i : ${#numbers.sequence(startPage, endPage)}" th:classappend="${currentPage == i} ? 'active' : ''" class="page-item">
+                <li th:each="i : ${#numbers.sequence(startPage, endPage)}" th:class="${currentPage == i} ? 'page-item active' : 'page-item'">
                     <a th:href="@{/admin/Noti(pageNo=${i}, pageSize=${pageSize})}" class="page-link" th:text="${i}"></a>
                 </li>
-                <li th:classappend="${endPage == totalPages} ? 'disabled' : ''" class="page-item">
-                    <a class="page-link" aria-label="Next">
+                <li th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
+                    <a th:href="@{/admin/Noti(pageNo=${currentPage + 1}, pageSize=${pageSize})}" class="page-link" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
@@ -82,7 +63,5 @@
         </div>
     </div>
 </div>
-
-
 </body>
 </html>

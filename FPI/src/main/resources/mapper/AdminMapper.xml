@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.fpi.mapper.main.FormMapper">
+<mapper namespace="com.example.fpi.mapper.admin.AdminMapper">
 
 <!--    Noti 부분     -->
-
     <!--  Noti 게시글 목록 가져오기  -->
     <select id="NotiSelectAll" resultType="NotiDTO">
         SELECT *
@@ -12,11 +11,12 @@
                  SELECT ROWNUM AS RN, NOTI.*
                  FROM (
                           SELECT
-                              NOTI_ID,
-                              NOTI_TITLE,
-                              NOTI_CONTENT,
-                              NOTI_REGISTER_DATE,
-                              NOTI_UPDATE_DATE,
+                              N.NOTI_ID,
+                              N.NOTI_TITLE,
+                              N.NOTI_CONTENT,
+                              N.NOTI_REGISTER_DATE,
+                              N.NOTI_UPDATE_DATE
+                          FROM TBL_NOTI N
                           ORDER BY
                               NOTI_REGISTER_DATE DESC
                       ) NOTI
@@ -38,9 +38,22 @@
             NOTI_TITLE,
             NOTI_CONTENT,
             NOTI_REGISTER_DATE,
-            NOTI_UPDATE_DATE,
+            NOTI_UPDATE_DATE
         FROM TBL_NOTI
-        where NOTI_ID = #{notiId}
+        WHERE NOTI_ID = #{notiId}
+    </select>
+
+<!--    Noti 게시글 최근 5개만 가져오기-->
+    <select id="selectRecentNoti" resultType="NotiDetailDTO">
+        SELECT NOTI_ID, NOTI_TITLE
+        FROM (
+                SELECT
+                    NOTI_ID,
+                    NOTI_TITLE
+                FROM TBL_NOTI
+                ORDER BY NOTI_REGISTER_DATE DESC
+            )
+        WHERE ROWNUM &lt;= 5
     </select>
 
 <!--    insert에 사용    -->
@@ -62,7 +75,7 @@
     </update>
 
     <!--  Noti 게시글 삭제하기  -->
-    <delete id="deleteBoard">
+    <delete id="deleteNoti">
         delete from TBL_NOTI
         where NOTI_ID = #{notiId}
     </delete>
@@ -70,9 +83,7 @@
 
 
 
-
-    <!--    FAQ 부분      -->
-
+<!--    FAQ 부분      -->
     <!--  FAQ 게시글 목록 가져오기  -->
     <select id="FAQSelectAll" resultType="FAQDTO">
         SELECT *
@@ -80,11 +91,12 @@
                  SELECT ROWNUM AS RN, FAQ.*
                  FROM (
                           SELECT
-                              FAQ_ID,
-                              FAQ_TITLE,
-                              FAQ_CONTENT,
-                              FAQ_REGISTER_DATE,
-                              FAQ_UPDATE_DATE,
+                              F.FAQ_ID,
+                              F.FAQ_TITLE,
+                              F.FAQ_CONTENT,
+                              F.FAQ_REGISTER_DATE,
+                              F.FAQ_UPDATE_DATE
+                          FROM TBL_FAQ F
                           ORDER BY
                               FAQ_REGISTER_DATE DESC
                       ) FAQ
@@ -93,11 +105,88 @@
         WHERE rn &gt; #{startRow}
     </select>
 
-    <!--  FAQ 총 게시글의 갯수  -->
+    <!-- FAQ 총 게시글의 갯수  -->
     <select id="countFAQ">
         select count(*)
         from tbl_FAQ
     </select>
+
+    <!--  FAQ 게시글 상세보기  -->
+    <select id="selectFaqDetail" resultType="FaqDetailDTO">
+        SELECT
+            FAQ_ID,
+            FAQ_TITLE,
+            FAQ_CONTENT,
+            FAQ_REGISTER_DATE,
+            FAQ_UPDATE_DATE
+        FROM TBL_FAQ
+        WHERE FAQ_ID = #{faqId}
+    </select>
+
+<!--    Noti는 이거 안씀     -->
+
+<!--    &lt;!&ndash;    Noti 게시글 최근 5개만 가져오기&ndash;&gt;-->
+<!--    <select id="selectRecentNoti" resultType="NotiDetailDTO">-->
+<!--        SELECT NOTI_ID, NOTI_TITLE-->
+<!--        FROM (-->
+<!--                 SELECT-->
+<!--                     NOTI_ID,-->
+<!--                     NOTI_TITLE-->
+<!--                 FROM TBL_NOTI-->
+<!--                 ORDER BY NOTI_REGISTER_DATE DESC-->
+<!--             )-->
+<!--        WHERE ROWNUM &lt;= 5-->
+<!--    </select>-->
+
+    <!--    작성  -->
+    <insert id="saveFaq">
+        insert into TBL_FAQ
+        values(#{faqId}, #{faqTitle}, #{FaqContent}, sysdate, sysdate)
+    </insert>
+    <!--    수정  -->
+    <update id="updateFaq">
+        update tbl_faq
+        set FAQ_TITLE = #{faqTitle},
+            FAQ_CONTENT = #{faqContent},
+            FAQ_UPDATE_DATE = sysdate
+        where FAQ_ID = #{faqId}
+    </update>
+
+    <!--  Noti 게시글 삭제하기  -->
+    <delete id="deleteFaq">
+        delete from TBL_FAQ
+        where FAQ_ID = #{faqId}
+    </delete>
+
+
+
+<!--    &lt;!&ndash;    FAQ 부분      &ndash;&gt;-->
+
+<!--    &lt;!&ndash;  FAQ 게시글 목록 가져오기  &ndash;&gt;-->
+<!--    <select id="FAQSelectAll" resultType="FAQDTO">-->
+<!--        SELECT *-->
+<!--        FROM (-->
+<!--                 SELECT ROWNUM AS RN, FAQ.*-->
+<!--                 FROM (-->
+<!--                          SELECT-->
+<!--                              FAQ_ID,-->
+<!--                              FAQ_TITLE,-->
+<!--                              FAQ_CONTENT,-->
+<!--                              FAQ_REGISTER_DATE,-->
+<!--                              FAQ_UPDATE_DATE,-->
+<!--                          ORDER BY-->
+<!--                              FAQ_REGISTER_DATE DESC-->
+<!--                      ) FAQ-->
+<!--                 WHERE ROWNUM &lt;= #{endRow}-->
+<!--             )-->
+<!--        WHERE rn &gt; #{startRow}-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash;  FAQ 총 게시글의 갯수  &ndash;&gt;-->
+<!--    <select id="countFAQ">-->
+<!--        select count(*)-->
+<!--        from tbl_FAQ-->
+<!--    </select>-->
 
 
 </mapper>

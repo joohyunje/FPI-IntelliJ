@@ -10,13 +10,13 @@ import java.time.LocalDateTime;
 @Data
 public class NotiDetailDTO {
     // pk
-    private Long NotiId;
+    private Long notiId;
     // 제목
-    private String NotiTitle;
+    private String notiTitle;
     // 내용
-    private String NotiContent;
+    private String notiContent;
     // 작성일
-    private LocalDateTime NotiRegisterDate;
+    private LocalDateTime notiRegisterDate;
     // 수정일
-    private LocalDateTime NotiUpdateDate;
+    private LocalDateTime notiUpdateDate;
 }

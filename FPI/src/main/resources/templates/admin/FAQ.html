@@ -1,34 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="" xmlns="">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>FAQ</title>
-    <link rel="stylesheet" th:href="@{/css/admin/Noti.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/FAQ.css}">
     <link rel="stylesheet" th:href="@{/css/admin/Header.css}">
 </head>
 <body>
-<div th:replace="~{/Header :: header}"></div>
-
-<!--<header id="header">-->
-<!--    <div class="global-nav-bar">-->
-<!--        <div class="desktop-header">-->
-<!--            <div class="header-left">-->
-<!--                <img src="../../static/img/pro_logo.png" alt="로고" id="logo" style="width: 100px;height: 80px; margin:0  8px 5px 0 ;">-->
-<!--            </div>-->
-
-<!--            <div class="header-right">-->
-<!--                <div class="nav-list">-->
-<!--                    <span class="nav-item">-->
-<!--                        <a href="#">공지사항</a>-->
-<!--                    </span>-->
-<!--                    <span class="nav-item right-item">-->
-<!--                        <a href="#">FAQ</a>-->
-<!--                    </span>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</header>-->
+<div th:replace="~{/admin/Header :: header}"></div>
 
 <div class="main">
     <div class="main-container">
@@ -55,9 +34,9 @@
         </div>
         <div class="FAQ-container">
             <ul>
-                <li><a href="#">1. 예시 질문입니다.</a></li>
-                <li><a href="#">2. 예시 질문입니다.</a></li>
-                <li><a href="#">3. 예시 질문입니다.</a></li>
+                <li><a th:href="@{/admin/FAQDetail/1}" th:text="${faqs[1].FAQTitle}"></a></li>
+                <li><a th:href="@{/admin/FAQDetail/2}" th:text="${faqs[2].FAQTitle}"></a></li>
+                <li><a th:href="@{/admin/FAQDetail/3}" th:text="${faqs[3].FAQTitle}"></a></li>
             </ul>
         </div>
 
@@ -71,84 +50,34 @@
                         <th style="width: 11%">등록일</th>
                     </tr>
                 </thead>
+
+
                 <tbody>
-                    <tr>
-                        <td class="list-num">1</td>
-                        <td class="list-title"><a href="#">샘플용 제목입니다.</a></td>
-                        <td class="list-date">01-01</td>
+                    <tr th:each="faq : ${faqs}" th:object="${faq}">
+                        <td th:text="*{FAQId}" class="list-num"></td>
+                        <td class="list-title"><a th:text="*{FAQTitle}" th:href="@{/admin/FAQDetail/{FAQId}(FAQId=*{FAQId})}"></a></td>
+                        <td th:text="*{#temporals.format(FAQUpdateDate, 'MM-dd')}" class="list-date"></td>
                     </tr>
                 </tbody>
-
-<!--                더미데이터 시작        -->
-                <tbody>
-                <tr>
-                    <td class="list-num">2</td>
-                    <td class="list-title"><a href="#">샘플용 제목입니다.</a></td>
-                    <td class="list-date">01-01</td>
-                </tr>
-                </tbody>
-                <tbody>
-                <tr>
-                    <td class="list-num">3</td>
-                    <td class="list-title"><a href="#">샘플용 제목입니다.</a></td>
-                    <td class="list-date">01-01</td>
-                </tr>
-                </tbody>
-                <tbody>
-                <tr>
-                    <td class="list-num">4</td>
-                    <td class="list-title"><a href="#">샘플용 제목입니다.</a></td>
-                    <td class="list-date">01-01</td>
-                </tr>
-                </tbody>
-                <tbody>
-                <tr>
-                    <td class="list-num">5</td>
-                    <td class="list-title"><a href="#">샘플용 제목입니다.</a></td>
-                    <td class="list-date">01-01</td>
-                </tr>
-                </tbody>
-                <tbody>
-                <tr>
-                    <td class="list-num">6</td>
-                    <td class="list-title"><a href="#">샘플용 제목입니다.</a></td>
-                    <td class="list-date">01-01</td>
-                </tr>
-                </tbody>
-                <tbody>
-                <tr>
-                    <td class="list-num">7</td>
-                    <td class="list-title"><a href="#">샘플용 제목입니다.</a></td>
-                    <td class="list-date">01-01</td>
-                </tr>
-                </tbody>
-                <tbody>
-                <tr>
-                    <td class="list-num">8</td>
-                    <td class="list-title"><a href="#">샘플용 제목입니다.</a></td>
-                    <td class="list-date">01-01</td>
-                </tr>
-                </tbody>
             </table>
-            <div class="write-box">
+
+<!--            이건 일단 보류    -->
+            <div class="write-box">ㅋ
                 <a href="#">글쓰기</a>
             </div>
-            <ul class="list-number">
-                <li class="page-item">
-                    <a class="page-link" aria-label="Previous">
+<!--            이건 일단 보류    -->
+
+            <ul class="list-number pagination">
+                <li th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
+                    <a th:href="@{/admin/FAQ(pageNo=${currentPage - 1}, pageSize=${pageSize})}" class="page-link" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-
-                <li class="page-item">
-                    <a class="page-link">1</a>
-                    <a class="page-link">2</a>
-                    <a class="page-link">3</a>
-                    <a class="page-link">4</a>
-                    <a class="page-link">5</a>
+                <li th:each="i : ${#numbers.sequence(startPage, endPage)}" th:class="${currentPage == i} ? 'page-item active' : 'page-item'">
+                    <a th:href="@{/admin/FAQ(pageNo=${i}, pageSize=${pageSize})}" class="page-link" th:text="${i}"></a>
                 </li>
-                <li class="page-item">
-                    <a class="page-link" aria-label="Next">
+                <li th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
+                    <a th:href="@{/admin/FAQ(pageNo=${currentPage + 1}, pageSize=${pageSize})}" class="page-link" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
