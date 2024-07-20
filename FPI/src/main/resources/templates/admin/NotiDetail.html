@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>공지상세게시판</title>
     <link rel="stylesheet" th:href="@{/css/admin/Header.css}">
+    <link rel="stylesheet" th:href="@{/css/main/common.css}">
     <link rel="stylesheet" th:href="@{/css/admin/NotiDetail.css}">
 
 </head>
@@ -37,7 +38,7 @@
             <div th:utext="*{notiContent}"></div>
         </div>
         <div class="article-bottom-menu">
-            <a href="/admin/Noti">목록</a>
+            <a th:href="@{/noti}">목록</a>
         </div>
     </div>
 </div>

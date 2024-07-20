@@ -1,10 +1,10 @@
 package com.example.fpi.service.admin;
 
-import com.example.fpi.domain.dto.admin.FAQDTO;
-import com.example.fpi.domain.dto.admin.FAQDetailDTO;
+import com.example.fpi.domain.dto.admin.FaqDTO;
+import com.example.fpi.domain.dto.admin.FaqDetailDTO;
 import com.example.fpi.domain.dto.admin.NotiDTO;
 import com.example.fpi.domain.dto.admin.NotiDetailDTO;
-import com.example.fpi.domain.vo.admin.FAQVO;
+import com.example.fpi.domain.vo.admin.FaqVO;
 import com.example.fpi.domain.vo.admin.NotiVO;
 import com.example.fpi.mapper.admin.AdminMapper;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ public class AdminServiceImpl implements AdminService{
         int startRow = (page - 1) * pageSize;
         int endRow = page * pageSize;
 
-        return adminMapper.NotiSelectAll(startRow, endRow);
+        return adminMapper.notiSelectAll(startRow, endRow);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
-    public List<NotiDTO> getRecentList() {
+    public List<NotiDTO> getRecentNoti() {
         return adminMapper.selectRecentNoti();
     }
 
@@ -78,62 +78,56 @@ public class AdminServiceImpl implements AdminService{
 
 
     @Override
-    public List<FAQDTO> getFAQList(int page, int pageSize) {
+    public List<FaqDTO> getFaqList(int page, int pageSize) {
         int startRow = (page - 1) * pageSize;
         int endRow = page * pageSize;
 
-        return adminMapper.FAQSelectAll(startRow, endRow);
+        return adminMapper.faqSelectAll(startRow, endRow);
     }
 
 
     @Override
-    public int getFAQListCount() {
-        return adminMapper.countFAQ();
+    public int getFaqListCount() {
+        return adminMapper.countFaq();
     }
 
     @Override
-    public FAQDetailDTO getFAQById(Long faqId) {
-        FAQDetailDTO faq = adminMapper.selectFAQDetail(faqId);
+    public FaqDetailDTO getFaqById(Long faqId) {
+        FaqDetailDTO faq = adminMapper.selectFaqDetail(faqId);
 
         return faq;
     }
 
 
     @Override
-    public FAQDetailDTO goUpdateFAQ(Long faqId) {
-        return adminMapper.selectFAQDetail(faqId);
+    public FaqDetailDTO goUpdateFaq(Long faqId) {
+        return adminMapper.selectFaqDetail(faqId);
     }
 
 
     @Override
-    public void updateFAQ(FAQDTO faq) {
-        adminMapper.updateFAQ(FAQVO.toEntity(faq));
+    public void updateFaq(FaqDTO faq) {
+        adminMapper.updateFaq(FaqVO.toEntity(faq));
 
-        saveFAQ(faq);
+        saveFaq(faq);
     }
 
     @Override
     @Transactional
-    public void saveFAQ(FAQDTO faq) {
+    public void saveFaq(FaqDTO faq) {
         Long faqId = adminMapper.getSeq();
-        faq.setFAQId(faqId);
-        adminMapper.saveFAQ(faq);
+        faq.setFaqId(faqId);
+        adminMapper.saveFaq(faq);
     }
 
     @Override
-    public void deleteFAQ(Long faqId) {
-        adminMapper.deleteFAQ(faqId);
+    public void deleteFaq(Long faqId) {
+        adminMapper.deleteFaq(faqId);
     }
 
-//    안씀
-//    @Override
-//    public List<FAQDTO> getRecentList() {
-//        return adminMapper.selectRecentFAQ();
-//    }
-
-
-
-
-
+    @Override
+    public List<FaqDTO> getRecentFaq() {
+        return adminMapper.selectRecentFaq();
+    }
 
 }
