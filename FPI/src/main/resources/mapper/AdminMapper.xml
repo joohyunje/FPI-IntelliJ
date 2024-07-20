@@ -5,7 +5,7 @@
 
 <!--    Noti 부분     -->
     <!--  Noti 게시글 목록 가져오기  -->
-    <select id="NotiSelectAll" resultType="NotiDTO">
+    <select id="notiSelectAll" resultType="NotiDTO">
         SELECT *
         FROM (
                  SELECT ROWNUM AS RN, NOTI.*
@@ -85,7 +85,7 @@
 
 <!--    FAQ 부분      -->
     <!--  FAQ 게시글 목록 가져오기  -->
-    <select id="FAQSelectAll" resultType="FAQDTO">
+    <select id="faqSelectAll" resultType="FaqDTO">
         SELECT *
         FROM (
                  SELECT ROWNUM AS RN, FAQ.*
@@ -106,7 +106,7 @@
     </select>
 
     <!-- FAQ 총 게시글의 갯수  -->
-    <select id="countFAQ">
+    <select id="countFaq">
         select count(*)
         from tbl_FAQ
     </select>
@@ -123,20 +123,18 @@
         WHERE FAQ_ID = #{faqId}
     </select>
 
-<!--    Noti는 이거 안씀     -->
-
-<!--    &lt;!&ndash;    Noti 게시글 최근 5개만 가져오기&ndash;&gt;-->
-<!--    <select id="selectRecentNoti" resultType="NotiDetailDTO">-->
-<!--        SELECT NOTI_ID, NOTI_TITLE-->
-<!--        FROM (-->
-<!--                 SELECT-->
-<!--                     NOTI_ID,-->
-<!--                     NOTI_TITLE-->
-<!--                 FROM TBL_NOTI-->
-<!--                 ORDER BY NOTI_REGISTER_DATE DESC-->
-<!--             )-->
-<!--        WHERE ROWNUM &lt;= 5-->
-<!--    </select>-->
+    <!--    FAQ 게시글 최근 5개만 가져오기-->
+    <select id="selectRecentFaq" resultType="FaqDetailDTO">
+        SELECT FAQ_ID, FAQ_TITLE
+        FROM (
+                 SELECT
+                     FAQ_ID,
+                     FAQ_TITLE
+                 FROM TBL_FAQ
+                 ORDER BY FAQ_REGISTER_DATE DESC
+             )
+        WHERE ROWNUM &lt;= 5
+    </select>
 
     <!--    작성  -->
     <insert id="saveFaq">
@@ -152,41 +150,10 @@
         where FAQ_ID = #{faqId}
     </update>
 
-    <!--  Noti 게시글 삭제하기  -->
+    <!--  FAQ 게시글 삭제하기  -->
     <delete id="deleteFaq">
         delete from TBL_FAQ
         where FAQ_ID = #{faqId}
     </delete>
-
-
-
-<!--    &lt;!&ndash;    FAQ 부분      &ndash;&gt;-->
-
-<!--    &lt;!&ndash;  FAQ 게시글 목록 가져오기  &ndash;&gt;-->
-<!--    <select id="FAQSelectAll" resultType="FAQDTO">-->
-<!--        SELECT *-->
-<!--        FROM (-->
-<!--                 SELECT ROWNUM AS RN, FAQ.*-->
-<!--                 FROM (-->
-<!--                          SELECT-->
-<!--                              FAQ_ID,-->
-<!--                              FAQ_TITLE,-->
-<!--                              FAQ_CONTENT,-->
-<!--                              FAQ_REGISTER_DATE,-->
-<!--                              FAQ_UPDATE_DATE,-->
-<!--                          ORDER BY-->
-<!--                              FAQ_REGISTER_DATE DESC-->
-<!--                      ) FAQ-->
-<!--                 WHERE ROWNUM &lt;= #{endRow}-->
-<!--             )-->
-<!--        WHERE rn &gt; #{startRow}-->
-<!--    </select>-->
-
-<!--    &lt;!&ndash;  FAQ 총 게시글의 갯수  &ndash;&gt;-->
-<!--    <select id="countFAQ">-->
-<!--        select count(*)-->
-<!--        from tbl_FAQ-->
-<!--    </select>-->
-
 
 </mapper>

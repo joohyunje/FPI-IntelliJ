@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>자주묻는질문</title>
+    <link rel="stylesheet" th:href="@{/css/admin/Header.css}">
+    <link rel="stylesheet" th:href="@{/css/main/common.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/FAQDetail.css}">
+</head>
+<body>
+
+<div class="main">
+    <div class="article-sidebar">
+        <h3>
+            자주 묻는 질문
+        </h3>
+        <ul>
+            <li th:each="faqRe : ${faqRecent}" th:object="${faqRe}">
+                <a th:text="*{faqTitle}" th:href="@{/faqDetail/{faqId}(faqId=*{faqId})}" class="sidebar-item"></a>
+            </li>
+        </ul>
+
+
+    </div>
+    <div class="article" th:object="${faq}">
+        <div class="FAQ">
+            <h1>자주묻는질문</h1>
+        </div>
+        <div class="article-title">
+            <h3>
+                <div th:utext="*{faqTitle}"></div>
+            </h3>
+            <div class="article-date">
+                <div th:utext="*{#temporals.format(faqRegisterDate, 'MM-dd')}"></div>
+            </div>
+        </div>
+        <div class="article-content">
+            <div th:utext="*{faqContent}"></div>
+        </div>
+        <div class="article-bottom-menu">
+            <a th:href="@{/faq}">목록</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

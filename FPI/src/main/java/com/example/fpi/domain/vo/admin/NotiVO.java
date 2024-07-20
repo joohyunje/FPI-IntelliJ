@@ -1,6 +1,5 @@
 package com.example.fpi.domain.vo.admin;
 
-import com.example.fpi.domain.dto.admin.FAQDTO;
 import com.example.fpi.domain.dto.admin.NotiDTO;
 import lombok.Builder;
 import lombok.Getter;

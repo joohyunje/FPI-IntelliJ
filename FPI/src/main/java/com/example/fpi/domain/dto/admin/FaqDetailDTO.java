@@ -4,11 +4,10 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-// 상세보기에 들어갈거
 
 @Component
 @Data
-public class FAQDetailDTO {
+public class FaqDetailDTO {
     // pk
     private Long faqId;
     // 제목

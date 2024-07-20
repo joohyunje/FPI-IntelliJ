@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>FAQ</title>
-    <link rel="stylesheet" th:href="@{/css/admin/FAQ.css}">
     <link rel="stylesheet" th:href="@{/css/admin/Header.css}">
+    <link rel="stylesheet" th:href="@{/css/main/common.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/FAQ.css}">
 </head>
 <body>
 <div th:replace="~{/admin/Header :: header}"></div>
 
 <div class="main">
     <div class="main-container">
-
         <div class="main-container-title">
             <div class="main-container-title-container">
                 <h2 class="title">
@@ -34,9 +34,15 @@
         </div>
         <div class="FAQ-container">
             <ul>
-                <li><a th:href="@{/admin/FAQDetail/1}" th:text="${faqs[1].FAQTitle}"></a></li>
-                <li><a th:href="@{/admin/FAQDetail/2}" th:text="${faqs[2].FAQTitle}"></a></li>
-                <li><a th:href="@{/admin/FAQDetail/3}" th:text="${faqs[3].FAQTitle}"></a></li>
+<!--                충돌나서 지움. 충돌 사유 : faq[3]이 현재 보여지는 리스트의 4(0부터시작이니)번째 값을 가져오는데 현재 보여지는-->
+<!--                것 중에서 4번째 리스트가 없을 경우 에러가 남 그래서 그냥 제목을 적는걸로 우선타협함. 어짜피 우리가 지정할 것이기에-->
+<!--                <li><a th:href="@{/admin/FaqDetail/3}" th:text="${faqs[3].faqTitle}"></a></li>-->
+<!--                <li><a th:href="@{/admin/FaqDetail/2}" th:text="${faqs[2].faqTitle}"></a></li>-->
+<!--                <li><a th:href="@{/admin/FaqDetail/1}" th:text="${faqs[1].faqTitle}"></a></li>-->
+                <li><a th:href="@{/faqDetail/3}">프로/유저는 어떻게 거래하나요</a></li>
+                <li><a th:href="@{/faqDetail/2}">비밀번호가 기억나지 않아요</a></li>
+                <li><a th:href="@{/faqDetail/1}">여기에는 어떤 서비스가 있나요?
+                </a></li>
             </ul>
         </div>
 
@@ -51,33 +57,33 @@
                     </tr>
                 </thead>
 
-
+<!-- 빨간 줄 무시해 -->
                 <tbody>
                     <tr th:each="faq : ${faqs}" th:object="${faq}">
-                        <td th:text="*{FAQId}" class="list-num"></td>
-                        <td class="list-title"><a th:text="*{FAQTitle}" th:href="@{/admin/FAQDetail/{FAQId}(FAQId=*{FAQId})}"></a></td>
-                        <td th:text="*{#temporals.format(FAQUpdateDate, 'MM-dd')}" class="list-date"></td>
+                        <td th:text="*{faqId}" class="list-num"></td>
+                        <td class="list-title"><a th:text="*{faqTitle}" th:href="@{/faqDetail/{faqId}(faqId=*{faqId})}"></a></td>
+                        <td th:text="*{#temporals.format(faqUpdateDate, 'MM-dd')}" class="list-date"></td>
                     </tr>
                 </tbody>
             </table>
 
 <!--            이건 일단 보류    -->
-            <div class="write-box">ㅋ
+            <div class="write-box" style="display: none">
                 <a href="#">글쓰기</a>
             </div>
 <!--            이건 일단 보류    -->
 
             <ul class="list-number pagination">
                 <li th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
-                    <a th:href="@{/admin/FAQ(pageNo=${currentPage - 1}, pageSize=${pageSize})}" class="page-link" aria-label="Previous">
+                    <a th:href="@{/faq(pageNo=${currentPage - 1}, pageSize=${pageSize})}" class="page-link" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
                 <li th:each="i : ${#numbers.sequence(startPage, endPage)}" th:class="${currentPage == i} ? 'page-item active' : 'page-item'">
-                    <a th:href="@{/admin/FAQ(pageNo=${i}, pageSize=${pageSize})}" class="page-link" th:text="${i}"></a>
+                    <a th:href="@{/faq(pageNo=${i}, pageSize=${pageSize})}" class="page-link" th:text="${i}"></a>
                 </li>
                 <li th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
-                    <a th:href="@{/admin/FAQ(pageNo=${currentPage + 1}, pageSize=${pageSize})}" class="page-link" aria-label="Next">
+                    <a th:href="@{/faq(pageNo=${currentPage + 1}, pageSize=${pageSize})}" class="page-link" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>

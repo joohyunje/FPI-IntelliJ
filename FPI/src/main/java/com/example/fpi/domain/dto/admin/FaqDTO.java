@@ -7,15 +7,15 @@ import java.time.LocalDateTime;
 
 @Component
 @Data
-public class FAQDTO {
+public class FaqDTO {
     // pk
-    private Long FAQId;
+    private Long faqId;
     // 제목
-    private String FAQTitle;
+    private String faqTitle;
     // 내용
-    private String FAQContent;
+    private String faqContent;
     // 작성일
-    private LocalDateTime FAQRegisterDate;
+    private LocalDateTime faqRegisterDate;
     // 수정일
-    private LocalDateTime FAQUpdateDate;
+    private LocalDateTime faqUpdateDate;
 }
