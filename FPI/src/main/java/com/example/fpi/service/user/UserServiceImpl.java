@@ -1,8 +1,12 @@
 package com.example.fpi.service.user;
 
+import com.example.fpi.domain.dto.main.CategoryListDTO;
 import com.example.fpi.domain.dto.user.*;
 import com.example.fpi.domain.util.PagedResponse;
 //import com.example.fpi.domain.vo.user.UserVO;
+import com.example.fpi.domain.vo.main.CategoryListVO;
+import com.example.fpi.domain.vo.user.UserVO;
+import com.example.fpi.mapper.main.FormMapper;
 import com.example.fpi.mapper.user.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +18,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
+    private final FormMapper formMapper;
 
     //    받은 요청 목록
     @Override
@@ -57,17 +62,24 @@ public class UserServiceImpl implements UserService {
         return userMapper.detailUser(userId);
     }
 
+    //    유저 정보 변경
+    @Override
+    public void editUser(UserDTO dto) {
+        userMapper.editUser(UserVO.toEntity(dto));
+    }
 
-//    유저 삭제 시, 이름 입력 비교를 위해
+    @Override
+    public void editCategory(CategoryListDTO dto) {
+        userMapper.editCategory(CategoryListVO.toEntity(dto));
+
+    }
+
+
+    //    유저 삭제 시, 이름 입력 비교를 위해
 //    DB에서 이름을 가져오기
     @Override
     public String getUserName(String userId) {
         return userMapper.findByUserId(userId).getUserName();
-    }
-
-    @Override
-    public UserDTO editUser(String userId) {
-        return userMapper.findByUserId(userId);
     }
 
 

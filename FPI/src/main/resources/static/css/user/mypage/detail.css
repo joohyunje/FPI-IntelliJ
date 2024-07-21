@@ -100,3 +100,14 @@ button{
 .oneline > span{
   margin-right: 10px;
 }
+
+.word {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  padding-top: 0.5rem;
+}

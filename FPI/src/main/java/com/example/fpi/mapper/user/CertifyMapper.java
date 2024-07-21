@@ -17,10 +17,12 @@ public interface CertifyMapper {
     void addCardInfoFile(CardInfoFileVO vo); //자격증 사진
     void addCareerInfo(CareerInfoVO vo); //경력 내용
     void insertProCategory(CategoryListVO vo);
-    void updateApproval(UserVO vo); //전문가 인증여부
+    void updateApproval(String userId); //전문가 인증여부
 
 
-    CertifyDTO selectCertify(String userId);
+//    CertifyDTO selectCertify(String userId);
     Long getProSeq();
     Long getInfoSeq();
+    Long getFileSeq();
+
 }

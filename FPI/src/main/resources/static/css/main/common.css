@@ -25,6 +25,10 @@ a{
     font-weight: bolder;
   }
 }
+button{
+  font-family: Interop, sans-serif;
+}
+
 
 ul, ol {
   padding: 0;

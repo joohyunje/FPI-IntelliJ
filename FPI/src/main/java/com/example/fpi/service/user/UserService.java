@@ -1,7 +1,9 @@
 package com.example.fpi.service.user;
 
+import com.example.fpi.domain.dto.main.CategoryListDTO;
 import com.example.fpi.domain.dto.user.*;
 import com.example.fpi.domain.util.PagedResponse;
+import com.example.fpi.domain.vo.user.UserVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,15 +25,16 @@ public interface UserService {
     //    유저가 받은 리뷰 목록보기
     List<UserReviewListDTO> selectUserReview(String userId);
 
-//    유저정보 상세보기
+//    유저정보 상세보기,수정하기로 정보 담아서 이동
     UserDTO detailUser(String userId);
 
     //    유저 삭제 시, 이름 입력 비교를 위해
 //    DB에서 이름을 가져오기
     String getUserName(String userId);
 
-//    수정하기로 정보 담아서 이동
-    UserDTO editUser(String userId);
+//    유저 정보수정
+    void editUser(UserDTO dto);
+    void editCategory(CategoryListDTO dto);
 
 //    유저 정보 삭제
     void deleteUser(String userId,String userName);

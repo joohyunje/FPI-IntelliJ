@@ -55,6 +55,7 @@ public interface UserMapper {
     //회원가입 폼
     void updateUser(UserVO vo);
 
+//    전문가 탈퇴시 전문가 인증값 변경
     void editApproval(String userId);
 
 //    유저정보 수정

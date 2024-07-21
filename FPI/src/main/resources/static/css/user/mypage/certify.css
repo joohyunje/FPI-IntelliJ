@@ -1,13 +1,11 @@
-.detail-container {
-  width: 100%;
-}
+
 .detail-container > .certify-container{
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 900px;
   /* padding: 0 16px; */
-  margin: 30px auto;
+  margin: 20px auto 30px auto;
   min-height: 800px;
 
   & >div>h2+p{
@@ -68,13 +66,14 @@
 .certi-label{
   display: flex;
   align-items: center;
+  margin-bottom: 0.5rem;
 }
 
-.height200{
+.height250{
   width: 100%;
   margin-bottom: 20px; 
   /* textarea와 버튼 사이의 간격 */
-  height: 200px; 
+  height: 250px;
   overflow:hidden;
 }
 .textarea{
@@ -100,16 +99,36 @@
   }
   
 }
-#proImg{
-  width: 120px;
-  height: 120px;
-  border: 1px solid rgb(228, 229, 237);
-  border-radius: 5px;
-  overflow: hidden;
-  background-color: #fff;
+#proEdit .textarea{
+  &:hover,&:focus{
+    position: inherit;
+    border-color: #F8CACC;
+  }
+  &:focus{
+    outline: none;
+  }
+}
+.plus,.minus{
+  font-size: 25px;
+  padding: 0rem 0.3rem 0.6rem 0.3rem;
+  cursor: pointer;
+}
+.minus{
+  display: none;
+}
+.margin5{
+  margin: 0.5rem 0;
+}
+/*#proImg{*/
+/*  width: 120px;*/
+/*  height: 120px;*/
+/*  border: 1px solid rgb(228, 229, 237);*/
+/*  border-radius: 5px;*/
+/*  overflow: hidden;*/
+/*  background-color: #fff;*/
 
-}
-#proImg img {
-  max-width: 100%;
-  max-height: 100%;
-}
+/*}*/
+/*#proImg img {*/
+/*  max-width: 100%;*/
+/*  max-height: 100%;*/
+/*}*/

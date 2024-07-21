@@ -108,8 +108,11 @@
   align-items: center;
 }
 
-#user-edit div,#pro-edit div{
+#userEdit div,#proEdit div{
   margin: 10px 0 8px 0;
+}
+#proEdit div{
+  margin: 0 0 8px 0;
 }
 .fontSize15{
   font-size: 15px;
@@ -155,7 +158,7 @@
   }
 }
 
-#pro-edit .form-control{
+#proEdit .form-control{
   &:hover,&:focus{
     border-color:  #F8CACC !important;
   }
@@ -172,7 +175,7 @@
   margin-bottom: 0.3rem;
 }
 
-#user-edit .col p,#pro-edit .col p{
+#user-edit .col p,#proEdit .col p{
   margin: 5px 0 8px 0;
   font-size: 13px;
   color: rgba(33, 37, 41, 0.75);
@@ -212,10 +215,10 @@ input:read-only{
 
 }
 
-#pro-edit .form-select{
+#proEdit .form-select{
   display: block;
-  width: 98%;
-  padding: .375rem 2.25rem .375rem .75rem;
+  width: 100%;
+  /*padding: .375rem 2.25rem .375rem .75rem;*/
   font-size: 1rem;
   border-color: #e0e0e0;
   border-radius: 0.375em;
@@ -242,7 +245,7 @@ input:read-only{
 }
 
 
-#pro-edit .height200 textarea{
+#proEdit .height200 textarea{
   &:hover {
     border-color: #F8CACC !important;
   }

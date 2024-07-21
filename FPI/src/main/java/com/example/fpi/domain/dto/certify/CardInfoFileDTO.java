@@ -7,9 +7,8 @@ import org.springframework.stereotype.Component;
 @Data
 public class CardInfoFileDTO {
     private Long cardInfoFileId;
-    private String cardInfoFileRoute;
-    private String cardInfoFileOriginal;
-    private String cardFileSaved;
+    private String cardInfoFileRoute; //파일경로
+    private String cardInfoFileOriginal; //t-실제 파일명
     private Long cardInfoId;
 
 }

@@ -21,9 +21,11 @@ public class FormServiceImpl implements FormService {
 //    지역아이디 조회하여 없으면 지역테이블에 데이터 추가 후 지역아이디 가져옴
     @Override
     public Long selectLocation(String region, String city) {
+//        해당값이 지역테이블에 있는지 검사
         Long locationId = formMapper.selectLocation(region, city);
+//        없다면 추가해줘야함
         if (locationId == null || locationId == 0) {
-            Long nextval = formMapper.getLoSeq(); // 데이터베이스에서 다음 시퀀스 값을 가져오는 예시 메서드
+            Long nextval = formMapper.getLoSeq(); // 데이터베이스에서 시퀀스 값을 가져옴
 
             LocationDTO locationDTO = new LocationDTO();
             locationDTO.setLocationId(nextval);  // 시퀀스 값 설정
@@ -32,7 +34,8 @@ public class FormServiceImpl implements FormService {
             LocationVO locationVO = LocationVO.toEntity(locationDTO);
             formMapper.insertLocation(locationVO);
 
-            return nextval+1;
+            System.out.println(nextval);
+            return nextval;
 
 
 
@@ -42,7 +45,7 @@ public class FormServiceImpl implements FormService {
 
 
     }
-// 유저와 프로가 선택한 카테고리를 카테고리테이블에 정보 입력
+// 유저가 선택한 카테고리를 카테고리리스트테이블에 정보 입력
     @Override
     public void insertCategoryList(Long categoryId,String userId) {
         Long nextval = formMapper.getCaSeq();
@@ -50,7 +53,6 @@ public class FormServiceImpl implements FormService {
         categoryListDTO.setCategoryListId(nextval);
         categoryListDTO.setCategoryId(categoryId);
         categoryListDTO.setUserId(userId);
-
         CategoryListVO vo= CategoryListVO.toEntity(categoryListDTO);
         formMapper.insertCategoryList(vo);
     }

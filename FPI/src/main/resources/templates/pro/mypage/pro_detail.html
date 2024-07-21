@@ -22,8 +22,8 @@
       <div class="aside">
         <h1>계정 설정</h1>
         <hr class="hr">
-        <a th:href="@{/pro/mypage/detail}" style="font-weight: bold;">전문가 정보</a>
-        <a href="/templates/pro/pro_edit.html">전문가 정보 수정</a>
+        <a th:href="@{/pro/detail}" style="font-weight: bold;">전문가 정보</a>
+        <a th:href="@{/pro/edit}">전문가 정보 수정</a>
         <button id="btn-modal">전문가 탈퇴</button>
       </div>
       <!-- 우측 정보수정 -->
@@ -33,8 +33,9 @@
         <div class="sub-container">
           <!-- 프로필사진 -->
           <div class="marginR-40">
-            <img src="" class="imgSize" ><!-- src"" = 프로필이미지링크넣어야함 -->
+            <img  class="imgSize" th:src="${detail.proImg}" ><!-- src"" = 프로필이미지링크넣어야함 -->
           </div>
+
           <div th:object="${detail}">
             <div class="underline">
               <div class="fontSize15">전문가 활동 이름</div>
@@ -60,6 +61,27 @@
               <div class="fontSize15">제공서비스</div>
               <p th:text="*{categoryName}">제공서비스뿌려줌</p>
             </div>
+
+            <div class="underline">
+              <div class="fontSize15">보유 자격증사진 </div>
+              <div style="display: flex; margin-top: 10px;flex-wrap:wrap;">
+                <img class="imgSize" style="margin:0 10px 15px 0" th:each="file:${files}" th:src="${file.cardInfoFileRoute}" >
+              </div>
+            </div>
+
+            <div class="underline">
+              <div class="fontSize15">보유 자격증정보</div>
+              <div th:each="card :${cards}" style="margin-top: 10px">
+                <div style="margin-bottom: 10px" th:text="'발급기관 : '+ ${card.certiOrgan} + ' 자격증 번호 : ' + ${card.certiNum}"></div>
+              </div>
+
+            </div>
+
+            <div class="underline" style="padding:0 0 1rem 0">
+              <div class="fontSize15">경력 혹은 수상내역</div>
+              <div class="word" th:text="*{award}" ></div>
+            </div>
+
             <div class="underline">
               <div class="fontSize15">고용횟수</div>
               <p th:if="*{empCnt == 0}">아직 서비스를 제공한 적이 없습니다.</p>
@@ -68,9 +90,10 @@
             </div>
             <div>
               <div class="fontSize15">받은 별점 </div>
-              <p th:if="*{proStarRate == null}">받은 별점이 없습니다.</p>
-              <p th:text="*{proStarRate}" th:unless="*{proStarRate == null}">받은 별점 평균 뿌려줌</p>
+              <p th:if="*{proStarRate == 0}">받은 별점이 없습니다.</p>
+              <p th:text="*{proStarRate}" th:unless="*{proStarRate == 0}">받은 별점 평균 뿌려줌</p>
             </div>
+
         </div>
 
   
@@ -115,7 +138,7 @@
     </div>
   </div>
 
-  <script src="/js/deletepro.js"></script>
+  <script th:src="@{/js/deletepro.js}"></script>
 
 </body>
 

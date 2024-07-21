@@ -9,7 +9,7 @@ public class CategoryDTO {
     private Long categoryListId;
     private Long categoryId;
     private String userId;
-    private Long ProId;
+    private Long proId;
 
 
 }
