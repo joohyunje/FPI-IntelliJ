@@ -9,16 +9,16 @@
     <div class="global-nav-bar">
         <div class="desktop-header">
             <div class="header-left">
-                <img th:src="@{/img/pro_logo.png}" alt="로고" id="logo" style="width: 100px;height: 80px; margin:0  8px 5px 0 ;">
+                <img th:src="@{/img/pro_logo.png}" alt="로고" id="logo" style="width: 100px;height: 80px; margin:0  8px 5px 0 ;" th:href="@{/main/main}">
             </div>
 
             <div class="header-right">
                 <div class="nav-list">
                     <span class="nav-item">
-                        <a th:href="@{/admin/Noti}">공지사항</a>
+                        <a th:href="@{/noti}">공지사항</a>
                     </span>
                     <span class="nav-item right-item">
-                        <a th:href="@{/admin/FAQ}">FAQ</a>
+                        <a th:href="@{/faq}">FAQ</a>
                     </span>
                 </div>
             </div>

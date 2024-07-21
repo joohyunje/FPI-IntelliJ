@@ -1,10 +1,10 @@
 package com.example.fpi.mapper.admin;
 
-import com.example.fpi.domain.dto.admin.FAQDTO;
-import com.example.fpi.domain.dto.admin.FAQDetailDTO;
+import com.example.fpi.domain.dto.admin.FaqDTO;
+import com.example.fpi.domain.dto.admin.FaqDetailDTO;
 import com.example.fpi.domain.dto.admin.NotiDTO;
 import com.example.fpi.domain.dto.admin.NotiDetailDTO;
-import com.example.fpi.domain.vo.admin.FAQVO;
+import com.example.fpi.domain.vo.admin.FaqVO;
 import com.example.fpi.domain.vo.admin.NotiVO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -17,7 +17,7 @@ public interface AdminMapper {
 
     // Noti 부분
     // 공지 게시판 목록
-    List<NotiDTO> NotiSelectAll(int startRow, int endRow);
+    List<NotiDTO> notiSelectAll(int startRow, int endRow);
     // 게시글 총 갯수
     int countNoti();
     // 게시글 상세보기
@@ -36,17 +36,17 @@ public interface AdminMapper {
 
     // FAQ 부분
     // 공지 게시판 목록
-    List<FAQDTO> FAQSelectAll(int startRow, int endRow);
+    List<FaqDTO> faqSelectAll(int startRow, int endRow);
     // 게시글 총 갯수
-    int countFAQ();
+    int countFaq();
     // 게시글 상세보기
-    FAQDetailDTO selectFAQDetail(Long faqId);
+    FaqDetailDTO selectFaqDetail(Long faqId);
     // 왼쪽에 달리는 최신글
-//    List<FAQDTO> selectRecentFAQ();
+    List<FaqDTO> selectRecentFaq();
     // 게시글 작성
-    void saveFAQ(FAQDTO faq);
+    void saveFaq(FaqDTO faq);
     // 게시글 수정
-    void updateFAQ(FAQVO faqVO);
+    void updateFaq(FaqVO faqVO);
     // 게시글 삭제
-    void deleteFAQ(Long faqId);
+    void deleteFaq(Long faqId);
 }

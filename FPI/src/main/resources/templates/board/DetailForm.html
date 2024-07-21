@@ -1,39 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>상세게시판</title>
-    <link rel="stylesheet" href="../../static/css/board/DetailForm.css">
+    <link rel="stylesheet" th:href="@{/css/layout/header.css}">
+    <link rel="stylesheet" th:href="@{/css/main/common.css}">
+    <link rel="stylesheet" th:href="@{/css/board/DetailForm.css}">
 </head>
 <body>
+<div th:replace="~{/layout/header :: header}"></div>
 
 <div class="main">
-    <div class="article">
+    <div class="article" th:object="${commu}">
         <div class="article-title">
-            <h3>
-                유튜브 무료편집 해드립니다
+            <h3 th:text="*{communityTitle}">
+<!--                유튜브 무료편집 해드립니다-->
             </h3>
             <div>
-                <div class="article-writer">
-                    김고글
+                <div class="article-writer" th:text="*{userName}">
+<!--                    김고글-->
                 </div>
-                <div class="article-date">
-                    01-01
+                <div class="article-date" th:text="*{#temporals.format(communityRegisterDate, 'MM-dd')}">
+<!--                    01-01-->
                 </div>
             </div>
         </div>
-        <div class="article-content">
+        <div class="article-content" th:text="*{communityContent}">
             <div>
-                안녕하세요<br><br>
-                사용하는 프로그램은 프리미어 사용하구요<br><br>
-                경력은 짧지만 최선을 다해 만들어보겠습니다<br><br>
-                만들어진 영상은  제포트폴리오로 사용할수있으니 참고부탁드립니다.<br><br>
-                사용용도:<br>
-                영상길이:<br>
-                러닝타임:<br>
-                참고영상이나 바라는점:<br>
-                중요포인트:<br><br>
-                쓰셔서 연락주세요
+<!--                안녕하세요<br><br>-->
+<!--                사용하는 프로그램은 프리미어 사용하구요<br><br>-->
+<!--                경력은 짧지만 최선을 다해 만들어보겠습니다<br><br>-->
+<!--                만들어진 영상은  제포트폴리오로 사용할수있으니 참고부탁드립니다.<br><br>-->
+<!--                사용용도:<br>-->
+<!--                영상길이:<br>-->
+<!--                러닝타임:<br>-->
+<!--                참고영상이나 바라는점:<br>-->
+<!--                중요포인트:<br><br>-->
+<!--                쓰셔서 연락주세요-->
             </div>
         </div>
         <div class="like-comment-icon">
@@ -43,8 +46,8 @@
                         <path d="M8 9.91273C8 9.55024 8.09852 9.19456 8.28501 8.88373L11.785 3.0504C12.8286 1.31102 15.5 2.05095 15.5 4.07939V8.35876C15.5 8.91104 15.9477 9.35876 16.5 9.35876H20.3415C21.6724 9.35876 22.632 10.6343 22.2632 11.9131L19.9555 19.9131C19.7085 20.7692 18.9249 21.3588 18.0338 21.3588H10C8.89543 21.3588 8 20.4633 8 19.3588V9.91273ZM20.8219 11.4973L18.5142 19.4973C18.4525 19.7114 18.2566 19.8588 18.0338 19.8588H10C9.72386 19.8588 9.5 19.6349 9.5 19.3588V9.91273C9.5 9.8221 9.52463 9.73318 9.57125 9.65548L13.0713 3.82214C13.1544 3.6835 13.2427 3.62915 13.3156 3.60284C13.4013 3.57184 13.514 3.56443 13.6335 3.59753C13.753 3.63063 13.8457 3.69493 13.9033 3.76565C13.9522 3.82568 14 3.91771 14 4.07939V8.35876C14 9.73947 15.1193 10.8588 16.5 10.8588H20.3415C20.6742 10.8588 20.9142 11.1777 20.8219 11.4973Z" stroke="black" stroke-width="0.5" fill="none"></path>
                         <path d="M2 11.3588C2 10.2542 2.89543 9.35876 4 9.35876H6C6.55228 9.35876 7 9.80648 7 10.3588V20.3588C7 20.911 6.55228 21.3588 6 21.3588H4C2.89543 21.3588 2 20.4633 2 19.3588V11.3588ZM4 10.8588H5.5V19.8588H4C3.72386 19.8588 3.5 19.6349 3.5 19.3588V11.3588C3.5 11.0826 3.72386 10.8588 4 10.8588Z" stroke="black" stroke-width="0.5" fill="none"></path>
                     </svg>
-                    <div>
-                        좋아요
+                    <div th:text="'좋아요 ' + *{likeCount}">
+
                     </div>
                 </div>
                 <div class="comment-icon">
