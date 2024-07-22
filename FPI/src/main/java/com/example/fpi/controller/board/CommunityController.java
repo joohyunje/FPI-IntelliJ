@@ -1,20 +1,15 @@
 package com.example.fpi.controller.board;
 
-import com.example.fpi.domain.dto.admin.NotiDTO;
 import com.example.fpi.domain.dto.board.CommunityDTO;
 import com.example.fpi.domain.dto.board.CommunityDetailDTO;
 import com.example.fpi.domain.oauth.CustomOAuth2User;
-import com.example.fpi.service.admin.AdminService;
 import com.example.fpi.service.board.CommunityService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -71,6 +66,19 @@ public class CommunityController {
 
         model.addAttribute("commu", commu);
 
-        return "board/DetailForm";
+        return "board/Detail";
+    }
+
+    @GetMapping("/write")
+    public String writeForm(Model model){
+        model.addAttribute("community", new CommunityDTO());
+        return "board/Write";
+    }
+
+    @PostMapping("/write")
+    public String write(CommunityDTO community, @RequestParam("userId") String userId){
+        community.setUserId(userId);
+        communityService.saveCommunity(community);
+        return "redirect:/community";
     }
 }

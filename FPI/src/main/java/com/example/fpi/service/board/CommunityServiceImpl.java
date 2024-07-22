@@ -6,6 +6,8 @@ import com.example.fpi.domain.oauth.CustomOAuth2User;
 import com.example.fpi.mapper.board.CommunityMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -33,5 +35,14 @@ public class CommunityServiceImpl implements CommunityService {
         CommunityDetailDTO community= communityMapper.selectCommunityDetail(communityId);
 
         return community;
+    }
+
+    @Override
+    @Transactional
+    public void saveCommunity(CommunityDTO community) {
+
+        Long communityId = communityMapper.getSeq();
+        community.setCommunityId(communityId);
+        communityMapper.saveCommunity(community);
     }
 }

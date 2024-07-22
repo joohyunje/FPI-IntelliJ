@@ -55,21 +55,6 @@ public class NotiController {
         return "admin/NotiDetail";
     }
 
-//    // 작성하기
-//    @PostMapping("/board/WriteForm")
-//    public String write(NotiDTO noti) {
-//        adminService.saveNoti(noti);
-//        return "redirect:/admin/Noti";
-//    }
-//
-//    // 수정하기
-//    @PostMapping("/edit")
-//    public String edit(NotiDTO noti) {
-//        adminService.updateNoti(noti);
-//
-//        return "redirect:/admin/NotiDetail/" + noti.getNotiId();
-//    }
-
     // 삭제하기
     @PostMapping("/delete/{notiId}")
     public String delete(@PathVariable Long notiId) {

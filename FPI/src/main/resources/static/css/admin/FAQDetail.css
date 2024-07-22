@@ -73,6 +73,7 @@ li{
 .article-content{
     margin: 0 auto 100px;
     width: calc(100% - 59px);
+    height:350px;
 }
 
 .article-bottom-menu{
@@ -81,7 +82,6 @@ li{
 
 .article-bottom-menu a{
     padding: 0 25px;
-    background: #444;
     border: 1px solid #303030;
     color: #fff;
     display: inline-block;

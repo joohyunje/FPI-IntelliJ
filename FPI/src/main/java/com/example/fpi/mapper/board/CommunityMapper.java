@@ -16,4 +16,6 @@ public interface CommunityMapper {
     int countCommunity();
 
     CommunityDetailDTO selectCommunityDetail(Long communityId);
+
+    void saveCommunity(CommunityDTO communityDTO);
 }
