@@ -60,6 +60,7 @@ li{
 .article-content{
     margin: 0 auto 100px;
     width: calc(100% - 59px);
+    height: 350px;
 }
 
 .like-comment-icon{
@@ -221,36 +222,6 @@ li{
     margin: 7px 0 0 5px;
 }
 
-.send-button{
-    margin-right:5px;
-    float: right;
-    width: 3.75rem;
-    padding: .3125rem .5rem;
-    color: #000000;
-    background-color: #eafaf9;
-    border: 0;
-    border-radius: 6px;
-    font-size: .6rem;
-    font-weight: 500;
-    line-height: 1.5;
-    letter-spacing: -.01875rem;
-    cursor: pointer;
-}
-
-.report-button{
-    float: right;
-    width: 3.75rem;
-    padding: .3125rem .5rem;
-    color: #000000;
-    background-color: #F8CACC;
-    border: 0;
-    border-radius: 6px;
-    font-size: .6rem;
-    font-weight: 500;
-    line-height: 1.5;
-    letter-spacing: -.01875rem;
-    cursor: pointer;
-}
 
 .comment-text{
     font-size: 13px;
@@ -267,7 +238,6 @@ li{
 
 .article-bottom-menu a{
 padding: 0 25px;
-background: #444;
 border: 1px solid #303030;
 color: #fff;
 display: inline-block;

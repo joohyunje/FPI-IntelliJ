@@ -4,6 +4,7 @@ import com.example.fpi.domain.dto.board.CommunityDTO;
 import com.example.fpi.domain.dto.board.CommunityDetailDTO;
 import com.example.fpi.domain.oauth.CustomOAuth2User;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -15,5 +16,7 @@ public interface CommunityService {
     int getCommunityListCount();
 
     CommunityDetailDTO getCommunityById(Long communityId, CustomOAuth2User customOAuth2User);
+
+    void saveCommunity(CommunityDTO community);
 }
 

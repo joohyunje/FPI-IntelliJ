@@ -87,7 +87,6 @@ h1{
 .content{
     width: 100%;
     min-height: 22.5rem;
-    height: 100%;
     position: relative;
     margin: auto;
 }
@@ -127,4 +126,8 @@ h1{
     background: #444;
     border: 1px solid #303030;
     color: #fff;
+}
+
+.note-editing-area{
+    height: 350px;
 }
