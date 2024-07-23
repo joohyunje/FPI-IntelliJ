@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 @Data
 public class CertifyDTO {
     private Long proId;
+//    private int certiCount;
+    private int awardCount;
     private String proName;
     private String phoneNumber;
     private String proImg;

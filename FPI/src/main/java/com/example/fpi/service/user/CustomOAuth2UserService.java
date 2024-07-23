@@ -57,10 +57,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 //            insert
             loginUser.setRole("new");
             UserVO user = UserVO.toEntity(loginUser);
-//            CategoryVO category = CategoryVO.toEntity()
             userMapper.saveUser(user);
 //            userMapper.updateUser(user);
-//            userMapper.insertCategory();
         }
 //        가입한 이력이 있다면, 정보 업데이트
 //        else{

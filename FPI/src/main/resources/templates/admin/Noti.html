@@ -21,7 +21,12 @@
                 </h2>
             </div>
         </div>
-        <div class="main-container-list">
+
+        <div th:if="${notis.isEmpty()}">
+            <p class="no-data">현재 등록된 공지가 없습니다.</p>
+        </div>
+
+        <div th:if="${notis.size() > 0}" class="main-container-list">
             <table class="list-container">
                 <thead>
                     <tr>

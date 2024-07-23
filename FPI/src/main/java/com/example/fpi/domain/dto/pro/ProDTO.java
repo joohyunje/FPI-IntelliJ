@@ -14,9 +14,11 @@ public class ProDTO {
     private Long empCnt;
     private Long locationId;
     private String userId;
+    private Long categoryId;
     private String categoryName;
     private String region;
     private String city;
     private String email;
     private String userCash;
+    private String award;
 }

@@ -1,9 +1,14 @@
 package com.example.fpi.service.user;
 
+import com.example.fpi.domain.dto.main.CategoryListDTO;
 import com.example.fpi.domain.dto.file.UserUploadFileDTO;
 import com.example.fpi.domain.dto.pro.ProReviewDTO;
 import com.example.fpi.domain.dto.user.*;
 import com.example.fpi.domain.util.PagedResponse;
+//import com.example.fpi.domain.vo.user.UserVO;
+import com.example.fpi.domain.vo.main.CategoryListVO;
+import com.example.fpi.domain.vo.user.UserVO;
+import com.example.fpi.mapper.main.FormMapper;
 import com.example.fpi.domain.vo.file.UserUploadFileVO;
 import com.example.fpi.mapper.File.FileMapper;
 import com.example.fpi.mapper.user.UserMapper;
@@ -26,6 +31,7 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
+    private final FormMapper formMapper;
     private final FileMapper fileMapper;
 
     //    받은 요청 목록
@@ -35,12 +41,11 @@ public class UserServiceImpl implements UserService {
         int endRow = page * pageSize;
 
         int totalRequest = userMapper.countReceivedRequest(userId);
-        int totalPages = (int) Math.ceil((double) totalRequest / pageSize);
+        int totalPages = (int) Math.ceil((double)totalRequest/pageSize);
 
         List<UserReceivedReqListDTO> requests = userMapper.selectReceivedReq(userId, startRow, endRow, sort);
         return new PagedResponse<>(requests, page, totalPages, pageSize, totalRequest);
     }
-
     //  보낸 요청 목록
     @Override
     public PagedResponse<UserSendReqListDTO> selectSendReq(String userId, int page, int pageSize, String sort) {
@@ -48,7 +53,7 @@ public class UserServiceImpl implements UserService {
         int endRow = page * pageSize;
 
         int totalRequest = userMapper.countSendRequest(userId);
-        int totalPages = (int) Math.ceil((double) totalRequest / pageSize);
+        int totalPages = (int) Math.ceil((double)totalRequest/pageSize);
 
         List<UserSendReqListDTO> requests = userMapper.selectSendReq(userId, startRow, endRow, sort);
 
@@ -65,34 +70,40 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectUserReview(userId);
     }
 
-    //유저 정보 조회
+//유저 정보 조회
     @Override
     public UserDTO detailUser(String userId) {
         return userMapper.detailUser(userId);
     }
 
+    //    유저 정보 변경
+    @Override
+    public void editUser(UserDTO dto) {
+        userMapper.editUser(UserVO.toEntity(dto));
+    }
 
-    //    유저 삭제 시, 이름 입력 비교를 위해
+    @Override
+    public void editCategory(CategoryListDTO dto) {
+        userMapper.editCategory(CategoryListVO.toEntity(dto));
+
+    }
+
+
+//    유저 삭제 시, 이름 입력 비교를 위해
 //    DB에서 이름을 가져오기
     @Override
     public String getUserName(String userId) {
         return userMapper.findByUserId(userId).getUserName();
     }
 
-    @Override
-    public UserDTO editUser(String userId) {
-        return userMapper.findByUserId(userId);
-    }
-
 
     //    유저 정보 삭제
     @Override
-    public void deleteUser(String userId, String userName) {
+    public void deleteUser(String userId,String userName) {
 
-        userMapper.deleteUser(userId, userName);
+        userMapper.deleteUser(userId,userName);
     }
-
-    // 전문가 탈퇴시 approval 변경
+// 전문가 탈퇴시 approval 변경
     @Override
     public void editApproval(String userId) {
         userMapper.editApproval(userId);
@@ -104,7 +115,7 @@ public class UserServiceImpl implements UserService {
         int endRow = page * pageSize;
 
         int totalUploads = userMapper.countUserUpload(search);
-        int totalPages = (int) Math.ceil((double) totalUploads / pageSize);
+        int totalPages = (int) Math.ceil((double)totalUploads/pageSize);
 
         List<UserUploadListDTO> uploads = userMapper.selectUserUploadList(startRow, endRow, search);
 
@@ -115,6 +126,17 @@ public class UserServiceImpl implements UserService {
     public UserUploadDetailDTO selectUserUploadDetail(Long userUploadId) {
         return userMapper.selectUserUploadDetail(userUploadId);
     }
+
+    @Override
+    public void updateCash(String userId, int cash) {
+        UserDTO dto = new UserDTO();
+        dto.setUserId(userId);
+        dto.setUserCash(cash);
+        UserVO vo = UserVO.toEntity(dto);
+        userMapper.updateCash(vo);
+
+    }
+
 
     //  회원 견적 작성하기
     @Override

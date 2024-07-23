@@ -2,83 +2,140 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.fpi.mapper.pro.ProMapper">
-    <!--    전문가 마이페이지의 상세보기-->
+<!--    전문가 마이페이지의 상세보기-->
     <select id="detailPro">
         SELECT p1.*, c.category_name
-        FROM (SELECT p.pro_id,
-                     p.pro_name,
-                     p.phone_number,
-                     p.pro_img,
-                     p.emp_cnt,
-                     u.email,
-                     u.user_cash,
-                     p.pro_star_rate,
-                     l.region,
-                     l.city,
-                     cl.category_id
+        FROM (SELECT p.pro_id, p.pro_name, p.phone_number, p.pro_img, p.emp_cnt,u.email, u.user_cash, p.pro_star_rate, l.region, l.city, cl.category_id, c.AWARD
               FROM tbl_pro p
                        JOIN tbl_location l ON p.location_id = l.location_id
                        JOIN tbl_category_list cl ON p.pro_id = cl.pro_id
-                       JOIN tbl_user u ON p.user_id = u.user_id) p1
+                       JOIN tbl_user u ON p.user_id = u.user_id
+                       JOIN TBL_CAREERINFO c ON p.PRO_ID = c.PRO_ID
+             ) p1
                  JOIN tbl_category c ON p1.category_id = c.category_id
         WHERE p1.pro_id = #{proId}
 
     </select>
+<!--    등록된 자격증 사진을 보여줄때 최근등록순 4개만 보여줌-->
+<!--    <select id="selectCardFile4">-->
+<!--        select infoFile.*-->
+<!--        from (-->
+<!--        select f.*-->
+<!--        from TBL_CARDINFO_FILE f  join TBL_CARDINFO c on c.CARDINFO_ID = f.CARDINFO_ID-->
+<!--        where pro_id=#{proId}-->
+<!--        order by f.CARDINFO_FILE_ID DESC) infoFile-->
+<!--        where ROWNUM &lt; 5-->
+<!--    </select>-->
+    <select id="selectCardFile">
+         select f.*
+         from TBL_CARDINFO_FILE f  join TBL_CARDINFO c on c.CARDINFO_ID = f.CARDINFO_ID
+         where pro_id=#{proId}
+         order by f.CARDINFO_FILE_ID DESC
+    </select>
 
-    <!--    유저에서 전문가 전환이 되기때문에 por_id가져오기 위해서 필요-->
+
+    <select id="selectCard">
+        select *
+        from TBL_CARDINFO
+        where pro_id=#{proId}
+    </select>
+
+    <select id="selectEditPro">
+        select pro.*,l.REGION,l.CITY
+        from(select p.PRO_ID,p.PRO_NAME,p.PHONE_NUMBER,p.PRO_IMG,p.LOCATION_ID,u.EMAIL,career.CAREERINFO_ID,career.AWARD,category.CATEGORY_ID,c.CARDINFO_ID
+             from tbl_pro p
+                      join TBL_CAREERINFO career on p.PRO_ID = career.PRO_ID
+                      join TBL_CATEGORY_LIST category on p.PRO_ID = category.PRO_ID
+                      join TBL_USER u on p.USER_ID = u.USER_ID
+                      join TBL_CARDINFO c on p.PRO_ID= c.PRO_ID)pro
+                join TBL_LOCATION l on l.LOCATION_ID = pro.LOCATION_ID
+        where pro.PRO_ID = #{proId}
+    </select>
+
+<!--    유저에서 전문가 전환이 되기때문에 por_id가져오기 위해서 필요-->
     <select id="selectProId">
         select pro_id
         from tbl_pro
-        where user_id = #{userId}
+        where user_id=#{userId}
     </select>
 
-    <!--    탈퇴시 폼에서 입력한 이름과 같은지 비교하기 위해서 필요-->
+<!--    탈퇴시 폼에서 입력한 이름과 같은지 비교하기 위해서 필요-->
     <select id="selectProName">
         select PRO_NAME
         from tbl_pro
-        where PRO_ID = #{proId}
+        where PRO_ID =#{proId}
     </select>
-    <!--    전문가 탈퇴-->
+<!--    전문가 탈퇴시 서버에 등록된 자격증 사진 삭제 위해서 필요-->
+    <select id="cardImg">
+        select *
+        from TBL_CARDINFO_FILE
+        where CARDINFO_ID=#{cardInfoId}
+    </select>
+<!--    전문가 탈퇴-->
     <delete id="deletePro">
-        delete
-        from tbl_pro
-        where pro_id = #{proId}
-          and pro_name = #{proName}
+        delete from tbl_pro
+        where pro_id=#{proId} and pro_name = #{proName}
     </delete>
 
-    <!--    전문가가 올리 견적 목록   -->
+<!--    마이페이지 전문가 정보 수정하기-->
+    <update id="editPro">
+        update tbl_pro
+        set PRO_NAME =#{proName},phone_number = #{phoneNumber},PRO_IMG=#{proImg},location_id=#{locationId}
+        where PRO_ID =#{proId}
+    </update>
+    <update id="editCategory">
+        update tbl_category_list
+        set category_id = #{categoryId}
+        where PRO_ID =#{proId}
+    </update>
+<!--    추가만 가능하도록-->
+    <update id="editCardInfoFile">
+        update TBL_CARDINFO_FILE
+        set CARDINFO_FILE_ROUTE = #{cardInfoFileRoute},CARDINFO_FILE_ORIGINAL =#{cardInfoFileOriginal}
+        where CARDINFO_FILE_ID =#{cardInfoFileId}
+    </update>
+    <update id="editCardInfo">
+        update TBL_CARDINFO
+        set CERTI_ORGAN = #{certiOrgan},CERTI_NUM=#{certiNum}
+        where PRO_ID=#{proId}
+    </update>
+    <update id="editCareerInfo">
+        update TBL_CAREERINFO
+        set AWARD=#{award}
+        where CAREERINFO_ID = #{careerInfoId}
+    </update>
+<!--    전문가가 올리 견적 목록   -->
     <select id="selectProUploadList" resultType="ProUploadListDTO">
         SELECT *
         FROM (
-        SELECT ROWNUM AS RN, UPLOAD.*
-        FROM (
-        select TPU.PRO_UPLOAD_ID, TPU.PRO_ID, tpu.PRO_UPLOAD_TITLE, tpu.PRO_UPLOAD_DATE, tp.PRO_STAR_RATE, tp.PRO_NAME,
-        ts.SERVICE_NAME
-        from TBL_PRO_UPLOAD TPU
-        inner join TBL_PRO TP
-        on TPU.PRO_ID = TP.PRO_ID
-        inner join TBL_SERVICE TS
-        on tpu.SERVICE_ID = ts.SERVICE_ID
+            SELECT ROWNUM AS RN, UPLOAD.*
+            FROM (
+                select TPU.PRO_UPLOAD_ID, TPU.PRO_ID, tpu.PRO_UPLOAD_TITLE, tpu.PRO_UPLOAD_DATE, tp.PRO_STAR_RATE, tp.PRO_NAME, ts.SERVICE_NAME
+                from TBL_PRO_UPLOAD TPU
+                    inner join TBL_PRO TP
+                    on TPU.PRO_ID = TP.PRO_ID
+                    inner join TBL_SERVICE TS
+                    on tpu.SERVICE_ID = ts.SERVICE_ID
         <where>
-            <if test="search != null">
+            <if test = "search != null">
                 tpu.PRO_UPLOAD_TITLE LIKE '%' || #{search} || '%'
             </if>
         </where>
-        ORDER BY
-        PRO_UPLOAD_DATE DESC
-        ) UPLOAD
+                ORDER BY
+                PRO_UPLOAD_DATE DESC
+            ) UPLOAD
         WHERE ROWNUM &lt;= #{endRow}
         )
         WHERE rn &gt; #{startRow}
 
     </select>
 
-    <!--    전문가가 올린 견적 갯수  -->
+<!--    전문가가 올린 견적 갯수  -->
     <select id="countProUpload">
         select count(*)
         from TBL_PRO_UPLOAD
         <where>
-            <if test="search != null">
+            <if test = "search != null">
                 PRO_UPLOAD_TITLE LIKE '%' || #{search} || '%'
             </if>
         </where>
@@ -95,21 +152,10 @@
 
     <!--    전문가가 올리 견적 상세보기  -->
     <select id="selectProUploadDetail" resultType="ProUploadDetailDTO">
-        SELECT TPU.PRO_UPLOAD_ID
-             , TPU.PRO_UPLOAD_DATE
-             , TC.CATEGORY_NAME
-             , TS.SERVICE_NAME
-             , TL.REGION
-             , TL.CITY
-             , TPU.PRO_UPLOAD_CONTENT
-             , TP.PRO_STAR_RATE
-             , TPU.PRO_UPLOAD_ADDRESS
-             , TPU.PRO_UPLOAD_PAY_RANGE
-             , TP.PRO_NAME
-             , TP.PRO_ID
-             , TPU.PRO_UPLOAD_TITLE
-             , TPU.PRO_UPLOAD_PAY
-             , TP.EMP_CNT
+        SELECT TPU.PRO_UPLOAD_ID, TPU.PRO_UPLOAD_DATE, TC.CATEGORY_NAME
+             , TS.SERVICE_NAME, TL.REGION, TL.CITY, TPU.PRO_UPLOAD_CONTENT
+             ,TP.PRO_STAR_RATE, TPU.PRO_UPLOAD_ADDRESS,TPU.PRO_UPLOAD_PAY_RANGE
+             ,TP.PRO_NAME, TP.PRO_ID,TPU.PRO_UPLOAD_TITLE, TPU.PRO_UPLOAD_PAY, TP.EMP_CNT
         FROM TBL_PRO_UPLOAD TPU
                  INNER JOIN TBL_SERVICE ts
                             ON TPU.SERVICE_ID = TS.SERVICE_ID
@@ -123,14 +169,14 @@
     </select>
 
 
-    <!--    전문가 견적 올리기-->
-    <!--    전문가 견적 올리 다음 시퀀스 가져오기-->
+
+<!--    전문가 견적 올리기-->
+<!--    전문가 견적 올리 다음 시퀀스 가져오기-->
     <select id="getUploadSeq" resultType="long">
-        select SEQ_UPLOAD.nextval
-        from dual
+        select SEQ_UPLOAD.nextval from dual
     </select>
 
-    <!--    견적 작성 쿼리문-->
+<!--    견적 작성 쿼리문-->
     <insert id="saveProUpload">
         insert into TBL_PRO_UPLOAD
         values (#{proUploadId}, #{proUploadTitle}, #{proUploadContent}, #{proUploadPay},

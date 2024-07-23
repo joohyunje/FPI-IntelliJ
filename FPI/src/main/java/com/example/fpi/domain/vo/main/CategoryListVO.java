@@ -13,21 +13,21 @@ public class CategoryListVO {
     private Long categoryListId;
     private Long categoryId;
     private String userId;
-    private Long ProId;
+    private Long proId;
 
     @Builder
-    public CategoryListVO(Long categoryListId, Long categoryId, String userId, Long ProId) {
+    public CategoryListVO(Long categoryListId, Long categoryId, String userId, Long proId) {
         this.categoryListId = categoryListId;
         this.categoryId = categoryId;
         this.userId = userId;
-        this.ProId = ProId;
+        this.proId = proId;
     }
 
     public static CategoryListVO toEntity(CategoryListDTO categoryDTO){
         return CategoryListVO.builder().categoryListId(categoryDTO.getCategoryListId())
                 .categoryId(categoryDTO.getCategoryId())
                 .userId(categoryDTO.getUserId())
-                .ProId(categoryDTO.getProId())
+                .proId(categoryDTO.getProId())
                 .build();
     }
 }

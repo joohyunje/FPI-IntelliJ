@@ -28,6 +28,7 @@ button{
 }
 .aside h1{
   margin: 0.3rem 0 0.7rem 0;
+  font-size: 30px;
 }
 .aside a,.aside button{
   padding: 8px 20px;
@@ -62,7 +63,7 @@ button{
   flex-shrink: 0;
   background-color: #e4e5ed;
   background-color: #303441;
-  height: 2px;
+
 
 }
 .container .sub-container{
@@ -99,4 +100,15 @@ button{
 }
 .oneline > span{
   margin-right: 10px;
+}
+
+.word {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  padding-top: 0.5rem;
 }

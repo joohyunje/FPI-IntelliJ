@@ -2,76 +2,56 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.fpi.mapper.user.UserMapper">
-    <!--    마이페이지 내정보 상세보기-->
+<!--    마이페이지 내정보 상세보기-->
     <select id="detailUser">
         SELECT u1.*, c.category_name
-        FROM (SELECT u.user_id,
-                     u.user_name,
-                     u.phone_number,
-                     u.user_img,
-                     u.email,
-                     u.user_cash,
-                     u.user_star_rate,
-                     u.user_Pro_Approval,
-                     l.region,
-                     l.city,
-                     cl.category_id
+        FROM (SELECT u.user_id, u.user_name, u.phone_number, u.user_img, u.email, u.user_cash, u.user_star_rate, u.user_Pro_Approval,l.region, l.city, cl.category_id
               FROM tbl_user u
-                       JOIN tbl_location l ON u.location_id = l.location_id
-                       JOIN tbl_category_list cl ON u.user_id = cl.user_id) u1
-                 JOIN tbl_category c ON u1.category_id = c.category_id
+              JOIN tbl_location l ON u.location_id = l.location_id
+              JOIN tbl_category_list cl ON u.user_id = cl.user_id
+             ) u1
+             JOIN tbl_category c ON u1.category_id = c.category_id
         WHERE u1.user_id = #{userId}
     </select>
 
 
-    <!--    회원가입 사용자 정보 조회-->
+<!--    회원가입 사용자 정보 조회-->
     <select id="findByUserId">
-        select *
-        from tbl_user
-        where user_id = #{userId}
+        select * from tbl_user
+        where user_id =#{userId}
     </select>
-    <!--    회원가입,OAuth내 정보 저장-->
+<!--    회원가입,OAuth내 정보 저장-->
     <insert id="saveUser">
-        insert into tbl_user (user_id, user_name, user_img, provider, role)
-        values (#{userId}, #{userName}, #{userImg}, #{provider}, #{role})
+        insert into tbl_user (user_id,user_name,user_img,provider,role)
+        values (#{userId},#{userName},#{userImg},#{provider},#{role})
     </insert>
-    <!--    회원가입시 입력 폼-->
+<!--    회원가입시 입력 폼-->
     <update id="updateUser">
         update tbl_user
-        set user_name        = #{userName},
-            PHONE_NUMBER     = #{phoneNumber},
-            email=#{email},
-            ROLE             = #{role},
-            location_id=#{locationId},
-            user_cash=0,
-            USER_PRO_APPROVAL='NO'
-        where user_id = #{userId}
+        set user_name = #{userName},PHONE_NUMBER = #{phoneNumber},email=#{email},ROLE = #{role},location_id=#{locationId},user_cash=0,USER_PRO_APPROVAL='NO'
+        where user_id =#{userId}
     </update>
 
     <!--    회원 탈퇴-->
     <delete id="deleteUser">
-        delete
-        from tbl_user
-        where user_id = #{userId}
-          and user_name = #{userName}
+        delete from tbl_user
+        where user_id=#{userId} and user_name = #{userName}
     </delete>
 
     <!--    전문가에서 회원탈퇴시 유저의 USER_PRO_APPROVAL 를 no로 변경해줘야 함,헤더부분때문에!-->
     <update id="editApproval">
         update TBL_USER
         set USER_PRO_APPROVAL = 'NO'
-        where USER_ID = #{userId}
+        where USER_ID =#{userId}
     </update>
 
-    <!--    마이페이지 내정보 수정하기-->
-    <update id="editUser">
+<!--    마이페이지 내정보 수정하기-->
+    <update id ="editUser">
         update tbl_user
-        set phone_number = #{phone_number},
-            email        = #{email},
-            location_id  = #{locationId}
-        where user_id = #{user_id}
+        set phone_number = #{phoneNumber},location_id=#{locationId},email = #{email}
+        where user_id=#{userId}
     </update>
-
+<!--  선택한 카테고리 수정-->
     <update id="editCategory">
         update tbl_category_list
         set category_id = #{categoryId}
@@ -82,24 +62,23 @@
     <select id="selectUserUploadList" resultType="UserUploadListDTO">
         SELECT *
         FROM (
-        SELECT ROWNUM AS RN, UPLOAD.*
-        FROM (
-        select TUU.USER_UPLOAD_ID, TUU.USER_ID, TUU.USER_UPLOAD_TITLE, TUU.USER_UPLOAD_DATE, TU.USER_STAR_RATE,
-        TU.USER_NAME, ts.SERVICE_NAME
-        from TBL_USER_UPLOAD TUU
-        inner join TBL_USER TU
-        on TUU.USER_ID = TU.USER_ID
-        inner join TBL_SERVICE TS
-        on tuu.SERVICE_ID = ts.SERVICE_ID
-        <where>
-            <if test="search != null">
-                TUU.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%'
-            </if>
-        </where>
-        ORDER BY
-        USER_UPLOAD_DATE DESC
-        ) UPLOAD
-        WHERE ROWNUM &lt;= #{endRow}
+            SELECT ROWNUM AS RN, UPLOAD.*
+            FROM (
+                    select TUU.USER_UPLOAD_ID, TUU.USER_ID, TUU.USER_UPLOAD_TITLE, TUU.USER_UPLOAD_DATE, TU.USER_STAR_RATE, TU.USER_NAME, ts.SERVICE_NAME
+                    from TBL_USER_UPLOAD TUU
+                    inner join TBL_USER TU
+                    on TUU.USER_ID = TU.USER_ID
+                    inner join TBL_SERVICE TS
+                    on tuu.SERVICE_ID = ts.SERVICE_ID
+                    <where>
+                        <if test = "search != null">
+                            TUU.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%'
+                        </if>
+                    </where>
+                    ORDER BY
+                    USER_UPLOAD_DATE DESC
+                ) UPLOAD
+            WHERE ROWNUM &lt;= #{endRow}
         )
         WHERE rn &gt; #{startRow}
 
@@ -110,28 +89,18 @@
         select count(*)
         from TBL_USER_UPLOAD
         <where>
-            <if test="search != null">
+            <if test = "search != null">
                 USER_UPLOAD_TITLE LIKE '%' || #{search} || '%'
             </if>
         </where>
     </select>
 
-    <!--    유저가 올리 견적 상세보기  -->
+<!--    유저가 올리 견적 상세보기  -->
     <select id="selectUserUploadDetail" resultType="UserUploadDetailDTO">
-        SELECT TUU.USER_UPLOAD_ID
-             , TUU.USER_UPLOAD_DATE
-             , TC.CATEGORY_NAME
-             , TS.SERVICE_NAME
-             , TL.REGION
-             , TL.CITY
-             , TUU.USER_UPLOAD_CONTENT
-             , TU.USER_STAR_RATE
-             , TUU.USER_UPLOAD_ADDRESS
-             , TUU.USER_UPLOAD_PAY_RANGE
-             , TU.USER_NAME
-             , TU.USER_ID
-             , TUU.USER_UPLOAD_TITLE
-             , TUU.USER_UPLOAD_PAY
+        SELECT TUU.USER_UPLOAD_ID, TUU.USER_UPLOAD_DATE, TC.CATEGORY_NAME
+             , TS.SERVICE_NAME, TL.REGION, TL.CITY, TUU.USER_UPLOAD_CONTENT
+             ,TU.USER_STAR_RATE, TUU.USER_UPLOAD_ADDRESS,TUU.USER_UPLOAD_PAY_RANGE
+             ,TU.USER_NAME, TU.USER_ID,TUU.USER_UPLOAD_TITLE, TUU.USER_UPLOAD_PAY
         FROM TBL_USER_UPLOAD TUU
                  INNER JOIN TBL_SERVICE ts
                             ON TUU.SERVICE_ID = TS.SERVICE_ID
@@ -143,6 +112,12 @@
                             ON TU.LOCATION_ID = TL.LOCATION_ID
         WHERE TUU.USER_UPLOAD_ID = #{userUploadId}
     </select>
+
+    <update id="updateCash">
+        update tbl_user
+        set USER_CASH =#{userCash}
+        where USER_ID = #{userId}
+    </update>
 
     <!--    회원 견적 올리기-->
     <!--    회원이 견적 올리기 다음 시퀀스 가져오기-->

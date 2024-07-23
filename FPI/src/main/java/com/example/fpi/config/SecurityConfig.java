@@ -67,6 +67,8 @@ public class SecurityConfig {
             CustomOAuth2User customOAuth2User = (CustomOAuth2User) auth.getPrincipal();
             UserDTO user = userMapper.findByUserId(customOAuth2User.getUserId());
             HttpSession session = request.getSession();
+
+//            회원의 role값이 new라면 정보가 없는 회원이여서 회원가입 폼으로 이동
             if(user.getRole().equals("new")){
                 response.sendRedirect("/main/sign");
             }
