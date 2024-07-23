@@ -47,4 +47,6 @@ public interface UserService {
 
     //    유저가 올리 견적 상세보기
     UserUploadDetailDTO selectUserUploadDetail(Long userUploadId);
+
+    void updateCash(String userId,int cash);
 }

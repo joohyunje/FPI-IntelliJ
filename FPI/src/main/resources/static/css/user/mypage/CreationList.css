@@ -1,18 +1,3 @@
-/*  ------------------------------------------------------------------------------------------------  */
-
-* {
-    box-sizing: border-box;
-}
-
-body{
-    background-color: #ffffff;
-    color: #363a3c;
-    font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
-    font-size: 15px;
-    font-weight: 400;
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-}
 
 header a{
     color: #ced0db;
@@ -63,12 +48,12 @@ h1{
 
 .main{
 
-    padding: 0 0 20px;
-    width: 100%;
+    padding: 3rem 0;
+    width: 1200px;
     background-color: #fff;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    /*display: grid;*/
+    /*grid-template-columns: repeat(5, 1fr);*/
     justify-content: center;
 }
 
@@ -118,16 +103,16 @@ h1{
     z-index: 1;
 }
 
-.main-container-list{
-    display: block;
-    padding-top: 20px;
-}
+/*.main-container-list{*/
+/*    display: block;*/
+/*    padding-top: 20px;*/
+/*}*/
 
 /*  ------------------------------------분류 부분----------------------------------------------------  */
 
 .tab-btn-container{
-    margin-top: 60px;
-    font-size: .875rem;
+    margin:40px 0 40px 0;
+    /*font-size: .875rem;*/
     font-weight: 700;
     line-height: 1.57143;
     letter-spacing: -.01875rem;
@@ -155,9 +140,9 @@ h1{
 
 /*  ------------------------------------메인 부분----------------------------------------------------  */
 
-.main-container-list{
-    font-size: 13px;
-}
+/*.main-container-list{*/
+/*    font-size: 13px;*/
+/*}*/
 .list-container{
     margin: 0 0 30px 0;
     width: 100%;
@@ -170,10 +155,10 @@ h1{
 }
 
 .list-container thead tr th{
-    padding: 8px 5px;
+    padding: 8px 0px;
     text-align: center;
     vertical-align: middle;
-    font-size: 13px;
+    /*font-size: 13px;*/
 }
 
 .list-container tbody tr{
@@ -184,18 +169,19 @@ h1{
     padding: 8px 5px;
     text-align: center;
     vertical-align: middle;
-    font-size: 13px;
+    /*font-size: 13px;*/
 }
 
-.list-title{
-    text-align: left;
-}
+/*.list-title{*/
+/*    text-align: center;*/
+
+/*}*/
 
 .list-title a{
     display: block;
-    text-align: left;
+    text-align: center;
     vertical-align: middle;
-    font-size: 13px;
+    /*font-size: 13px;*/
 }
 
 .no-content-container{
@@ -220,11 +206,12 @@ h1{
 }
 
 .list-number{
-    position: relative;
-    width: 100%;
-    margin-top: 15px;
+    /*position: relative;*/
+    /*width: 100%;*/
+    /*margin-top: 15px;*/
     display: flex;
-    place-content: center;
+    float: right;
+    /*place-content: center;*/
 }
 
 .pagination {
@@ -234,6 +221,9 @@ h1{
 }
 .page-item a{
     color: #363a3c;
+}
+.page-link{
+    margin: 0 0.5rem;
 }
 .pagination .page-item {
     margin: 0 5px;
@@ -252,8 +242,8 @@ h1{
     color: white;
     border: 1px solid #4CAF50;
 }
-.pagination .page-item.disabled .page-link {
-    color: #ccc;
+.page-item.disabled .page-link {
+    /*color: #ccc;*/
     pointer-events: none;
-    border: 1px solid #ddd;
+    /*border: 1px solid #ddd;*/
 }

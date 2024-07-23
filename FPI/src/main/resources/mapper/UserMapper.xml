@@ -112,4 +112,10 @@
                             ON TU.LOCATION_ID = TL.LOCATION_ID
         WHERE TUU.USER_UPLOAD_ID = #{userUploadId}
     </select>
+
+    <update id="updateCash">
+        update tbl_user
+        set USER_CASH =#{userCash}
+        where USER_ID = #{userId}
+    </update>
 </mapper>

@@ -83,14 +83,14 @@
 
               <div class="col underline2 plusPoint">
                 <div class="certi-label" >
-                  <label for="certiOrgan" class="fontSize15 label">자격증 발급기관/ </label>
+                  <label for="certiOrgan" class="fontSize15">자격증 발급기관/ </label>
                   
-                  <label for="certiNum" class="fontSize15 label">자격증 번호</label>
+                  <label for="certiNum" class="fontSize15">자격증 번호</label>
                   <div class="plus">+</div>
-                  <div class="minus">-</div>
+<!--                  <div class="minus">-</div>-->
                 </div>
-
-                <div class="certi-label" >
+<!--                <input type="hidden" id="certiCount" name="certiCount">-->
+                <div class="certi-label certiCount" >
                   <input type="text" id="certiOrgan" name="certiOrgan" class="form-control" style=" margin-right: 10px;" placeholder="자격증 발급기관을 입력하세요" th:field="*{certiOrgan}">
                   <input type="text" id="certiNum" name="certiNum" class="form-control"
                   placeholder="자격증 번호를 입력하세요" th:field="*{certiNum}">
@@ -98,15 +98,22 @@
               </div>
           
           
-              <div class="col height250">
-                <span for="career" class="fontSize15 label margin5">경력 혹은 수상내역 작성</span>
-                <textarea maxlength="400" class="textarea" th:field="*{award}"></textarea>
+              <div class="col height250 awardPlusPoint" >
+                <div style="display: flex">
+                  <span for="career" class="fontSize15 label margin5">경력 혹은 수상내역 작성</span>
+                  <div class="awardPlus">+</div>
+                </div>
+                <input type="hidden"  id="awardCount" name="awardCount">
+                <div style="display: flex">
+                  <textarea th:field="*{award}" id="awards" maxlength="255" class="textarea awardCount"></textarea>
+                </div>
+
 
               </div>
 
               <div class="left">
 <!--                <button type="button" onclick="CertifyForm()">인증하기</button>-->
-                <button type="submit" >인증하기</button>
+                <button type="button" id="submitBtn" >인증하기</button>
               </div>
             </div>
         </form> <!-- 폼작성 끝 -->

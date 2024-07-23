@@ -98,10 +98,11 @@
 <!--              </div>-->
 
 
-                <div class="certi-con underline2">
+                <div class="underline2 plusPoint">
                   <div class="certi-label" >
-                    <label for="certification-agency" class="fontSize15 label">자격증 발급기관/ </label>
-                    <label for="certification-num" class="fontSize15 label">자격증 번호</label>
+                    <label for="certification-agency" class="fontSize15">자격증 발급기관/ </label>
+                    <label for="certification-num" class="fontSize15">자격증 번호</label>
+                    <div class="plus">+</div>
                   </div>
 
                   <div class="certi-label" th:each="card : ${cards}">
@@ -110,14 +111,19 @@
                     <input th:value="${card.certiNum}" type="text" id="certification-num" name="certification-num" class="form-control"
                     placeholder="자격증 번호를 입력하세요">
                   </div>
-
                 </div>
 
 
-                <div class="height250">
-                  <span for="career" class="fontSize15 label">경력 혹은 수상내역 작성</span>
+                <div class="height250 awardPlusPoint">
+                  <div style="display: flex">
+                    <span for="career" class="fontSize15 label margin5">경력 혹은 수상내역 작성</span>
+                    <div class="awardPlus">+</div>
+                  </div>
+
                   <input type="hidden" th:value="*{careerInfoId}"  name="careerInfoId" style="display: none !important;" >
-                  <textarea th:field="*{award}" id="award" maxlength="400" class="textarea"></textarea>
+                  <div style="display: flex">
+                    <textarea th:field="*{award}" id="awards" maxlength="255" class="textarea"></textarea>
+                  </div>
                 </div>
 
                 <div class="left">
@@ -170,6 +176,8 @@
 
 <script th:src="@{/js/location.js}"></script>
 <script th:src="@{/js/file.js}"></script>
+<script th:src="@{/js/plus.js}"></script>
+
 <script th:src="@{/js/deletepro.js}"></script>
 
 <script th:inline="javascript">

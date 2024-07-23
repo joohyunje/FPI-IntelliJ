@@ -16,7 +16,7 @@ public class UserVO {
     private String phoneNumber;
     private String userImg;
     private String email;
-    private Long userCash;
+    private int userCash;
     private String userProApproval;
     private Long userStarRate;
     private String role;
@@ -24,7 +24,7 @@ public class UserVO {
 
     @Builder
     public UserVO(String userId, String provider, String userName, String phoneNumber, String userImg, String email,
-                  Long userCash, String userProApproval, Long userStarRate, String role, Long locationId){
+                  int userCash, String userProApproval, Long userStarRate, String role, Long locationId){
         this.userId = userId;
         this.provider = provider;
         this.userName = userName;

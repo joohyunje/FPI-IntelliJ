@@ -113,5 +113,16 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectUserUploadDetail(userUploadId);
     }
 
+    @Override
+    public void updateCash(String userId, int cash) {
+        UserDTO dto = new UserDTO();
+        dto.setUserId(userId);
+        dto.setUserCash(cash);
+        UserVO vo = UserVO.toEntity(dto);
+        userMapper.updateCash(vo);
+
+    }
+
+
 
 }

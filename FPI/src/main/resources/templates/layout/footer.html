@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,11 +38,7 @@
                         <span>고객안내</span>
                         <div class="list-items">
                             <span>이용안내</span>
-                            <span>안전정책</span>
-                            <span>예상금액</span>
                             <span>전문가찾기</span>
-                            <span>전문가보증</span>
-                            <span>전문가에게묻다</span>
                         </div>
                     </li>
                     <li class="footer-list">
@@ -56,8 +52,8 @@
                     <li class="footer-list">
                         <span>고객센터</span>
                         <div class="list-items">
-                            <span>공지사항</span>
-                            <span>자주묻는질문</span>
+                            <span><a th:href="@{/noti}">공지사항</a></span>
+                            <span><a th:href="@{/faq}">자주묻는질문</a></span>
                         </div>
                     </li>
                 </ul>

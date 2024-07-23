@@ -62,4 +62,5 @@ public interface UserMapper {
     void editUser(UserVO vo);
     void editCategory(CategoryListVO vo);
 
+    void updateCash(UserVO vo);
 }

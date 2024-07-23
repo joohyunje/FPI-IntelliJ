@@ -298,7 +298,6 @@ CREATE TABLE TBL_CARDINFO_FILE(
       CARDINFO_FILE_ID NUMBER PRIMARY KEY,
       CARDINFO_FILE_ROUTE VARCHAR2(1000),
       CARDINFO_FILE_ORIGINAL VARCHAR2(1000),
-      CARDINFO_FILE_SAVED VARCHAR2(1000),
       CARDINFO_ID NUMBER NOT NULL,
       CONSTRAINT FK_CARDINFO_FILE FOREIGN KEY (CARDINFO_ID)
           REFERENCES TBL_CARDINFO (CARDINFO_ID) ON DELETE CASCADE
@@ -481,7 +480,7 @@ FROM (SELECT p.pro_id, p.pro_name, p.phone_number, p.pro_img, p.emp_cnt,u.email,
          JOIN tbl_category c ON p1.category_id = c.category_id
 WHERE p1.pro_id = 1;
 
-select pro.*,files.CARDINFO_FILE_ORIGINAL,files.CARDINFO_FILE_ROUTE,files.CARDINFO_FILE_SAVED
+select pro.*,files.CARDINFO_FILE_ORIGINAL,files.CARDINFO_FILE_ROUTE
 from(select p.PRO_ID,p.PRO_NAME,p.PHONE_NUMBER,p.PRO_IMG,p.LOCATION_ID,p.USER_ID,card.CARDINFO_ID,card.CERTI_NUM,card.CERTI_ORGAN,career.AWARD,category.CATEGORY_ID
      from tbl_pro p
               join TBL_CARDINFO card on p.PRO_ID=card.PRO_ID
@@ -631,7 +630,15 @@ where pro_id=110
 order by f.CARDINFO_FILE_ID DESC) infoFile
 where ROWNUM<5;
 
-
+select *
+from (select ROWNUM AS RN,c.*
+        from(
+            select *
+            from TBL_COMMUNITY
+            where USER_ID=3614057925
+            order by COMMUNITY_REGISTER_DATE DESC,COMMUNITY_ID desc) c
+        where ROWNUM <=5)
+where RN >0;
 
 
 

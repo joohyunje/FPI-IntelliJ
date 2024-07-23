@@ -1,3 +1,16 @@
+document.getElementById('submitBtn').addEventListener('click', function() {
+    // 현재 페이지에서 .awardCount 클래스를 가진 요소들의 개수를 구합니다.
+    var awardCounts = document.getElementsByClassName('awardCount').length;
+
+    // awardCount 값을 폼 데이터에 추가합니다.
+    document.getElementById('awardCount').value = awardCounts;
+
+    // alert 창에 awardCounts 값을 표시합니다.
+    alert(awardCounts);
+
+    // 폼을 서버로 제출합니다.
+    document.getElementById('CertifyForm').submit();
+});
 
 // 삭제 폼 제출
 function deleteForm(){

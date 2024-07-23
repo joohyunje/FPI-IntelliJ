@@ -12,7 +12,7 @@ public class UserDTO {
     private String phoneNumber;
     private String userImg;
     private String email;
-    private Long userCash;
+    private int userCash;
     private String userProApproval;
     private Long userStarRate;
     private String role;

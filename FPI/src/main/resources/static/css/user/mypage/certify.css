@@ -73,14 +73,15 @@
   width: 100%;
   margin-bottom: 20px; 
   /* textarea와 버튼 사이의 간격 */
-  height: 250px;
+  /*height: 250px;*/
   overflow:hidden;
 }
 .textarea{
   overflow: auto;
   outline: none;
   width: 100%;
-  height: 84%;
+  height: 80px;
+  margin-bottom: 10px;
   border-color: #e0e0e0;
   border-radius: 0.375em;
   display: block;
@@ -108,14 +109,14 @@
     outline: none;
   }
 }
-.plus,.minus{
+.plus,.minus,.awardPlus,.awardMinus{
   font-size: 25px;
-  padding: 0rem 0.3rem 0.6rem 0.3rem;
+  padding: 0rem 0.3rem 0.3rem 0.3rem;
   cursor: pointer;
 }
-.minus{
-  display: none;
-}
+/*.minus,.awardMinus{*/
+/*  display: none;*/
+/*}*/
 .margin5{
   margin: 0.5rem 0;
 }

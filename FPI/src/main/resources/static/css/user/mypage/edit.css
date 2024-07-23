@@ -5,7 +5,7 @@
   display: flex;
   width: 1200px;
   padding: 10px 16px;
-  margin: 0px auto 40px;
+  margin: 40px auto;
   min-height: 600px;
 }
 .aside{
@@ -15,6 +15,7 @@
 }
 .aside h1{
   margin: 0.3rem 0 0.7rem 0;
+  font-size: 30px;
 }
 .hr{
   height: 1px;
@@ -23,7 +24,7 @@
   flex-shrink: 0;
   background-color: #e4e5ed;
   background-color: #303441;
-  height: 2px;
+
 
 }
 .aside > button{
@@ -108,12 +109,12 @@
   align-items: center;
 }
 
-#userEdit div,#proEdit div{
+#userEdit div{
   margin: 10px 0 8px 0;
 }
-#proEdit div{
-  margin: 0 0 8px 0;
-}
+/*#proEdit div{*/
+/*  margin: 0 0 8px 0;*/
+/*}*/
 .fontSize15{
   font-size: 15px;
   font-weight: 700;
