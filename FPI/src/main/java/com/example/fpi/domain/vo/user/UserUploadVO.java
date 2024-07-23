@@ -23,9 +23,10 @@ public class UserUploadVO {
     private LocalDate userUploadDate;
     private String userUploadAddress;
     private String userId;
+    private Long serviceId;
 
     @Builder
-    public UserUploadVO(Long userUploadId, String userUploadTitle, String userUploadContent, Long userUploadPay, Long userUploadPayRange, LocalDate userUploadDate, String userUploadAddress, String userId) {
+    public UserUploadVO(Long userUploadId, String userUploadTitle, String userUploadContent, Long userUploadPay, Long userUploadPayRange, LocalDate userUploadDate, String userUploadAddress, String userId, Long serviceId) {
         this.userUploadId = userUploadId;
         this.userUploadTitle = userUploadTitle;
         this.userUploadContent = userUploadContent;
@@ -34,6 +35,7 @@ public class UserUploadVO {
         this.userUploadDate = userUploadDate;
         this.userUploadAddress = userUploadAddress;
         this.userId = userId;
+        this.serviceId = serviceId;
     }
 
     public static UserUploadVO toEntity(UserUploadDTO userUploadDTO) {
@@ -45,6 +47,7 @@ public class UserUploadVO {
                 .userUploadDate(userUploadDTO.getUserUploadDate())
                 .userUploadAddress(userUploadDTO.getUserUploadAddress())
                 .userId(userUploadDTO.getUserId())
+                .serviceId(userUploadDTO.getServiceId())
                 .build();
     }
 

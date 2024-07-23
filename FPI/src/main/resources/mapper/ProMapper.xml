@@ -52,8 +52,7 @@
         where pro.PRO_ID = #{proId}
     </select>
 
-
-    <!--    유저에서 전문가 전환이 되기때문에 pro_id가져오기 위해서 필요-->
+<!--    유저에서 전문가 전환이 되기때문에 por_id가져오기 위해서 필요-->
     <select id="selectProId">
         select pro_id
         from tbl_pro
@@ -184,6 +183,40 @@
                 #{proUploadPayRange}, sysdate, #{proUploadAddress}, #{proId}, #{serviceId})
     </insert>
 
+    <!--    전문가 위치 가져오기-->
+    <select id="selectProLocation" resultType="ProLocationDTO">
+        select REGION, CITY, PRO_NAME
+        from tbl_pro
+                 inner join TBL_LOCATION
+                            on tbl_pro.LOCATION_ID = TBL_LOCATION.LOCATION_ID
+        where TBL_PRO.PRO_ID = #{proId}
+    </select>
+
+    <!--    회원 찾기를 통 보낸 요청-->
+    <insert id="proRequest">
+        insert into TBL_PRO_REQUEST
+        values (SEQ_REQUEST.nextval, #{proRequestPay}, #{proRequestContent},
+                sysdate, 'PRE', #{proId}, #{userUploadId})
+    </insert>
+
+    <!--    회원 올린 견적에 대해서 내가 보낸 요청이 있는 없는지 확인-->
+    <select id="checkProRequest" resultType="long">
+        select count(*)
+        from TBL_USER_UPLOAD TUU
+                 inner join TBL_PRO_REQUEST TPR
+                            on TUU.USER_UPLOAD_ID = TPR.USER_UPLOAD_ID
+                 inner join TBL_PRO TP
+                            on TPR.PRO_ID = TP.PRO_ID
+        where TUU.USER_UPLOAD_ID = #{userUploadId}
+          and TPR.PRO_ID = #{proId}
+    </select>
+
+    <!--    전문가가 회원에 대해 리뷰 작성하기  -->
+    <insert id="proWriteUserReview">
+        insert into TBL_USER_REVIEW
+        values (SEQ_REVIEW.nextval, #{userReviewTitle}, #{userReviewContent}, #{userReviewRate}, 100, sysdate,
+                #{proId}, #{userId})
+    </insert>
 
 
 </mapper>

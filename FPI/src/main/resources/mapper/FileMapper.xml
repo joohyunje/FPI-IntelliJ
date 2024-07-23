@@ -6,24 +6,40 @@
 
     <!--   전문가 견적 작성시 첨부파일 추가-->
     <insert id="insertProUploadFile">
-        INSERT INTO TBL_PRO_UPLOAD_FILE (PRO_UPLOAD_FILE_ID, PRO_UPLOAD_FILE_ORIGINAL, PRO_UPLOAD_FILE_SAVED, PRO_UPLOAD_ID)
-        VALUES (SEQ_FILE.nextval, #{proUploadFileOriginal}, #{proUploadFileSaved}, #{proUploadId})
+        INSERT INTO TBL_PRO_UPLOAD_FILE (PRO_UPLOAD_FILE_ID, PRO_UPLOAD_FILE_ORIGINAL, PRO_UPLOAD_FILE_ROUTE,
+                                         PRO_UPLOAD_ID)
+        VALUES (SEQ_FILE.nextval, #{proUploadFileOriginal}, #{proUploadFileRoute}, #{proUploadId})
     </insert>
 
     <!--  전문가가 올린 견적 번호로 첨부파일들 가져오기  -->
     <select id="selectProUploadFileList" resultType="ProUploadFileDTO">
-        select
-            PRO_UPLOAD_ID,
-            PRO_UPLOAD_FILE_ORIGINAL,
-            PRO_UPLOAD_FILE_SAVED,
-            PRO_UPLOAD_ID
-        from
-            TBL_PRO_UPLOAD_FILE
+        select PRO_UPLOAD_ID,
+               PRO_UPLOAD_FILE_ORIGINAL,
+               PRO_UPLOAD_FILE_ROUTE,
+               PRO_UPLOAD_ID
+        from TBL_PRO_UPLOAD_FILE
         where PRO_UPLOAD_ID = #{proUploadId}
     </select>
 
+    <!--   회원 견적 올리기시 첨부파일 추가-->
+    <insert id="insertUserUploadFile">
+        INSERT INTO TBL_USER_UPLOAD_FILE (USER_UPLOAD_FILE_ID, USER_UPLOAD_FILE_ORIGINAL, USER_UPLOAD_FILE_ROUTE,
+                                          USER_UPLOAD_ID)
+        VALUES (SEQ_FILE.nextval, #{userUploadFileOriginal}, #{userUploadFileRoute}, #{userUploadId})
+    </insert>
 
-<!--    프로활동사진 추가-->
+    <!--  전문가가 올린 견적 번호로 첨부파일들 가져오기  -->
+    <select id="selectUserUploadFileList" resultType="UserUploadFileDTO">
+        select USER_UPLOAD_ID,
+               USER_UPLOAD_FILE_ORIGINAL,
+               USER_UPLOAD_FILE_ROUTE,
+               USER_UPLOAD_ID
+        from TBL_USER_UPLOAD_FILE
+        where USER_UPLOAD_ID = #{userUploadId}
+    </select>
+
+
+    <!--    프로활동사진 추가-->
     <insert id="addProImg">
         INSERT INTO TBL_PRP (pro_img)
         VALUES #{proImg}

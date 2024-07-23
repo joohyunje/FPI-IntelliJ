@@ -6,18 +6,23 @@
     <link rel="stylesheet" th:href="@{/css/user/profind/find_info.css}">
     <link rel="stylesheet" th:href="@{/css/main/common.css}">
     <link rel="stylesheet" th:href="@{/css/layout/header.css}">
+    <link rel="stylesheet" th:href="@{/css/user/req_list/received_req_info.css}">
+    <link rel="stylesheet" th:href="@{/css/user/mypage/certify.css}">
+    <link rel="stylesheet" th:href="@{/css/user/upload/receiveform.css}">
+    <link rel="stylesheet" th:href="@{/css/user/mypage/edit.css}">
+    <link rel="stylesheet" th:href="@{/css/user/mypage/withdrawmodal.css}">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
 <!--    <link rel="stylesheet" href="/static/css/common(2)/font.css">-->
 </head>
 <body>
-<div th:replace="~{/layout/proheader :: header}"></div>
+<div th:replace="~{/layout/header :: header}"></div>
     <div class="request-header">
         <div class="request-header-inner">
             <div class="service-title">
                 <h2 th:text="${userUpload.userUploadTitle}"></h2>
             </div>
             <div class="received-date">
-                <div class="date-badge">받은 날짜</div>
+                <div class="date-badge">올린 날짜</div>
                 <div class="date" th:text="${userUpload.userUploadDate}">2024.06.28</div>
             </div>
         </div>
@@ -117,13 +122,54 @@
                         <span th:text="${userUpload.userUploadPay}+${userUpload.userUploadPayRange}">30000원</span>
                     </div>
                     <div class="accept-cancle-btn">
-                        <button type="button" class="btn-accept">서비스 견적드리기</button>
+                        <button type="button" th:disabled="${checkRequest} != 0" id="btn-modal" class="btn-accept">서비스 견적드리기</button>
                     </div>
                 </div>
                  </div>
              </div>
          </div>
      </div>
+
+<div id="modal" class="container">
+    <div class="container">
+        <div class="container">
+            <div class="box-container">
+                <div class="box-header">견적서</div>
+                <div class="box-content">
+                    <div class="description">
+                        <div class="pro-name user-name" th:text="${proLocation.proName}">주현제</div>
+                        <div class="address" style="margin-top: 10px;">
+                            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMCAyMGgyMFYwSDB6Ii8+PGcgc3Ryb2tlPSIjNzM3MzczIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiI+PHBhdGggZD0iTTE2LjIxOCA3LjI3NGMwIDQuOTQzLTUuODMzIDEwLjIyNi01LjgzMyAxMC4yMjZTNC41NSAxMi41NDIgNC41NSA3LjI3NGMwLTMuMDk3IDIuNjEyLTUuNjA3IDUuODM0LTUuNjA3IDMuMjIxIDAgNS44MzMgMi41MSA1LjgzMyA1LjYwN3oiLz48cGF0aCBkPSJNMTIuNjI4IDcuOTE3YTIuMDg0IDIuMDg0IDAgMTEtNC4xNjctLjAwMSAyLjA4NCAyLjA4NCAwIDAxNC4xNjcgMHoiLz48L2c+PC9nPjwvc3ZnPg=="
+                                 alt="">
+                            <span th:text="${proLocation.region} + ' ' + ${proLocation.city}"></span>
+                        </div>
+                    </div>
+                    <form th:action="@{/pro/sendProRequest}" name="pro_receviemodal" th:object="${proRequest}"
+                          id="pro_receviemodal" class="pro" method="post">
+                        <input type="hidden" th:value="${userUpload.userUploadId}" name="userUploadId">
+                        <div class="title">견적을 보내면 회원이 수락시 연락처가 공개됩니다.</div>
+                        <div class="col underline">
+                            <label for="price" class="fontSize15 label">견적 금액 (원)</label>
+                            <input type="number" id="pro_receive_modal" th:field="*{proRequestPay}" name="price_input" class="form-control"
+                                   placeholder="정확한금액을 입력하세요">
+                        </div>
+                        <div class="">
+                            <textarea class="textarea" maxlength="65536" style="width:100%;height:300px" th:field="*{proRequestContent}"
+                                      placeholder="견적과 서비스에 대한 내용을 구체적으로 적으실 수록 회원의 수락률이 높습니다."></textarea>
+                        </div>
+
+
+                        <!--모달 창 닫음 -->
+                        <button type="submit" id="close-modal" class="btn">견적 보내기</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
@@ -205,5 +251,25 @@
             }
         })
     }
+
+//     모달
+    const modal=document.getElementById("modal")
+
+    function modalOn(){
+      modal.style.display="flex"
+    }
+    function modalOff() {
+      modal.style.display = "none"
+    }
+    // 모달창 보임
+    const btnModal = document.getElementById("btn-modal")
+    btnModal.addEventListener("click", e => {
+      modalOn()
+    })
+    // 모달창 닫음
+    const closeModal = document.getElementById("close-modal")
+    closeModal.addEventListener("click", e => {
+      modalOff()
+    })
 </script>
 </html>

@@ -11,117 +11,133 @@
 </head>
 <body>
 <div th:replace="~{/layout/header :: header}"></div>
-    <div class="request-header">
-        <div class="request-header-inner">
-            <div class="service-title">
-                <h2 th:text="${proRequest.userUploadTitle}">서비스 제목</h2>
-            </div>
-            <div class="received-date">
-                <div class="date-badge">보낸 날짜</div>
-                <div class="date" th:text="${proRequest.proRequestDate}">2024.06.27</div>
-            </div>
+<div class="request-header">
+    <div class="request-header-inner">
+        <div class="service-title">
+            <h2 th:text="${proRequest.userUploadTitle}">서비스 제목</h2>
+        </div>
+        <div class="received-date">
+            <div class="date-badge">보낸 날짜</div>
+            <div class="date" th:text="${proRequest.proRequestDate}">2024.06.27</div>
         </div>
     </div>
-    <div class="container">
-        <div class="page-body">
-            <div class="info">
-                <div class="request-info">
-                    <!-- 전문가 정보 -->
-                    <div class="pro-info">
-                        <div class="pro-pic">
-                            <img src="https://dmmj3ljielax6.cloudfront.net/upload/requestForm/25f0e364-93ad-4d49-b710-3a2f073dc547.svg">
-                        </div>
-                        <div class="pro-name-rate">
-                            <div class="pro-name" th:text="${proRequest.proName}"></div>
-                            <div class="service-address">
-                                <div class="service-name" th:text="${proRequest.serviceName}"></div>
-                                <div class="address">
-                                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMCAyMGgyMFYwSDB6Ii8+PGcgc3Ryb2tlPSIjNzM3MzczIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiI+PHBhdGggZD0iTTE2LjIxOCA3LjI3NGMwIDQuOTQzLTUuODMzIDEwLjIyNi01LjgzMyAxMC4yMjZTNC41NSAxMi41NDIgNC41NSA3LjI3NGMwLTMuMDk3IDIuNjEyLTUuNjA3IDUuODM0LTUuNjA3IDMuMjIxIDAgNS44MzMgMi41MSA1LjgzMyA1LjYwN3oiLz48cGF0aCBkPSJNMTIuNjI4IDcuOTE3YTIuMDg0IDIuMDg0IDAgMTEtNC4xNjctLjAwMSAyLjA4NCAyLjA4NCAwIDAxNC4xNjcgMHoiLz48L2c+PC9nPjwvc3ZnPg==" alt="">
-                                    <span th:text="${proRequest.region} + ' ' + ${proRequest.city}"></span>
-                                </div>
+</div>
+<div class="container">
+    <div class="page-body">
+        <div class="info">
+            <div class="request-info">
+                <!-- 전문가 정보 -->
+                <div class="pro-info">
+                    <div class="pro-pic">
+                        <img src="https://dmmj3ljielax6.cloudfront.net/upload/requestForm/25f0e364-93ad-4d49-b710-3a2f073dc547.svg">
+                    </div>
+                    <div class="pro-name-rate">
+                        <div class="pro-name" th:text="${proRequest.proName}"></div>
+                        <div class="service-address">
+                            <div class="service-name" th:text="${proRequest.serviceName}"></div>
+                            <div class="address">
+                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMCAyMGgyMFYwSDB6Ii8+PGcgc3Ryb2tlPSIjNzM3MzczIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiI+PHBhdGggZD0iTTE2LjIxOCA3LjI3NGMwIDQuOTQzLTUuODMzIDEwLjIyNi01LjgzMyAxMC4yMjZTNC41NSAxMi41NDIgNC41NSA3LjI3NGMwLTMuMDk3IDIuNjEyLTUuNjA3IDUuODM0LTUuNjA3IDMuMjIxIDAgNS44MzMgMi41MSA1LjgzMyA1LjYwN3oiLz48cGF0aCBkPSJNMTIuNjI4IDcuOTE3YTIuMDg0IDIuMDg0IDAgMTEtNC4xNjctLjAwMSAyLjA4NCAyLjA4NCAwIDAxNC4xNjcgMHoiLz48L2c+PC9nPjwvc3ZnPg=="
+                                     alt="">
+                                <span th:text="${proRequest.region} + ' ' + ${proRequest.city}"></span>
                             </div>
-                            <div class="pro-rate">
-                                <div class="hired-cnt">
-                                    <div class="pro-rate-title">고용 횟수</div>
-                                    <div class="pro-rate-info" th:text="${proRequest.empCnt}+'회'"></div>
-                                </div>
-                                <div class="rate">
-                                    <div class="pro-rate-title">별점</div>
-                                    <div class="pro-rate-info">
-                                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=" alt="">
-                                        <span th:text="${proRequest.proStarRate}"></span>
-                                        <span class="count">(15)</span>
-                                    </div>
+                        </div>
+                        <div class="pro-rate">
+                            <div class="hired-cnt">
+                                <div class="pro-rate-title">고용 횟수</div>
+                                <div class="pro-rate-info" th:text="${proRequest.empCnt}+'회'"></div>
+                            </div>
+                            <div class="rate">
+                                <div class="pro-rate-title">별점</div>
+                                <div class="pro-rate-info">
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo="
+                                         alt="">
+                                    <span th:text="${proRequest.proStarRate}"></span>
+                                    <span class="count">(15)</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- 전문가가 보낼때 적은 요청 내용 -->
-                    <div class="request-content-body">
-                        <div class="request-content">
-                            <h2>요청 내용</h2>
-                            <div th:text="${proRequest.proRequestContent}"></div>
+                </div>
+                <!-- 전문가가 보낼때 적은 요청 내용 -->
+                <div class="request-content-body">
+                    <div class="request-content">
+                        <h2>요청 내용</h2>
+                        <div th:text="${proRequest.proRequestContent}"></div>
+                    </div>
+                    <!--                        여기 다시 짜야함-->
+                    <div class="carrer-body">
+                        <div class="carrer-header">
+                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Ik0xMi42OCAzYzIuMTMzIDAgMy44OTggMS41NSAzLjg5OCAzLjUxMmwtLjAwMS40OTloNC4yODNjLjMyMSAwIC41ODcuMjQyLjYzMy41NTZsLjAwNy4wOTZ2MTEuNjg1YzAgLjM2LS4yODYuNjUyLS42NC42NTJIMy4xNGEuNjQ2LjY0NiAwIDAgMS0uNjQtLjY1MlY3LjY2M2MwLS4zNi4yODYtLjY1MS42NC0uNjUxbDQuMjgyLS4wMDF2LS40OTljMC0xLjkgMS42NTMtMy40MTIgMy42OTMtMy41MDdMMTEuMzIgM3pNNy45MTQgMTQuODM0SDMuNzc5djMuODYySDIwLjIydi0zLjg2MmgtNC4xMzV2Ljg1M2MwIC4zNi0uMjg2LjY1MS0uNjQuNjUxYS42NDQuNjQ0IDAgMCAxLS42MzItLjU1NWwtLjAwNy0uMDk2LS4wMDEtLjg1M0g5LjE5NHYuODUzYzAgLjM2LS4yODYuNjUxLS42NC42NTFhLjY0NC42NDQgMCAwIDEtLjYzMy0uNTU1bC0uMDA2LS4wOTYtLjAwMS0uODUzek0yMC4yMiA4LjMxNUgzLjc4bC0uMDAxIDUuMjE1aDQuMTM1di0uODUyYzAtLjM2LjI4Ny0uNjUyLjY0LS42NTIuMzIyIDAgLjU4OC4yNDEuNjMzLjU1NmwuMDA3LjA5NnYuODUyaDUuNjExdi0uODUyYzAtLjM2LjI4Ny0uNjUyLjY0LS42NTIuMzIyIDAgLjU4OC4yNDEuNjM0LjU1NmwuMDA2LjA5NnYuODUyaDQuMTM1VjguMzE1em0tNy41NC00LjAxMWgtMS4zNmMtMS40NjUgMC0yLjYxOCAxLjAxMi0yLjYxOCAyLjIwOHYuNWg2LjU5NnYtLjVjMC0xLjE0OC0xLjA2My0yLjEyNy0yLjQ0NC0yLjIwM2wtLjE3NC0uMDA1eiIgZmlsbD0iIzAwQzdBRSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo="
+                                 alt="">
+                            <h3>경력</h3>
                         </div>
-<!--                        여기 다시 짜야함-->
-                        <div class="carrer-body">
-                            <div class="carrer-header">
-                                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Ik0xMi42OCAzYzIuMTMzIDAgMy44OTggMS41NSAzLjg5OCAzLjUxMmwtLjAwMS40OTloNC4yODNjLjMyMSAwIC41ODcuMjQyLjYzMy41NTZsLjAwNy4wOTZ2MTEuNjg1YzAgLjM2LS4yODYuNjUyLS42NC42NTJIMy4xNGEuNjQ2LjY0NiAwIDAgMS0uNjQtLjY1MlY3LjY2M2MwLS4zNi4yODYtLjY1MS42NC0uNjUxbDQuMjgyLS4wMDF2LS40OTljMC0xLjkgMS42NTMtMy40MTIgMy42OTMtMy41MDdMMTEuMzIgM3pNNy45MTQgMTQuODM0SDMuNzc5djMuODYySDIwLjIydi0zLjg2MmgtNC4xMzV2Ljg1M2MwIC4zNi0uMjg2LjY1MS0uNjQuNjUxYS42NDQuNjQ0IDAgMCAxLS42MzItLjU1NWwtLjAwNy0uMDk2LS4wMDEtLjg1M0g5LjE5NHYuODUzYzAgLjM2LS4yODYuNjUxLS42NC42NTFhLjY0NC42NDQgMCAwIDEtLjYzMy0uNTU1bC0uMDA2LS4wOTYtLjAwMS0uODUzek0yMC4yMiA4LjMxNUgzLjc4bC0uMDAxIDUuMjE1aDQuMTM1di0uODUyYzAtLjM2LjI4Ny0uNjUyLjY0LS42NTIuMzIyIDAgLjU4OC4yNDEuNjMzLjU1NmwuMDA3LjA5NnYuODUyaDUuNjExdi0uODUyYzAtLjM2LjI4Ny0uNjUyLjY0LS42NTIuMzIyIDAgLjU4OC4yNDEuNjM0LjU1NmwuMDA2LjA5NnYuODUyaDQuMTM1VjguMzE1em0tNy41NC00LjAxMWgtMS4zNmMtMS40NjUgMC0yLjYxOCAxLjAxMi0yLjYxOCAyLjIwOHYuNWg2LjU5NnYtLjVjMC0xLjE0OC0xLjA2My0yLjEyNy0yLjQ0NC0yLjIwM2wtLjE3NC0uMDA1eiIgZmlsbD0iIzAwQzdBRSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=" alt="">
-                                <h3>경력</h3>
-                            </div>
-                            <div class="carrer-content">
-                                <ul >
-                                    <li th:each="item : ${careerInfo}" th:text="${item.award}"></li>
-                                </ul>
-                            </div>
+                        <div class="carrer-content">
+                            <ul>
+                                <li th:each="item : ${careerInfo}" th:text="${item.award}"></li>
+                            </ul>
                         </div>
-                        <div class="certificate-image">
-                            <h2>자격증 및 기타 서류</h2>
+                    </div>
+                    <div class="certificate-image">
+                        <h2>자격증 및 기타 서류</h2>
+                        <ul class="image-veiwer">
+                            <li>
+                                <img src="/static/img/certificate.jpeg" alt="">
+                            </li>
+                            <li>
+                                <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F9pQ5k%2FbtrmGXmIuQe%2F6XTySrahwqBSlJ5YkfsdJ1%2Fimg.jpg"
+                                     alt="">
+                            </li>
+                            <li>
+                                <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F9pQ5k%2FbtrmGXmIuQe%2F6XTySrahwqBSlJ5YkfsdJ1%2Fimg.jpg"
+                                     alt="">
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="pro-photos">
+                    <div class="photos-container">
+                        <h2>사진</h2>
+                        <div>
                             <ul class="image-veiwer">
                                 <li>
-                                    <img src="/static/img/certificate.jpeg" alt="">
-                                </li>
-                                <li>
-                                    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F9pQ5k%2FbtrmGXmIuQe%2F6XTySrahwqBSlJ5YkfsdJ1%2Fimg.jpg" alt="">
-                                </li>
-                                <li>
-                                    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F9pQ5k%2FbtrmGXmIuQe%2F6XTySrahwqBSlJ5YkfsdJ1%2Fimg.jpg" alt="">
+                                    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F9pQ5k%2FbtrmGXmIuQe%2F6XTySrahwqBSlJ5YkfsdJ1%2Fimg.jpg"
+                                         alt="">
                                 </li>
                             </ul>
                         </div>
                     </div>
-                    <div class="pro-photos">
-                        <div class="photos-container">
-                            <h2>사진</h2>
-                            <div><ul class="image-veiwer">
-                                <li>
-                                    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F9pQ5k%2FbtrmGXmIuQe%2F6XTySrahwqBSlJ5YkfsdJ1%2Fimg.jpg" alt="">
-                                </li>
-                            </ul></div>
-                        </div>
-                    </div>
                 </div>
             </div>
-            <div class="request-price-side">
-                <div class="side-wrapper">
-                    <div class="request-price">
-                        <span th:text="${proRequest.proRequestPay}"></span>
-                        <span>원에 요청을 보내셨습니다.</span>
+        </div>
+        <div class="request-price-side">
+            <div class="side-wrapper">
+                <div class="request-price">
+                    <span th:text="${proRequest.proRequestPay}"></span>
+                    <span>원에 요청을 보내셨습니다.</span>
 
-                        <!-- 작업이 완료 되면 띄우도록 -->
-                        <!-- <span>작업이 완료 되었습니다!</span> -->
-                    </div>
-                    <div class="accept-cancle-btn">
-                        <button type="button" class="btn-cancle">요청 진행중..</button>
+                    <!-- 작업이 완료 되면 띄우도록 -->
+                    <!-- <span>작업이 완료 되었습니다!</span> -->
+                </div>
+                <div class="accept-cancle-btn">
 
-                        <!-- 상대방이 수락을 누르면 띄우기!! -->
-                        <!-- <button type="button" class="btn-cancle">작업 진행중..</button>  -->
+                    <button th:style="${proRequest.proRequestProgress != 'PRE' ? 'display:none' : ''}" type="button"
+                            class="btn-cancle">요청 진행중..
+                    </button>
 
-                        <!-- 상대방이 작업 완료를 누른다면 리뷰 작성하기 띄우기 -->
-                        <!-- <button type="button" class="btn-accept">리뷰 작성하기</button>  -->
-                    </div>
+                    <!-- 상대방이 수락을 누르면 띄우기!! -->
+
+                    <button th:style="${proRequest.proRequestProgress != 'ING' ? 'display:none' : ''}" type="button"
+                            class="btn-cancle">작업 진행중..
+                    </button>
+
+                    <!-- 상대방이 작업 완료를 누른다면 리뷰 작성하기 띄우기 -->
+                    <button th:style="${proRequest.proRequestProgress != 'POST' ? 'display:none' : ''}" type="button"
+                            class="btn-accept">리뷰 작성하기
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>

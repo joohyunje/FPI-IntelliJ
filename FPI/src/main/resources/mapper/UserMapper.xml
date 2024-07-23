@@ -118,4 +118,53 @@
         set USER_CASH =#{userCash}
         where USER_ID = #{userId}
     </update>
+
+    <!--    회원 견적 올리기-->
+    <!--    회원이 견적 올리기 다음 시퀀스 가져오기-->
+    <select id="getUploadSeq" resultType="long">
+        select SEQ_UPLOAD.nextval
+        from dual
+    </select>
+
+    <!--    견적 작성 쿼리문-->
+    <insert id="saveUserUpload">
+        insert into TBL_USER_UPLOAD
+        values (#{userUploadId}, #{userUploadTitle}, #{userUploadContent}, #{userUploadPay},
+                #{userUploadPayRange}, sysdate, #{userUploadAddress}, #{userId}, #{serviceId})
+    </insert>
+
+    <!--    회원 위치 가져오기-->
+    <select id="selectUserLocation" resultType="UserLocationDTO">
+        select REGION, CITY, USER_NAME
+        from tbl_user
+                 inner join TBL_LOCATION
+                            on tbl_user.LOCATION_ID = TBL_LOCATION.LOCATION_ID
+        where TBL_USER.USER_ID = #{userId}
+    </select>
+
+    <!--    전뭄가 찾기를 통한 요청 보내기   -->
+    <insert id="userRequest">
+        insert into TBL_USER_REQUEST
+        values (SEQ_REQUEST.nextval, #{userRequestPay}, #{userRequestContent},
+                sysdate, 'PRE', #{userId}, #{proUploadId})
+    </insert>
+
+    <!--    전문가가 올린 견적에 대해서 내가 보낸 요청이 있는 없는지 확인-->
+    <select id="checkUserRequest" resultType="long">
+        select count(*)
+        from TBL_PRO_UPLOAD TPU
+                 inner join TBL_USER_REQUEST TUR
+                            on tpu.PRO_UPLOAD_ID = tur.PRO_UPLOAD_ID
+                 inner join TBL_USER TU
+                            on TUR.USER_ID = TU.USER_ID
+        where tpu.PRO_UPLOAD_ID = #{proUploadId}
+          and tur.USER_ID = #{userId}
+    </select>
+
+    <!--    유저가 회원에 대해 리뷰 작성하기  -->
+    <insert id="userWriteProReview">
+        insert into TBL_PRO_REVIEW
+        values (SEQ_REVIEW.nextval, #{proReviewTitle}, #{proReviewContent}, #{proReviewRate}, 100, sysdate,
+                #{proId}, #{userId})
+    </insert>
 </mapper>

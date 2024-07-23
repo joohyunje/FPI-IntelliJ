@@ -1,5 +1,6 @@
 package com.example.fpi.mapper.user;
 
+import com.example.fpi.domain.dto.pro.ProReviewDTO;
 import com.example.fpi.domain.dto.user.*;
 import com.example.fpi.domain.vo.main.CategoryListVO;
 import com.example.fpi.domain.vo.user.UserVO;
@@ -55,7 +56,6 @@ public interface UserMapper {
     //회원가입 폼
     void updateUser(UserVO vo);
 
-//    전문가 탈퇴시 전문가 인증값 변경
     void editApproval(String userId);
 
 //    유저정보 수정
@@ -63,4 +63,22 @@ public interface UserMapper {
     void editCategory(CategoryListVO vo);
 
     void updateCash(UserVO vo);
+    //    견적 올리기
+//    시퀀스 가져오기
+    long getUploadSeq();
+
+    //    회원 견적올리기 작성하기
+    void saveUserUpload(UserUploadDTO userUpload);
+
+    //    회원 위치가져오기
+    UserLocationDTO selectUserLocation(String userId);
+
+    //    전문가 견적을 보고 요청 보내기
+    void userRequest(UserRequestDTO userRequestDTO);
+
+    Long checkUserRequest(Long proUploadId, String userId);
+
+    void userWriteProReview(ProReviewDTO proReview);
+
+    void deleteProRequest(Long proRequestId);
 }

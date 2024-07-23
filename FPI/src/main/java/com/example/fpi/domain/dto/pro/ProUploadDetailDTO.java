@@ -24,5 +24,6 @@ public class ProUploadDetailDTO {
     private Long proUploadPayRange;
     private Long proUploadPay;
     private String proUploadAddress;
+    private String proUploadFileRoute;
 
 }

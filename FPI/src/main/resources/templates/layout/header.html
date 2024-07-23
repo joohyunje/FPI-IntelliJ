@@ -8,7 +8,7 @@
 <!--  <link rel="stylesheet" th:href="@{/css/main/common.css}">-->
 </head>
 <body>
-    <div th:fragment="header" >
+    <div th:fragment="header">
         <div id="header" th:if="${session.proName}==null">
             <div class="global-nav-bar">
                 <div class="desktop-header">
@@ -17,7 +17,7 @@
                             <img th:src="@{/img/user_logo.png}" alt="로고" id="logo" style="width: 100px;height: 80px; margin:1px  8px 0px 0 ;vertical-align: middle;">
                         </a>
                         <div class="nav-list">
-                            <span class="nav-item"> <a href="/templates/main/user_receiveform.html" >견적요청 </a></span>
+                            <span class="nav-item"> <a th:href="@{/user/upload}" >견적요청 </a></span>
                             <span class="nav-item left-items"><a th:href="@{/user/proFind}">전문가찾기</a></span>
                             <span class="nav-item left-items"><a th:href="@{/community}">커뮤니티</a></span>
                         </div>
@@ -53,15 +53,15 @@
                             <img th:src="@{/img/pro_logo.png}" alt="로고" id="logo" style="width: 100px;height: 80px; margin:1px  8px 0px 0 ;vertical-align: middle;">
                         </a>
                         <div class="nav-list">
-                            <span class="nav-item-pro"><a href="/templates/main/user_receiveform.html">서비스 올리기</a></span>
-                            <span class="nav-item-pro left-items"><a href="">회원 찾기</a></span>
+                            <span class="nav-item-pro"><a th:href="@{/pro/upload}">서비스 올리기</a></span>
+                            <span class="nav-item-pro left-items"><a th:href="@{/pro/userFind}">회원 찾기</a></span>
                             <span class="nav-item-pro left-items"><a th:href="@{/community}">커뮤니티</a></span>
                         </div>
                     </div>
 
                     <div class="header-right">
                         <div class="nav-list">
-                            <span class="nav-item-pro left-items"><a href="/templates/common(2)/pro_received_req.html">보낸요청/받은요청</a></span>
+                            <span class="nav-item-pro left-items"><a th:href="@{/pro/requests}">보낸요청/받은요청</a></span>
                             <span class="nav-item-pro left-items"><a id="moveUser" th:href="@{/main/user}">회원 전환</a></span>
                                 <div class="header_oneline">
                                     <span class="nav-item-pro left-items"><a th:href="@{/pro/mypage}" th:text="${session.proName}+ ' 전문가님' "></a></span>
