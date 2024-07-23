@@ -2,102 +2,118 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.fpi.mapper.user.UserMapper">
-<!--&lt;!&ndash;    유저가 받은요청 받아오기, pro_request select&ndash;&gt;-->
-<!--    <select id="selectUserReceivedReq" resultType="UserReceivedReqListDTO">-->
-<!--        SELECT *-->
-<!--        FROM (-->
-<!--                 SELECT ROWNUM AS RN, request.*-->
-<!--                 FROM (-->
-<!--                          SELECT PRO_REQUEST_ID, PRO_REQUEST_PAY, PRO_REQUEST_DATE , PRO_REQUEST_PROGRESS, PR.PRO_NAME, PR.EMP_CNT, TBL_USER_UPLOAD.USER_UPLOAD_TITLE-->
-<!--                          FROM TBL_PRO_REQUEST-->
-<!--                                   INNER JOIN TBL_USER_UPLOAD-->
-<!--                                              ON TBL_PRO_REQUEST.USER_UPLOAD_ID = TBL_USER_UPLOAD.USER_UPLOAD_ID-->
-<!--                                   INNER JOIN TBL_PRO pr-->
-<!--                                              ON TBL_PRO_REQUEST.PRO_ID = PR.PRO_ID-->
-<!--                          WHERE TBL_USER_UPLOAD.USER_ID = 1-->
-<!--                          ORDER BY PRO_REQUEST_DATE DESC-->
-<!--                      ) request-->
-<!--                 WHERE rownum &lt;= #{endRow}-->
-<!--             )-->
-<!--        WHERE rn &gt; #{startRow}-->
-<!--    </select>-->
+    <!--&lt;!&ndash;    유저가 받은요청 받아오기, pro_request select&ndash;&gt;-->
+    <!--    <select id="selectUserReceivedReq" resultType="UserReceivedReqListDTO">-->
+    <!--        SELECT *-->
+    <!--        FROM (-->
+    <!--                 SELECT ROWNUM AS RN, request.*-->
+    <!--                 FROM (-->
+    <!--                          SELECT PRO_REQUEST_ID, PRO_REQUEST_PAY, PRO_REQUEST_DATE , PRO_REQUEST_PROGRESS, PR.PRO_NAME, PR.EMP_CNT, TBL_USER_UPLOAD.USER_UPLOAD_TITLE-->
+    <!--                          FROM TBL_PRO_REQUEST-->
+    <!--                                   INNER JOIN TBL_USER_UPLOAD-->
+    <!--                                              ON TBL_PRO_REQUEST.USER_UPLOAD_ID = TBL_USER_UPLOAD.USER_UPLOAD_ID-->
+    <!--                                   INNER JOIN TBL_PRO pr-->
+    <!--                                              ON TBL_PRO_REQUEST.PRO_ID = PR.PRO_ID-->
+    <!--                          WHERE TBL_USER_UPLOAD.USER_ID = 1-->
+    <!--                          ORDER BY PRO_REQUEST_DATE DESC-->
+    <!--                      ) request-->
+    <!--                 WHERE rownum &lt;= #{endRow}-->
+    <!--             )-->
+    <!--        WHERE rn &gt; #{startRow}-->
+    <!--    </select>-->
 
-<!--    위의 요청 갯수-->
+    <!--    위의 요청 갯수-->
     <select id="countReceivedRequest">
         select count(*)
-        from(SELECT PRO_REQUEST_ID, PRO_REQUEST_PAY, PRO_REQUEST_DATE , PRO_REQUEST_PROGRESS, PR.PRO_NAME, PR.EMP_CNT, TBL_USER_UPLOAD.USER_UPLOAD_TITLE
-             FROM TBL_PRO_REQUEST
-                      INNER JOIN TBL_USER_UPLOAD
-                                 ON TBL_PRO_REQUEST.USER_UPLOAD_ID = TBL_USER_UPLOAD.USER_UPLOAD_ID
-                      INNER JOIN TBL_PRO pr
-                                 ON TBL_PRO_REQUEST.PRO_ID = PR.PRO_ID
-             WHERE TBL_USER_UPLOAD.USER_ID = #{userId})
+        from (SELECT PRO_REQUEST_ID,
+                     PRO_REQUEST_PAY,
+                     PRO_REQUEST_DATE,
+                     PRO_REQUEST_PROGRESS,
+                     PR.PRO_NAME,
+                     PR.EMP_CNT,
+                     TBL_USER_UPLOAD.USER_UPLOAD_TITLE
+              FROM TBL_PRO_REQUEST
+                       INNER JOIN TBL_USER_UPLOAD
+                                  ON TBL_PRO_REQUEST.USER_UPLOAD_ID = TBL_USER_UPLOAD.USER_UPLOAD_ID
+                       INNER JOIN TBL_PRO pr
+                                  ON TBL_PRO_REQUEST.PRO_ID = PR.PRO_ID
+              WHERE TBL_USER_UPLOAD.USER_ID = #{userId})
     </select>
 
 
-<!--   받은 요청 동적 쿼리   -->
+    <!--   받은 요청 동적 쿼리   -->
     <select id="selectReceivedReq" resultType="UserReceivedReqListDTO">
         SELECT *
         FROM (
-                 SELECT ROWNUM AS RN, request.*
-                 FROM (
-                          SELECT PRO_REQUEST_ID, PRO_REQUEST_PAY, PRO_REQUEST_DATE , PRO_REQUEST_PROGRESS, NVL(PR.PRO_STAR_RATE, '0') AS pro_Star_Rate, PR.PRO_NAME, PR.EMP_CNT, TBL_USER_UPLOAD.USER_UPLOAD_TITLE
-                          FROM TBL_PRO_REQUEST
-                                   INNER JOIN TBL_USER_UPLOAD
-                                              ON TBL_PRO_REQUEST.USER_UPLOAD_ID = TBL_USER_UPLOAD.USER_UPLOAD_ID
-                                   INNER JOIN TBL_PRO pr
-                                              ON TBL_PRO_REQUEST.PRO_ID = PR.PRO_ID
-                          WHERE TBL_USER_UPLOAD.USER_ID = #{userId}
-                          ORDER BY
-                                <choose>
-                                    <when test="sort == 'oldest'">PRO_REQUEST_DATE ASC</when>
-                                    <otherwise> PRO_REQUEST_DATE DESC</otherwise>
-                                </choose>
-                      ) request
-                 WHERE rownum &lt;= #{endRow}
-             )
+        SELECT ROWNUM AS RN, request.*
+        FROM (
+        SELECT PRO_REQUEST_ID, PRO_REQUEST_PAY, PRO_REQUEST_DATE , PRO_REQUEST_PROGRESS, NVL(PR.PRO_STAR_RATE, '0') AS
+        pro_Star_Rate, PR.PRO_NAME, PR.EMP_CNT, TBL_USER_UPLOAD.USER_UPLOAD_TITLE
+        FROM TBL_PRO_REQUEST
+        INNER JOIN TBL_USER_UPLOAD
+        ON TBL_PRO_REQUEST.USER_UPLOAD_ID = TBL_USER_UPLOAD.USER_UPLOAD_ID
+        INNER JOIN TBL_PRO pr
+        ON TBL_PRO_REQUEST.PRO_ID = PR.PRO_ID
+        WHERE TBL_USER_UPLOAD.USER_ID = #{userId}
+        ORDER BY
+        <choose>
+            <when test="sort == 'oldest'">PRO_REQUEST_DATE ASC</when>
+            <otherwise>PRO_REQUEST_DATE DESC</otherwise>
+        </choose>
+        ) request
+        WHERE rownum &lt;= #{endRow}
+        )
         WHERE rn &gt; #{startRow}
     </select>
 
-<!--    보낸 요청 목록    -->
+    <!--    보낸 요청 목록    -->
     <select id="selectSendReq" resultType="UserSendReqListDTO">
         SELECT *
         FROM (
-                 SELECT ROWNUM AS RN, request.*
-                 FROM (
-                        SELECT USER_REQUEST_ID, USER_REQUEST_PAY, USER_REQUEST_DATE, USER_REQUEST_PROGRESS, TBL_PRO_UPLOAD.PRO_UPLOAD_TITLE,NVL(PR.PRO_STAR_RATE , '0') AS pro_Star_Rate, PR.PRO_NAME, PR.EMP_CNT
-                        FROM TBL_USER_REQUEST
-                                INNER JOIN TBL_PRO_UPLOAD
-                                        ON TBL_USER_REQUEST.PRO_UPLOAD_ID = TBL_PRO_UPLOAD.PRO_UPLOAD_ID
-                                INNER JOIN TBL_PRO PR
-                                        ON TBL_PRO_UPLOAD.PRO_ID = PR.PRO_ID
-                        WHERE TBL_USER_REQUEST.USER_ID = #{userId}
-                        ORDER BY
-                                <choose>
-                                    <when test="sort == 'oldest'">USER_REQUEST_DATE ASC</when>
-                                    <otherwise> USER_REQUEST_DATE DESC</otherwise>
-                                </choose>
-                      ) request
-                 WHERE rownum &lt;= #{endRow}
-             )
+        SELECT ROWNUM AS RN, request.*
+        FROM (
+        SELECT USER_REQUEST_ID, USER_REQUEST_PAY, USER_REQUEST_DATE, USER_REQUEST_PROGRESS,
+        TBL_PRO_UPLOAD.PRO_UPLOAD_TITLE,NVL(PR.PRO_STAR_RATE , '0') AS pro_Star_Rate, PR.PRO_NAME, PR.EMP_CNT
+        FROM TBL_USER_REQUEST
+        INNER JOIN TBL_PRO_UPLOAD
+        ON TBL_USER_REQUEST.PRO_UPLOAD_ID = TBL_PRO_UPLOAD.PRO_UPLOAD_ID
+        INNER JOIN TBL_PRO PR
+        ON TBL_PRO_UPLOAD.PRO_ID = PR.PRO_ID
+        WHERE TBL_USER_REQUEST.USER_ID = #{userId}
+        ORDER BY
+        <choose>
+            <when test="sort == 'oldest'">USER_REQUEST_DATE ASC</when>
+            <otherwise>USER_REQUEST_DATE DESC</otherwise>
+        </choose>
+        ) request
+        WHERE rownum &lt;= #{endRow}
+        )
         WHERE rn &gt; #{startRow}
     </select>
 
     <select id="countSendRequest">
         select count(*)
-        from(SELECT USER_REQUEST_ID, USER_REQUEST_PAY, USER_REQUEST_DATE, USER_REQUEST_PROGRESS, TBL_PRO_UPLOAD.PRO_UPLOAD_TITLE, PR.PRO_NAME, PR.EMP_CNT
-             FROM TBL_USER_REQUEST
-                      INNER JOIN TBL_PRO_UPLOAD
-                                 ON TBL_USER_REQUEST.PRO_UPLOAD_ID = TBL_PRO_UPLOAD.PRO_UPLOAD_ID
-                      INNER JOIN TBL_PRO PR
-                                 ON TBL_PRO_UPLOAD.PRO_ID = PR.PRO_ID
-             WHERE TBL_USER_REQUEST.USER_ID = #{userId})
+        from (SELECT USER_REQUEST_ID,
+                     USER_REQUEST_PAY,
+                     USER_REQUEST_DATE,
+                     USER_REQUEST_PROGRESS,
+                     TBL_PRO_UPLOAD.PRO_UPLOAD_TITLE,
+                     PR.PRO_NAME,
+                     PR.EMP_CNT
+              FROM TBL_USER_REQUEST
+                       INNER JOIN TBL_PRO_UPLOAD
+                                  ON TBL_USER_REQUEST.PRO_UPLOAD_ID = TBL_PRO_UPLOAD.PRO_UPLOAD_ID
+                       INNER JOIN TBL_PRO PR
+                                  ON TBL_PRO_UPLOAD.PRO_ID = PR.PRO_ID
+              WHERE TBL_USER_REQUEST.USER_ID = #{userId})
     </select>
 
+    <!--    받은 요청 삭제하기  -->
+    <delete id="deleteProRequest">
+        delete
+        from TBL_PRO_REQUEST
+        where TBL_PRO_REQUEST.PRO_REQUEST_ID = #{proRequestId}
+    </delete>
 
 
-
-
-    
-    
 </mapper>

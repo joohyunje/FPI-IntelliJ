@@ -20,21 +20,21 @@
 </div>
 <div class="container">
     <div class="page-body">
-        <form th:action="@{/user/proReview}" class="review-input" th:object="${proReview}">
+        <form th:action="@{/pro/userReview}" class="review-input" th:object="${userReview}">
             <div class="request-info">
                 <div class="reviewer-info">
                     <div class="review-name-rate">
                         <div class="reviewer-name user-name">주현제 님에게 작성하기</div>
                         <div class="review-title-wrapper">
                             <label class="review-title" for="reviewTitle">제목</label>
-                            <input type="text" id="reviewTitle" th:field="*{proReviewTitle}">
+                            <input type="text" id="reviewTitle" th:field="*{userReviewTitle}">
                         </div>
                     </div>
                 </div>
                 <div class="review-content-body">
                     <div class="review-content">
                         <label for="reviewContent">리뷰 내용</label>
-                        <textarea th:field="*{proReviewContent}" class="textarea" name="reviewContent"
+                        <textarea th:field="*{userReviewContent}" class="textarea" name="reviewContent"
                                   id="reviewContent" placeholder="리뷰 내용을 작성해주세요"
                                   rows="10"></textarea>
                     </div>

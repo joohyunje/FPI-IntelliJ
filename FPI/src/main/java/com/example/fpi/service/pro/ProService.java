@@ -5,6 +5,7 @@ import com.example.fpi.domain.dto.certify.CardInfoFileDTO;
 import com.example.fpi.domain.dto.certify.CareerInfoDTO;
 import com.example.fpi.domain.dto.main.CategoryListDTO;
 import com.example.fpi.domain.dto.pro.*;
+import com.example.fpi.domain.dto.user.UserReviewDTO;
 import com.example.fpi.domain.util.PagedResponse;
 import com.example.fpi.domain.vo.certify.CardInfoFileVO;
 import com.example.fpi.domain.vo.certify.CardInfoVO;
@@ -79,5 +80,19 @@ public interface ProService {
 
 //    견적 올리기
 //    시퀀스 가져오기
-    void saveProUpload(ProUploadDTO proUpload);
+    void saveProUpload(ProUploadDTO proUpload, List<MultipartFile> files);
+
+    void saveProUploadFile(Long proUploadId, List<MultipartFile> files);
+
+    //    전문가 위치가져오기
+    ProLocationDTO selectProLocation(Long proId);
+
+    //    전문가 견적을 보고 요청 보내기
+    void proRequest(ProRequestDTO proRequestDTO);
+
+    Long checkProRequest(Long userUploadId, Long proId);
+
+    void proWriteUserReview(UserReviewDTO userReview);
+
+    void deleteUserRequest(Long userRequestId);
 }

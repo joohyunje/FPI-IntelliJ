@@ -4,13 +4,17 @@ import com.example.fpi.domain.dto.certify.CardInfoDTO;
 import com.example.fpi.domain.dto.certify.CardInfoFileDTO;
 import com.example.fpi.domain.dto.certify.CareerInfoDTO;
 import com.example.fpi.domain.dto.main.CategoryListDTO;
+import com.example.fpi.domain.dto.file.ProUploadFileDTO;
 import com.example.fpi.domain.dto.pro.*;
+import com.example.fpi.domain.dto.user.UserReviewDTO;
 import com.example.fpi.domain.util.PagedResponse;
 import com.example.fpi.domain.vo.certify.CardInfoFileVO;
 import com.example.fpi.domain.vo.certify.CardInfoVO;
 import com.example.fpi.domain.vo.certify.CareerInfoVO;
 import com.example.fpi.domain.vo.main.CategoryListVO;
 import com.example.fpi.domain.vo.pro.ProVO;
+import com.example.fpi.domain.vo.file.ProUploadFileVO;
+import com.example.fpi.mapper.File.FileMapper;
 import com.example.fpi.mapper.pro.ProMapper;
 import com.example.fpi.service.user.CertifyService;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +37,7 @@ public class ProServiceImpl implements ProService {
 
     private final ProMapper proMapper;
     private final CertifyService certifyService;
+    private final FileMapper fileMapper;
 
     //    받은 요청 목록
     @Override
@@ -76,6 +81,10 @@ public class ProServiceImpl implements ProService {
     public Long selectProId(String userId) {
         return proMapper.selectProId(userId);
     }
+
+
+
+
 
 
     //    전문가 상세정보 조회
@@ -206,7 +215,6 @@ public class ProServiceImpl implements ProService {
             Files.delete(proImg);
         }
         proMapper.deletePro(proId, proName);
-
     }
 
 //    전문가 탈퇴시 서버에 저장된 자격증사진 삭제
@@ -237,10 +245,74 @@ public class ProServiceImpl implements ProService {
 
 //  전문가 견적 작성하기
     @Override
-    public void saveProUpload(ProUploadDTO proUpload) {
+    @Transactional
+    public void saveProUpload(ProUploadDTO proUpload, List<MultipartFile> files) {
         Long proUploadId = proMapper.getUploadSeq();
         proUpload.setProUploadId(proUploadId);
         proMapper.saveProUpload(proUpload);
+
+        saveProUploadFile(proUploadId, files);
+    }
+
+    @Override
+    public void saveProUploadFile(Long proUploadId, List<MultipartFile> files) {
+        LocalDate now = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        String datePath = now.format(formatter);
+
+        for (MultipartFile file : files) {
+            // 방어코드
+            if (file.isEmpty()) continue; // 파일이 비어있으면 건너뜀
+
+            String originalFileName = file.getOriginalFilename();
+            String proUploadFileRouteName = UUID.randomUUID().toString().replaceAll("-", "") + "_" + originalFileName;
+
+            try {
+                // 파일 저장 경로 설정
+                Path directoryPath = Paths.get("src/main/resources/static/uploads/proUpload/" + datePath);
+                if (!Files.exists(directoryPath)) {
+                    Files.createDirectories(directoryPath); // 폴더가 없으면 생성
+                }
+                Path filePath = directoryPath.resolve(proUploadFileRouteName);
+                // 파일 저장
+                Files.copy(file.getInputStream(), filePath);
+
+                ProUploadFileDTO proUploadFileDTO = new ProUploadFileDTO();
+                proUploadFileDTO.setProUploadId(proUploadId);
+                proUploadFileDTO.setProUploadFileOriginal(originalFileName);
+                proUploadFileDTO.setProUploadFileRoute("/uploads/proUpload/" + datePath + "/" + proUploadFileRouteName);
+
+                fileMapper.insertProUploadFile(ProUploadFileVO.toEntity(proUploadFileDTO)); // 파일 정보 저장
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public ProLocationDTO selectProLocation(Long proId) {
+        return proMapper.selectProLocation(proId);
+    }
+
+    @Override
+    public void proRequest(ProRequestDTO proRequestDTO) {
+        proMapper.proRequest(proRequestDTO);
+    }
+
+    @Override
+    public Long checkProRequest(Long userUploadId, Long proId) {
+        return proMapper.checkProRequest(userUploadId, proId);
+    }
+
+    @Override
+    public void proWriteUserReview(UserReviewDTO userReview) {
+        proMapper.proWriteUserReview(userReview);
+    }
+
+    @Override
+    public void deleteUserRequest(Long userRequestId) {
+        proMapper.deleteUserRequest(userRequestId);
     }
 
     //    올린 견적으로 경력 가져오기

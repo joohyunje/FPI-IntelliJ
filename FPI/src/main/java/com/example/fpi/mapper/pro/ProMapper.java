@@ -8,6 +8,7 @@ import com.example.fpi.domain.vo.certify.CardInfoVO;
 import com.example.fpi.domain.vo.certify.CareerInfoVO;
 import com.example.fpi.domain.vo.main.CategoryListVO;
 import com.example.fpi.domain.vo.pro.ProVO;
+import com.example.fpi.domain.dto.user.UserReviewDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -89,5 +90,16 @@ public interface ProMapper {
 //    전문가 찾기 갯수 동적
     int countProUpload(String search);
 
+    //    전문가 위치가져오기
+    ProLocationDTO selectProLocation(Long proId);
+
+    //    전문가 견적을 보고 요청 보내기
+    void proRequest(ProRequestDTO proRequestDTO);
+
+    Long checkProRequest(Long userUploadId, Long proId);
+
+    void proWriteUserReview(UserReviewDTO userReview);
+
+    void deleteUserRequest(Long userRequestId);
 
 }

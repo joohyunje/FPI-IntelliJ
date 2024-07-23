@@ -11,7 +11,6 @@ public class ProUploadFileDTO {
     private Long proUploadFileId;
     private String proUploadFileRoute;
     private String proUploadFileOriginal;
-    private String proUploadFileSaved;
     private Long proUploadId;
 
 }

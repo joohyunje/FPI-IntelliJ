@@ -1,10 +1,12 @@
 package com.example.fpi.service.user;
 
 import com.example.fpi.domain.dto.main.CategoryListDTO;
+import com.example.fpi.domain.dto.pro.ProReviewDTO;
 import com.example.fpi.domain.dto.user.*;
 import com.example.fpi.domain.util.PagedResponse;
 import com.example.fpi.domain.vo.user.UserVO;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -25,7 +27,7 @@ public interface UserService {
     //    유저가 받은 리뷰 목록보기
     List<UserReviewListDTO> selectUserReview(String userId);
 
-//    유저정보 상세보기,수정하기로 정보 담아서 이동
+//    유저정보 상세보기
     UserDTO detailUser(String userId);
 
     //    유저 삭제 시, 이름 입력 비교를 위해
@@ -49,4 +51,20 @@ public interface UserService {
     UserUploadDetailDTO selectUserUploadDetail(Long userUploadId);
 
     void updateCash(String userId,int cash);
+
+    //회원 견적 올리기
+    void saveUserUpload(UserUploadDTO userUpload, List<MultipartFile> files);
+
+    void saveUserUploadFile(Long userUploadId, List<MultipartFile> files);
+
+    //    회원 위치가져오기
+    UserLocationDTO selectUserLocation(String userId);
+
+    void userRequest(UserRequestDTO userRequestDTO);
+
+    Long checkUserRequest(Long proUploadId, String userId);
+
+    void userWriteProReview(ProReviewDTO proReview);
+
+    void deleteProRequest(Long proRequestId);
 }
