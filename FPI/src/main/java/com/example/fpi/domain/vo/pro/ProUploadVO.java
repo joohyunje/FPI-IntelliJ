@@ -23,9 +23,10 @@ public class ProUploadVO {
     private LocalDate proUploadDate;
     private String proUploadAddress;
     private Long proId;
+    private Long serviceId;
 
     @Builder
-    public ProUploadVO(Long proUploadId, String proUploadTitle, String proUploadContent, Long proUploadPay, Long proUploadPayRange, LocalDate proUploadDate,String proUploadAddress, Long proId) {
+    public ProUploadVO(Long proUploadId, String proUploadTitle, String proUploadContent, Long proUploadPay, Long proUploadPayRange, LocalDate proUploadDate,String proUploadAddress, Long proId, Long serviceId) {
         this.proUploadId = proUploadId;
         this.proUploadTitle = proUploadTitle;
         this.proUploadContent = proUploadContent;
@@ -34,6 +35,7 @@ public class ProUploadVO {
         this.proUploadDate = proUploadDate;
         this.proUploadAddress = proUploadAddress;
         this.proId = proId;
+        this.serviceId = serviceId;
     }
 
     public static ProUploadVO toEntity(ProUploadDTO proUploadDTO) {
@@ -45,6 +47,7 @@ public class ProUploadVO {
                 .proUploadDate(proUploadDTO.getProUploadDate())
                 .proUploadAddress(proUploadDTO.getProUploadAddress())
                 .proId(proUploadDTO.getProId())
+                .serviceId(proUploadDTO.getServiceId())
                 .build();
     }
 

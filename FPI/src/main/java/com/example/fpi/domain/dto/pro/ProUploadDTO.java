@@ -17,4 +17,5 @@ public class ProUploadDTO {
     private LocalDate proUploadDate;
     private String proUploadAddress;
     private Long proId;
+    private Long serviceId;
 }

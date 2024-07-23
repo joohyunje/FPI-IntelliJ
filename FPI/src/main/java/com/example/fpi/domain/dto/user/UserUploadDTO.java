@@ -17,4 +17,5 @@ public class UserUploadDTO {
     private LocalDate userUploadDate;
     private String userUploadAddress;
     private String userId;
+    private Long serviceId;
 }

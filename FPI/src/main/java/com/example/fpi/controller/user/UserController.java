@@ -1,17 +1,24 @@
 package com.example.fpi.controller.user;
 
+import com.example.fpi.domain.dto.file.ProUploadFileDTO;
 import com.example.fpi.domain.dto.pro.ProCareerInfoListDTO;
 import com.example.fpi.domain.dto.pro.ProRequestDetailDTO;
+import com.example.fpi.domain.dto.pro.ProReviewDTO;
 import com.example.fpi.domain.dto.pro.ProUploadDetailDTO;
+import com.example.fpi.domain.dto.user.UserLocationDTO;
+import com.example.fpi.domain.dto.user.UserRequestDTO;
 import com.example.fpi.domain.dto.user.UserRequestDetailDTO;
+import com.example.fpi.domain.dto.user.UserUploadDTO;
+import com.example.fpi.domain.oauth.CustomOAuth2User;
+import com.example.fpi.mapper.File.FileMapper;
 import com.example.fpi.service.pro.ProService;
 import com.example.fpi.service.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -22,6 +29,7 @@ public class UserController {
 
     private final UserService userService;
     private final ProService proService;
+    private final FileMapper fileMapper;
 
 //    @GetMapping("/received_req")
 //    public String received_req(@RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
@@ -52,7 +60,7 @@ public class UserController {
         return "user/req_list/user_received_req";
     }
 
-//    전문가가 보낸 요청의 상세보기
+    //    전문가가 보낸 요청의 상세보기
     @GetMapping("/proDetail/{proRequestId}")
     public String proReqDetail(@PathVariable("proRequestId") Long proRequestId, Model model) {
 
@@ -71,7 +79,7 @@ public class UserController {
 
     }
 
-//    유저가 보낸 요청의 상세보기
+    //    유저가 보낸 요청의 상세보기
     @GetMapping("/userDetail/{userRequestId}")
     public String userReqDetail(@PathVariable("userRequestId") Long userRequestId, Model model) {
 
@@ -90,17 +98,112 @@ public class UserController {
 
     //    전문가 찾기를 통해 전문가가 올리 견적 상세보기
     @GetMapping("/uploadDetail/{proUploadId}")
-    public String uploadDetail(@PathVariable("proUploadId") Long proUploadId, Model model) {
+    public String uploadDetail(@PathVariable("proUploadId") Long proUploadId, Model model,
+                               @AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
         ProUploadDetailDTO Upload = proService.selectProUploadDetail(proUploadId);
 
         List<ProCareerInfoListDTO> careerInfo = proService.selectProCareerByUp(proUploadId);
 
+        List<ProUploadFileDTO> proUploadFiles = fileMapper.selectProUploadFileList(proUploadId);
+
+        String userId = customOAuth2User.getUserId();
+        UserLocationDTO userLocation = userService.selectUserLocation(userId);
+
+        Long checkRequest = userService.checkUserRequest(proUploadId, userId);
 
         model.addAttribute("careerInfo", careerInfo);
 
         model.addAttribute("proUpload", Upload);
 
+        model.addAttribute("proUploadFiles", proUploadFiles);
+
+        model.addAttribute("userLocation", userLocation);
+
+        model.addAttribute("userRequest", new UserRequestDTO());
+
+        model.addAttribute("checkRequest", checkRequest);
+
         return "/user/profind/proFind_info";
     }
+
+    //    회원 견적 작성하기
+    @GetMapping("/upload")
+    public String uploadForm(Model model,
+                             @AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
+
+        String userId = customOAuth2User.getUserId();
+        UserLocationDTO userLocation = userService.selectUserLocation(userId);
+
+        model.addAttribute("userUpload", new UserUploadDTO());
+        model.addAttribute("userLocation", userLocation);
+
+        return "/user/upload/user_receiveform";
+    }
+
+    @PostMapping("/upload")
+    public String upload(UserUploadDTO userUpload,
+                         @AuthenticationPrincipal CustomOAuth2User customOAuth2User,
+                         @RequestParam("userUploadFiles") List<MultipartFile> files) {
+
+        if (customOAuth2User != null) {
+            String userId = customOAuth2User.getUserId();
+            userUpload.setUserId(userId);
+            System.out.println("userId " + userId);
+        }
+
+        System.out.println("userUpload " + userUpload.toString());
+
+
+        userService.saveUserUpload(userUpload, files);
+
+        return "redirect:/main/user";
+    }
+
+    @PostMapping("/sendUserRequest")
+    public String sendRequest(@RequestParam Long proUploadId,
+                              UserRequestDTO userRequest,
+                              @AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
+        String userId = customOAuth2User.getUserId();
+        userRequest.setUserId(userId);
+        userRequest.setProUploadId(proUploadId);
+
+
+        userService.userRequest(userRequest);
+
+
+        return "redirect:/user/uploadDetail/" + proUploadId;
+
+    }
+
+    @GetMapping("/proReview")
+    public String proReviewForm(Model model) {
+
+        model.addAttribute("proReview", new ProReviewDTO());
+
+        return "/user/req_list/reviewWrite";
+    }
+
+    @PostMapping("/proReview")
+    public String proReview(ProReviewDTO proReview,
+                            @AuthenticationPrincipal CustomOAuth2User customOAuth2User,
+                            @RequestParam Long proId) {
+
+        String userId = customOAuth2User.getUserId();
+        proReview.setUserId(userId);
+        proReview.setProId(proId);
+
+        userService.userWriteProReview(proReview);
+
+        return "redirect:/user/main";
+
+    }
+
+    @PostMapping("/proDetail/delete/{proRequestId}")
+    public String deleteProRequest(@PathVariable Long proRequestId) {
+        userService.deleteProRequest(proRequestId);
+
+        return "redirect:/user/requests";
+    }
+
 
 }

@@ -1,82 +1,85 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>로그인 전 헤더</title>
-<!--  <link rel="stylesheet" th:href="@{/css/layout/header.css}">-->
-<!--  <link rel="stylesheet" th:href="@{/css/main/common.css}">-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 전 헤더</title>
+    <!--  <link rel="stylesheet" th:href="@{/css/layout/header.css}">-->
+    <!--  <link rel="stylesheet" th:href="@{/css/main/common.css}">-->
 </head>
 <body>
-    <div th:fragment="header">
-        <div id="header" th:if="${session.proName}==null">
-            <div class="global-nav-bar">
-                <div class="desktop-header">
-                    <div class="header-left">
-                        <a th:href="@{/main/user}">
-                            <img th:src="@{/img/user_logo.png}" alt="로고" id="logo" style="width: 100px;height: 80px; margin:1px  8px 0px 0 ;vertical-align: middle;">
-                        </a>
-                        <div class="nav-list">
-                            <a href="/templates/main/user_receiveform.html"><span class="nav-item">견적요청</span></a>
-                            <a th:href="@{/user/proFind}"><span class="nav-item left-items">전문가찾기</span></a>
-                            <a href="/templates/common(1)/Community.html"><span class="nav-item left-items">커뮤니티</span></a>
-                        </div>
-                    </div>
-
-                    <div class="header-right" sec:authorize="!isAuthenticated()">
-                        <div class="nav-list">
-                    <span class="nav-item">
-                        <a th:href="@{/main/login}" >로그인/회원가입</a>
-                    </span>
-                        </div>
-                    </div>
-                    <div class="header-right" sec:authorize="isAuthenticated()">
-                        <div class="nav-list">
-                            <a th:href="@{/user/requests}"><span class="nav-item left-items">보낸요청/받은요청</span></a>
-                            <a th:unless="${session.userProApproval.equals('NO')}" id="movePro" th:href="@{/main/pro}"><span class="nav-item left-items">전문가 전환</span></a>
-                            <a th:href="@{/user/mypage}" >
-                                <div class="header_oneline">
-                                    <span th:text="${session.loginName}" class="nav-item left-items"></span>
-                                    <span class="nav-item">님</span>
-                                </div>
-                            </a>
-                            <a href="/logout"><span class="nav-item left-items logout-btn">로그아웃</span></a>
-                        </div>
+<div th:fragment="header">
+    <div id="header" th:if="${session.proName}==null">
+        <div class="global-nav-bar">
+            <div class="desktop-header">
+                <div class="header-left">
+                    <a th:href="@{/main/user}">
+                        <img th:src="@{/img/user_logo.png}" alt="로고" id="logo"
+                             style="width: 100px;height: 80px; margin:1px  8px 0px 0 ;vertical-align: middle;">
+                    </a>
+                    <div class="nav-list">
+                        <a th:href="@{/user/upload}"><span class="nav-item">견적요청</span></a>
+                        <a th:href="@{/user/proFind}"><span class="nav-item left-items">전문가찾기</span></a>
+                        <a href="/templates/common(1)/Community.html"><span class="nav-item left-items">커뮤니티</span></a>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <div id="proheader" th:unless="${session.proName}==null">
-            <div class="global-nav-bar">
-                <div class="desktop-header">
-                    <div class="header-left">
-                        <a th:href="@{/main/pro}">
-                            <img th:src="@{/img/pro_logo.png}" alt="로고" id="logo" style="width: 100px;height: 80px; margin:1px  8px 0px 0 ;vertical-align: middle;">
-                        </a>
-                        <div class="nav-list">
-                            <a href="/templates/main/user_receiveform.html"><span class="nav-item">서비스 올리기</span></a>
-                            <a href=""><span class="nav-item left-items">회원 찾기</span></a>
-                            <a href="/templates/common(1)/Community.html"><span class="nav-item left-items">커뮤니티</span></a>
-                        </div>
+                <div class="header-right" sec:authorize="!isAuthenticated()">
+                    <div class="nav-list">
+                    <span class="nav-item">
+                        <a th:href="@{/main/login}">로그인/회원가입</a>
+                    </span>
                     </div>
-
-                    <div class="header-right">
-                        <div class="nav-list">
-                            <a href="/templates/common(2)/pro_received_req.html"><span class="nav-item left-items">보낸요청/받은요청</span></a>
-                            <a id="moveUser" th:href="@{/main/user}"><span class="nav-item left-items">회원 전환</span></a>
-                            <a th:href="@{/pro/mypage}">
-                                <div class="header_oneline">
-                                    <span th:text="${session.proName}" class="nav-item left-items"></span>
-                                    <span class="nav-item">전문가님</span>
-                                </div>
-                            </a>
-                            <a href="/logout"><span class="nav-item left-items logout-btn">로그아웃</span></a>
-                        </div>
+                </div>
+                <div class="header-right" sec:authorize="isAuthenticated()">
+                    <div class="nav-list">
+                        <a th:href="@{/user/requests}"><span class="nav-item left-items">보낸요청/받은요청</span></a>
+                        <a th:unless="${session.userProApproval.equals('NO')}" id="movePro" th:href="@{/main/pro}"><span
+                                class="nav-item left-items">전문가 전환</span></a>
+                        <a th:href="@{/user/mypage}">
+                            <div class="header_oneline">
+                                <span th:text="${session.loginName}" class="nav-item left-items"></span>
+                                <span class="nav-item">님</span>
+                            </div>
+                        </a>
+                        <a href="/logout"><span class="nav-item left-items logout-btn">로그아웃</span></a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div id="proheader" th:unless="${session.proName}==null">
+        <div class="global-nav-bar">
+            <div class="desktop-header">
+                <div class="header-left">
+                    <a th:href="@{/main/pro}">
+                        <img th:src="@{/img/pro_logo.png}" alt="로고" id="logo"
+                             style="width: 100px;height: 80px; margin:1px  8px 0px 0 ;vertical-align: middle;">
+                    </a>
+                    <div class="nav-list">
+                        <a th:href="@{/pro/upload}"><span class="nav-item">서비스 올리기</span></a>
+                        <a th:href="@{/pro/userFind}"><span class="nav-item left-items">회원 찾기</span></a>
+                        <a href="/templates/common(1)/Community.html"><span class="nav-item left-items">커뮤니티</span></a>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <div class="nav-list">
+                        <a th:href="@{/pro/requests}"><span class="nav-item left-items">보낸요청/받은요청</span></a>
+                        <a id="moveUser" th:href="@{/main/user}"><span class="nav-item left-items">회원 전환</span></a>
+                        <a th:href="@{/pro/mypage}">
+                            <div class="header_oneline">
+                                <span th:text="${session.proName}" class="nav-item left-items"></span>
+                                <span class="nav-item">전문가님</span>
+                            </div>
+                        </a>
+                        <a href="/logout"><span class="nav-item left-items logout-btn">로그아웃</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
