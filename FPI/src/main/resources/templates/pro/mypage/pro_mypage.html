@@ -24,9 +24,17 @@
                 <img src="https://assets.cdn.soomgo.com/icons/icon-mypage-list-arrow.svg">
               </div>
             </a>
-
+          </li>
+          <li class="li-padding ">
+            <a th:href="@{/pro/edit}"  class="oneline"> <!-- 개인정보 수정 페이지 -->
+              <div class="auto">개인정보 수정하기</div>
+              <div>
+                <img src="https://assets.cdn.soomgo.com/icons/icon-mypage-list-arrow.svg">
+              </div>
+            </a>
           </li>
         </ul>
+
         <div class="mypage-menu">
           <ul class="underline">
             <li class="main-list li-padding">내 지갑</li>
@@ -43,7 +51,7 @@
             <li class="main-list li-padding">활동 내역</li>
             <!-- 내가 쓴 게시글목록 이동 -->
             <li class="li-padding">
-              <a href="#" class="oneline">
+              <a th:href="@{/user/activeList}" class="oneline">
                 <div class="auto">내가 쓴 게시글</div>
                 <div>
                   <img src="https://assets.cdn.soomgo.com/icons/icon-mypage-list-arrow.svg">

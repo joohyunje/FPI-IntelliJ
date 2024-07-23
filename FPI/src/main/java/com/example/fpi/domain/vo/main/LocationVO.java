@@ -16,6 +16,7 @@ public class LocationVO {
     private Long locationId;
     private String region;
     private String city;
+
     @Builder
     public LocationVO(Long locationId, String region, String city) {
         this.locationId = locationId;

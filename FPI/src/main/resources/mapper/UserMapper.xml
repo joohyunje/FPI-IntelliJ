@@ -46,12 +46,12 @@
     </update>
 
 <!--    마이페이지 내정보 수정하기-->
-    <update id = "editUser">
+    <update id ="editUser">
         update tbl_user
-        set phone_number = #{phone_number}, email = #{email},location_id = #{locationId}
-        where user_id=#{user_id}
+        set phone_number = #{phoneNumber},location_id=#{locationId},email = #{email}
+        where user_id=#{userId}
     </update>
-
+<!--  선택한 카테고리 수정-->
     <update id="editCategory">
         update tbl_category_list
         set category_id = #{categoryId}
@@ -112,4 +112,10 @@
                             ON TU.LOCATION_ID = TL.LOCATION_ID
         WHERE TUU.USER_UPLOAD_ID = #{userUploadId}
     </select>
+
+    <update id="updateCash">
+        update tbl_user
+        set USER_CASH =#{userCash}
+        where USER_ID = #{userId}
+    </update>
 </mapper>

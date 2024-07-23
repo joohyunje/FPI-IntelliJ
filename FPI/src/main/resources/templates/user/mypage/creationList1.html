@@ -1,12 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>공지게시판</title>
-    <link rel="stylesheet" href="../../static/css/main(1)/CreationList.css">
+    <title>활동내역</title>
+    <link rel="stylesheet" th:href="@{/css/user/mypage/CreationList.css}">
+    <link rel="stylesheet" th:href="@{/css/main/common.css}">
+    <link rel="stylesheet" th:href="@{/css/layout/header.css}">
+    <link rel="stylesheet" th:href="@{/css/layout/footer.css}">
+
 </head>
 <body>
-<!--<div th:replace="~{/layout/header :: header}"></div>-->
+<div th:replace="~{/layout/header :: header}"></div>
 <div class="main">
     <div class="main-container">
         <div class="main-container-title">
@@ -25,98 +29,49 @@
         </div>
 
 <!--        게시글을 눌렀을 때      -->
-
-        <div class="main-container-list">
-            <table class="list-container">
+        <div class="main-container-list community" th:if="${totalPages}== 0"><h3>작성하신 게시글이 없습니다.</h3></div>
+        <div class="main-container-list community"  th:unless="${totalPages}== 0">
+            <table class="list-container" >
                 <thead>
                     <tr>
-                        <th style="width: 9%">번호</th>
-                        <th style="width: 80%">제목</th>
-                        <th style="width: 11%">등록일</th>
+                        <th style="width: 5%">번호</th>
+                        <th style="width: 10%">게시판 번호</th>
+                        <th style="width: 15%">게시판 카테고리</th>
+                        <th style="width: 60%">제목</th>
+                        <th style="width: 10%">등록일</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td class="list-num">1</td>
-                        <td class="list-title"><a href="#">샘플용 제목입니다.</a></td>
-                        <td class="list-date">01-01</td>
+                <tbody id ="commuList">
+                    <tr th:each="list : ${lists}" th:object="${list}">
+                        <td th:text="*{RN}" class="list-num">1</td>
+                        <td th:text="*{communityId}" class="list-num">1</td>
+                        <td th:text="*{subject}" class="list-num">전문가의 팁</td>
+                        <td class="list-title"><a th:text="*{communityTitle}" th:href="@{/detail/{communityId}(communityId=*{communityId})}">샘플용 제목입니다.</a></td>
+                        <td th:text="*{#temporals.format(communityRegisterDate, 'yy년 MM월 dd일')}" class="list-date">01-01</td>
                     </tr>
                 </tbody>
-                <tbody>
-                <tr>
-                    <td class="list-num">2</td>
-                    <td class="list-title"><a href="#">샘플용 제목입니다.</a></td>
-                    <td class="list-date">01-01</td>
-                </tr>
-                </tbody>
-                <tbody>
-                <tr>
-                    <td class="list-num">3</td>
-                    <td class="list-title"><a href="#">샘플용 제목입니다.</a></td>
-                    <td class="list-date">01-01</td>
-                </tr>
-                </tbody>
-                <tbody>
-                <tr>
-                    <td class="list-num">4</td>
-                    <td class="list-title"><a href="#">샘플용 제목입니다.</a></td>
-                    <td class="list-date">01-01</td>
-                </tr>
-                </tbody>
-                <tbody>
-                <tr>
-                    <td class="list-num">5</td>
-                    <td class="list-title"><a href="#">샘플용 제목입니다.</a></td>
-                    <td class="list-date">01-01</td>
-                </tr>
-                </tbody>
-                <tbody>
-                <tr>
-                    <td class="list-num">6</td>
-                    <td class="list-title"><a href="#">샘플용 제목입니다.</a></td>
-                    <td class="list-date">01-01</td>
-                </tr>
-                </tbody>
-                <tbody>
-                <tr>
-                    <td class="list-num">7</td>
-                    <td class="list-title"><a href="#">샘플용 제목입니다.</a></td>
-                    <td class="list-date">01-01</td>
-                </tr>
-                </tbody>
-                <tbody>
-                <tr>
-                    <td class="list-num">8</td>
-                    <td class="list-title"><a href="#">샘플용 제목입니다.</a></td>
-                    <td class="list-date">01-01</td>
-                </tr>
-                </tbody>
             </table>
-            <ul class="list-number">
-                <li class="page-item">
-                    <a class="page-link" aria-label="Previous">
+            <ul class="list-number ">
+                <li style="margin-right: 0.5rem" th:classappend="${startPage == 1} ? 'disabled' : ''" class="page-item">
+                    <a class="page-link" th:href="@{/user/activeList(page=${startPage - 1}, pageSize=${pageSize})}" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
 
-                <li class="page-item">
-                    <a class="page-link">1</a>
-                    <a class="page-link">2</a>
-                    <a class="page-link">3</a>
-                    <a class="page-link">4</a>
-                    <a class="page-link">5</a>
+                <li th:each="i : ${#numbers.sequence(startPage, endPage)}" th:classappend="${currentPage == i} ? 'active' : ''" class="page-item" style="display: flex;">
+                    <a th:href="@{/user/activeList(page=${i}, pageSize=${pageSize})}" class="page-link" th:text="${i}">1</a>
                 </li>
-                <li class="page-item">
-                    <a class="page-link" aria-label="Next">
+                <li th:classappend="${endPage == totalPages} ? 'disabled' : ''" class="page-item" style="margin-left: 0.5rem">
+                    <a class="page-link" th:href="@{/user/activeList(page=${startPage - 1}, pageSize=${pageSize})}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
             </ul>
         </div>
 
-        <!--        리뷰를 눌렀을 때      -->
+        <!--                                     리뷰를 눌렀을 때                                           -->
 
-        <div class="main-container-list" style="display: none">
+        <div class="main-container-list review">
             <table class="list-container">
                 <thead>
                 <tr>
@@ -308,7 +263,7 @@
 
 
         <!--        댓글을 눌렀을 때      -->
-        <div class="no-content-container" style="display: none">
+        <div class="no-content-container main-container-list comment">
             <i>
                 <img src="https://assets.cdn.soomgo.com/icons/icon-coupon-empty.svg" alt="empty">
             </i>
@@ -318,5 +273,8 @@
         </div>
     </div>
 </div>
+<div th:replace="~{/layout/footer :: footer}"></div>
+<script th:src="@{/js/activeList.js}"></script>
+
 </body>
 </html>

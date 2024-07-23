@@ -7,12 +7,14 @@
   <link rel="stylesheet" th:href="@{/css/user/mypage/coupon.css}">
   <link rel="stylesheet" th:href="@{/css/main/common.css}">
   <link rel="stylesheet" th:href="@{/css/layout/header.css}">
+  <link rel="stylesheet" th:href="@{/css/layout/footer.css}">
+
 </head>
 <body>
   <div th:replace="~{/layout/header :: header}"></div>
   <div id="main-body" >
     <div class="container">
-      <div class="padding3">
+      <div class="padding3" style="margin-bottom: 15px">
         <h1>쿠폰함</h1>
       </div>
       <div class="center padding3" id="noCoupon" th:if="${coupons[0].count == 0}">
@@ -66,5 +68,7 @@
       </div>
     </div>
   </div>
+  <div th:replace="~{/layout/footer :: footer}"></div>
+
 </body>
 </html>

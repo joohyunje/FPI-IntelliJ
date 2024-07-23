@@ -8,8 +8,15 @@
 <div th:fragment="header">
     <div class="global-nav-bar">
         <div class="desktop-header">
-            <div class="header-left">
-                <img th:src="@{/img/pro_logo.png}" alt="로고" id="logo" style="width: 100px;height: 80px; margin:0  8px 5px 0 ;" th:href="@{/main/main}">
+            <div class="header-left" style="padding-top: 0.9rem">
+                <a th:href="@{/main/user}" th:if="${session.proName}==null">
+                    <img th:src="@{/img/pro_logo.png}" alt="로고" id="logo" style="width: 100px;height: 80px; margin:0  8px 5px 0 ;"  >
+                </a>
+                <a th:href="@{/main/pro}" th:unless="${session.proName}==null">
+                    <img th:src="@{/img/pro_logo.png}" alt="로고" id="logo" style="width: 100px;height: 80px; margin:0  8px 5px 0 ;">
+                </a>
+
+
             </div>
 
             <div class="header-right">

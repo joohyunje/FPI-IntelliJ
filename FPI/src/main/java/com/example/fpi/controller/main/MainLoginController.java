@@ -31,11 +31,10 @@ public class MainLoginController {
     private final ProService proService;
     private final ProMapper proMapper;
 
-
+//헤더에서 회원,전문가일때 구분 위해서 필요
     @GetMapping(value = {"/{status}", ""})
     public String index(@AuthenticationPrincipal CustomOAuth2User customOAuth2User,
                         @PathVariable(required = false) String status,
-                        Model model,
                         HttpSession session) {
 
         if(customOAuth2User != null){
@@ -57,12 +56,13 @@ public class MainLoginController {
 
 
 
-
+// 회원가입 폼으로 이동
     @GetMapping("/sign")
     public String sign(){
         return "main/OAuthform";
     }
 
+//회원가입 폼
     @PostMapping("/sign")
     public String sign(@RequestParam("userName") String userName, // form에서 입력한 이름
                        @RequestParam("phoneNumber") String phoneNumber,

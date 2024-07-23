@@ -21,6 +21,7 @@ public class CouponServiceImpl implements CouponService {
         return couponMapper.couponCount(userId);
     }
 
+//    쿠폰지급 관련
     @Override
     public void userCoupon(String userId) {
         CouponDTO couponDTO = new CouponDTO();
@@ -33,8 +34,6 @@ public class CouponServiceImpl implements CouponService {
 
         Random rd = new Random(); //난수생성
 
-//        쿠폰갯수 1~3개 랜덤으로 저장
-        int countCoupon = (int)(Math.random() * 3) + 1;
 
 //        랜덤 지급할 금액들
         int [] num ={1000,3000,5000};
@@ -54,7 +53,7 @@ public class CouponServiceImpl implements CouponService {
 
 //            값을 랜덤하게 가져옴
             int rdNum=(int)(Math.random()* num.length);
-            if(i==0){ //처음에는 무조건 10000원 지금
+            if(i==0){ //처음에는 무조건 10000원 지급
                 couponDTO.setDiscount(10000);
             }
             else{ //그 다음엔 금액 랜덤 지금

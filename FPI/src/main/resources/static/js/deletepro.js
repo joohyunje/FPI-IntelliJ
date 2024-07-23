@@ -24,15 +24,17 @@ function deleteForm(){
     // 모달창 보임
     const btnModal = document.getElementById("btn-modal");
     btnModal.addEventListener("click", e => {
-        modalOn();
+        modalOn(e);
         hidden.style.display="none !important";
+        // document.body.style.overflow = 'hidden';
     })
 
     // 모달창 닫음
     const closeModal = document.getElementById("close-modal");
     closeModal.addEventListener("click", e => {
         input.value="";
-        modalOff();
+        // document.body.style.overflow = 'auto';
+        modalOff(e);
     })
 
 

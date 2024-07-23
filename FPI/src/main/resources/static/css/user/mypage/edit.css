@@ -5,7 +5,7 @@
   display: flex;
   width: 1200px;
   padding: 10px 16px;
-  margin: 0px auto 40px;
+  margin: 40px auto;
   min-height: 600px;
 }
 .aside{
@@ -15,6 +15,7 @@
 }
 .aside h1{
   margin: 0.3rem 0 0.7rem 0;
+  font-size: 30px;
 }
 .hr{
   height: 1px;
@@ -23,7 +24,7 @@
   flex-shrink: 0;
   background-color: #e4e5ed;
   background-color: #303441;
-  height: 2px;
+
 
 }
 .aside > button{
@@ -108,9 +109,12 @@
   align-items: center;
 }
 
-#user-edit div,#pro-edit div{
+#userEdit div{
   margin: 10px 0 8px 0;
 }
+/*#proEdit div{*/
+/*  margin: 0 0 8px 0;*/
+/*}*/
 .fontSize15{
   font-size: 15px;
   font-weight: 700;
@@ -155,7 +159,7 @@
   }
 }
 
-#pro-edit .form-control{
+#proEdit .form-control{
   &:hover,&:focus{
     border-color:  #F8CACC !important;
   }
@@ -172,7 +176,7 @@
   margin-bottom: 0.3rem;
 }
 
-#user-edit .col p,#pro-edit .col p{
+#user-edit .col p,#proEdit .col p{
   margin: 5px 0 8px 0;
   font-size: 13px;
   color: rgba(33, 37, 41, 0.75);
@@ -212,10 +216,10 @@ input:read-only{
 
 }
 
-#pro-edit .form-select{
+#proEdit .form-select{
   display: block;
-  width: 98%;
-  padding: .375rem 2.25rem .375rem .75rem;
+  width: 100%;
+  /*padding: .375rem 2.25rem .375rem .75rem;*/
   font-size: 1rem;
   border-color: #e0e0e0;
   border-radius: 0.375em;
@@ -242,7 +246,7 @@ input:read-only{
 }
 
 
-#pro-edit .height200 textarea{
+#proEdit .height200 textarea{
   &:hover {
     border-color: #F8CACC !important;
   }

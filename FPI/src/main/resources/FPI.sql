@@ -298,7 +298,6 @@ CREATE TABLE TBL_CARDINFO_FILE(
       CARDINFO_FILE_ID NUMBER PRIMARY KEY,
       CARDINFO_FILE_ROUTE VARCHAR2(1000),
       CARDINFO_FILE_ORIGINAL VARCHAR2(1000),
-      CARDINFO_FILE_SAVED VARCHAR2(1000),
       CARDINFO_ID NUMBER NOT NULL,
       CONSTRAINT FK_CARDINFO_FILE FOREIGN KEY (CARDINFO_ID)
           REFERENCES TBL_CARDINFO (CARDINFO_ID) ON DELETE CASCADE
@@ -481,7 +480,7 @@ FROM (SELECT p.pro_id, p.pro_name, p.phone_number, p.pro_img, p.emp_cnt,u.email,
          JOIN tbl_category c ON p1.category_id = c.category_id
 WHERE p1.pro_id = 1;
 
-select pro.*,files.CARDINFO_FILE_ORIGINAL,files.CARDINFO_FILE_ROUTE,files.CARDINFO_FILE_SAVED
+select pro.*,files.CARDINFO_FILE_ORIGINAL,files.CARDINFO_FILE_ROUTE
 from(select p.PRO_ID,p.PRO_NAME,p.PHONE_NUMBER,p.PRO_IMG,p.LOCATION_ID,p.USER_ID,card.CARDINFO_ID,card.CERTI_NUM,card.CERTI_ORGAN,career.AWARD,category.CATEGORY_ID
      from tbl_pro p
               join TBL_CARDINFO card on p.PRO_ID=card.PRO_ID
@@ -607,14 +606,39 @@ FROM TBL_PRO_UPLOAD TPU
                     ON TP.PRO_ID = TPU.PRO_ID
          INNER JOIN TBL_LOCATION tl
                     ON TP.LOCATION_ID = TL.LOCATION_ID
-WHERE TPU.PRO_UPLOAD_ID = 7
+WHERE TPU.PRO_UPLOAD_ID = 7;
 
 -- 현제
 
 
+select pro.*,files.CARDINFO_FILE_ORIGINAL,files.CARDINFO_FILE_ROUTE,l.REGION,l.CITY
+from(select p.PRO_ID,p.PRO_NAME,p.PHONE_NUMBER,p.PRO_IMG,p.LOCATION_ID,u.EMAIL,card.CARDINFO_ID,card.CERTI_NUM,card.CERTI_ORGAN,career.AWARD,category.CATEGORY_ID
+     from tbl_pro p
+              join TBL_CARDINFO card on p.PRO_ID=card.PRO_ID
+              join TBL_CAREERINFO career on p.PRO_ID = career.PRO_ID
+              join TBL_CATEGORY_LIST category on p.PRO_ID = category.PRO_ID
+              join TBL_USER u on p.USER_ID = u.USER_ID)pro
+        join TBL_CARDINFO_FILE files
+             on pro.CARDINFO_ID =files.CARDINFO_ID
+        join TBL_LOCATION l on l.LOCATION_ID = pro.LOCATION_ID
+where pro.PRO_ID = 102;
+select infoFile.*
+from (
+select f.*
+from TBL_CARDINFO_FILE f  join TBL_CARDINFO c on c.CARDINFO_ID = f.CARDINFO_ID
+where pro_id=110
+order by f.CARDINFO_FILE_ID DESC) infoFile
+where ROWNUM<5;
 
-
-
+select *
+from (select ROWNUM AS RN,c.*
+        from(
+            select *
+            from TBL_COMMUNITY
+            where USER_ID=3614057925
+            order by COMMUNITY_REGISTER_DATE DESC,COMMUNITY_ID desc) c
+        where ROWNUM <=5)
+where RN >0;
 
 
 

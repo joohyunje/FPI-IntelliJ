@@ -132,17 +132,7 @@ header {
     margin: auto;
 }
 
-.form-control {
-    border: none;
-    font-size: .875rem;
-    line-height: 1.5;
-    height: auto;
-    caret-color: #00c7ae;
-    color: #323232;
-    padding: 0;
-    background: #f2f2f2;
-    flex: 1 1 0%;
-}
+
 
 .header-right {
     display: flex;

@@ -9,5 +9,4 @@ public class LocationDTO {
     private Long locationId;
     private String region;
     private String city;
-
 }

@@ -13,15 +13,23 @@ body {
     color: #323232;
     text-align: left;
     background-color: #fff;
+    padding-top: 80px;
 }
 /* header */
 
-header {
-    position: sticky;
+#header,#proheader {
+    position: fixed;
     top: 0;
-    z-index: 1;
+    margin-bottom:0;
+    /*left: 0;*/
+    width: 100%;
+    z-index: 1000 !important;
+    /*position: pi;*/
+    /*top: 0;*/
+    /*z-index: 1;*/
     background-color: white;
 }
+
 
 .global-nav-bar {
     position: relative;
@@ -60,20 +68,52 @@ header {
     margin: 0;
 }
 
-.nav-item {
+.nav-item,.nav-item-pro  {
     position: relative;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    font-weight: 1000;
+    /*font-weight: 700;*/
     cursor: pointer;
 }
 
-.nav-item > a {
-    text-decoration: none;
-    color: #323232;
+.nav-item a,.nav-item-pro a {
+    text-decoration: none; /* 기본 텍스트 밑줄 제거 */
+    position: relative;
+    font-size: 15px; /* 링크 텍스트 크기 */
+    font-weight: 700; /* 링크 텍스트 두께 */
+    color: #323232; /* 링크 텍스트 색상 */
+    transition: color 0.3s ease, border-bottom-color 0.3s ease; /* 색상과 밑줄 색상 전환 효과 */
 }
+
+.nav-item a:hover {
+    color: #8da4d0; /* 호버 시 밑줄 색상 */
+}
+.nav-item-pro a:hover {
+    color:#F8CACC ; /* 호버 시 밑줄 색상 */
+}
+
+.nav-item a:after,.nav-item-pro a:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px; /* 밑줄 위치 조정 */
+    width: 100%;
+    height: 2px; /* 밑줄 두께 */
+    background-color: transparent; /* 기본 밑줄 색상 */
+    transition: background-color 0.3s ease; /* 밑줄 색상 전환 효과 */
+}
+
+.nav-item a:hover:after,
+.nav-item a:focus:after {
+    background-color: #8da4d0; /* 호버 및 포커스 시 밑줄 색상 변경 */
+}
+.nav-item-pro a:hover:after,
+.nav-item-pro a:focus:after {
+    background-color: #F8CACC ; /* 호버 및 포커스 시 밑줄 색상 변경 */
+}
+
 .left-items {
     margin-left: 1.125rem;
 }
@@ -82,7 +122,6 @@ header {
     color: red;
     font-size: 13px;
 }
-
 
 
 .input-group {
@@ -112,17 +151,6 @@ header {
     margin: auto;
 }
 
-/*.form-control {*/
-/*    border: none;*/
-/*    font-size: .875rem;*/
-/*    line-height: 1.5;*/
-/*    height: auto;*/
-/*    caret-color: #00c7ae;*/
-/*    color: #323232;*/
-/*    padding: 0;*/
-/*    background: #f2f2f2;*/
-/*    flex: 1 1 0%;*/
-/*}*/
 
 .header-right {
     display: flex;
@@ -133,23 +161,7 @@ header {
     margin-left: 1rem;
 }
 
-.header-button {
-    width: 5rem;
-    height: 36px;
-    padding: .40625rem 0;
-    border-radius: 6px;
-    font-size: .875rem;
-    margin-left: 1rem;
-    color: #fff;
-    background-color: #00c7ae;
-    border-color: #00c7ae;
-    cursor: pointer;
-    font-weight: 500;
-    border: none;
-}
-.header-button:hover {
-    background-color: #009c87;
-}
+
 .header_oneline{
     display: flex;
     align-items:center;

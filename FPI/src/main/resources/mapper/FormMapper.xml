@@ -6,7 +6,7 @@
 
     <insert id="insertCategoryList">
         insert into tbl_category_list(CATEGORY_LIST_ID,CATEGORY_ID,USER_ID)
-        values (SEQ_CATEGORY_LIST.nextval,#{categoryId},#{userId})
+        values (#{categoryListId},#{categoryId},#{userId})
     </insert>
     <select id="getCaSeq">
         select SEQ_CATEGORY_LIST.nextval from dual
@@ -20,7 +20,7 @@
     </select>
     <insert id="insertLocation">
         insert into tbl_location(location_id,region,city)
-        values (SEQ_LOCATION.nextval,#{region},#{city})
+        values (#{locationId},#{region},#{city})
     </insert>
     <!--    다음시퀀스가져옴-->
     <select id="getLoSeq">
