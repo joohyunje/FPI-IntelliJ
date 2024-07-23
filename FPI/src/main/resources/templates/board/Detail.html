@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>상세게시판</title>
     <link rel="stylesheet" th:href="@{/css/layout/header.css}">
     <link rel="stylesheet" th:href="@{/css/main/common.css}">
-    <link rel="stylesheet" th:href="@{/css/board/DetailForm.css}">
+    <link rel="stylesheet" th:href="@{/css/board/Detail.css}">
 </head>
 <body>
 <div th:replace="~{/layout/header :: header}"></div>
@@ -59,74 +59,47 @@
                     </div>
                 </div>
             </div>
-            <div>
+
+            <div th:if="${#authentication.name == commu.userId}">
                 <button type="button" class="delete-button">삭제</button>
                 <button type="button" class="edit-button">수정</button>
             </div>
         </div>
-        <div class="comment-container">
+<!--        아래 comment-container에 sec:authorize ="isAuthenticated()" 추가해주면 됨-->
+        <div class="comment-container" >
             <div class="comment-box">
                 <textarea name="comment-input" placeholder="댓글을 남겨보세요"></textarea>
             </div>
             <div class="enter-box">
-                <button type="button" id="enter-button" alt="댓글 등록">
+                <button type="button" onclick="addComment()" id="enter-button" alt="댓글 등록">
                     등록
                 </button>
             </div>
         </div>
-        <ul class="comment-list">
-            <li class="comment-item">
-                <strong class="comment-title">
-                    <img alt="#" src="https://static.cdn.soomgo.com/upload/profile-default/soomgo_65.jpg?h=320&w=320&webp=1">
-                    <span class="comment-nickname">인재파파</span>
-                    <span class="comment-date">(2024-07-04 06:39)</span>
-                </strong>
-                <img class="delete-icon" alt="#" width="10px" height="10px" src="https://w7.pngwing.com/pngs/447/77/png-transparent-computer-icons-x-mark-symbol-check-mark-symbol-miscellaneous-cross-sign.png">
-                <button type="button" class="report-button">신고하기</button>
-                <button type="button" class="send-button">견적요청</button>
-                <div class="comment-text">
-                    당기면 빠집니다 살살 땡기세요
-                </div>
-            </li>
-        </ul>
-        <!--        더미 댓글       -->
+<!--        <ul class="comment-list">-->
+<!--            <li class="comment-item">-->
+<!--                <strong class="comment-title">-->
+<!--                    <img alt="#" src="https://static.cdn.soomgo.com/upload/profile-default/soomgo_65.jpg?h=320&w=320&webp=1">-->
+<!--                    <span class="comment-nickname">인재파파</span>-->
+<!--                    <span class="comment-date">(2024-07-04 06:39)</span>-->
+<!--                </strong>-->
+<!--                <img class="delete-icon" alt="#" width="10px" height="10px" src="https://w7.pngwing.com/pngs/447/77/png-transparent-computer-icons-x-mark-symbol-check-mark-symbol-miscellaneous-cross-sign.png">-->
+<!--                <button type="button" class="report-button">신고하기</button>-->
+<!--                <button type="button" class="send-button">견적요청</button>-->
+<!--                <div class="comment-text">-->
+<!--                    당기면 빠집니다 살살 땡기세요-->
+<!--                </div>-->
+<!--            </li>-->
+<!--        </ul>-->
 
-        <ul class="comment-list">
-            <li class="comment-item">
-                <strong class="comment-title">
-                    <img alt="#" src="https://static.cdn.soomgo.com/upload/profile-default/soomgo_65.jpg?h=320&w=320&webp=1">
-                    <span class="comment-nickname">강인탁</span>
-                    <span class="comment-date">(2024-07-04 06:40)</span>
-                </strong>
-                <img class="delete-icon" alt="#" width="10px" height="10px" src="https://w7.pngwing.com/pngs/447/77/png-transparent-computer-icons-x-mark-symbol-check-mark-symbol-miscellaneous-cross-sign.png">
-                <button type="button" class="report-button">신고하기</button>
-                <button type="button" class="send-button">견적요청</button>
-                <div class="comment-text">
-                    땅기시면됩니다. 힘 많이 안필요해요
-                </div>
-            </li>
-        </ul>
-        <ul class="comment-list">
-            <li class="comment-item">
-                <strong class="comment-title">
-                    <img alt="#" src="https://static.cdn.soomgo.com/upload/profile-default/soomgo_65.jpg?h=320&w=320&webp=1">
-                    <span class="comment-nickname">김민식</span>
-                    <span class="comment-date">(2024-07-04 06:41)</span>
-                </strong>
-                <img class="delete-icon" alt="#" width="10px" height="10px" src="https://w7.pngwing.com/pngs/447/77/png-transparent-computer-icons-x-mark-symbol-check-mark-symbol-miscellaneous-cross-sign.png">
-                <button type="button" class="report-button">신고하기</button>
-                <button type="button" class="send-button">견적요청</button>
-                <div class="comment-text">
-                    살살 빼세요
-                </div>
-            </li>
-        </ul>
         <div class="article-bottom-menu">
-            <a href="#">목록</a>
+            <a th:href="@{/community}">목록</a>
         </div>
     </div>
 </div>
 <div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script th:src="@{/js/detail.js}"></script>
 </body>
 </html>

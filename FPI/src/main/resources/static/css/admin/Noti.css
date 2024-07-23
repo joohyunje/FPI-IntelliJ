@@ -222,7 +222,6 @@ h1{
     background-color: #ddd;
 }
 .pagination .page-item.active .page-link {
-    background-color: #363a3c;
     color: white;
     border: 1px solid #363a3c;
 }
@@ -232,4 +231,8 @@ h1{
     pointer-events: none;
     cursor: not-allowed;
     border: 1px solid #ddd;
+}
+
+.no-data{
+    text-align: center;
 }

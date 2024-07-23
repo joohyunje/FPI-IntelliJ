@@ -53,15 +53,16 @@
         where C.COMMUNITY_ID = #{communityId}
     </select>
 
-<!--&lt;!&ndash;    insert에 사용    &ndash;&gt;-->
-<!--    <select id="getSeq" resultType="long">-->
-<!--        select SEQ_ADMIN.nextval from dual-->
-<!--    </select>-->
-<!--&lt;!&ndash;    작성  &ndash;&gt;-->
-<!--    <insert id="saveNoti">-->
-<!--        insert into TBL_NOTI-->
-<!--        values(#{notiId}, #{notiTitle}, #{notiContent}, sysdate, sysdate)-->
-<!--    </insert>-->
+<!--    insert에 사용    -->
+    <select id="getSeq" resultType="long">
+        select SEQ_COMMUNITY.nextval from dual
+    </select>
+<!--    작성  -->
+    <insert id="saveCommunity">
+        insert into TBL_COMMUNITY
+        values(#{communityId}, #{subject}, #{communityTitle},#{communityContent}, sysdate, sysdate, #{userId})
+    </insert>
+
 <!--&lt;!&ndash;    수정  &ndash;&gt;-->
 <!--    <update id="updateNoti">-->
 <!--        update tbl_noti-->
