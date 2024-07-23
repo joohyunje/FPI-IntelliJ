@@ -233,3 +233,7 @@ h1{
     cursor: not-allowed;
     border: 1px solid #ddd;
 }
+
+.no-data{
+    text-align: center;
+}

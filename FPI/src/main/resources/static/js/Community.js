@@ -57,7 +57,7 @@ function formatDate(dateString) {
     const HH = commentDate.getHours().toString().padStart(2, '0');
     const mm = commentDate.getMinutes().toString().padStart(2, '0'); // 두자리 수 일 때 앞에 0을 붙임.
 
-    displayText = `${yy}년 ${M}월 ${d}일 ${HH}시 ${mm}분`;
+    displayText = `(yyyy-MM-dd HH:mm)`;
     // }
     return displayText;
 }
@@ -107,8 +107,8 @@ function getComments(communityId) {
                 if(loginId === comment.providerId){
                     buttons = `
                         <div>
-                            <button onclick="deleteComment(${comment.commentId})" type="button" class="delete-button">삭제</button>
-                            <button onclick="updateComment(${comment.commentId})" type="button" class="edit-button">수정</button>
+                        <img class="delete-icon" alt="#" width="10px" height="10px" src="https://w7.pngwing.com/pngs/447/77/png-transparent-computer-icons-x-mark-symbol-check-mark-symbol-miscellaneous-cross-sign.png" onclick="deleteComment(${comment.commentId})">
+<!--                            <button onclick="deleteComment(${comment.commentId})" type="button" class="delete-button">삭제</button>-->
                         </div>
                     `
                 }
@@ -116,17 +116,16 @@ function getComments(communityId) {
                 // 종합적으로 뿌려줄 html
                 let commentElement = `
                     <ul class="comment-list">
-                        <li class="comment-item">
+                        <li class="comment-item id="comment-${comment.commentId}"">
                             <strong class="comment-title">
                                 <img alt="#" src="https://static.cdn.soomgo.com/upload/profile-default/soomgo_65.jpg?h=320&w=320&webp=1">
-                                <span class="comment-nickname">인재파파</span>
-                                <span class="comment-date">(2024-07-04 06:39)</span>
+                                <span class="comment-nickname">${comment.name}</span>
+                                <span class="comment-date">${commentDate}${editStr}</span>
                             </strong>
-                            <img class="delete-icon" alt="#" width="10px" height="10px" src="https://w7.pngwing.com/pngs/447/77/png-transparent-computer-icons-x-mark-symbol-check-mark-symbol-miscellaneous-cross-sign.png">
-                            <button type="button" class="report-button">신고하기</button>
-                            <button type="button" class="send-button">견적요청</button>
+                            ${buttons}
                             <div class="comment-text">
-                                당기면 빠집니다 살살 땡기세요
+                                    ${comment.commentContent}
+<!--                                당기면 빠집니다 살살 땡기세요-->
                             </div>
                         </li>
                     </ul>

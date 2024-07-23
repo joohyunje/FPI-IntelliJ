@@ -56,20 +56,6 @@ public class FaqController {
         return "admin/FaqDetail";
     }
 
-    // 작성하기
-//    @PostMapping("/board/WriteForm")
-//    public String write(FAQDTO faq) {
-//        adminService.saveFAQ(faq);
-//        return "redirect:/admin/FAQ";
-//    }
-
-//    // 수정하기
-//    @PostMapping("/edit")
-//    public String edit(FAQDTO faq) {
-//        adminService.updateFAQ(faq);
-//
-//        return "redirect:/admin/FAQDetail/" + faq.getFAQId();
-//    }
 
     // 삭제하기
     @PostMapping("/delete/{faqId}")
