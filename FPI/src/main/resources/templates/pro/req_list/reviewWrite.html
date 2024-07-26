@@ -6,7 +6,6 @@
     <link rel="stylesheet" th:href="@{/css/user/req_list/reviewWrite.css}">
     <link rel="stylesheet" th:href="@{/css/main/common.css}">
     <link rel="stylesheet" th:href="@{/css/layout/header.css}">
-    s
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -20,11 +19,12 @@
 </div>
 <div class="container">
     <div class="page-body">
-        <form th:action="@{/pro/userReview}" class="review-input" th:object="${userReview}">
+        <form method="post" th:action="@{/pro/userReview}" class="review-input" th:object="${userReview}">
+            <input type="hidden" name="userId" th:value="${userId}">
             <div class="request-info">
                 <div class="reviewer-info">
                     <div class="review-name-rate">
-                        <div class="reviewer-name user-name">주현제 님에게 작성하기</div>
+                        <div class="reviewer-name user-name" th:text="${userName} + ' 님에게 작성하기'"></div>
                         <div class="review-title-wrapper">
                             <label class="review-title" for="reviewTitle">제목</label>
                             <input type="text" id="reviewTitle" th:field="*{userReviewTitle}">
@@ -42,6 +42,7 @@
                 <!-- 이부분은 다시 수정할 필요 있음!! 별 주기 -->
                 <div class="star-rating">
                     <span>별점</span>
+                    <input type="text" th:field="*{userReviewRate}">
                     <input type="radio" class="star" value="1">
                     <input type="radio" class="star" value="2">
                     <input type="radio" class="star" value="3">

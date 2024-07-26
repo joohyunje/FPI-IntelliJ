@@ -7,6 +7,7 @@ import com.example.fpi.domain.dto.user.*;
 import com.example.fpi.domain.util.PagedResponse;
 //import com.example.fpi.domain.vo.user.UserVO;
 import com.example.fpi.domain.vo.main.CategoryListVO;
+import com.example.fpi.domain.vo.pro.ProReviewVO;
 import com.example.fpi.domain.vo.user.UserVO;
 import com.example.fpi.mapper.main.FormMapper;
 import com.example.fpi.domain.vo.file.UserUploadFileVO;
@@ -41,11 +42,12 @@ public class UserServiceImpl implements UserService {
         int endRow = page * pageSize;
 
         int totalRequest = userMapper.countReceivedRequest(userId);
-        int totalPages = (int) Math.ceil((double)totalRequest/pageSize);
+        int totalPages = (int) Math.ceil((double) totalRequest / pageSize);
 
         List<UserReceivedReqListDTO> requests = userMapper.selectReceivedReq(userId, startRow, endRow, sort);
         return new PagedResponse<>(requests, page, totalPages, pageSize, totalRequest);
     }
+
     //  보낸 요청 목록
     @Override
     public PagedResponse<UserSendReqListDTO> selectSendReq(String userId, int page, int pageSize, String sort) {
@@ -53,7 +55,7 @@ public class UserServiceImpl implements UserService {
         int endRow = page * pageSize;
 
         int totalRequest = userMapper.countSendRequest(userId);
-        int totalPages = (int) Math.ceil((double)totalRequest/pageSize);
+        int totalPages = (int) Math.ceil((double) totalRequest / pageSize);
 
         List<UserSendReqListDTO> requests = userMapper.selectSendReq(userId, startRow, endRow, sort);
 
@@ -70,7 +72,7 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectUserReview(userId);
     }
 
-//유저 정보 조회
+    //유저 정보 조회
     @Override
     public UserDTO detailUser(String userId) {
         return userMapper.detailUser(userId);
@@ -89,7 +91,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-//    유저 삭제 시, 이름 입력 비교를 위해
+    //    유저 삭제 시, 이름 입력 비교를 위해
 //    DB에서 이름을 가져오기
     @Override
     public String getUserName(String userId) {
@@ -99,11 +101,12 @@ public class UserServiceImpl implements UserService {
 
     //    유저 정보 삭제
     @Override
-    public void deleteUser(String userId,String userName) {
+    public void deleteUser(String userId, String userName) {
 
-        userMapper.deleteUser(userId,userName);
+        userMapper.deleteUser(userId, userName);
     }
-// 전문가 탈퇴시 approval 변경
+
+    // 전문가 탈퇴시 approval 변경
     @Override
     public void editApproval(String userId) {
         userMapper.editApproval(userId);
@@ -115,7 +118,7 @@ public class UserServiceImpl implements UserService {
         int endRow = page * pageSize;
 
         int totalUploads = userMapper.countUserUpload(search);
-        int totalPages = (int) Math.ceil((double)totalUploads/pageSize);
+        int totalPages = (int) Math.ceil((double) totalUploads / pageSize);
 
         List<UserUploadListDTO> uploads = userMapper.selectUserUploadList(startRow, endRow, search);
 
@@ -164,7 +167,7 @@ public class UserServiceImpl implements UserService {
 
             try {
                 // 파일 저장 경로 설정
-                Path directoryPath = Paths.get("/Users/hyunje/uploads/userUpload/" + datePath);
+                Path directoryPath = Paths.get("src/main/resources/static/uploads/userUpload/" + datePath);
                 if (!Files.exists(directoryPath)) {
                     Files.createDirectories(directoryPath); // 폴더가 없으면 생성
                 }
@@ -175,7 +178,7 @@ public class UserServiceImpl implements UserService {
                 UserUploadFileDTO userUploadFileDTO = new UserUploadFileDTO();
                 userUploadFileDTO.setUserUploadId(userUploadId);
                 userUploadFileDTO.setUserUploadFileOriginal(originalFileName);
-                userUploadFileDTO.setUserUploadFileRoute(directoryPath + "/" + userUploadFileRouteName);
+                userUploadFileDTO.setUserUploadFileRoute("/uploads/userUpload/" + datePath + "/" + userUploadFileRouteName);
 
                 fileMapper.insertUserUploadFile(UserUploadFileVO.toEntity(userUploadFileDTO)); // 파일 정보 저장
 
@@ -202,12 +205,25 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void userWriteProReview(ProReviewDTO proReview) {
-        userMapper.userWriteProReview(proReview);
+        Long proReviewId = userMapper.getReviewSeq();
+        proReview.setProReviewId(proReviewId);
+
+        userMapper.userWriteProReview(ProReviewVO.toEntity(proReview));
     }
 
     @Override
     public void deleteProRequest(Long proRequestId) {
         userMapper.deleteProRequest(proRequestId);
+    }
+
+    @Override
+    public void updateUserAccept(Long proRequestId) {
+        userMapper.updateUserAccept(proRequestId);
+    }
+
+    @Override
+    public void updateUserComplete(Long proRequestId) {
+        userMapper.updateUserComplete(proRequestId);
     }
 
 

@@ -1,10 +1,12 @@
 package com.example.fpi.controller.pro;
 
+import com.example.fpi.domain.dto.file.UserUploadFileDTO;
 import com.example.fpi.domain.dto.pro.*;
 import com.example.fpi.domain.dto.user.UserRequestDetailDTO;
 import com.example.fpi.domain.dto.user.UserReviewDTO;
 import com.example.fpi.domain.dto.user.UserUploadDetailDTO;
 import com.example.fpi.domain.oauth.CustomOAuth2User;
+import com.example.fpi.mapper.File.FileMapper;
 import com.example.fpi.service.pro.ProService;
 import com.example.fpi.service.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ public class ProController {
 
     private final ProService proService;
     private final UserService userService;
+    private final FileMapper fileMapper;
 
     @GetMapping("/requests")
     public String rest() {
@@ -68,6 +71,8 @@ public class ProController {
                                Model model) {
         UserUploadDetailDTO Upload = userService.selectUserUploadDetail(userUploadId);
 
+        List<UserUploadFileDTO> userUploadFiles = fileMapper.selectUserUploadFileList(userUploadId);
+
         String userId = customOAuth2User.getUserId();
         Long proId = proService.selectProId(userId);
         ProLocationDTO proLocation = proService.selectProLocation(proId);
@@ -77,6 +82,8 @@ public class ProController {
         model.addAttribute("userUpload", Upload);
 
         model.addAttribute("proLocation", proLocation);
+
+        model.addAttribute("userUploadFiles", userUploadFiles);
 
         model.addAttribute("proRequest", new ProRequestDTO());
 
@@ -135,10 +142,17 @@ public class ProController {
 
     }
 
-    @GetMapping("/userReview")
-    public String userReviewForm(Model model) {
+    @GetMapping("/userReview/{userId}")
+    public String userReviewForm(@PathVariable String userId,
+                                 Model model) {
+
+        String userName = userService.getUserName(userId);
 
         model.addAttribute("userReview", new UserReviewDTO());
+        model.addAttribute("userId", userId);
+        model.addAttribute("userName", userName);
+        System.out.println(userId);
+        System.out.println(userName);
 
         return "/pro/req_list/reviewWrite";
     }
@@ -156,7 +170,7 @@ public class ProController {
         proService.proWriteUserReview(userReview);
 
 
-        return "redirect:/pro/main";
+        return "redirect:/main/pro";
 
     }
 
@@ -165,6 +179,20 @@ public class ProController {
         proService.deleteUserRequest(userRequestId);
 
         return "redirect:/pro/requests";
+    }
+
+    @PostMapping("/userDetail/updateAccept/{userRequestId}")
+    public String updateAccept(@PathVariable Long userRequestId) {
+
+        proService.updateProAccept(userRequestId);
+        return "redirect:/pro/userDetail/" + userRequestId;
+    }
+
+    @PostMapping("/userDetail/updateComplete/{userRequestId}")
+    public String updateComplete(@PathVariable Long userRequestId) {
+
+        proService.updateProComplete(userRequestId);
+        return "redirect:/pro/userDetail/" + userRequestId;
     }
 
 }

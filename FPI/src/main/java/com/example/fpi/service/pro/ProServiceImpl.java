@@ -46,12 +46,13 @@ public class ProServiceImpl implements ProService {
         int endRow = page * pageSize;
 
         int totalRequest = proMapper.countReceivedRequest(proId);
-        int totalPages = (int) Math.ceil((double)totalRequest/pageSize);
+        int totalPages = (int) Math.ceil((double) totalRequest / pageSize);
 
         List<ProReceivedReqListDTO> requests = proMapper.selectReceivedReq(proId, startRow, endRow, sort);
 
         return new PagedResponse<>(requests, page, totalPages, pageSize, totalRequest);
     }
+
     //  보낸 요청 목록
     @Override
     public PagedResponse<ProSendReqListDTO> selectSendReq(Long proId, int page, int pageSize, String sort) {
@@ -59,7 +60,7 @@ public class ProServiceImpl implements ProService {
         int endRow = page * pageSize;
 
         int totalRequest = proMapper.countSendRequest(proId);
-        int totalPages = (int) Math.ceil((double)totalRequest/pageSize);
+        int totalPages = (int) Math.ceil((double) totalRequest / pageSize);
 
         List<ProSendReqListDTO> requests = proMapper.selectSendReq(proId, startRow, endRow, sort);
 
@@ -81,10 +82,6 @@ public class ProServiceImpl implements ProService {
     public Long selectProId(String userId) {
         return proMapper.selectProId(userId);
     }
-
-
-
-
 
 
     //    전문가 상세정보 조회
@@ -114,18 +111,18 @@ public class ProServiceImpl implements ProService {
     // 전문가 수정정보는 여기서 최종으로 모아서 update됨
     @Override
     @Transactional
-    public void updatePro(ProEditDTO dto, List<MultipartFile> files,MultipartFile proProfile) throws IOException {
-        String proImg = editProImage(dto.getProId(),proProfile);
+    public void updatePro(ProEditDTO dto, List<MultipartFile> files, MultipartFile proProfile) throws IOException {
+        String proImg = editProImage(dto.getProId(), proProfile);
 
-        editPro(dto.getProName(),dto.getPhoneNumber(),proImg,dto.getLocationId(),dto.getProId());
-        editCategory(dto.getCategoryId(),dto.getProId());
-        editCareerInfo(dto.getCareerInfoId(),dto.getAward());
-        certifyService.saveCertifyImage(dto.getCardInfoId(),files);
+        editPro(dto.getProName(), dto.getPhoneNumber(), proImg, dto.getLocationId(), dto.getProId());
+        editCategory(dto.getCategoryId(), dto.getProId());
+        editCareerInfo(dto.getCareerInfoId(), dto.getAward());
+        certifyService.saveCertifyImage(dto.getCardInfoId(), files);
     }
 
-//     전문가 테이블 수정
+    //     전문가 테이블 수정
     @Override
-    public void editPro(String proName,String phoneNumber,String proImg,Long locationId,Long proId) {
+    public void editPro(String proName, String phoneNumber, String proImg, Long locationId, Long proId) {
         ProDTO dto = new ProDTO();
         dto.setProName(proName);
         dto.setPhoneNumber(phoneNumber);
@@ -135,30 +132,31 @@ public class ProServiceImpl implements ProService {
         proMapper.editPro(ProVO.toEntity(dto));
         System.out.println(dto);
     }
-//  전문가가 선택한 카테고리 수정
+
+    //  전문가가 선택한 카테고리 수정
     @Override
-    public void editCategory(Long categoryId,Long proId) {
+    public void editCategory(Long categoryId, Long proId) {
         CategoryListDTO dto = new CategoryListDTO();
         dto.setCategoryId(categoryId);
         dto.setProId(proId);
         proMapper.editCategory(CategoryListVO.toEntity(dto));
     }
-// 작성한 자격증 정보 파일 수정
+
+    // 작성한 자격증 정보 파일 수정
     @Override
     public void editCardInfoFile(CardInfoFileDTO dto) {
         proMapper.editCardInfoFile(CardInfoFileVO.toEntity(dto));
-
     }
 
-//    작성한 자격증 정보 수정
+    //    작성한 자격증 정보 수정
     @Override
     public void editCardInfo(CardInfoDTO dto) {
         proMapper.editCardInfo(CardInfoVO.toEntity(dto));
     }
 
-//    작성한 경력사항 수정
+    //    작성한 경력사항 수정
     @Override
-    public void editCareerInfo(Long careerInfoId,String award) {
+    public void editCareerInfo(Long careerInfoId, String award) {
         CareerInfoDTO dto = new CareerInfoDTO();
 
         dto.setCareerInfoId(careerInfoId);
@@ -167,17 +165,17 @@ public class ProServiceImpl implements ProService {
         proMapper.editCareerInfo(CareerInfoVO.toEntity(dto));
     }
 
-//    전문가 정보수정에서 프로필 사진변경
+    //    전문가 정보수정에서 프로필 사진변경
     @Override
-    public String editProImage(Long ProId,MultipartFile proProfile) throws IOException {
+    public String editProImage(Long ProId, MultipartFile proProfile) throws IOException {
         String proImg = detailPro(ProId).getProImg();
 //        선택값이 없으면 기존꺼 가져옴
-        if(proProfile == null || proProfile.isEmpty()){
+        if (proProfile == null || proProfile.isEmpty()) {
             return proImg;
         }
 //        기존꺼 삭제하고 새로업데이트
         else {
-            Path proImgPath = Paths.get("src/main/resources/static"+proImg);
+            Path proImgPath = Paths.get("src/main/resources/static" + proImg);
             if (Files.exists(proImgPath)) {
                 Files.delete(proImgPath);
             }
@@ -210,20 +208,20 @@ public class ProServiceImpl implements ProService {
     //전문가 탈퇴,탈퇴시 서버에 저장된 프로필사진도 함께삭제
     @Override
     public void deletePro(Long proId, String proName) throws IOException {
-        Path proImg = Paths.get("src/main/resources/static"+selectEditPro(proId).getProImg());
+        Path proImg = Paths.get("src/main/resources/static" + selectEditPro(proId).getProImg());
         if (Files.exists(proImg)) {
             Files.delete(proImg);
         }
         proMapper.deletePro(proId, proName);
     }
 
-//    전문가 탈퇴시 서버에 저장된 자격증사진 삭제
+    //    전문가 탈퇴시 서버에 저장된 자격증사진 삭제
     @Override
     public void deleteCardFile(Long cardInfoId) throws IOException {
-        List<CardInfoFileDTO> cardInfoFileDTOList =proMapper.cardImg(cardInfoId);
-        for(CardInfoFileDTO cardInfoFile : cardInfoFileDTOList){
+        List<CardInfoFileDTO> cardInfoFileDTOList = proMapper.cardImg(cardInfoId);
+        for (CardInfoFileDTO cardInfoFile : cardInfoFileDTOList) {
             System.out.println(cardInfoFile.getCardInfoFileRoute());
-            Path file = Paths.get("src/main/resources/static" +cardInfoFile.getCardInfoFileRoute() );
+            Path file = Paths.get("src/main/resources/static" + cardInfoFile.getCardInfoFileRoute());
             if (Files.exists(file)) {
                 Files.delete(file);
             }
@@ -237,13 +235,13 @@ public class ProServiceImpl implements ProService {
         return proMapper.selectProName(proId);
     }
 
-//    전문가가 올린 견적 상세보기
+    //    전문가가 올린 견적 상세보기
     @Override
     public ProUploadDetailDTO selectProUploadDetail(Long proUploadId) {
         return proMapper.selectProUploadDetail(proUploadId);
     }
 
-//  전문가 견적 작성하기
+    //  전문가 견적 작성하기
     @Override
     @Transactional
     public void saveProUpload(ProUploadDTO proUpload, List<MultipartFile> files) {
@@ -315,6 +313,7 @@ public class ProServiceImpl implements ProService {
         proMapper.deleteUserRequest(userRequestId);
     }
 
+
     //    올린 견적으로 경력 가져오기
     @Override
     public List<ProCareerInfoListDTO> selectProCareerByUp(Long proUploadId) {
@@ -327,7 +326,7 @@ public class ProServiceImpl implements ProService {
         return proMapper.selectProCareerByReq(proRequestId);
     }
 
-//  전문가 찾기
+    //  전문가 찾기
     @Override
     public PagedResponse<ProUploadListDTO> selectProUploadList(int page, int pageSize, String search) {
 
@@ -335,12 +334,22 @@ public class ProServiceImpl implements ProService {
         int endRow = page * pageSize;
 
         int totalUploads = proMapper.countProUpload(search);
-        int totalPages = (int) Math.ceil((double)totalUploads/pageSize);
+        int totalPages = (int) Math.ceil((double) totalUploads / pageSize);
 
         List<ProUploadListDTO> uploads = proMapper.selectProUploadList(startRow, endRow, search);
 
         return new PagedResponse<>(uploads, page, totalPages, pageSize, totalUploads);
     }
 
+
+    @Override
+    public void updateProAccept(Long userRequestId) {
+        proMapper.updateProAccept(userRequestId);
+    }
+
+    @Override
+    public void updateProComplete(Long userRequestId) {
+        proMapper.updateProComplete(userRequestId);
+    }
 
 }

@@ -70,8 +70,9 @@
                         <div class="photos-container">
                             <h2>사진</h2>
                             <div><ul class="image-veiwer">
-                                <li>
-                                    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F9pQ5k%2FbtrmGXmIuQe%2F6XTySrahwqBSlJ5YkfsdJ1%2Fimg.jpg" alt="">
+                                <li th:each="userUploadFile : ${userUploadFiles}">
+                                    <img th:src="${userUploadFile.userUploadFileRoute}" alt="이미지">
+                                    <!--                                    여기 부분 사진 받아오기-->
                                 </li>
                             </ul></div>
                         </div>
