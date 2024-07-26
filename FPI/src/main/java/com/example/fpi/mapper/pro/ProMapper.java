@@ -1,7 +1,9 @@
 package com.example.fpi.mapper.pro;
 
 import com.example.fpi.domain.dto.certify.CardInfoDTO;
+import com.example.fpi.domain.dto.certify.CardInfoFIleListDTO;
 import com.example.fpi.domain.dto.certify.CardInfoFileDTO;
+import com.example.fpi.domain.dto.certify.CareerInfoDTO;
 import com.example.fpi.domain.dto.pro.*;
 import com.example.fpi.domain.vo.certify.CardInfoFileVO;
 import com.example.fpi.domain.vo.certify.CardInfoVO;
@@ -45,6 +47,8 @@ public interface ProMapper {
     ProDTO detailPro(Long proId);
     List<CardInfoFileDTO> selectCardFile(Long proId);
     List<CardInfoDTO> selectCard(Long proId);
+    List<CareerInfoDTO> selectCareer(Long proId);
+
 //    마이페이지 전문가 수정하기에 뿌려줌
     ProEditDTO selectEditPro(Long proId);
 
@@ -58,6 +62,9 @@ public interface ProMapper {
 //    유저아이디를 입력받아 프로아이디 알아내기
     Long selectProId(String userId);
 
+//    조인 없이 오직 전문가 테이블만
+    ProDTO selectProInfo(Long proId);
+
     //    전문가 탈퇴
     void deletePro(Long proId,String proName);
 
@@ -66,6 +73,11 @@ public interface ProMapper {
 
 //    전문가 탈퇴시 자격증사진 삭제위해 필요
     List<CardInfoFileDTO>  cardImg(Long cardInfoId);
+
+//    보유 자격증사진 뿌려주기위해
+    List<CardInfoFIleListDTO> cardFileList(Long proId);
+
+
 
 
     //    요청으로 전문가 경력 가져오기
@@ -101,5 +113,8 @@ public interface ProMapper {
     void proWriteUserReview(UserReviewDTO userReview);
 
     void deleteUserRequest(Long userRequestId);
+
+//    조인테이블에서 전문가아이디를 통해 -> 자격증관리테이블 -> 파일아이디 가져옴
+//    Long selectCardFileId(Long proId);
 
 }

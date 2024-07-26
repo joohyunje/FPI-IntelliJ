@@ -4,20 +4,26 @@
 <mapper namespace="com.example.fpi.mapper.board.CommentMapper">
 
     <!--    특정 게시글의 모든 댓글 조회-->
-    <select id="selectCommentById" resultType="CommentListDTO">
-        select u.name, c.*
+    <select id="selectCommentList" resultType="CommentListDTO">
+        select u.user_name, c.*
         from tbl_user u join TBL_COMMENT c
                               on u.USER_ID =c.USER_ID
-                                  and COMMUNITY_ID = #{community_Id}
+                                  and c.COMMUNITY_ID = #{community_Id}
         order by COMMENT_UPDATE_DATE DESC
     </select>
 
     <!--    특정 게시글에 댓글 추가-->
     <insert id="insertComment">
-        insert into TBL_COMMENT (COMMENT_ID, COMMUNITY_ID, USER_ID, COMMENT_CONTENT, COMMENT_REGISTER_DATE, COMMENT_UPDATE_DATE)
+        insert into TBL_COMMENT (COMMENT_ID, COMMUNITY_ID, USER_ID,COMMENT_CONTENT ,COMMENT_REGISTER_DATE, COMMENT_UPDATE_DATE)
         values (seq_comment.nextval, #{communityId}, #{userId}, #{commentContent}, sysdate, sysdate)
     </insert>
 
+<!-- 커뮤니티 게시글의 댓글 수정-->
+    <update id="updateComment">
+        update TBL_COMMENT
+        set COMMENT_CONTENT = #{commentContent}, COMMENT_UPDATE_DATE = sysdate
+        where COMMENT_ID= #{commentId}
+    </update>
     <!--    댓글 삭제-->
     <delete id="deleteComment">
         delete from TBL_COMMENT

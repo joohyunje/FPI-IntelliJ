@@ -91,9 +91,10 @@
                 </div>
 <!--                <input type="hidden" id="certiCount" name="certiCount">-->
                 <div class="certi-label certiCount" >
-                  <input type="text" id="certiOrgan" name="certiOrgan" class="form-control" style=" margin-right: 10px;" placeholder="자격증 발급기관을 입력하세요" th:field="*{certiOrgan}">
+
+                  <input type="text" id="certiOrgan" name="certiOrgan" class="form-control" style=" margin-right: 10px;" placeholder="자격증 발급기관을 입력하세요" >
                   <input type="text" id="certiNum" name="certiNum" class="form-control"
-                  placeholder="자격증 번호를 입력하세요" th:field="*{certiNum}">
+                         placeholder="자격증 번호를 입력하세요" >
                 </div>
               </div>
           
@@ -103,9 +104,9 @@
                   <span for="career" class="fontSize15 label margin5">경력 혹은 수상내역 작성</span>
                   <div class="awardPlus">+</div>
                 </div>
-                <input type="hidden"  id="awardCount" name="awardCount">
+
                 <div style="display: flex">
-                  <textarea th:field="*{award}" id="awards" maxlength="255" class="textarea awardCount"></textarea>
+                  <textarea id="award" name="award" maxlength="255" class="textarea awardCount"></textarea>
                 </div>
 
 
@@ -124,12 +125,16 @@
 </div><!-- 메인 전체 컨테이너 -->
 <div th:replace="~{/layout/footer :: footer}"></div>
 
-<script th:src="@{/js/user.js}"></script>
 <script th:src="@{/js/file.js}"></script>
 <script th:src="@{/js/plus.js}"></script>
 
 <script th:src="@{/js/location.js}"></script>
 
+<script>
+  document.getElementById('submitBtn').addEventListener('click', function() {
 
+
+    document.getElementById('CertifyForm').submit()});
+</script>
 </body>
 </html>

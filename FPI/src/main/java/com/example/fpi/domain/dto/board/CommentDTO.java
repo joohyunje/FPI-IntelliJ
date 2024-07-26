@@ -1,8 +1,10 @@
 package com.example.fpi.domain.dto.board;
 
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+
 
 @Data
 public class CommentDTO {

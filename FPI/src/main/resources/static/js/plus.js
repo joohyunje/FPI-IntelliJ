@@ -1,3 +1,5 @@
+// 폼에서 +누르면 자격증 추가,경력 추가 input,textarea생기는거 구현
+
 document.addEventListener('DOMContentLoaded', function() {
     const plus = document.querySelector('.plus');
 
@@ -45,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // HTML 문자열을 생성하여 새로운 자격증 입력 필드를 추가,숨겨진 삭제버튼 보임
         const awards = `
             <div class = "award" style="display: flex">
-            <textarea th:field="*{award}" id="award" maxlength="255" class="textarea awardCount"></textarea>
+            <textarea id="award" name="award" maxlength="255" class="textarea awardCount"></textarea>
             <div class="awardMinus" >-</div>
             </div>
         `;

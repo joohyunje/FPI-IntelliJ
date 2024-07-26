@@ -611,13 +611,117 @@ WHERE TPU.PRO_UPLOAD_ID = 7
 
 -- 현제
 
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '이사', 1);
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '입/집청소', 1);
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '가구/가구청소', 1);
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '특수 청소', 1);
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '철거/폐기', 1);
+
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '가전제품', 2);
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '문/창문', 2);
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '수도/보일러/전기', 2);
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '가구', 2);
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '기타 설치/수리', 2);
+
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '종합 인테리어', 3);
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '부분 인테리어', 3);
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '바닥 시공', 3);
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '야외 시공', 3);
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '기타 시공', 3);
+
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '악기', 4);
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '보컬', 4);
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '피트니스', 4);
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '스포츠', 4);
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '댄스', 4);
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '연기/마술', 4);
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '미술', 4);
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '사진/영상', 4);
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '투자', 4);
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '공예', 4);
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '요리/조리', 4);
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '패션/미용', 4);
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '취업 준비 컨설팅', 4);
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '기타 취미/자기계발', 4);
+
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '렌탈', 5);
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '심리', 5);
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '반려동물', 5);
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '번역 작업', 5);
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '여행', 5);
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '심부름', 5);
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '도우미', 5);
+insert into TBL_SERVICE (SERVICE_ID, SERVICE_NAME, CATEGORY_ID)
+values (SEQ_SERVICE.nextval, '알바', 5);
 
 
 
+select count(*)
+from TBL_LIKE
+where USER_ID=1 and COMMUNITY_ID=1;
 
 
+select f.*,c.PRO_ID
+from TBL_CARDINFO_FILE f
+         join TBL_CARDINFO c on f.CARDINFO_ID = c.CARDINFO_ID
+where c.PRO_ID =168;
 
-
-
-
-
+select pro.*,l.REGION,l.CITY
+from(select p.PRO_ID,p.PRO_NAME,p.PHONE_NUMBER,p.PRO_IMG,p.LOCATION_ID,u.EMAIL,category.CATEGORY_ID
+     from tbl_pro p
+              join TBL_CATEGORY_LIST category on p.PRO_ID = category.PRO_ID
+              join TBL_USER u on p.USER_ID = u.USER_ID)pro
+        join TBL_LOCATION l on l.LOCATION_ID = pro.LOCATION_ID
+where pro.PRO_ID = 168;
+SELECT ROWNUM AS RN, COMMUNITY.*
+FROM (
+         SELECT
+             C.COMMUNITY_ID,
+             C.SUBJECT,
+             C.COMMUNITY_TITLE,
+             C.COMMUNITY_CONTENT,
+             C.COMMUNITY_REGISTER_DATE,
+             C.COMMUNITY_UPDATE_DATE,
+             C.COMMUNITY_THUMBNAIL
+         FROM
+             TBL_COMMUNITY C
+         ORDER BY
+             C.COMMUNITY_UPDATE_DATE DESC
+     ) COMMUNITY
+WHERE ROWNUM &lt;= 4

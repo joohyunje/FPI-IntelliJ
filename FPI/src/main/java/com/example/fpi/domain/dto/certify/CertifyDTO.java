@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 @Data
 public class CertifyDTO {
     private Long proId;
-//    private int certiCount;
     private int awardCount;
     private String proName;
     private String phoneNumber;
@@ -17,11 +16,13 @@ public class CertifyDTO {
     private String region;
     private String city;
     private Long categoryId;
-    private String certiOrgan;
-    private String certiNum;
-    private String award;
     private String cardinfoFileOriginal;
     private String cardinfoFileRoute;
     private String cardinfoFileSaved;
+
+    //    배열이기때문에 컨트롤러에서 @RequestParam으로 값을 따로 받아올것임
+//    private String certiOrgan;
+//    private String certiNum;
+//    private String award;
 
 }

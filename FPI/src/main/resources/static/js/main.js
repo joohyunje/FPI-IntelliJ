@@ -1,3 +1,6 @@
+//메인에서 헤더값에 따라 css효과 다르게 적용하려고 사용
+// 전문가 색상, 회원색상 구분하여 색상진행중이기 때문에
+
 function getCurrentURL(){
     return window.location.pathname; //현재 경로 반환함
 }

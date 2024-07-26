@@ -50,7 +50,7 @@ public interface UserService {
     //    유저가 올리 견적 상세보기
     UserUploadDetailDTO selectUserUploadDetail(Long userUploadId);
 
-    void updateCash(String userId,int cash);
+    void updateCash(String userId,int cash,int plusCash);
 
     //회원 견적 올리기
     void saveUserUpload(UserUploadDTO userUpload, List<MultipartFile> files);
