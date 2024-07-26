@@ -1,12 +1,10 @@
 package com.example.fpi.mapper.user;
 
-import com.example.fpi.domain.dto.certify.CertifyDTO;
 import com.example.fpi.domain.vo.certify.CardInfoFileVO;
 import com.example.fpi.domain.vo.certify.CardInfoVO;
 import com.example.fpi.domain.vo.certify.CareerInfoVO;
 import com.example.fpi.domain.vo.main.CategoryListVO;
 import com.example.fpi.domain.vo.pro.ProVO;
-import com.example.fpi.domain.vo.user.UserVO;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

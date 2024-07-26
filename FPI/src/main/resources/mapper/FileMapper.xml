@@ -44,4 +44,11 @@
         INSERT INTO TBL_PRP (pro_img)
         VALUES #{proImg}
     </insert>
+
+<!--    게시판에서 선택한 파일을 테이블에 추가-->
+    <insert id="insertSummernoteImg">
+        INSERT INTO TBL_COMMUNITY_FILE
+        VALUES (seq_file.nextval,#{communityFileRoute},#{communityFileOriginal},#{communityId})
+
+    </insert>
 </mapper>

@@ -14,7 +14,7 @@ public class ProEditDTO {
     private String region;
     private String city;
     private String email;
-    private String award;
+//    private String award;
     private Long categoryId;
     private Long careerInfoId;
     private Long cardInfoId;

@@ -1,3 +1,5 @@
+// 첨부파일 선택시 이미지 띄워주는 js,프로필사진 변경 // 전문가 등록 에서 사용
+
 document.getElementById('fileInput').addEventListener('change',function (event){
     const file = event.target.files[0]
     const proImg = document.getElementById('proImg');

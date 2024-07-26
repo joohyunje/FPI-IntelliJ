@@ -6,6 +6,7 @@
   <link rel="stylesheet" th:href="@{/css/user/mypage/mypage.css}">
   <link rel="stylesheet" th:href="@{/css/main/common.css}">
   <link rel="stylesheet" th:href="@{/css/layout/header.css}">
+  <link rel="stylesheet" th:href="@{/css/user/mypage/withdrawmodal.css}">
 
 
 
@@ -60,7 +61,7 @@
             <ul class="underline">
               <li class="main-list li-padding">내 지갑</li>
               <li class="li-padding oneline">
-                <div class="auto">보유 포인트</div>
+                <div class="auto">보유 캐시</div>
                 <div class="circle">
                   <!-- ? : 보유캐시 뿌려주는곳 -->
                   <span th:text="${mypage.userCash}">?</span>
@@ -94,6 +95,14 @@
                   </div>
                 </a>
               </li>
+              <li class="li-padding">
+                <a th:href="@{/user/activeList}" class="oneline">
+                  <div class="auto">내가 받은 리뷰</div>
+                  <div>
+                    <img src="https://assets.cdn.soomgo.com/icons/icon-mypage-list-arrow.svg">
+                  </div>
+                </a>
+              </li>
 <!--              &lt;!&ndash; 내가 쓴 리뷰목록 이동 &ndash;&gt;-->
 <!--              <li class="li-padding">-->
 <!--                <a th:href="@{/user/activeList}" class="oneline">-->
@@ -116,27 +125,6 @@
           </div>
 
       </div>
-<!--  카카오페이 충전 모달,카카오페이api로 넘겨줄 충전금액 적을것임-->
-<!--    <div id=modal class="container">-->
-<!--      <div class="box-container">-->
-<!--        <div class="box-header">포인트충전</div>-->
-<!--        <div class="box-content">-->
-<!--          <div class="description">-->
-<!--            <h3>포인트 충전은 카카오페이로 진행됩니다.</h3>-->
-<!--            충전하실 포인트 금액을 입력해주세요-->
-<!--          </div>-->
-<!--          <form method="post" id="deleteForm" th:action="@{/user/delete}">-->
-<!--            <div class="title">카카오페이로 충전하실 금액을 입력해주세요</div>-->
-<!--            <input class="input-box" name="point" placeholder="충전하실 금액을 입력해주세요" type="number">-->
-
-<!--            &lt;!&ndash; 충전하기API &ndash;&gt;-->
-<!--            <button type="submit" class="btn" onclick="paybtn()">충전하기</button>-->
-<!--            &lt;!&ndash;모달 창 닫음 &ndash;&gt;-->
-<!--            <button type="button" id="close-modal"  class="btn">취소</button>-->
-<!--          </form>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
 
   </body>
 </html>

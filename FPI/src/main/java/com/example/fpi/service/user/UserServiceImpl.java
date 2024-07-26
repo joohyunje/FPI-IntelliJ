@@ -31,7 +31,6 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
-    private final FormMapper formMapper;
     private final FileMapper fileMapper;
 
     //    받은 요청 목록
@@ -128,10 +127,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateCash(String userId, int cash) {
+    public void updateCash(String userId, int userCash, int userPlusCash) {
         UserDTO dto = new UserDTO();
         dto.setUserId(userId);
-        dto.setUserCash(cash);
+        dto.setUserCash(userCash+userPlusCash);
         UserVO vo = UserVO.toEntity(dto);
         userMapper.updateCash(vo);
 

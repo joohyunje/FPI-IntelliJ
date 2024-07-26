@@ -79,7 +79,7 @@
 
             <div class="underline" style="padding:0 0 1rem 0">
               <div class="fontSize15">경력 혹은 수상내역</div>
-              <div class="word" th:text="*{award}" ></div>
+              <div class="word" th:each="career :${careers}" th:text="${career.award}" ></div>
             </div>
 
             <div class="underline">
@@ -138,7 +138,7 @@
     </div>
   </div>
 
-  <script th:src="@{/js/deletepro.js}"></script>
+  <script th:src="@{/js/deletePro.js}"></script>
 
 </body>
 

@@ -1,3 +1,4 @@
+// 마이페이지에서 활동내역관련
 document.addEventListener('DOMContentLoaded', function() {
     // 요소 선택
     const tabs = {

@@ -1,7 +1,9 @@
 package com.example.fpi.controller.pro;
 
 import com.example.fpi.domain.dto.certify.CardInfoDTO;
+import com.example.fpi.domain.dto.certify.CardInfoFIleListDTO;
 import com.example.fpi.domain.dto.certify.CardInfoFileDTO;
+import com.example.fpi.domain.dto.certify.CareerInfoDTO;
 import com.example.fpi.domain.dto.pro.ProDTO;
 import com.example.fpi.domain.dto.pro.ProEditDTO;
 import com.example.fpi.domain.dto.user.UserDTO;
@@ -21,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -52,38 +55,46 @@ public class ProMypageController {
     @GetMapping("/detail")
     public String detail(@AuthenticationPrincipal CustomOAuth2User customOAuth2User, Model model){
         Long proId = proService.selectProId(customOAuth2User.getUserId());
-        List<CardInfoFileDTO> files = proService.selectCardInfoFile(proId);
+        List<CardInfoFIleListDTO> files = proService.cardFileList(proId);
         List<CardInfoDTO> cards = proService.selectCard(proId);
+        List<CareerInfoDTO> careers = proService.selectCareer(proId);
 
         model.addAttribute("detail",proService.detailPro(proId));
         model.addAttribute("files", files);
         model.addAttribute("cards", cards);
-        System.out.println(cards);
+        model.addAttribute("careers",careers);
+
+        System.out.println(files);
         return "pro/mypage/pro_detail";
 
     }
     @GetMapping("/edit")
     public String edit(@AuthenticationPrincipal CustomOAuth2User customOAuth2User, Model model) {
         Long proId = proService.selectProId(customOAuth2User.getUserId());
-        List<CardInfoFileDTO> files = proService.selectCardInfoFile(proId);
+        List<CardInfoFIleListDTO> files = proService.cardFileList(proId);
         List<CardInfoDTO> cards = proService.selectCard(proId);
+        List<CareerInfoDTO> careers = proService.selectCareer(proId);
 
         model.addAttribute("edit", proService.selectEditPro(proId));
         model.addAttribute("files", files);
         model.addAttribute("cards", cards);
-        System.out.println(proService.selectEditPro(proId));
+        model.addAttribute("careers", careers);
+//        System.out.println(proService.selectEditPro(proId));
+//        System.out.println(cards);
         return "pro/mypage/pro_edit";
     }
 
     @PostMapping("/edit")
-    public String edit(ProEditDTO edit, @RequestParam List<MultipartFile> files,
+    public String edit(ProEditDTO edit,@RequestParam("cards") List<CardInfoDTO> cards
+//                       ,@RequestParam List<CareerInfoDTO> careers
+                       ,@RequestParam List<MultipartFile> files,
                        @RequestParam MultipartFile proProfile) throws IOException {
 
         String region = edit.getRegion();
         String city = edit.getCity();
         edit.setLocationId(formService.selectLocation(region,city));
-        System.out.println(edit);
-        proService.updatePro(edit,files,proProfile);
+        System.out.println(cards+"jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj");
+        proService.updatePro(edit,cards,files,proProfile);
 
         return "redirect:/pro/detail";
 
@@ -99,12 +110,13 @@ public class ProMypageController {
                          HttpSession session) throws IOException {
         String dbProName = proService.getProName(proId);
         String userId= customOAuth2User.getUserId();
-        Long cardInfoId = proService.selectEditPro(proId).getCardInfoId();
+//        List<CardInfoFIleListDTO> dto =proService.cardFileList(proId);
+//        Long cardInfoId = proService.selectEditPro(proId).getCardInfoId();
 
 
 //        db에 저장된 이름이랑 받아온 input에 입력된 이름이랑 비교
         if(proName.equals(dbProName)){
-            proService.deleteCardFile(cardInfoId);
+            proService.deleteCardFile(proId);
             proService.deletePro(proId,proName);
             userService.editApproval(userId);
 

@@ -79,8 +79,8 @@
   <!-- 카테고리 -->
                 <div class="col underline pro">
                   <label for="category" class="fontSize15 label">활동 서비스</label>
-                  <select name="categoryId" id="category" aria-required="false" class="form-select" style="margin-bottom: 17px;">
-                    <option value="12">카테고리</option>
+                  <select name="categoryId" id="category" aria-required="true" class="form-select" style="margin-bottom: 17px;">
+                    <option value="none">카테고리</option>
                     <option value="1">이사/청소</option>
                     <option value="2">설치/수리</option>
                     <option value="3">인테리어</option>
@@ -100,15 +100,16 @@
 
                 <div class="underline2 plusPoint">
                   <div class="certi-label" >
-                    <label for="certification-agency" class="fontSize15">자격증 발급기관/ </label>
-                    <label for="certification-num" class="fontSize15">자격증 번호</label>
+                    <label for="certiOrgan" class="fontSize15">자격증 발급기관/ </label>
+                    <label for="certiNum" class="fontSize15">자격증 번호</label>
                     <div class="plus">+</div>
                   </div>
 
-                  <div class="certi-label" th:each="card : ${cards}">
-                    <input type="hidden" th:value="${edit.cardInfoId}"  name="cardInfoId" style="display: none !important;" >
-                    <input th:value="${card.certiOrgan}" type="text" id="certification-agency" name="certification-num" class="form-control" style=" margin-right: 10px;" placeholder="자격증 발급기관을 입력하세요">
-                    <input th:value="${card.certiNum}" type="text" id="certification-num" name="certification-num" class="form-control"
+                  <div class="certi-label" th:each="card : ${cards}" id="cards" >
+                    <input type="hidden" th:value="${card.proId}"  name="proId" >
+                    <input type="hidden" th:value="${card.cardInfoId}" name="cardInfoId">
+                    <input th:value="${card.certiOrgan}" type="text" id="certiOrgan" name="certiOrgan" class="form-control" style=" margin-right: 10px;" placeholder="자격증 발급기관을 입력하세요">
+                    <input th:value="${card.certiNum}" type="text" id="certiNum" name="certiNum" class="form-control"
                     placeholder="자격증 번호를 입력하세요">
                   </div>
                 </div>
@@ -120,9 +121,10 @@
                     <div class="awardPlus">+</div>
                   </div>
 
-                  <input type="hidden" th:value="*{careerInfoId}"  name="careerInfoId" style="display: none !important;" >
-                  <div style="display: flex">
-                    <textarea th:field="*{award}" id="awards" maxlength="255" class="textarea"></textarea>
+
+                  <div style="display: flex" th:each="career:${careers}" th:object="${career}">
+<!--                    <input type="hidden" th:value="*{careerInfoId}"  name="careerInfoId" style="display: none !important;" >-->
+<!--                    <textarea th:field="*{award}" id="award" name="award" maxlength="255" class="textarea"></textarea>-->
                   </div>
                 </div>
 
@@ -178,7 +180,7 @@
 <script th:src="@{/js/file.js}"></script>
 <script th:src="@{/js/plus.js}"></script>
 
-<script th:src="@{/js/deletepro.js}"></script>
+<script th:src="@{/js/deletePro.js}"></script>
 
 <script th:inline="javascript">
   var categoryId = /*[[ ${edit.categoryId} ]]*/ null;

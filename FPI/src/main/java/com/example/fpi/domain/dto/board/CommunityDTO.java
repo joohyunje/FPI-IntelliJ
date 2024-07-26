@@ -20,4 +20,5 @@ public class CommunityDTO {
     private LocalDateTime communityUpdateDate;
     //좋아요 갯수
     private int likeCount;
+    private String communityThumbnail;
 }
