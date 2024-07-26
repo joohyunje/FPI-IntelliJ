@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>커뮤니티</title>
+    <link rel="stylesheet" th:href="@{/css/main/common.css}">
+    <link rel="stylesheet" th:href="@{/css/layout/header.css}">
+    <link rel="stylesheet" th:href="@{/css/board/community.css}">
+    <link rel="stylesheet" th:href="@{/css/user/req_list/pagination.css}">
+
+    <link rel="stylesheet" th:href="@{/css/layout/footer.css}">
+
+
+
+</head>
+<body>
+<div th:replace="~{/layout/header :: header}"></div>
+
+<div class="main">
+    <div class="main-container">
+        <div class="main-container-title">
+            <div class="main-container-title-container">
+                <h2 class="title">
+                    <span class="title-content">
+                        커뮤니티
+                    </span>
+                </h2>
+            </div>
+        </div>
+
+        <div class="search-container">
+            <div class="search-input">
+                <input  name="search" type="text" onkeyup="enterkey()" placeholder="검색해보세요!" >
+                <div class="delete-button">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTAgMGgyNHYyNEgweiIvPgogICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDMgMykiPgogICAgICAgICAgICA8Y2lyY2xlIGZpbGw9IiNDNUM1QzUiIGN4PSI5IiBjeT0iOSIgcj0iOSIvPgogICAgICAgICAgICA8cGF0aCBzdHJva2U9IiNGRkYiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Im02IDYgNi4wMDUgNi4wMDZNMTIuMDA1IDYgNiAxMi4wMDYiLz4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPgo=" alt="검색어 삭제아이콘">
+                </div>
+            </div>
+            <div>
+                <a class="write-box" sec:authorize ="isAuthenticated()"  th:href="@{/community/write}">글쓰기</a>
+            </div>
+        </div>
+
+
+        <div class="community-container">
+            <div class="category-list aside">
+                <input name="search" type="hidden" >
+                <div id="community" >전체</div>
+                <div id="freeTalk"> 자유게시판</div>
+                <div id="proTip"> 전문가 팁</div>
+            </div>
+            <div class="content-layout">
+                <div class="feed">
+                    <ul class="feed-list">
+<!--                        <li class="feed-item">-->
+<!--                            <a th:href="@{/community/detail/{communityId}(communityId=*{communityId})}">-->
+<!--                                <div class="feed-container">-->
+<!--                                    <div class="item-wrapper">-->
+<!--                                        <h3 class="item-title" th:text="*{communityTitle}">-->
+
+<!--                                        </h3>-->
+<!--                                        <div class="item-content" th:utext="*{communityContent}"></div>-->
+<!--                                    </div>-->
+
+<!--                                    <div th:unless="*{communityThumbnail == null or communityThumbnail == '' or communityThumbnail == 'dd'}">-->
+<!--                                        <img style="background-repeat: no-repeat;width: 150px;height: 150px" th:src="*{communityThumbnail}" alt="img">-->
+<!--                                    </div>-->
+<!--                                    <div th:if="*{communityThumbnail == null or communityThumbnail == '' or communityThumbnail == 'dd'}">-->
+<!--                                        <img style="background-repeat: no-repeat;width: 150px;height: 150px" th:src="@{/img/커뮤니티 기본.png}" alt="img">-->
+<!--                                    </div>-->
+
+<!--                                </div>-->
+<!--                            </a>-->
+<!--                            <div class="feed-footer">-->
+<!--                                <div>-->
+<!--                                    <div class="footer-like" th:text="*{likeCount}">-->
+
+<!--                                    </div>-->
+<!--                                    <div class="footer-comment">-->
+<!--                                        0-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div>-->
+<!--                                    <div class="footer-date" style="margin-right: 2rem" th:text="'작성자 : '+ *{userName}"></div>-->
+<!--                                    <div class="footer-date" th:text="*{#temporals.format(communityUpdateDate, 'YY-MM-dd')}"></div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </li>-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <ul class="pagination">
+
+        </ul>
+    </div>
+</div>
+<div th:replace="~{/layout/footer :: footer}"></div>
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+// 날짜 포맷
+function formatDate(dateString) {
+    const now = new Date();
+    const commentDate = new Date(dateString); // 문자열을 Date 객체로 변환
+
+    const nowYear = now.getFullYear();
+    const nowMonth = now.getMonth();
+    const nowDate = now.getDate();
+
+    const commentYear = commentDate.getFullYear();
+    const commentMonth = commentDate.getMonth();
+    const commentDateDate = commentDate.getDate();
+
+    let displayText = "";
+
+    // 년, 월, 일이 모두 같은 경우 "오늘"로 표시
+    // if (nowYear === commentYear && nowMonth === commentMonth && nowDate === commentDateDate) {
+    //     displayText = "오늘";
+    // } else {
+    // 그 외의 경우, 정해진 포맷으로 표시
+    const yy = commentYear.toString().slice(-2); // 마지막 두 자리를 가지고 옴.
+    const MM = commentMonth + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
+    const dd = commentDateDate;
+    // const HH = commentDate.getHours().toString().padStart(2, '0');
+    // const mm = commentDate.getMinutes().toString().padStart(2, '0'); // 두자리 수 일 때 앞에 0을 붙임.
+
+    displayText = `${yy}. ${MM}. ${dd}`;
+    // }
+    return displayText;
+}
+<!--    엔터키 누르면 savekeyword실행(맨아래에서 지정함, )-->
+function enterkey() {
+    if (window.event.keyCode == 13) {
+        saveKeyword();
+    }
+}
+
+    const pageSize = 5; //페이징 사이즈,ajax에 쓸것임
+    let search = null;
+    let subject ='';
+
+<!--    페이지 시작시 해당 함수 실행-->
+    window.onload = function(){
+        search = $('input[name="search"]').val(); //input태그에 name이 search인곳 value를 ajax의 search에 넣을것임
+        subject = $('input[name="subject"]').val();
+        getList(1);
+        subjectValue();//해당 함수 실행,첫번째 페이지 뿌려줌
+    }
+    function getList(page){
+        $.ajax({
+            method:'get', //방식
+            url:'/community', //보낼곳,컨트롤러적을것임
+            data: {
+                page: page,
+                size: pageSize,
+                search: search,
+                subject:subject
+            },
+            success:function (data){
+                // 성공시 리스트 뿌려주는 함수.
+                renderUploadList(data.content);
+                // 페이징 처리
+                renderPagination(data)
+            },
+            error:function (){
+                console.error('실패')
+            }
+
+        })
+    }
+
+
+
+    // 페이지 리스트 뿌려줌
+function renderUploadList(uploads){
+    const uploadContainer = $('.feed ul');
+    uploadContainer.empty();
+
+    uploads.forEach(function(upload) {
+        let uploadRow = `  <li class="feed-item">
+                            <a href="/community/detail/${upload.communityId}">
+                                <div class="feed-container">
+                                    <div class="item-wrapper">
+                                        <h3 class="item-title">
+                                            ${upload.communityTitle}
+                                        </h3>
+                                        <div class="item-content">
+                                        ${upload.communityContent}
+                                        </div>
+                                    </div>
+
+                                    <div if = "${upload.communityContent} != null and ${upload.communityContent} !='' and ${upload.communityContent} != 'dd'">
+                                    <img style="background-repeat: no-repeat;width: 150px;height: 150px" src="${upload.communityThumbnail}" alt="img">
+                                    </div>
+
+                                    <div if = "${upload.communityContent}== null or ${upload.communityContent}=='' or ${upload.communityContent} == 'dd'">
+                                    <img style="background-repeat: no-repeat;width: 150px;height: 150px" src="/img/커뮤니티 기본.png" alt="img">
+                                    </div>
+
+                                </div>
+                            </a>
+                            <div class="feed-footer">
+                                <div>
+                                    <div class="footer-like">
+                                    ${upload.likeCount}
+                                    </div>
+                                    <div class="footer-comment">
+                                        0
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="footer-date" style="margin-right: 2rem" >
+                                    작성자 : ${upload.userName}
+                                    </div>
+
+                                    <div class="footer-date" >
+                                     ${formatDate(upload.communityRegisterDate)}
+                                    </div>
+                                </div>
+                            </div>
+                        </li>`;
+        uploadContainer.append(uploadRow);
+    });
+}
+
+
+
+
+    // 페이징
+    function renderPagination(pagination) {
+        const PaginationContainer = $('.pagination'); //클래스이름
+        PaginationContainer.empty(); //비워줌
+
+        // 이전 버튼
+        const prevDisabled = pagination.currentPage === 1 ? 'disabled' : ''; //현재 페이지가 1이면 비활성화
+
+        PaginationContainer.append(`
+            <li class="page-item ${prevDisabled}">
+                <a class="page-link" href="#" aria-label="Previous" data-page="${pagination.currentPage - 1}">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        `); //해당요소들 추가
+
+        for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+            const activeClass = pagination.currentPage === i ? 'active' : ''; //값이 같으면 활성화
+
+            PaginationContainer.append(`
+            <li class="page-item ${activeClass}">
+                <a class="page-link" href="#" data-page="${i}">${i}</a>
+            </li>
+        `);
+        } //반복문 돌려서 해당값 추가
+
+        const nextDisabled = pagination.currentPage === pagination.totalPages ? 'disabled' : ''; //다음버튼
+
+        PaginationContainer.append(`
+            <li class="page-item ${nextDisabled}">
+                <a class="page-link" href="#" aria-label="Next" data-page="${pagination.currentPage + 1}">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        `);
+
+        // 클래스가 .page-link인 요소를 클릭했을때(a링크에 지정되어있고 위에서 append로 추가해주었음)
+        $('.page-link').click(function(event) {
+            event.preventDefault(); //기본동작 없앰
+            const selectedPage = $(this).data('page');
+            getList(selectedPage);
+        });
+    }
+
+    //
+    function saveKeyword(){
+        search = $('input[name="search"]').val();
+        getList(1);
+    }
+
+    function subjectValue(){
+        const subjectName = {
+            community: document.getElementById('community')[0],
+            freeTalk: document.getElementById('freeTalk')[0],
+            proTip: document.getElementById('proTip')[0]
+        };
+
+        // 초기 상태 설정
+        subjectName.community.classList.add('selected');
+
+
+        // 탭 클릭 이벤트 리스너
+        subjectName.community.addEventListener('click', function() {
+            subjectName.community.classList.add('selected');
+            subjectName.freeTalk.classList.remove('selected');
+            subjectName.proTip.classList.remove('selected');
+            $('input[name="subject"]').val('');
+
+        });
+
+        subjectName.freeTalk.addEventListener('click', function() {
+            subjectName.community.classList.remove('selected');
+            subjectName.freeTalk.classList.add('selected');
+            subjectName.proTip.classList.remove('selected');
+            $('input[name="subject"]').val('자유게시판');
+
+        });
+
+        subjectName.proTip.addEventListener('click', function() {
+            subjectName.community.classList.remove('selected');
+            subjectName.freeTalk.classList.remove('selected');
+            subjectName.proTip.classList.add('selected');
+            $('input[name="subject"]').val('전문가팁');
+
+
+        });
+
+    }
+</script>
+</html>

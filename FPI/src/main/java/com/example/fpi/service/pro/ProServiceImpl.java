@@ -1,6 +1,7 @@
 package com.example.fpi.service.pro;
 
 import com.example.fpi.domain.dto.certify.CardInfoDTO;
+import com.example.fpi.domain.dto.certify.CardInfoFIleListDTO;
 import com.example.fpi.domain.dto.certify.CardInfoFileDTO;
 import com.example.fpi.domain.dto.certify.CareerInfoDTO;
 import com.example.fpi.domain.dto.main.CategoryListDTO;
@@ -16,6 +17,7 @@ import com.example.fpi.domain.vo.pro.ProVO;
 import com.example.fpi.domain.vo.file.ProUploadFileVO;
 import com.example.fpi.mapper.File.FileMapper;
 import com.example.fpi.mapper.pro.ProMapper;
+import com.example.fpi.mapper.user.CertifyMapper;
 import com.example.fpi.service.user.CertifyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -38,6 +40,7 @@ public class ProServiceImpl implements ProService {
     private final ProMapper proMapper;
     private final CertifyService certifyService;
     private final FileMapper fileMapper;
+    private final CertifyMapper certifyMapper;
 
     //    받은 요청 목록
     @Override
@@ -90,15 +93,27 @@ public class ProServiceImpl implements ProService {
         return proMapper.detailPro(proId);
 
     }
+// 전문가 한명당 여러정보가 있어서 list형태
+//    @Override
+//    public List<CardInfoFileDTO> selectCardInfoFile(Long cardInfoId) {
+//        return proMapper.cardImg(cardInfoId);
+//    }
 
-    @Override
-    public List<CardInfoFileDTO> selectCardInfoFile(Long proId) {
-        return proMapper.selectCardFile(proId);
-    }
 
     @Override
     public List<CardInfoDTO> selectCard(Long proId) {
         return proMapper.selectCard(proId);
+    }
+
+    @Override
+    public List<CareerInfoDTO> selectCareer(Long proId) {
+        return proMapper.selectCareer(proId);
+    }
+
+    //    자격증 파일이 여러개임
+    @Override
+    public List<CardInfoFIleListDTO> cardFileList(Long proId) {
+        return proMapper.cardFileList(proId);
     }
 
     //    전문가 수정하기에 정보 뿌려줌
@@ -107,20 +122,23 @@ public class ProServiceImpl implements ProService {
         return proMapper.selectEditPro(proId);
     }
 
-
     // 전문가 수정정보는 여기서 최종으로 모아서 update됨
     @Override
     @Transactional
-    public void updatePro(ProEditDTO dto, List<MultipartFile> files, MultipartFile proProfile) throws IOException {
+
+    public void updatePro(ProEditDTO dto, List<CardInfoDTO> cards, List<MultipartFile> files, MultipartFile proProfile) throws IOException {
         String proImg = editProImage(dto.getProId(), proProfile);
 
         editPro(dto.getProName(), dto.getPhoneNumber(), proImg, dto.getLocationId(), dto.getProId());
+        editCardInfo(cards);
         editCategory(dto.getCategoryId(), dto.getProId());
-        editCareerInfo(dto.getCareerInfoId(), dto.getAward());
-        certifyService.saveCertifyImage(dto.getCardInfoId(), files);
+//        editCareerInfo(dto.getCareerInfoId(),dto.getAward());
+//        certifyService.saveCertifyImage(dto.getCardInfoId(),files);
     }
 
-    //     전문가 테이블 수정
+
+//     전문가 테이블 수정
+
     @Override
     public void editPro(String proName, String phoneNumber, String proImg, Long locationId, Long proId) {
         ProDTO dto = new ProDTO();
@@ -150,8 +168,18 @@ public class ProServiceImpl implements ProService {
 
     //    작성한 자격증 정보 수정
     @Override
-    public void editCardInfo(CardInfoDTO dto) {
-        proMapper.editCardInfo(CardInfoVO.toEntity(dto));
+    public void editCardInfo(List<CardInfoDTO> cards) {
+        for (CardInfoDTO dto : cards) {
+            if (dto.getCardInfoId() == null) {
+                //insert
+                Long cardInfoId = certifyMapper.getInfoSeq();
+                certifyService.addCardInfo(cardInfoId, dto.getProId(), dto.getCertiOrgan(), dto.getCertiNum());
+            } else if (dto.getCardInfoId().equals(dto.getCardInfoId())) {
+                proMapper.editCardInfo(CardInfoVO.toEntity(dto));
+            }
+        }
+
+//
     }
 
     //    작성한 경력사항 수정
@@ -189,7 +217,7 @@ public class ProServiceImpl implements ProService {
 
             // 파일 저장 경로 설정 (프로젝트의 정적 자원 경로에 저장)
 //            게시판 관리시 datePath까지는 동일
-            Path directoryPath = Paths.get("src/main/resources/static/uploads/" + datePath + "/proImg/");
+            Path directoryPath = Paths.get("src/main/resources/static/uploads/proImg/" + datePath);
             if (!Files.exists(directoryPath)) {
                 Files.createDirectories(directoryPath); // 폴더가 없으면 생성
             }
@@ -198,7 +226,7 @@ public class ProServiceImpl implements ProService {
             Files.copy(proProfile.getInputStream(), filePath);
 
             // 저장된 파일의 URL 반환
-            String fileUrl = "/uploads/" + datePath + "/proImg/" + storedFileName;
+            String fileUrl = "/uploads/proImg/" + datePath + "/" + storedFileName;
 
             return fileUrl;
         }
@@ -208,7 +236,9 @@ public class ProServiceImpl implements ProService {
     //전문가 탈퇴,탈퇴시 서버에 저장된 프로필사진도 함께삭제
     @Override
     public void deletePro(Long proId, String proName) throws IOException {
-        Path proImg = Paths.get("src/main/resources/static" + selectEditPro(proId).getProImg());
+
+        Path proImg = Paths.get("src/main/resources/static" + proMapper.selectProInfo(proId).getProImg());
+
         if (Files.exists(proImg)) {
             Files.delete(proImg);
         }
@@ -217,9 +247,10 @@ public class ProServiceImpl implements ProService {
 
     //    전문가 탈퇴시 서버에 저장된 자격증사진 삭제
     @Override
-    public void deleteCardFile(Long cardInfoId) throws IOException {
-        List<CardInfoFileDTO> cardInfoFileDTOList = proMapper.cardImg(cardInfoId);
-        for (CardInfoFileDTO cardInfoFile : cardInfoFileDTOList) {
+    public void deleteCardFile(Long proId) throws IOException {
+        List<CardInfoFIleListDTO> cardInfoFileDTOList = proMapper.cardFileList(proId);
+        for (CardInfoFIleListDTO cardInfoFile : cardInfoFileDTOList) {
+
             System.out.println(cardInfoFile.getCardInfoFileRoute());
             Path file = Paths.get("src/main/resources/static" + cardInfoFile.getCardInfoFileRoute());
             if (Files.exists(file)) {
@@ -227,6 +258,11 @@ public class ProServiceImpl implements ProService {
             }
         }
     }
+
+//    @Override
+//    public Long selectCardFileId(Long proId) {
+//        return proMapper.selectCardFileId(proId);
+//    }
 
 
     // 전문가 삭제시 이름비교 위해 필요

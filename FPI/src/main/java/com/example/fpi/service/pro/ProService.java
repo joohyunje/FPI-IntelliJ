@@ -1,7 +1,9 @@
 package com.example.fpi.service.pro;
 
 import com.example.fpi.domain.dto.certify.CardInfoDTO;
+import com.example.fpi.domain.dto.certify.CardInfoFIleListDTO;
 import com.example.fpi.domain.dto.certify.CardInfoFileDTO;
+import com.example.fpi.domain.dto.certify.CareerInfoDTO;
 import com.example.fpi.domain.dto.pro.*;
 import com.example.fpi.domain.dto.user.UserReviewDTO;
 import com.example.fpi.domain.util.PagedResponse;
@@ -31,11 +33,14 @@ public interface ProService {
     //    유저아이디를 입력받아 프로아이디 알아내기
     Long selectProId(String userId);
 
+
     //  전문가 정보 삭제
     void deletePro(Long proId, String proName) throws IOException;
 
     // 함께 저장된 자격증 사진 삭제
-    void deleteCardFile(Long cardInfoId) throws IOException;
+    void deleteCardFile(Long cardFileId) throws IOException;
+// 파일아이디 가져와서 삭제
+//    Long selectCardFileId(Long proId);
 
 
     //  올린견적으로  전문가 경력 가져오기
@@ -50,15 +55,18 @@ public interface ProService {
     //    전문가 상세보기
     ProDTO detailPro(Long proId);
 
-    List<CardInfoFileDTO> selectCardInfoFile(Long proId);
-
+    //    List<CardInfoFileDTO> selectCardInfoFile(Long proId);
     List<CardInfoDTO> selectCard(Long proId);
+
+    List<CareerInfoDTO> selectCareer(Long proId);
+
+    List<CardInfoFIleListDTO> cardFileList(Long proId);
 
     //   전문가 수정정보 뿌려줌
     ProEditDTO selectEditPro(Long proId);
 
     //    전문가 수정하기 폼
-    void updatePro(ProEditDTO dto, List<MultipartFile> files, MultipartFile proProfile) throws IOException;
+    void updatePro(ProEditDTO dto, List<CardInfoDTO> cards, List<MultipartFile> files, MultipartFile proProfile) throws IOException;
 
     void editPro(String proName, String phoneNumber, String proImg, Long locationId, Long proId);
 
@@ -66,9 +74,10 @@ public interface ProService {
 
     void editCardInfoFile(CardInfoFileDTO dto);
 
-    void editCardInfo(CardInfoDTO dto);
+    void editCardInfo(List<CardInfoDTO> cards);
 
     void editCareerInfo(Long careerInfoId, String award);
+
 
     String editProImage(Long proId, MultipartFile proProfile) throws IOException;  //전문가 활동사진 파일수정
 

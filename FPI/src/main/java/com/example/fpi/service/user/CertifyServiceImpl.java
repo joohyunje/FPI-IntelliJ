@@ -30,6 +30,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -57,14 +58,16 @@ public class CertifyServiceImpl implements CertifyService {
     @Override
     public void addCardInfo(Long cardInfoId,Long proId,String certiOrgan, String certiNum) {
         CardInfoDTO cardInfoDTO = new CardInfoDTO();
-        cardInfoDTO.setCardInfoId(cardInfoId);
         cardInfoDTO.setProId(proId);
+
+        cardInfoDTO.setCardInfoId(cardInfoId);
         cardInfoDTO.setCertiOrgan(certiOrgan);
         cardInfoDTO.setCertiNum(certiNum);
-
         CardInfoVO vo = CardInfoVO.toEntity(cardInfoDTO);
         certifyMapper.addCardInfo(vo);
-        System.out.println(vo);
+
+
+//        System.out.println(vo);
     }
 
 //    경력작성
@@ -99,11 +102,21 @@ public class CertifyServiceImpl implements CertifyService {
 //  최종적으로 전문가 인증되는곳
     @Override
     @Transactional
-    public void addCertify(CertifyDTO dto,List<MultipartFile> files, MultipartFile proProfile) throws IOException {
+    public void addCertify(CertifyDTO dto,List<MultipartFile> files, MultipartFile proProfile,String certiOrgan,String certiNum,String award) throws IOException {
         Long proId = certifyMapper.getProSeq();
         String userId = dto.getUserId();
-        Long cardInfoId = certifyMapper.getInfoSeq();
-        Long careerInfoId = certifyMapper.getInfoSeq();
+        Long cardInfoId = 0L;
+        Long careerInfoId = 0L;
+
+//        js로 추가되어 넘어가는 값들이 컬럼에,로 같이 저장되어 분리해서 저장하기 위해 필요
+        // 정규표현식 패턴 설정
+        Pattern pattern = Pattern.compile("\\s*,\\s*");
+
+        // 패턴을 이용해 문자열 분리
+        String[] organ = pattern.split(certiOrgan);
+        String[] num = pattern.split(certiNum);
+        String[] proAward = pattern.split(award);
+
 
 
 //        proProfile에서 리턴받은 값을 받아와서 proImg로 넣어줌
@@ -113,10 +126,15 @@ public class CertifyServiceImpl implements CertifyService {
         addPro(proId,dto.getProName(),dto.getPhoneNumber(), dto.getProImg(), dto.getLocationId(),userId);
 
 //        자격증 번호,발급기관관련 테이블
-        addCardInfo(cardInfoId,proId,dto.getCertiOrgan(),dto.getCertiNum());
-
-//        경력작성 테이블
-        addCareerInfo(careerInfoId,dto.getAward(),proId);
+        for (int i = 0; i < organ.length; i++) {
+            cardInfoId = certifyMapper.getInfoSeq();
+            addCardInfo(cardInfoId, proId, organ[i], num[i]);
+        }
+        //경력작성 테이블
+        for (int i = 0; i < proAward.length; i++) {
+            careerInfoId = certifyMapper.getInfoSeq();
+            addCareerInfo(careerInfoId,proAward[i],proId);
+        }
 
 //        선택한 카테고리 관리테이블
         insertProCategory(dto.getCategoryId(),proId);
@@ -143,7 +161,7 @@ public class CertifyServiceImpl implements CertifyService {
 
         // 파일 저장 경로 설정 (프로젝트의 정적 자원 경로에 저장)
 //            게시판 관리시 datePath까지는 동일
-        Path directoryPath = Paths.get("src/main/resources/static/uploads/" + datePath + "/proImg/");
+        Path directoryPath = Paths.get("src/main/resources/static/uploads/proImg/" + datePath );
         if (!Files.exists(directoryPath)) {
             Files.createDirectories(directoryPath); // 폴더가 없으면 생성
         }
@@ -152,7 +170,7 @@ public class CertifyServiceImpl implements CertifyService {
         Files.copy(proProfile.getInputStream(), filePath);
 
         // 저장된 파일의 URL 반환
-        String fileUrl = "/uploads/" + datePath + "/proImg/" + storedFileName;
+        String fileUrl = "/uploads/proImg/" + datePath + "/" + storedFileName;
 
         return fileUrl;
     }
@@ -176,7 +194,7 @@ public class CertifyServiceImpl implements CertifyService {
 
             try {
                 // 파일 저장 경로 설정
-                Path directoryPath = Paths.get("src/main/resources/static/uploads/" + datePath + "/certifyFile/");
+                Path directoryPath = Paths.get("src/main/resources/static/uploads/certifyFile/" + datePath);
                 if (!Files.exists(directoryPath)) {//위에  경로안에 중복폴더가 존재하지 않는다면
                     Files.createDirectories(directoryPath); // 폴더가 없으면 생성
                 }
@@ -187,7 +205,7 @@ public class CertifyServiceImpl implements CertifyService {
 //                사용하려면 db에 저장되있어야함,db에 저장되어야 데이터를 꺼내올수있음
                 CardInfoFileDTO fileDTO = new CardInfoFileDTO(); //fileDTO만듬,vo는 setter가 없어서 dto로 만들어줌
                 Long cardInfoFileId = certifyMapper.getFileSeq();
-                String cardInfoFileRoute =  "/uploads/" + datePath + "/certifyFile/" + storedFileName;
+                String cardInfoFileRoute =  "/uploads/certifyFile/" + datePath + "/" + storedFileName;
                 fileDTO.setCardInfoFileId(cardInfoFileId);
                 fileDTO.setCardInfoId(cardInfoId);
                 fileDTO.setCardInfoFileOriginal(originalFileName);

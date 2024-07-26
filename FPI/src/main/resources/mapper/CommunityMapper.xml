@@ -3,7 +3,43 @@
 
 <mapper namespace="com.example.fpi.mapper.board.CommunityMapper">
 
-    <!--  Community 목록 가져오기  -->
+    <!--  Community  전체 목록 가져오기  -->
+<!--    <select id="communitySelectAll" resultType="CommunityDTO">-->
+<!--        SELECT *-->
+<!--        FROM (-->
+<!--                 SELECT ROWNUM AS RN, COMMUNITY.*-->
+<!--                 FROM (-->
+<!--                          SELECT-->
+<!--                              C.COMMUNITY_ID,-->
+<!--                              C.SUBJECT,-->
+<!--                              C.COMMUNITY_TITLE,-->
+<!--                              C.COMMUNITY_CONTENT,-->
+<!--                              U.USER_NAME,-->
+<!--                              C.COMMUNITY_REGISTER_DATE,-->
+<!--                              C.COMMUNITY_UPDATE_DATE,-->
+<!--                              U.USER_ID,-->
+<!--                              C.COMMUNITY_THUMBNAIL,-->
+<!--                              (SELECT COUNT(*) FROM TBL_LIKE L WHERE L.COMMUNITY_ID = C.COMMUNITY_ID) AS LIKE_COUNT-->
+<!--                          FROM-->
+<!--                              TBL_COMMUNITY C-->
+<!--                                  JOIN TBL_USER U ON U.USER_ID = C.USER_ID-->
+<!--                          WHERE-->
+<!--                              C.SUBJECT IN ('자유게시판', '전문가팁')-->
+<!--                          ORDER BY-->
+<!--                              C.COMMUNITY_UPDATE_DATE DESC-->
+<!--                      ) COMMUNITY-->
+<!--        WHERE ROWNUM &lt;= #{endRow}-->
+<!--        )-->
+<!--        WHERE rn &gt; #{startRow}-->
+<!--    </select>-->
+
+
+
+
+
+
+
+
     <select id="communitySelectAll" resultType="CommunityDTO">
         SELECT *
         FROM (
@@ -18,11 +54,30 @@
                               C.COMMUNITY_REGISTER_DATE,
                               C.COMMUNITY_UPDATE_DATE,
                               U.USER_ID,
+                              C.COMMUNITY_THUMBNAIL,
                               (SELECT COUNT(*) FROM TBL_LIKE L  WHERE L.COMMUNITY_ID = C.COMMUNITY_ID) AS LIKE_COUNT
                           FROM
                               TBL_COMMUNITY C JOIN TBL_USER U
                                                ON
                                                    U.USER_ID = C.USER_ID
+                        <where>
+                            <if test="search != null">
+                                <choose>
+                                    <when test="subject =='자유게시판'">c.subject == '자유게시판' and
+                                        (c.community_content LIKE '%' || #{search} || '%' or c.community_title
+                                        LIKE '%' || #{search} || '%')
+                                    </when>
+                                    <when test="subject == '전문가팁'">tbl_community.subject == '전문가팁' and
+                                        (c.community_content LIKE '%' || #{search} || '%' or c.community_title
+                                        LIKE '%' || #{search} || '%')
+                                    </when>
+                                    <otherwise>
+                                        c.community_content LIKE '%' || #{search} || '%' or c.community_title
+                                        LIKE '%' || #{search} || '%'
+                                    </otherwise>
+                                </choose>
+                            </if>
+                        </where>
                           ORDER BY
                               C.COMMUNITY_UPDATE_DATE DESC
                       ) COMMUNITY
@@ -31,16 +86,128 @@
         WHERE rn &gt; #{startRow}
     </select>
 
+
+    <!--  자유게시판 목록 가져오기  -->
+<!--    <select id="SelectBoardList" resultType="CommunityDTO">-->
+<!--        SELECT *-->
+<!--        FROM (-->
+<!--                 SELECT ROWNUM AS RN, COMMUNITY.*-->
+<!--                 FROM (-->
+<!--                          SELECT-->
+<!--                              C.COMMUNITY_ID,-->
+<!--                              C.SUBJECT,-->
+<!--                              C.COMMUNITY_TITLE,-->
+<!--                              C.COMMUNITY_CONTENT,-->
+<!--                              U.USER_NAME,-->
+<!--                              C.COMMUNITY_REGISTER_DATE,-->
+<!--                              C.COMMUNITY_UPDATE_DATE,-->
+<!--                              U.USER_ID,-->
+<!--                              (SELECT COUNT(*) FROM TBL_LIKE L  WHERE L.COMMUNITY_ID = C.COMMUNITY_ID) AS LIKE_COUNT-->
+<!--                          FROM-->
+<!--                              TBL_COMMUNITY C JOIN TBL_USER U-->
+<!--                                                   ON-->
+<!--                                                       U.USER_ID = C.USER_ID-->
+<!--                          where c.subject = '자유게시판'-->
+<!--                          ORDER BY-->
+<!--                              C.COMMUNITY_UPDATE_DATE DESC-->
+<!--                      ) COMMUNITY-->
+<!--                 WHERE ROWNUM &lt;= #{endRow}-->
+<!--             )-->
+<!--        WHERE rn &gt; #{startRow}-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash;  전문가팁 목록 가져오기  &ndash;&gt;-->
+<!--    <select id="SelectProTipList" resultType="CommunityDTO">-->
+<!--        SELECT *-->
+<!--        FROM (-->
+<!--                 SELECT ROWNUM AS RN, COMMUNITY.*-->
+<!--                 FROM (-->
+<!--                          SELECT-->
+<!--                              C.COMMUNITY_ID,-->
+<!--                              C.SUBJECT,-->
+<!--                              C.COMMUNITY_TITLE,-->
+<!--                              C.COMMUNITY_CONTENT,-->
+<!--                              U.USER_NAME,-->
+<!--                              C.COMMUNITY_REGISTER_DATE,-->
+<!--                              C.COMMUNITY_UPDATE_DATE,-->
+<!--                              U.USER_ID,-->
+<!--                              (SELECT COUNT(*) FROM TBL_LIKE L  WHERE L.COMMUNITY_ID = C.COMMUNITY_ID) AS LIKE_COUNT-->
+<!--                          FROM-->
+<!--                              TBL_COMMUNITY C JOIN TBL_USER U-->
+<!--                                                   ON-->
+<!--                                                       U.USER_ID = C.USER_ID-->
+<!--                          where c.subject = '전문가팁'-->
+<!--                          ORDER BY-->
+<!--                              C.COMMUNITY_UPDATE_DATE DESC-->
+<!--                      ) COMMUNITY-->
+<!--                 WHERE ROWNUM &lt;= #{endRow}-->
+<!--             )-->
+<!--        WHERE rn &gt; #{startRow}-->
+<!--    </select>-->
+
+
+
+
     <!-- community 총 게시글의 갯수  -->
+<!--    <select id="countCommunity">-->
+<!--        select count(*)-->
+<!--        from tbl_Community-->
+<!--        <where>-->
+<!--            <if test="search != null">-->
+<!--                <choose>-->
+<!--                    <when test="subject =='자유게시판'">tbl_community.subject == '자유게시판' and-->
+<!--                        (tbl_community.community_content LIKE '%' || #{search} || '%' or tbl_community.community_title-->
+<!--                        LIKE '%' || #{search} || '%')-->
+<!--                    </when>-->
+<!--                    <when test="subject == '전문가팁'">tbl_community.subject == '전문가팁' and-->
+<!--                        (tbl_community.community_content LIKE '%' || #{search} || '%' or tbl_community.community_title-->
+<!--                        LIKE '%' || #{search} || '%')-->
+<!--                    </when>-->
+<!--                    <otherwise>-->
+<!--                        tbl_community.community_content LIKE '%' || #{search} || '%' or tbl_community.community_title-->
+<!--                        LIKE '%' || #{search} || '%'-->
+<!--                    </otherwise>-->
+<!--                </choose>-->
+<!--            </if>-->
+<!--        </where>-->
+<!--    </select>-->
     <select id="countCommunity">
-        select count(*)
-        from tbl_Community
+        SELECT COUNT(*)
+        FROM tbl_Community
+        WHERE
+        <choose>
+            <when test="subject == '자유게시판'">
+                subject = '자유게시판'
+            </when>
+            <when test="subject == '전문가팁'">
+                subject = '전문가팁'
+            </when>
+            <otherwise>
+                subject IN ('자유게시판', '전문가팁')
+            </otherwise>
+        </choose>
     </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <!--  community 게시글 상세보기  -->
     <select id="selectCommunityDetail" resultType="CommunityDetailDTO">
         SELECT
             C.COMMUNITY_ID,
+            C.SUBJECT,
             C.COMMUNITY_TITLE,
             C.COMMUNITY_CONTENT,
             U.USER_NAME,
@@ -60,24 +227,64 @@
 <!--    작성  -->
     <insert id="saveCommunity">
         insert into TBL_COMMUNITY
-        values(#{communityId}, #{subject}, #{communityTitle},#{communityContent}, sysdate, sysdate, #{userId})
+        values(#{communityId}, #{subject}, #{communityTitle},#{communityContent}, sysdate, sysdate, #{userId}, #{communityThumbnail})
     </insert>
 
-<!--&lt;!&ndash;    수정  &ndash;&gt;-->
-<!--    <update id="updateNoti">-->
-<!--        update tbl_noti-->
-<!--        set NOTI_TITLE = #{notiTitle},-->
-<!--            NOTI_CONTENT = #{notiContent},-->
-<!--            NOTI_UPDATE_DATE = sysdate-->
-<!--        where NOTI_ID = #{notiId}-->
-<!--    </update>-->
+<!--    게시글 수정-->
+    <update id="editCommunity">
+        update tbl_community
+        set SUBJECT=#{subject},COMMUNITY_TITLE =#{communityTitle}, COMMUNITY_CONTENT =#{communityContent},COMMUNITY_UPDATE_DATE = sysdate ,COMMUNITY_THUMBNAIL=#{communityThumbnail}
+        where community_id = #{communityId}
+    </update>
 
-<!--    &lt;!&ndash;  Noti 게시글 삭제하기  &ndash;&gt;-->
-<!--    <delete id="deleteNoti">-->
-<!--        delete from TBL_NOTI-->
-<!--        where NOTI_ID = #{notiId}-->
-<!--    </delete>-->
+<!--    게시글 삭제-->
+    <delete id="deleteCommunity">
+        delete from TBL_COMMUNITY
+        where COMMUNITY_ID = #{communityId}
+    </delete>
+
+<!--    해당 게시글 좋아요 한적있는지 조회-->
+    <select id="selectLike">
+        select LIKE_ID
+        from TBL_LIKE
+        where USER_ID=#{userId} and COMMUNITY_ID=#{communityId}
+    </select>
+
+<!--                        좋아요 테이블                                  -->
+    <insert id="insertLike">
+        insert into TBL_LIKE
+        values (#{likeId},#{userId},#{communityId})
+    </insert>
+    <select id="getLikeSeq" resultType="long">
+        select SEQ_LIKE.nextval from dual
+    </select>
+    <delete id="deleteLike">
+        delete from TBL_LIKE
+        where LIKE_ID=#{likeId}
+    </delete>
 
 
+<!--    최근 게시글 4개뿌려주기,메인에서 사용-->
+    <select id="communityList" resultType="CommunityDTO">
+         SELECT ROWNUM AS RN, COMMUNITY.*
+         FROM (
+                  SELECT
+                      C.COMMUNITY_ID,
+                      C.SUBJECT,
+                      C.COMMUNITY_TITLE,
+                      C.COMMUNITY_CONTENT,
+                      C.COMMUNITY_REGISTER_DATE,
+                      C.COMMUNITY_UPDATE_DATE,
+                      C.COMMUNITY_THUMBNAIL,
+                      u.USER_NAME
+                  FROM
+                      TBL_COMMUNITY C join TBL_USER u
+                    on c.USER_ID = u.USER_ID
+                  ORDER BY
+                      C.COMMUNITY_UPDATE_DATE DESC
+              ) COMMUNITY
+         WHERE ROWNUM &lt;= 4
+
+    </select>
 
 </mapper>

@@ -24,9 +24,10 @@ public class CommunityVO {
     private String userName;
     private LocalDateTime communityRegisterDate;
     private LocalDateTime communityUpdateDate;
+    private String communityThumbnail;
 
     @Builder
-    public CommunityVO(Long communityId, String subject, String communityTitle, String communityContent,String userId,String userName, LocalDateTime communityRegisterDate, LocalDateTime communityUpdateDate) {
+    public CommunityVO(Long communityId, String subject, String communityTitle, String communityContent,String userId,String userName, LocalDateTime communityRegisterDate, LocalDateTime communityUpdateDate, String communityThumbnail) {
         this.communityId = communityId;
         this.subject = subject;
         this.communityTitle = communityTitle;
@@ -35,6 +36,7 @@ public class CommunityVO {
         this.userName = userName;
         this.communityRegisterDate = communityRegisterDate;
         this.communityUpdateDate = communityUpdateDate;
+        this.communityThumbnail = communityThumbnail;
     }
 
     public static CommunityVO toEntity(CommunityDTO communityDTO){
@@ -46,6 +48,7 @@ public class CommunityVO {
                 .userName(communityDTO.getUserName())
                 .communityRegisterDate(communityDTO.getCommunityRegisterDate())
                 .communityUpdateDate(communityDTO.getCommunityUpdateDate())
+                .communityThumbnail(communityDTO.getCommunityThumbnail())
                 .build();
     }
 

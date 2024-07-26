@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>활동내역</title>
     <link rel="stylesheet" th:href="@{/css/user/mypage/CreationList.css}">
+
     <link rel="stylesheet" th:href="@{/css/main/common.css}">
     <link rel="stylesheet" th:href="@{/css/layout/header.css}">
     <link rel="stylesheet" th:href="@{/css/layout/footer.css}">
@@ -17,11 +18,26 @@
             <div class="main-container-title-container">
                 <h2 class="title">
                     <span class="title-content">
-                        내가 작성한 글
+                        활동내역 목록
                     </span>
                 </h2>
             </div>
+
         </div>
+<!--        <div class="search-input">-->
+<!--            <label>-->
+<!--                <select name="search-type" id="type">-->
+<!--                    <option value="title">게시글</option>-->
+<!--                    <option value="review">리뷰 </option>-->
+<!--                    <option value="content">댓글</option>-->
+<!--                </select>-->
+<!--            </label>-->
+<!--            <input type="text" name="search" onkeyup="enterkey()" placeholder="활동내역을 검색하세요" >-->
+<!--            <div class="delete-button">-->
+<!--                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTAgMGgyNHYyNEgweiIvPgogICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDMgMykiPgogICAgICAgICAgICA8Y2lyY2xlIGZpbGw9IiNDNUM1QzUiIGN4PSI5IiBjeT0iOSIgcj0iOSIvPgogICAgICAgICAgICA8cGF0aCBzdHJva2U9IiNGRkYiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Im02IDYgNi4wMDUgNi4wMDZNMTIuMDA1IDYgNiAxMi4wMDYiLz4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPgo=" alt="검색어 삭제아이콘">-->
+<!--            </div>-->
+<!--        </div>-->
+
         <div class="tab-btn-container">
             <button class="btn tab1 active">게시글</button>
             <button class="btn tab2">리뷰</button>
@@ -46,7 +62,7 @@
                         <td th:text="*{RN}" class="list-num">1</td>
                         <td th:text="*{communityId}" class="list-num">1</td>
                         <td th:text="*{subject}" class="list-num">전문가의 팁</td>
-                        <td class="list-title"><a th:text="*{communityTitle}" th:href="@{/detail/{communityId}(communityId=*{communityId})}">샘플용 제목입니다.</a></td>
+                        <td class="list-title"><a th:text="*{communityTitle}" th:href="@{/community/detail/{communityId}(communityId=*{communityId})}">샘플용 제목입니다.</a></td>
                         <td th:text="*{#temporals.format(communityRegisterDate, 'yy년 MM월 dd일')}" class="list-date">01-01</td>
                     </tr>
                 </tbody>

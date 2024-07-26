@@ -18,7 +18,7 @@
         </h3>
         <ul>
             <li th:each="notiRe : ${notiRecent}" th:object="${notiRe}">
-                <a th:text="*{notiTitle}" th:href="@{/admin/NotiDetail/{notiId}(notiId=*{notiId})}" class="sidebar-item"></a>
+                <a th:text="*{notiTitle}" th:href="@{/NotiDetail/{notiId}(notiId=*{notiId})}" class="sidebar-item"></a>
             </li>
         </ul>
     </div>

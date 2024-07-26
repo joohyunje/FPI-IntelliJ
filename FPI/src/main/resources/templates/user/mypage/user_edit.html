@@ -38,7 +38,7 @@
             </div>
           <div style="width: 100%;">
               <form method="post" name="userEdit" id="userEdit" th:action="@{/user/edit}" th:object="${edit}">
-                <input class="userId" type="hidden" th:value="${edit.userId}"  name="userId" style="display: none !important;" >
+                <input class="userId" type="hidden" th:value="${edit.userId}"  name="userId" >
 
 
                 <div style="width: 100%;">
@@ -118,12 +118,15 @@
     </div>
   </div>
 
-  <script th:src="@{/js/user.js}"></script>
+  <script th:src="@{/js/deleteUser.js}"></script>
+
+<!--  파일선택시 미리보기처럼 이미지띄워주는 js-->
   <script th:src="@{/js/file.js}"></script>
 
+<!--지역선택하는 js-->
   <script th:src="@{/js/location.js}"></script>
 
-<!--자바스크립트 파일에서 타임리프문법을 사용하기 위해서 필요-->
+<!--자바스크립트 파일에서 타임리프문법을 사용하기 위해서 필요,카테고리에 선택한 옵셥띄워주기위해 사용-->
   <script th:inline="javascript">
     var categoryId = /*[[ ${edit.categoryId} ]]*/ null;
 

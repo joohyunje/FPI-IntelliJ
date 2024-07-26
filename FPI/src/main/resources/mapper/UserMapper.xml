@@ -56,7 +56,7 @@
           and user_name = #{userName}
     </delete>
 
-    <!--    전문가에서 회원탈퇴시 유저의 USER_PRO_APPROVAL 를 no로 변경해줘야 함,헤더부분때문에!-->
+    <!--    전문가에서 회원탈퇴시 유저의 USER_PRO_APPROVAL 를 no로 변경해줘야 함,헤더부분에서도 사용!-->
     <update id="editApproval">
         update TBL_USER
         set USER_PRO_APPROVAL = 'NO'
@@ -144,6 +144,7 @@
         WHERE TUU.USER_UPLOAD_ID = #{userUploadId}
     </select>
 
+<!--    카카오페이로 충전시 사용-->
     <update id="updateCash">
         update tbl_user
         set USER_CASH =#{userCash}

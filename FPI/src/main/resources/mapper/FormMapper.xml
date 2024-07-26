@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.fpi.mapper.main.FormMapper">
+<!--              카테고리선택, 지역선택하는곳에서 사용하여 수정,추가하는곳에서 사용 -->
 <!--    카테고리value값 매칭해서 카테고리list에 추가-->
 
     <insert id="insertCategoryList">

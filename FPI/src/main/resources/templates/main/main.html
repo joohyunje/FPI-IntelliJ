@@ -169,51 +169,27 @@
       <!-- 커뮤니티 -->
       <div class="post-slider">
         <h4>최근 커뮤니티글</h4>
-        <div class="row">
+        <div class="row" >
 
-          <!-- 카드1 -->
-          <div class="col-sm-6 mb-3 mb-sm-0">
+          <!-- 커뮤니티 목록뿌려줌 -->
+          <div class="col-sm-6 mb-3 mb-sm-0" th:each="community:${communityList}" th:object="${community}">
             <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">글 제목 </h5>
-                <p class="card-text">자유게시판</p>
-                <a href="#" class="btn btn-light" >보러가기</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- 카드2 -->
-          <div class="col-sm-6">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title"> 내돈내산 선글라스 추천해요!</h5>
-                <p class="card-text">자유게시판</p>
-                <a href="#" class="btn btn-light" >보러가기</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-sm-6" >
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">장마철 습기제거는 이렇게 하세요 </h5>
-                <p class="card-text">전문가의 팁</p>
-                <a href="#" class="btn btn-light" >보러가기</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-sm-6">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">글 제목 </h5>
-                <p class="card-text">전문가의 팁</p>
-                <a href="#" class="btn btn-light" >보러가기</a>
+              <div class="card-body" style="display: flex">
+                <div style="width: 70%;">
+                  <h5 class="card-title" th:text="*{communityTitle}">글 제목 </h5>
+                  <p class="card-text" th:text="*{subject}">자유게시판</p>
+                  <p th:text="*{communityRegisterDate != communityUpdateDate ? userName+'(수정)':userName+'(New)'}"></p>
+                  <a th:href="@{/community/detail/{communityId}(communityId=*{communityId})}" class="btn btn-light" style="width: 95%;margin-top: 40px" >보러가기</a>
+                </div>
+                <div th:unless="*{communityThumbnail == null or communityThumbnail == '' or communityThumbnail == 'dd'}">
+                  <img style="background-repeat: no-repeat;width: 150px;height: 150px" th:src="*{communityThumbnail}" alt="img">
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div> <!-- 커뮤니티 나열 끝 -->
+
     </div> 
   </main>
 

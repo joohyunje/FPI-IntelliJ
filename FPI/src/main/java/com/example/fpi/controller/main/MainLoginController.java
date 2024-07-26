@@ -7,6 +7,7 @@ import com.example.fpi.domain.vo.user.UserVO;
 
 import com.example.fpi.mapper.pro.ProMapper;
 import com.example.fpi.mapper.user.UserMapper;
+import com.example.fpi.service.board.CommunityService;
 import com.example.fpi.service.main.FormService;
 import com.example.fpi.service.pro.ProService;
 import com.example.fpi.service.user.CouponService;
@@ -30,11 +31,13 @@ public class MainLoginController {
     private final CouponService couponService;
     private final ProService proService;
     private final ProMapper proMapper;
+    private final CommunityService communityService;
 
 //헤더에서 회원,전문가일때 구분 위해서 필요
     @GetMapping(value = {"/{status}", ""})
     public String index(@AuthenticationPrincipal CustomOAuth2User customOAuth2User,
                         @PathVariable(required = false) String status,
+                        Model model,
                         HttpSession session) {
 
         if(customOAuth2User != null){
@@ -48,6 +51,7 @@ public class MainLoginController {
                 session.setAttribute("loginName", userService.detailUser(userId).getUserName());
             }
         }
+        model.addAttribute("communityList", communityService.maincommunityList());
 
 
         return "main/main";

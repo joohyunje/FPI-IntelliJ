@@ -1,0 +1,336 @@
+
+
+/*  ------------------------------------윗쪽작은부분----------------------------------------------------  */
+
+.main{
+    /*padding: 0 20px;*/
+    width: 100%;
+    max-width: 1000px;
+    margin: 40px auto;
+    margin-bottom: 100px;
+}
+
+
+.main-container{
+    /*grid-column: 2 / span 3;*/
+    margin: 0px auto;
+    padding: 0;
+    width: 100%;
+}
+.main-container-title{
+    width: 96%;
+}
+
+
+.main-container-title-container{
+    display: flex;
+    justify-content: space-between;
+    letter-spacing: -0.25px;
+}
+
+.title{
+    position: relative;
+    margin: 0;
+    overflow: hidden;
+    padding: 0 20px;
+    height: 45px;
+    border-radius: 10px;
+    line-height: 45px;
+    color: #000000;
+    font-size: 27px;
+
+}
+
+.title::before{
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: -12px;
+    z-index: 0;
+    width: 50%;
+    height: 45px;
+    transform: skewX(-43deg);
+}
+.title span{
+    position: relative;
+    z-index: 1;
+}
+
+.write-box{
+    display: flex;
+    align-items: center;
+    padding: .625rem 1.5625rem .625rem 1.8125rem;
+    border-radius: 6px;
+    border: none;
+    background-color: #303030 !important;
+    color: #fff!important;
+    cursor: pointer;
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+.write-box::after{
+    width: 1.125rem;
+    height: 1.125rem;
+    background-image: url(https://assets.cdn.soomgo.com/icons/icon-board-create.svg);
+    background-size: cover;
+    border: 0;
+    content: "";
+    margin-left:2px;
+    color: #fff!important;
+}
+
+
+/*  ------------------------------------왼쪽부분----------------------------------------------------  */
+
+.community-container{
+    margin-top: 20px;
+    display: flex;
+    width: 1000px;
+}
+.aside{
+    display: flex;
+    width: 300px;
+    flex-direction: column;
+}
+.aside a{
+    padding: 15px 15px;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 35px;
+}
+.category-list{
+    width: 18rem;
+    display: block;
+    margin-left: 10px;
+}
+
+.category-list ul{
+    /*이걸로 좌측이 고정됨*/
+    position: sticky;
+    top: 6rem;
+    z-index: 10;
+    width: 12.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+}
+
+.selected{
+    border-radius: 8px;
+    background: #f8f8f8;
+    font-weight: 700;
+    margin-right: 10px;
+}
+
+.category-list ul li a{
+    display: flex;
+    align-items: center;
+    padding: 0 1.25rem;
+    height: 3.5rem;
+    color: #2d2d2d;
+    font-size: .875rem;
+    cursor: pointer;
+}
+
+/*  ------------------------------------오른쪽부분----------------------------------------------------  */
+
+.content-layout{
+    width: 760px;
+    padding-top: 0;
+    /*margin-left: 5.3125rem;*/
+}
+
+.feed{
+    padding: 0 0 5rem;
+}
+
+.feed-list{
+    margin: 0;
+}
+
+.feed-item{
+    margin-bottom:20px;
+    cursor: pointer;
+    border-bottom: .0625rem solid #f4f4f4;
+}
+
+.feed-container{
+    display: flex;
+    /*justify-content: space-between;*/
+    margin-bottom: .75rem;
+}
+
+.feed-container div{
+    /*flex: 1;*/
+    /*padding-right: 1rem;*/
+}
+
+.item-title{
+    line-height: 1.57;
+    margin-bottom: .25rem;
+    font-size: .875rem;
+    font-weight: 700;
+    letter-spacing: -.01875rem;
+    color: #2d2d2d;
+}
+.item-wrapper{
+    margin-right: 10px;
+    min-width: 600px;
+    height: 150px;
+}
+.item-wrapper h3{
+    margin: 0;
+    font-size: 20px;
+}
+
+.item-content{
+    word-wrap: break-word !important;
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: .625rem;
+    color: #888;
+    font-size: .875rem;
+    line-height: 1.57143;
+    letter-spacing: -.01875rem;
+}
+.item-content p{
+    margin: 0;
+}
+.item-content p img{
+    max-height: 3.14em;
+    overflow: hidden;
+    margin-bottom: .625rem;
+    color: #888;
+    font-size: .875rem;
+    line-height: 1.57143;
+    letter-spacing: -.01875rem;
+}
+
+.feed-container img{
+    /*height: 5rem;*/
+    border: .0625rem solid #f4f4f4;
+    border-radius: 8px;
+}
+
+.feed-footer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.feed-footer div{
+    display: inherit;
+}
+
+.footer-like{
+    color: #c5c5c5;
+    font-size: .75rem;
+    letter-spacing: -.0125rem;
+}
+
+.footer-like::before{
+    padding-right: 1.25rem;
+    content: "";
+    background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTkuOTQyIDYuMjkzVjMuNzZjMC0xLjA1LS44MjYtMS45LTEuODQ0LTEuOWwtMi40NiA1Ljd2Ni45NjZoNi45MzZhMS4yNDEgMS4yNDEgMCAwMDEuMjMtMS4wNzZsLjg0OS01LjdhMS4yOTMgMS4yOTMgMCAwMC0uMjg4LTEuMDIyIDEuMjE1IDEuMjE1IDAgMDAtLjk0Mi0uNDM1aC0zLjQ4ek0zLjkzIDE0LjUyNkgyLjU2M2MtLjY3OSAwLTEuMjMtLjU2Ny0xLjIzLTEuMjY2VjguODI2YzAtLjcuNTUxLTEuMjY2IDEuMjMtMS4yNjZIMy45M3Y2Ljk2NnoiIGZpbGw9IiNDNUM1QzUiIGZpbGwtcnVsZT0iZXZlbm9kZCIvPjwvc3ZnPg==) no-repeat 0;
+}
+
+.footer-comment{
+    color: #c5c5c5;
+    font-size: .75rem;
+    letter-spacing: -.0125rem;
+}
+
+.footer-comment::before{
+    padding-right: 1.25rem;
+    margin-left: .75rem;
+    content: "";
+    background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTkuNjgyIDEuODZhNC45ODUgNC45ODUgMCAwMTQuOTg1IDQuOTg1djEuMzYzYzAgMS45MS0xLjA3NiAzLjU3LTIuNjU0IDQuNDA3djEuOTEyYS42NjcuNjY3IDAgMDEtLjk4Mi41ODdsLS4wNzEtLjA0NC0yLjYzNi0xLjg3N0g2LjMxOGE0Ljk4NSA0Ljk4NSAwIDAxLTQuOTg1LTQuOTg1VjYuODQ1QTQuOTg1IDQuOTg1IDAgMDE2LjMxOCAxLjg2aDMuMzY0em0tNC44NDkgNWEuODMzLjgzMyAwIDEwMCAxLjY2Ni44MzMuODMzIDAgMDAwLTEuNjY2em0zIDBhLjgzMy44MzMgMCAxMDAgMS42NjYuODMzLjgzMyAwIDAwMC0xLjY2NnptMyAwYS44MzMuODMzIDAgMTAwIDEuNjY2LjgzMy44MzMgMCAwMDAtMS42NjZ6IiBmaWxsPSIjQzVDNUM1IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiLz48L3N2Zz4=) no-repeat 0;
+}
+
+
+.footer-date{
+    margin-right: 5px;
+    color: #c5c5c5;
+    font-size: .85rem;
+    letter-spacing: -.0125rem;
+}
+
+
+
+/*검색*/
+
+.search-bar-container{
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    width: 100%;
+    margin-bottom:20px;
+    place-content : center;
+}
+
+.search-container{
+    display: flex;
+    width:100%;
+    justify-content: flex-end;
+}
+
+.search-input{
+    display: flex;
+    width: 65%;
+    margin-right: 0.5rem;
+}
+
+.search-input input{
+    background-color: rgb(242, 242, 242);
+    padding: 0.625rem 1rem 0.625rem 2.5rem;
+    border: none;
+    height: 2.75rem;
+    width: 100%;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMSAxKSIgc3Ryb2tlPSIjQzVDNUM1IiBzdHJva2Utd2lkdGg9IjEuNSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48Y2lyY2xlIGN4PSI2LjYxMSIgY3k9IjYuNjExIiByPSI1Ljg2MSIvPjxwYXRoIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTTE1LjI1IDE1LjI1bC00LjI0My00LjI0MyIvPjwvZz48L3N2Zz4=);
+    background-repeat: no-repeat;
+    background-position: 0.875rem center;
+    border-top-left-radius: .5rem;
+    border-bottom-left-radius: .5rem;
+}
+
+.delete-button{
+    width: 2.5rem;
+    background-color: rgb(242, 242, 242);
+    display: flex;
+    border-top-right-radius: .5rem;
+    border-bottom-right-radius: .5rem;
+}
+
+.delete-button img{
+    width: 1.5rem;
+    margin: 0;
+    cursor: pointer;
+}
+
+.map-button{
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 12%;
+    min-height: 2.75rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.icon{
+    display: inline-flex;
+    margin-right: 0.25rem;
+}
+
+.icon svg{
+    color: #1c242f;
+}
