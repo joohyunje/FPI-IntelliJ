@@ -17,11 +17,15 @@ import org.springframework.web.bind.annotation.*;
 public class CommunityRestController {
 
     private final CommunityService communityService;
-    @GetMapping("/community")
+    @GetMapping("/community/list")
     public ResponseEntity<PagedResponse<CommunityDTO>> getCommunityList( @RequestParam(defaultValue = "1") int page,
                                                                          @RequestParam(defaultValue = "5") int size,
                                                                          @RequestParam String search,
                                                                          @RequestParam(defaultValue = "") String subject){
+
+        System.out.println(search);
+        System.out.println(subject);
+
         return ResponseEntity.ok(communityService.getCommunityList(page, size, search, subject));
     }
 //    @GetMapping("/community")

@@ -23,9 +23,9 @@ public interface CertifyService {
     void insertProCategory(Long categoryId,Long proId);
 
 
-    void addCertify(CertifyDTO dto,List<MultipartFile> certifyFiles, MultipartFile proProfile,String certiOrgan,String certiNum,String award) throws IOException; //최종종합
+    void addCertify(CertifyDTO dto,List<MultipartFile> certifyFiles, MultipartFile proProfile,String certiOrgan,String certiNum) throws IOException; //최종종합
     String saveProImage(MultipartFile proProfile) throws IOException;  //전문가 활동사진 파일
-    void saveCertifyImage(Long cardInfoId,List<MultipartFile> certifyFiles) throws IOException; //자격증 사진
+    void saveCertifyImage(Long proId,List<MultipartFile> certifyFiles) throws IOException; //자격증 사진
 
 
 }

@@ -129,7 +129,6 @@ public class UserMypageController {
     public String certify(CertifyDTO certify, @AuthenticationPrincipal CustomOAuth2User customOAuth2User,
                           @RequestParam String certiOrgan,
                           @RequestParam String certiNum,
-                          @RequestParam String award,
                           @RequestParam List<MultipartFile> files,
                           @RequestParam MultipartFile proProfile,HttpSession session) throws IOException {
 
@@ -141,7 +140,7 @@ public class UserMypageController {
         certify.setUserId(userId);
         certify.setLocationId(formService.selectLocation(region,city));
 
-        certifyService.addCertify(certify,files,proProfile,certiOrgan,certiNum,award);
+        certifyService.addCertify(certify,files,proProfile,certiOrgan,certiNum);
 
         session.setAttribute("userProApproval",userService.detailUser(userId).getUserProApproval());
         return "redirect:/user/mypage";

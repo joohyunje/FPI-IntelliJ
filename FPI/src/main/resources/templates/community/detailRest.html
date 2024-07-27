@@ -56,7 +56,7 @@
 
 
             <div sec:authorize ="isAuthenticated()">
-                <div th:if="${#authentication.getPrincipal().getUserId() == commu.userId}" style="display: flex">
+                <div th:if="${commu.loginUserId == commu.userId}" style="display: flex">
                     <button type="button" class="edit-button" id="editBtn">수정</button>
                     <button type="button" class="delete-button" id="deleteBtn">삭제</button>
                 </div>
@@ -75,10 +75,30 @@
                 </button>
             </div>
         </div>
+        <ul class="comment-list">
+            <!-- 댓글 목록을 동적으로 추가.타임리프(페이지 이동하면서 html로드) 사용 불가 -->
 
-<!--        <div class="article-bottom-menu">-->
-<!--            <a th:href="@{/community}">목록</a>-->
-<!--        </div>-->
+        </ul>
+
+
+<!--        <ul class="comment-list">-->
+<!--            <li class="comment-item">-->
+<!--                <strong class="comment-title">-->
+<!--                    <img alt="#" src="https://static.cdn.soomgo.com/upload/profile-default/soomgo_65.jpg?h=320&w=320&webp=1">-->
+<!--                    <span class="comment-nickname">인재파파</span>-->
+<!--                    <span class="comment-date">(2024-07-04 06:39)</span>-->
+<!--                </strong>-->
+<!--                <img class="delete-icon" alt="#" width="10px" height="10px" src="https://w7.pngwing.com/pngs/447/77/png-transparent-computer-icons-x-mark-symbol-check-mark-symbol-miscellaneous-cross-sign.png">-->
+<!--                <button type="button" class="report-button">신고하기</button>-->
+<!--                <button type="button" class="send-button">견적요청</button>-->
+<!--                <div class="comment-text">-->
+<!--                    당기면 빠집니다 살살 땡기세요-->
+<!--                </div>-->
+<!--            </li>-->
+<!--        </ul>-->
+        <div class="article-bottom-menu">
+            <a th:href="@{/community}">목록</a>
+        </div>
     </div>
 </div>
 <div>

@@ -102,11 +102,11 @@ public class CertifyServiceImpl implements CertifyService {
 //  최종적으로 전문가 인증되는곳
     @Override
     @Transactional
-    public void addCertify(CertifyDTO dto,List<MultipartFile> files, MultipartFile proProfile,String certiOrgan,String certiNum,String award) throws IOException {
+    public void addCertify(CertifyDTO dto,List<MultipartFile> files, MultipartFile proProfile,String certiOrgan,String certiNum) throws IOException {
         Long proId = certifyMapper.getProSeq();
         String userId = dto.getUserId();
         Long cardInfoId = 0L;
-        Long careerInfoId = 0L;
+//        Long careerInfoId = certifyMapper.getInfoSeq();
 
 //        js로 추가되어 넘어가는 값들이 컬럼에,로 같이 저장되어 분리해서 저장하기 위해 필요
         // 정규표현식 패턴 설정
@@ -115,7 +115,7 @@ public class CertifyServiceImpl implements CertifyService {
         // 패턴을 이용해 문자열 분리
         String[] organ = pattern.split(certiOrgan);
         String[] num = pattern.split(certiNum);
-        String[] proAward = pattern.split(award);
+
 
 
 
@@ -131,16 +131,14 @@ public class CertifyServiceImpl implements CertifyService {
             addCardInfo(cardInfoId, proId, organ[i], num[i]);
         }
         //경력작성 테이블
-        for (int i = 0; i < proAward.length; i++) {
-            careerInfoId = certifyMapper.getInfoSeq();
-            addCareerInfo(careerInfoId,proAward[i],proId);
-        }
+        addCareerInfo(certifyMapper.getInfoSeq(),dto.getAward(),proId);
+
 
 //        선택한 카테고리 관리테이블
         insertProCategory(dto.getCategoryId(),proId);
 
 //        자격증사진
-        saveCertifyImage(cardInfoId,files);
+        saveCertifyImage(proId,files);
 
 //        전문가 인증값YES
         certifyMapper.updateApproval(userId);
@@ -177,7 +175,7 @@ public class CertifyServiceImpl implements CertifyService {
 
 //    자격증 사진관리
     @Override
-    public void saveCertifyImage(Long cardInfoId,List<MultipartFile> files) throws IOException {
+    public void saveCertifyImage(Long proId,List<MultipartFile> files) throws IOException {
         // 현재 날짜를 기반으로 폴더 경로 생성
         LocalDate now = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
@@ -207,7 +205,7 @@ public class CertifyServiceImpl implements CertifyService {
                 Long cardInfoFileId = certifyMapper.getFileSeq();
                 String cardInfoFileRoute =  "/uploads/certifyFile/" + datePath + "/" + storedFileName;
                 fileDTO.setCardInfoFileId(cardInfoFileId);
-                fileDTO.setCardInfoId(cardInfoId);
+                fileDTO.setProId(proId);
                 fileDTO.setCardInfoFileOriginal(originalFileName);
                 fileDTO.setCardInfoFileRoute(cardInfoFileRoute);
                 //directoryPath 와 storedFileName가 /로 연결되어야 해당경로로 잘 찾아들어가서 파일다운로드가 제대로 이루어짐

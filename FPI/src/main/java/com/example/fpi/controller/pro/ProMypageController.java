@@ -5,6 +5,7 @@ import com.example.fpi.domain.dto.certify.CardInfoFIleListDTO;
 import com.example.fpi.domain.dto.certify.CardInfoFileDTO;
 import com.example.fpi.domain.dto.certify.CareerInfoDTO;
 import com.example.fpi.domain.dto.pro.ProDTO;
+import com.example.fpi.domain.dto.pro.ProDetailDTO;
 import com.example.fpi.domain.dto.pro.ProEditDTO;
 import com.example.fpi.domain.dto.user.UserDTO;
 import com.example.fpi.domain.oauth.CustomOAuth2User;
@@ -40,7 +41,7 @@ public class ProMypageController {
         String userId= customOAuth2User.getUserId();
         Long proId = proService.selectProId(userId);
 
-        ProDTO pro = proService.detailPro(proId);
+        ProDetailDTO pro = proService.detailPro(proId);
 
         session.removeAttribute("loginName");
 
@@ -53,17 +54,17 @@ public class ProMypageController {
 
 
     @GetMapping("/detail")
-    public String detail(@AuthenticationPrincipal CustomOAuth2User customOAuth2User, Model model){
+    public String detail(@AuthenticationPrincipal CustomOAuth2User customOAuth2User, Model model,HttpSession session){
         Long proId = proService.selectProId(customOAuth2User.getUserId());
-        List<CardInfoFIleListDTO> files = proService.cardFileList(proId);
+        List<CardInfoFileDTO> files = proService.selectCardInfoFile(proId);
         List<CardInfoDTO> cards = proService.selectCard(proId);
-        List<CareerInfoDTO> careers = proService.selectCareer(proId);
+//        List<CareerInfoDTO> careers = proService.selectCareer(proId);
 
         model.addAttribute("detail",proService.detailPro(proId));
         model.addAttribute("files", files);
         model.addAttribute("cards", cards);
-        model.addAttribute("careers",careers);
-
+//        model.addAttribute("careers",careers);
+        session.setAttribute("proName", proService.detailPro(proId).getProName());
         System.out.println(files);
         return "pro/mypage/pro_detail";
 
@@ -71,29 +72,36 @@ public class ProMypageController {
     @GetMapping("/edit")
     public String edit(@AuthenticationPrincipal CustomOAuth2User customOAuth2User, Model model) {
         Long proId = proService.selectProId(customOAuth2User.getUserId());
-        List<CardInfoFIleListDTO> files = proService.cardFileList(proId);
+        List<CardInfoFileDTO> files = proService.selectCardInfoFile(proId);
         List<CardInfoDTO> cards = proService.selectCard(proId);
-        List<CareerInfoDTO> careers = proService.selectCareer(proId);
 
         model.addAttribute("edit", proService.selectEditPro(proId));
         model.addAttribute("files", files);
         model.addAttribute("cards", cards);
-        model.addAttribute("careers", careers);
-//        System.out.println(proService.selectEditPro(proId));
+        System.out.println(proService.selectEditPro(proId));
 //        System.out.println(cards);
         return "pro/mypage/pro_edit";
     }
 
     @PostMapping("/edit")
-    public String edit(ProEditDTO edit,@RequestParam("cards") List<CardInfoDTO> cards
-//                       ,@RequestParam List<CareerInfoDTO> careers
+    public String edit(ProEditDTO edit
+                        ,@RequestParam String cardInfoId
+                       ,@RequestParam String certiOrgan
+                       ,@RequestParam String certiNum
                        ,@RequestParam List<MultipartFile> files,
                        @RequestParam MultipartFile proProfile) throws IOException {
+
+        System.out.println(cardInfoId);
+        System.out.println(certiOrgan);
+        System.out.println(certiNum);
+
+//        requestParm list로 값을 받아오면 계속 오류, certify와 똑같이 처리하는 방식
+        List<CardInfoDTO> cards = proService.getCardInfoList(edit.getProId(), cardInfoId, certiOrgan, certiNum);
 
         String region = edit.getRegion();
         String city = edit.getCity();
         edit.setLocationId(formService.selectLocation(region,city));
-        System.out.println(cards+"jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj");
+//        System.out.println(cards+"jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj");
         proService.updatePro(edit,cards,files,proProfile);
 
         return "redirect:/pro/detail";
