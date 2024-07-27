@@ -39,7 +39,8 @@ public interface ProService {
     void deletePro(Long proId, String proName) throws IOException;
 
     // 함께 저장된 자격증 사진 삭제
-    void deleteCardFile(Long cardFileId) throws IOException;
+    void deleteCardFile(Long proId) throws IOException;
+
 // 파일아이디 가져와서 삭제
 //    Long selectCardFileId(Long proId);
 
@@ -53,15 +54,15 @@ public interface ProService {
     //    전문가 찾기
     PagedResponse<ProUploadListDTO> selectProUploadList(int page, int pageSize, String search);
 
+
     //    전문가 상세보기
-    ProDTO detailPro(Long proId);
+    ProDetailDTO detailPro(Long proId);
 
-    //    List<CardInfoFileDTO> selectCardInfoFile(Long proId);
+    List<CardInfoFileDTO> selectCardInfoFile(Long proId);
+
     List<CardInfoDTO> selectCard(Long proId);
+//    List<CardInfoFIleDTO> cardFileList(Long proId);
 
-    List<CareerInfoDTO> selectCareer(Long proId);
-
-    List<CardInfoFIleListDTO> cardFileList(Long proId);
 
     //   전문가 수정정보 뿌려줌
     ProEditDTO selectEditPro(Long proId);
@@ -73,7 +74,7 @@ public interface ProService {
 
     void editCategory(Long categoryId, Long proId);
 
-    void editCardInfoFile(CardInfoFileDTO dto);
+    void editCardInfoFile(Long proId, List<MultipartFile> files) throws IOException;
 
     void editCardInfo(List<CardInfoDTO> cards);
 
@@ -108,6 +109,7 @@ public interface ProService {
 
     void deleteUserRequest(Long userRequestId);
 
+
     void updateProAccept(Long userRequestId);
 
     void updateProComplete(Long userRequestId);
@@ -115,4 +117,8 @@ public interface ProService {
     void proAccuseUser(UserAccuseDTO userAccuseDTO);
 
     String selectUserIdByUserRequestId(Long userRequestId);
+
+    //    컨트롤러에서 생성하여 전문가 정보 수정시 input 추가되었을때
+    List<CardInfoDTO> getCardInfoList(Long proId, String cardInfoId, String certiOrgan, String certiNum);
+
 }

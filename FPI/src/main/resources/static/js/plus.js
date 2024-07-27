@@ -1,15 +1,11 @@
-// 폼에서 +누르면 자격증 추가,경력 추가 input,textarea생기는거 구현
+// 폼에서 +누르면 자격증 추가 input생기는거 구현
 
 document.addEventListener('DOMContentLoaded', function() {
     const plus = document.querySelector('.plus');
 
-    const awardPlus = document.querySelector('.awardPlus');
-
     // var certiCount = document.getElementsByClassName('certiCount').length;
     // var certiCounts = document.getElementById('certiCount');
     // certiCounts.value= certiCount;
-
-
 
     plus.addEventListener('click', function() {
         // HTML 문자열을 생성하여 새로운 자격증 입력 필드를 추가
@@ -42,33 +38,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
     });
 
-
-    awardPlus.addEventListener('click', function() {
-        // HTML 문자열을 생성하여 새로운 자격증 입력 필드를 추가,숨겨진 삭제버튼 보임
-        const awards = `
-            <div class = "award" style="display: flex">
-            <textarea id="award" name="award" maxlength="255" class="textarea awardCount"></textarea>
-            <div class="awardMinus" >-</div>
-            </div>
-        `;
-        const parentDiv = document.querySelector('.awardPlusPoint');
-        parentDiv.insertAdjacentHTML('beforeend', awards);
-        // 바로 아래에 새로운 자격증 입력 필드 추가
-
-        const awardMinus = parentDiv.querySelector('.award:last-child .awardMinus');
-        if(awardMinus) {
-            awardMinus.addEventListener('click', function (e) {
-                if (e.target.classList.contains('awardMinus')) {
-
-                    const awardArea = e.target.closest('.award');
-                    if (awardArea) {
-                        // certi-label 요소 삭제
-                        awardArea.remove();
-                    }
-                }
-            });
-        }
-
-    });
 
 });

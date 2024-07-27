@@ -725,3 +725,14 @@ FROM (
              C.COMMUNITY_UPDATE_DATE DESC
      ) COMMUNITY
 WHERE ROWNUM &lt;= 4
+
+
+--                  테이블수정들어가야함
+CREATE TABLE TBL_CARDINFO_FILE(
+                                  CARDINFO_FILE_ID NUMBER PRIMARY KEY,
+                                  CARDINFO_FILE_ROUTE VARCHAR2(1000),
+                                  CARDINFO_FILE_ORIGINAL VARCHAR2(1000),
+                                  PRO_ID NUMBER NOT NULL,
+                                  CONSTRAINT FK_CARDINFO_FILE FOREIGN KEY (PRO_ID)
+                                      REFERENCES TBL_PRO (PRO_ID) ON DELETE CASCADE
+);

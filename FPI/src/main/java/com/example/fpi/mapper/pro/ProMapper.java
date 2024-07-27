@@ -43,13 +43,16 @@ public interface ProMapper {
 
 
     //    <!--    마이페이지 전문가정보 상세보기-->
-    ProDTO detailPro(Long proId);
+
+    ProDetailDTO detailPro(Long proId);
 
     List<CardInfoFileDTO> selectCardFile(Long proId);
 
     List<CardInfoDTO> selectCard(Long proId);
 
-    List<CareerInfoDTO> selectCareer(Long proId);
+
+    int empCount(Long proId);
+
 
 //    마이페이지 전문가 수정하기에 뿌려줌
 
@@ -78,11 +81,12 @@ public interface ProMapper {
     //    탈퇴시 전문가 이름필요
     String selectProName(Long proId);
 
-    //    전문가 탈퇴시 자격증사진 삭제위해 필요
-    List<CardInfoFileDTO> cardImg(Long cardInfoId);
+
+//    전문가 탈퇴시 자격증사진 삭제위해 필요
+//    List<CardInfoFileDTO>  cardImg(Long cardInfoId);
 
     //    보유 자격증사진 뿌려주기위해
-    List<CardInfoFIleListDTO> cardFileList(Long proId);
+    List<CardInfoFileDTO> cardFileList(Long proId);
 
 
     //    요청으로 전문가 경력 가져오기

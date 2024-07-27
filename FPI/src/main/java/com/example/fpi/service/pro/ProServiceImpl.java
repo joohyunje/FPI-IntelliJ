@@ -32,8 +32,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -91,7 +93,8 @@ public class ProServiceImpl implements ProService {
 
     //    전문가 상세정보 조회
     @Override
-    public ProDTO detailPro(Long proId) {
+    public ProDetailDTO detailPro(Long proId) {
+
         return proMapper.detailPro(proId);
 
     }
@@ -101,22 +104,30 @@ public class ProServiceImpl implements ProService {
 //        return proMapper.cardImg(cardInfoId);
 //    }
 
+    //    자격증 파일 여러개 가져옴
+    @Override
+    public List<CardInfoFileDTO> selectCardInfoFile(Long proId) {
+        return proMapper.cardFileList(proId);
+    }
 
+    //    자격증 정보 여러개 가져옴
     @Override
     public List<CardInfoDTO> selectCard(Long proId) {
         return proMapper.selectCard(proId);
     }
 
-    @Override
-    public List<CareerInfoDTO> selectCareer(Long proId) {
-        return proMapper.selectCareer(proId);
-    }
 
-    //    자격증 파일이 여러개임
-    @Override
-    public List<CardInfoFIleListDTO> cardFileList(Long proId) {
-        return proMapper.cardFileList(proId);
-    }
+    //경력사항가져옴
+//    @Override
+//    public CareerInfoDTO selectCareer(Long proId) { return proMapper.selectCareer(proId);
+//    }
+//
+////    자격증 파일이 여러개임
+//    @Override
+//    public List<CardInfoDTO> cardFileList(Long proId) {
+//        return proMapper.cardFileList(proId);
+//    }
+
 
     //    전문가 수정하기에 정보 뿌려줌
     @Override
@@ -133,9 +144,11 @@ public class ProServiceImpl implements ProService {
 
         editPro(dto.getProName(), dto.getPhoneNumber(), proImg, dto.getLocationId(), dto.getProId());
         editCardInfo(cards);
+        editCardInfoFile(dto.getProId(), files);
         editCategory(dto.getCategoryId(), dto.getProId());
-//        editCareerInfo(dto.getCareerInfoId(),dto.getAward());
-//        certifyService.saveCertifyImage(dto.getCardInfoId(),files);
+        editCareerInfo(dto.getCareerInfoId(), dto.getAward());
+
+
     }
 
 
@@ -162,26 +175,25 @@ public class ProServiceImpl implements ProService {
         proMapper.editCategory(CategoryListVO.toEntity(dto));
     }
 
-    // 작성한 자격증 정보 파일 수정
+    // 작성한 자격증 사진은 추가만 가능,전문가인증폼에서 썼던루트 그대로 가져다 씀
     @Override
-    public void editCardInfoFile(CardInfoFileDTO dto) {
-        proMapper.editCardInfoFile(CardInfoFileVO.toEntity(dto));
+    public void editCardInfoFile(Long proId, List<MultipartFile> files) throws IOException {
+        certifyService.saveCertifyImage(proId, files);
+
     }
 
-    //    작성한 자격증 정보 수정
+    //    작성한 자격증 정보리스트 수정
     @Override
     public void editCardInfo(List<CardInfoDTO> cards) {
         for (CardInfoDTO dto : cards) {
-            if (dto.getCardInfoId() == null) {
+            if (dto.getCardInfoId() == 0L) {
                 //insert
                 Long cardInfoId = certifyMapper.getInfoSeq();
                 certifyService.addCardInfo(cardInfoId, dto.getProId(), dto.getCertiOrgan(), dto.getCertiNum());
-            } else if (dto.getCardInfoId().equals(dto.getCardInfoId())) {
+            } else {
                 proMapper.editCardInfo(CardInfoVO.toEntity(dto));
             }
         }
-
-//
     }
 
     //    작성한 경력사항 수정
@@ -250,9 +262,9 @@ public class ProServiceImpl implements ProService {
     //    전문가 탈퇴시 서버에 저장된 자격증사진 삭제
     @Override
     public void deleteCardFile(Long proId) throws IOException {
-        List<CardInfoFIleListDTO> cardInfoFileDTOList = proMapper.cardFileList(proId);
-        for (CardInfoFIleListDTO cardInfoFile : cardInfoFileDTOList) {
 
+        List<CardInfoFileDTO> cardInfoFileList = proMapper.cardFileList(proId);
+        for (CardInfoFileDTO cardInfoFile : cardInfoFileList) {
             System.out.println(cardInfoFile.getCardInfoFileRoute());
             Path file = Paths.get("src/main/resources/static" + cardInfoFile.getCardInfoFileRoute());
             if (Files.exists(file)) {
@@ -351,7 +363,6 @@ public class ProServiceImpl implements ProService {
         proMapper.deleteUserRequest(userRequestId);
     }
 
-
     //    올린 견적으로 경력 가져오기
     @Override
     public List<ProCareerInfoListDTO> selectProCareerByUp(Long proUploadId) {
@@ -401,4 +412,43 @@ public class ProServiceImpl implements ProService {
     }
 
 
+    //    전문가 수정하기에서 자격증 수정정보를 List에 담아서 넘겨주기 위해 필요한것
+//    길이를 비교하여 insert,update 둘다 사용함
+    @Override
+    public List<CardInfoDTO> getCardInfoList(Long proId, String cardInfoId, String certiOrgan, String certiNum) {
+
+        List<CardInfoDTO> cardInfoList = new ArrayList<>();
+
+        Pattern pattern = Pattern.compile("\\s*,\\s*");
+
+        // 패턴을 이용해 문자열 분리
+        String[] cardInfo = pattern.split(cardInfoId);
+        String[] organ = pattern.split(certiOrgan);
+        String[] num = pattern.split(certiNum);
+
+        System.out.println(cardInfoId);
+        System.out.println(cardInfo.length);
+
+//        ex) 3칸 i=3, i=0,1
+//        추가된 cardInfoId은 아무정보가 담기지않음,그래서 0을 임의로 담아서 insert,update처리하는곳에 넘겨줌 이 값은 2가됨
+        for (int i = 0; i < num.length; i++) {
+            CardInfoDTO dto = new CardInfoDTO();
+//            추가된 input 없어서 기존 값을 넣어줌
+            if (cardInfo.length - 1 >= i) {
+                dto.setCardInfoId(Long.parseLong(cardInfo[i]));
+            }
+//            input이 추가되었음, 0을 담아서 넘겨줄것임 ,editcardInfo에서 insert,update처리하는거 있음
+            else {
+                dto.setCardInfoId(0L);
+            }
+            dto.setProId(proId);
+            dto.setCertiOrgan(organ[i]);
+            dto.setCertiNum(num[i]);
+            cardInfoList.add(dto);
+
+
+        }
+
+        return cardInfoList;
+    }
 }

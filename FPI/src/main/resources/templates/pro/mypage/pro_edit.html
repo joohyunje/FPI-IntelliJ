@@ -115,18 +115,13 @@
                 </div>
 
 
-                <div class="height250 awardPlusPoint">
-                  <div style="display: flex">
-                    <span for="career" class="fontSize15 label margin5">경력 혹은 수상내역 작성</span>
-                    <div class="awardPlus">+</div>
-                  </div>
+              <div class="col height200">
+                <span for="career" class="fontSize15 label">경력 혹은 수상내역 작성</span>
+                <input type="hidden" th:value="*{careerInfoId}" name="careerInfoId">
+                <textarea  id="award" name="award" maxlength="400" class="textarea" th:field="*{award}"></textarea>
+              </div>
 
 
-                  <div style="display: flex" th:each="career:${careers}" th:object="${career}">
-<!--                    <input type="hidden" th:value="*{careerInfoId}"  name="careerInfoId" style="display: none !important;" >-->
-<!--                    <textarea th:field="*{award}" id="award" name="award" maxlength="255" class="textarea"></textarea>-->
-                  </div>
-                </div>
 
                 <div class="left">
                   <button type="submit" class="probtn">수정완료</button>
@@ -195,6 +190,8 @@
   const p = document.querySelector('#modal .error');
   p.style.display="flex";
 </script>
+
+
 
 
 </html>

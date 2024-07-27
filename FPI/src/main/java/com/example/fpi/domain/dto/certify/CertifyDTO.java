@@ -19,10 +19,11 @@ public class CertifyDTO {
     private String cardinfoFileOriginal;
     private String cardinfoFileRoute;
     private String cardinfoFileSaved;
+    private String award;
 
     //    배열이기때문에 컨트롤러에서 @RequestParam으로 값을 따로 받아올것임
 //    private String certiOrgan;
 //    private String certiNum;
-//    private String award;
+
 
 }
