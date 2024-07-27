@@ -11,6 +11,7 @@ import com.example.fpi.domain.vo.certify.CardInfoVO;
 import com.example.fpi.domain.vo.certify.CareerInfoVO;
 import com.example.fpi.domain.vo.main.CategoryListVO;
 import com.example.fpi.domain.vo.pro.ProVO;
+import com.example.fpi.domain.vo.user.UserAccuseVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -125,6 +126,10 @@ public interface ProMapper {
 
 //    조인테이블에서 전문가아이디를 통해 -> 자격증관리테이블 -> 파일아이디 가져옴
 //    Long selectCardFileId(Long proId);
+
+    void proAccuseUser(UserAccuseVO userAccuseVO);
+
+    String selectUserIdByUserRequestId(Long userRequestId);
 
 
 }

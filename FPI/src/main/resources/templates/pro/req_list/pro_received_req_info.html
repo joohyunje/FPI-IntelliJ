@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>requests</title>
@@ -166,17 +166,18 @@
             <div id="close-area" class="close-area">X</div>
         </div>
         <div class="content">
-            <form id="cancle-form" action="#">
+            <form method="post" id="cancle-form" th:action="@{/pro/accuseUser}" th:object="${userAccuse}">
+                <input type="hidden" name="userRequestId" th:value="${userRequest.userRequestId}">
                 <div class="check-text">
                          <textarea class="form-control" rows="9"
-                                   placeholder="취소또는 신고 사유"></textarea>
+                                   placeholder="취소또는 신고 사유" th:field="*{userAccuseContent}"></textarea>
                 </div>
             </form>
         </div>
         <div class="cancle-declare-btn">
             <input type="hidden" name="userRequestId" th:value="${userRequest.userRequestId}">
             <a class="btn cancle-btn" onclick="goDelete()">취소하기</a>
-            <a class="btn declar-btn">신고하기</a>
+            <a class="btn declar-btn" onclick="goAccuse()">신고하기</a>
         </div>
     </div>
 </div>
@@ -317,6 +318,11 @@
     form.method = 'post';
     form.action = '/pro/userDetail/updateComplete/' + userRequestId;
     document.body.appendChild(form);
+    form.submit();
+  }
+
+  function goAccuse() {
+    var form = document.querySelector('form[id="cancle-form"]');
     form.submit();
   }
 

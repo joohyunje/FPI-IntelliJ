@@ -1,16 +1,16 @@
 package com.example.fpi.service.user;
 
-import com.example.fpi.domain.dto.main.CategoryListDTO;
 import com.example.fpi.domain.dto.file.UserUploadFileDTO;
+import com.example.fpi.domain.dto.main.CategoryListDTO;
+import com.example.fpi.domain.dto.pro.ProAccuseDTO;
 import com.example.fpi.domain.dto.pro.ProReviewDTO;
 import com.example.fpi.domain.dto.user.*;
 import com.example.fpi.domain.util.PagedResponse;
-//import com.example.fpi.domain.vo.user.UserVO;
+import com.example.fpi.domain.vo.file.UserUploadFileVO;
 import com.example.fpi.domain.vo.main.CategoryListVO;
+import com.example.fpi.domain.vo.pro.ProAccuseVO;
 import com.example.fpi.domain.vo.pro.ProReviewVO;
 import com.example.fpi.domain.vo.user.UserVO;
-import com.example.fpi.mapper.main.FormMapper;
-import com.example.fpi.domain.vo.file.UserUploadFileVO;
 import com.example.fpi.mapper.File.FileMapper;
 import com.example.fpi.mapper.user.UserMapper;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +33,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
     private final FileMapper fileMapper;
+    private final ProAccuseVO proAccuseVO;
 
     //    받은 요청 목록
     @Override
@@ -133,7 +134,7 @@ public class UserServiceImpl implements UserService {
     public void updateCash(String userId, int userCash, int userPlusCash) {
         UserDTO dto = new UserDTO();
         dto.setUserId(userId);
-        dto.setUserCash(userCash+userPlusCash);
+        dto.setUserCash(userCash + userPlusCash);
         UserVO vo = UserVO.toEntity(dto);
         userMapper.updateCash(vo);
 
@@ -223,6 +224,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUserComplete(Long proRequestId) {
         userMapper.updateUserComplete(proRequestId);
+    }
+
+    @Override
+    public void userAccusePro(ProAccuseDTO proAccuseDTO) {
+        userMapper.userAccusePro(ProAccuseVO.toEntity(proAccuseDTO));
+
+    }
+
+    @Override
+    public Long selectProIdByProRequestId(Long proRequestId) {
+        return userMapper.selectProIdByProRequestId(proRequestId);
     }
 
 

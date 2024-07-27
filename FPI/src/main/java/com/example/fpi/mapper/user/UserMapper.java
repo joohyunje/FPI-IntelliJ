@@ -2,6 +2,7 @@ package com.example.fpi.mapper.user;
 
 import com.example.fpi.domain.dto.user.*;
 import com.example.fpi.domain.vo.main.CategoryListVO;
+import com.example.fpi.domain.vo.pro.ProAccuseVO;
 import com.example.fpi.domain.vo.pro.ProReviewVO;
 import com.example.fpi.domain.vo.user.UserVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -91,4 +92,8 @@ public interface UserMapper {
     void updateUserAccept(Long proRequestId);
 
     void updateUserComplete(Long proRequestId);
+
+    void userAccusePro(ProAccuseVO proAccuseVO);
+
+    Long selectProIdByProRequestId(Long proRequestId);
 }

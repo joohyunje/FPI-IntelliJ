@@ -1,10 +1,7 @@
 package com.example.fpi.controller.user;
 
 import com.example.fpi.domain.dto.file.ProUploadFileDTO;
-import com.example.fpi.domain.dto.pro.ProCareerInfoListDTO;
-import com.example.fpi.domain.dto.pro.ProRequestDetailDTO;
-import com.example.fpi.domain.dto.pro.ProReviewDTO;
-import com.example.fpi.domain.dto.pro.ProUploadDetailDTO;
+import com.example.fpi.domain.dto.pro.*;
 import com.example.fpi.domain.dto.user.UserLocationDTO;
 import com.example.fpi.domain.dto.user.UserRequestDTO;
 import com.example.fpi.domain.dto.user.UserRequestDetailDTO;
@@ -72,6 +69,7 @@ public class UserController {
         System.out.println(careerInfo);
 
 
+        model.addAttribute("proAccuse", new ProAccuseDTO());
         model.addAttribute("proRequest", proRequest);
         model.addAttribute("careerInfo", careerInfo);
 
@@ -224,6 +222,23 @@ public class UserController {
 
         userService.updateUserComplete(proRequestId);
         return "redirect:/user/proDetail/" + proRequestId;
+    }
+
+    @PostMapping("/accusePro")
+    public String accusePro(@RequestParam Long proRequestId,
+                            ProAccuseDTO proAccuse,
+                            @AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
+
+        String userId = customOAuth2User.getUserId();
+        Long proId = userService.selectProIdByProRequestId(proRequestId);
+
+        proAccuse.setUserId(userId);
+        proAccuse.setProId(proId);
+
+        userService.userAccusePro(proAccuse);
+        userService.deleteProRequest(proRequestId);
+
+        return "redirect:/user/requests";
     }
 
 

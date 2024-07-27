@@ -144,7 +144,7 @@
         WHERE TUU.USER_UPLOAD_ID = #{userUploadId}
     </select>
 
-<!--    카카오페이로 충전시 사용-->
+    <!--    카카오페이로 충전시 사용-->
     <update id="updateCash">
         update tbl_user
         set USER_CASH =#{userCash}
@@ -220,9 +220,16 @@
         where PRO_REQUEST_ID = #{proRequestId}
     </update>
 
-    <!--    유저가 전문가 신고하기    -->
-    <!--    <insert id="userAccusePro">-->
-    <!--        insert into TBL_PRO_ACCUSE-->
-    <!--        values (SEQ_ACCUSE.nextval, #{})-->
-    <!--    </insert>-->
+    <!--    유저가 전문가 신고하기-->
+    <insert id="userAccusePro">
+        insert into TBL_PRO_ACCUSE
+        values (SEQ_ACCUSE.nextval, #{userAccuseContent}, #{userId}, #{proId})
+    </insert>
+
+    <!--    유저가 전문가 신고 할때 리퀘스트 아이디를 통해 프로 아이디 가져오기-->
+    <select id="selectProIdByProRequestId" resultType="Long">
+        select PRO_ID
+        from TBL_PRO_REQUEST
+        where PRO_REQUEST_ID = #{proRequestId}
+    </select>
 </mapper>

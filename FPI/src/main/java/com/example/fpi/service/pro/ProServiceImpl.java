@@ -4,17 +4,19 @@ import com.example.fpi.domain.dto.certify.CardInfoDTO;
 import com.example.fpi.domain.dto.certify.CardInfoFIleListDTO;
 import com.example.fpi.domain.dto.certify.CardInfoFileDTO;
 import com.example.fpi.domain.dto.certify.CareerInfoDTO;
-import com.example.fpi.domain.dto.main.CategoryListDTO;
 import com.example.fpi.domain.dto.file.ProUploadFileDTO;
+import com.example.fpi.domain.dto.main.CategoryListDTO;
 import com.example.fpi.domain.dto.pro.*;
+import com.example.fpi.domain.dto.user.UserAccuseDTO;
 import com.example.fpi.domain.dto.user.UserReviewDTO;
 import com.example.fpi.domain.util.PagedResponse;
 import com.example.fpi.domain.vo.certify.CardInfoFileVO;
 import com.example.fpi.domain.vo.certify.CardInfoVO;
 import com.example.fpi.domain.vo.certify.CareerInfoVO;
+import com.example.fpi.domain.vo.file.ProUploadFileVO;
 import com.example.fpi.domain.vo.main.CategoryListVO;
 import com.example.fpi.domain.vo.pro.ProVO;
-import com.example.fpi.domain.vo.file.ProUploadFileVO;
+import com.example.fpi.domain.vo.user.UserAccuseVO;
 import com.example.fpi.mapper.File.FileMapper;
 import com.example.fpi.mapper.pro.ProMapper;
 import com.example.fpi.mapper.user.CertifyMapper;
@@ -387,5 +389,16 @@ public class ProServiceImpl implements ProService {
     public void updateProComplete(Long userRequestId) {
         proMapper.updateProComplete(userRequestId);
     }
+
+    @Override
+    public void proAccuseUser(UserAccuseDTO userAccuseDTO) {
+        proMapper.proAccuseUser(UserAccuseVO.toEntity(userAccuseDTO));
+    }
+
+    @Override
+    public String selectUserIdByUserRequestId(Long userRequestId) {
+        return proMapper.selectUserIdByUserRequestId(userRequestId);
+    }
+
 
 }

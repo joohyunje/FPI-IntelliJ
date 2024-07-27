@@ -1,6 +1,7 @@
 package com.example.fpi.service.user;
 
 import com.example.fpi.domain.dto.main.CategoryListDTO;
+import com.example.fpi.domain.dto.pro.ProAccuseDTO;
 import com.example.fpi.domain.dto.pro.ProReviewDTO;
 import com.example.fpi.domain.dto.user.*;
 import com.example.fpi.domain.util.PagedResponse;
@@ -73,4 +74,8 @@ public interface UserService {
     void updateUserAccept(Long proRequestId);
 
     void updateUserComplete(Long proRequestId);
+
+    void userAccusePro(ProAccuseDTO proAccuseDTO);
+
+    Long selectProIdByProRequestId(Long proRequestId);
 }

@@ -5,6 +5,7 @@ import com.example.fpi.domain.dto.certify.CardInfoFIleListDTO;
 import com.example.fpi.domain.dto.certify.CardInfoFileDTO;
 import com.example.fpi.domain.dto.certify.CareerInfoDTO;
 import com.example.fpi.domain.dto.pro.*;
+import com.example.fpi.domain.dto.user.UserAccuseDTO;
 import com.example.fpi.domain.dto.user.UserReviewDTO;
 import com.example.fpi.domain.util.PagedResponse;
 import org.springframework.stereotype.Service;
@@ -110,4 +111,8 @@ public interface ProService {
     void updateProAccept(Long userRequestId);
 
     void updateProComplete(Long userRequestId);
+
+    void proAccuseUser(UserAccuseDTO userAccuseDTO);
+
+    String selectUserIdByUserRequestId(Long userRequestId);
 }
