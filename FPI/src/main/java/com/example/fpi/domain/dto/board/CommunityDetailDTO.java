@@ -16,11 +16,14 @@ public class CommunityDetailDTO {
     private String communityContent;
     private String userName;
     private String userId;
+    private Long proId;
     private LocalDateTime communityRegisterDate;
     private LocalDateTime communityUpdateDate;
     //좋아요 갯수
     private int likeCount;
     private String loginUserId;
     private String communityThumbnail;
+    private String showContent;
+    private int views;
 
 }

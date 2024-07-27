@@ -26,7 +26,10 @@
                 </div>
             </div>
         </div>
-        <div class="article-content" th:utext="*{communityContent}"> </div>
+        <div class="article-content" style="display:flex">
+            <div th:utext="*{communityContent}"> </div>
+        </div>
+
 
         <div class="like-comment-icon">
             <div class="like-comment-icon-box" sec:authorize ="isAuthenticated()">

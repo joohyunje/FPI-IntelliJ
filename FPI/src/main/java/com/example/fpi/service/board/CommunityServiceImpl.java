@@ -64,8 +64,14 @@ public class CommunityServiceImpl implements CommunityService {
 //    게시판 상세페이지
     @Override
     @Transactional
-    public CommunityDetailDTO getCommunityDetail(Long communityId) {
+    public CommunityDetailDTO getCommunityDetail(Long communityId,CustomOAuth2User user) {
         CommunityDetailDTO community= communityMapper.selectCommunityDetail(communityId);
+
+        if (user ==null) {
+//            조회수가 플러스 1이되는 update쿼리문
+            communityMapper.plusViews(communityId);
+            System.out.println(community);
+        }
 
         return community;
     }
@@ -74,6 +80,7 @@ public class CommunityServiceImpl implements CommunityService {
     @Override
     public void saveCommunity(CommunityDTO community) {
         String thumnail = null;
+        String content = community.getCommunityContent();
 
         Long communityId = communityMapper.getSeq();
         community.setCommunityId(communityId);
@@ -84,16 +91,18 @@ public class CommunityServiceImpl implements CommunityService {
         Pattern pattern = Pattern.compile(patternString);
 
         // 정규표현식을 이용한 매칭
-        Matcher matcher = pattern.matcher(community.getCommunityContent());
+        Matcher matcher = pattern.matcher(content);
 
         // 첫 번째 img 태그의 src 속성 값 추출
         if (matcher.find()) {
             thumnail = matcher.group(1);
+
         } else {
             thumnail = "";
         }
-
+        String showContent = content.replaceFirst("<img\\s+src\\s*=\\s*\"" + Pattern.quote(thumnail) + "\"[^>]*>", "");
         community.setCommunityThumbnail(thumnail);
+        community.setShowContent(showContent);
         communityMapper.saveCommunity(community);
 //        System.out.println(community);
     }
@@ -102,6 +111,7 @@ public class CommunityServiceImpl implements CommunityService {
     public void updateCommunity(CommunityDTO community) {
 
         String thumnail = community.getCommunityThumbnail();
+        String content = community.getCommunityContent();
 
         // summernote에서 이미지가 여러개 들어갔을때 첫번째 등록한 이미지만 content에서 분리하여 썸네일에 저장해줌
         // 정규표현식 패턴 설정
@@ -117,8 +127,10 @@ public class CommunityServiceImpl implements CommunityService {
         } else {
             thumnail = "";
         }
+        String showContent = content.replaceFirst("<img\\s+src\\s*=\\s*\"" + Pattern.quote(thumnail) + "\"[^>]*>", "");
 
         community.setCommunityThumbnail(thumnail);
+        community.setShowContent(showContent);
 
         communityMapper.editCommunity(CommunityVO.toEntity(community));
 
@@ -132,6 +144,7 @@ public class CommunityServiceImpl implements CommunityService {
         communityMapper.deleteCommunity(communityId);
     }
 
+//    좋아요 기능
     @Override
     public void selectLike(String userId,Long communityId) {
         LikeDTO likeDTO = new LikeDTO();
