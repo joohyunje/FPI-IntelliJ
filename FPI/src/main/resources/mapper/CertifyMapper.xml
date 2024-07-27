@@ -15,7 +15,7 @@
 <!--    자격증 사진 추가-->
     <insert id="addCardInfoFile">
         insert into TBL_CARDINFO_FILE
-        values (#{cardInfoFileId},#{cardInfoFileRoute},#{cardInfoFileOriginal},#{cardInfoId})
+        values (#{cardInfoFileId},#{cardInfoFileRoute},#{cardInfoFileOriginal},#{proId})
     </insert>
 <!--    경력사항 테이블 정보 추가-->
     <insert id="addCareerInfo">

@@ -40,51 +40,115 @@
 
 
 
+<!--    <select id="communitySelectAll" resultType="CommunityDTO">-->
+<!--        SELECT *-->
+<!--        FROM (-->
+<!--                 SELECT ROWNUM AS RN, COMMUNITY.*-->
+<!--                 FROM (-->
+<!--                          SELECT-->
+<!--                              C.COMMUNITY_ID,-->
+<!--                              C.SUBJECT,-->
+<!--                              C.COMMUNITY_TITLE,-->
+<!--                              C.COMMUNITY_CONTENT,-->
+<!--                              U.USER_NAME,-->
+<!--                              C.COMMUNITY_REGISTER_DATE,-->
+<!--                              C.COMMUNITY_UPDATE_DATE,-->
+<!--                              U.USER_ID,-->
+<!--                              C.COMMUNITY_THUMBNAIL,-->
+<!--                              (SELECT COUNT(*) FROM TBL_LIKE L  WHERE L.COMMUNITY_ID = C.COMMUNITY_ID) AS LIKE_COUNT-->
+<!--                          FROM-->
+<!--                              TBL_COMMUNITY C JOIN TBL_USER U-->
+<!--                                               ON-->
+<!--                                                   U.USER_ID = C.USER_ID-->
+<!--                        <where>-->
+<!--                            <if test="search != null">-->
+<!--                                <choose>-->
+<!--                                    <when test="subject =='자유게시판'">c.subject == '자유게시판' and-->
+<!--                                        (c.community_content LIKE '%' || #{search} || '%' or c.community_title-->
+<!--                                        LIKE '%' || #{search} || '%')-->
+<!--                                    </when>-->
+<!--                                    <when test="subject == '전문가팁'">tbl_community.subject == '전문가팁' and-->
+<!--                                        (c.community_content LIKE '%' || #{search} || '%' or c.community_title-->
+<!--                                        LIKE '%' || #{search} || '%')-->
+<!--                                    </when>-->
+<!--                                    <otherwise>-->
+<!--                                        c.community_content LIKE '%' || #{search} || '%' or c.community_title-->
+<!--                                        LIKE '%' || #{search} || '%'-->
+<!--                                    </otherwise>-->
+<!--                                </choose>-->
+<!--                            </if>-->
+<!--                        </where>-->
+<!--                          ORDER BY-->
+<!--                              C.COMMUNITY_UPDATE_DATE DESC-->
+<!--                      ) COMMUNITY-->
+<!--                 WHERE ROWNUM &lt;= #{endRow}-->
+<!--             )-->
+<!--        WHERE rn &gt; #{startRow}-->
+<!--    </select>-->
+
+
     <select id="communitySelectAll" resultType="CommunityDTO">
         SELECT *
         FROM (
-                 SELECT ROWNUM AS RN, COMMUNITY.*
-                 FROM (
-                          SELECT
-                              C.COMMUNITY_ID,
-                              C.SUBJECT,
-                              C.COMMUNITY_TITLE,
-                              C.COMMUNITY_CONTENT,
-                              U.USER_NAME,
-                              C.COMMUNITY_REGISTER_DATE,
-                              C.COMMUNITY_UPDATE_DATE,
-                              U.USER_ID,
-                              C.COMMUNITY_THUMBNAIL,
-                              (SELECT COUNT(*) FROM TBL_LIKE L  WHERE L.COMMUNITY_ID = C.COMMUNITY_ID) AS LIKE_COUNT
-                          FROM
-                              TBL_COMMUNITY C JOIN TBL_USER U
-                                               ON
-                                                   U.USER_ID = C.USER_ID
-                        <where>
-                            <if test="search != null">
-                                <choose>
-                                    <when test="subject =='자유게시판'">c.subject == '자유게시판' and
-                                        (c.community_content LIKE '%' || #{search} || '%' or c.community_title
-                                        LIKE '%' || #{search} || '%')
-                                    </when>
-                                    <when test="subject == '전문가팁'">tbl_community.subject == '전문가팁' and
-                                        (c.community_content LIKE '%' || #{search} || '%' or c.community_title
-                                        LIKE '%' || #{search} || '%')
-                                    </when>
-                                    <otherwise>
-                                        c.community_content LIKE '%' || #{search} || '%' or c.community_title
-                                        LIKE '%' || #{search} || '%'
-                                    </otherwise>
-                                </choose>
-                            </if>
-                        </where>
-                          ORDER BY
-                              C.COMMUNITY_UPDATE_DATE DESC
-                      ) COMMUNITY
-                 WHERE ROWNUM &lt;= #{endRow}
-             )
-        WHERE rn &gt; #{startRow}
+        SELECT ROWNUM AS RN, COMMUNITY.*
+        FROM (
+        SELECT
+        C.COMMUNITY_ID,
+        C.SUBJECT,
+        C.COMMUNITY_TITLE,
+        C.COMMUNITY_CONTENT,
+        U.USER_NAME,
+        C.COMMUNITY_REGISTER_DATE,
+        C.COMMUNITY_UPDATE_DATE,
+        U.USER_ID,
+        C.COMMUNITY_THUMBNAIL,
+        (SELECT COUNT(*) FROM TBL_LIKE L WHERE L.COMMUNITY_ID = C.COMMUNITY_ID) AS LIKE_COUNT
+        FROM
+        TBL_COMMUNITY C
+        JOIN
+        TBL_USER U ON U.USER_ID = C.USER_ID
+        <where>
+            <if test="search != null and search != ''">
+                <choose>
+                    <when test="subject != null and subject == '자유게시판'">
+                        C.SUBJECT = '자유게시판' AND
+                        (C.COMMUNITY_CONTENT LIKE '%' || #{search} || '%'
+                        OR C.COMMUNITY_TITLE LIKE '%' || #{search} || '%')
+                    </when>
+                    <when test="subject != null and subject == '전문가팁'">
+                        C.SUBJECT = '전문가팁' AND
+                        (C.COMMUNITY_CONTENT LIKE '%' || #{search} || '%'
+                        OR C.COMMUNITY_TITLE LIKE '%' || #{search} || '%')
+                    </when>
+                    <otherwise>
+                        (C.COMMUNITY_CONTENT LIKE '%' || #{search} || '%'
+                        OR C.COMMUNITY_TITLE LIKE '%' || #{search} || '%')
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="search == null or search == ''">
+                <choose>
+                    <when test="subject != null and subject == '자유게시판'">
+                        C.SUBJECT = '자유게시판'
+                    </when>
+                    <when test="subject != null and subject == '전문가팁'">
+                        C.SUBJECT = '전문가팁'
+                    </when>
+                    <otherwise>
+                        1 = 1 <!-- Always true, acts as a fallback to include all rows when no subject filter is applied -->
+                    </otherwise>
+                </choose>
+            </if>
+        </where>
+        ORDER BY
+        C.COMMUNITY_UPDATE_DATE DESC
+        ) COMMUNITY
+        WHERE ROWNUM &lt;= #{endRow}
+        )
+        WHERE RN &gt; #{startRow}
     </select>
+
+
 
 
     <!--  자유게시판 목록 가져오기  -->

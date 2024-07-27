@@ -9,6 +9,6 @@ public class CardInfoFileDTO {
     private Long cardInfoFileId;
     private String cardInfoFileRoute; //파일경로
     private String cardInfoFileOriginal; //t-실제 파일명
-    private Long cardInfoId;
+    private Long proId;
 
 }

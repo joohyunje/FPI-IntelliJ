@@ -11,14 +11,14 @@ public class CardInfoFileVO {
     private Long cardInfoFileId;
     private String cardInfoFileRoute;
     private String cardInfoFileOriginal;
-    private Long cardInfoId;
+    private Long proId;
 
     @Builder
-    public CardInfoFileVO(Long cardInfoFileId, String cardInfoFileRoute, String cardInfoFileOriginal, Long cardInfoId) {
+    public CardInfoFileVO(Long cardInfoFileId, String cardInfoFileRoute, String cardInfoFileOriginal, Long proId) {
         this.cardInfoFileId = cardInfoFileId;
         this.cardInfoFileRoute = cardInfoFileRoute;
         this.cardInfoFileOriginal = cardInfoFileOriginal;
-        this.cardInfoId = cardInfoId;
+        this.proId = proId;
     }
 
     public static CardInfoFileVO toEntity(CardInfoFileDTO dto) {
@@ -26,7 +26,7 @@ public class CardInfoFileVO {
                 .cardInfoFileId(dto.getCardInfoFileId())
                 .cardInfoFileRoute(dto.getCardInfoFileRoute())
                 .cardInfoFileOriginal(dto.getCardInfoFileOriginal())
-                .cardInfoId(dto.getCardInfoId())
+                .proId(dto.getProId())
                 .build();
     }
 }

@@ -5,16 +5,39 @@
 <!--    전문가 마이페이지의 상세보기-->
     <select id="detailPro">
         SELECT p1.*, c.category_name
-        FROM (SELECT p.pro_id, p.pro_name, p.phone_number, p.pro_img, p.emp_cnt,u.email, u.user_cash, p.pro_star_rate, l.region, l.city, cl.category_id
+        FROM (SELECT p.pro_id, p.pro_name, p.phone_number, p.pro_img, p.emp_cnt,u.email, u.user_cash, p.pro_star_rate, l.region, l.city, cl.category_id,career.award
               FROM tbl_pro p
                        JOIN tbl_location l ON p.location_id = l.location_id
                        JOIN tbl_category_list cl ON p.pro_id = cl.pro_id
                        JOIN tbl_user u ON p.user_id = u.user_id
+                       JOIN TBL_CAREERINFO career ON p.PRO_ID = career.PRO_ID
              ) p1
                  JOIN tbl_category c ON p1.category_id = c.category_id
         WHERE p1.pro_id = #{proId}
 
     </select>
+
+<!--    고용횟수 가져옴-->
+    <select id="empCount">
+        select sum(cnt) as proEmpCount
+        from(
+                select count(*) as cnt
+                from TBL_USER_REQUEST u join TBL_PRO_UPLOAD p
+                                             on u.PRO_UPLOAD_ID = p.PRO_UPLOAD_ID
+                where u.USER_REQUEST_PROGRESS ='post' and p.PRO_ID = #{proId}
+
+                union all
+
+                select count(*) as cnt
+                from TBL_PRO_REQUEST
+                where PRO_ID=#{proId} and PRO_REQUEST_PROGRESS= 'post'
+            )
+    </select>
+
+
+<!--    <select id="starCount">-->
+<!--        select-->
+<!--    </select>-->
 <!--    등록된 자격증 사진을 보여줄때 최근등록순 4개만 보여줌-->
 <!--    <select id="selectCardFile4">-->
 <!--        select infoFile.*-->
@@ -33,19 +56,14 @@
         where pro_id=#{proId}
     </select>
 
-<!--    경력정보 리스트로 가져옴-->
-    <select id="selectCareer">
-        select *
-        from TBL_CAREERINFO
-        where pro_id=#{proId}
-    </select>
 
     <select id="selectEditPro">
         select pro.*,l.REGION,l.CITY
-        from(select p.PRO_ID,p.PRO_NAME,p.PHONE_NUMBER,p.PRO_IMG,p.LOCATION_ID,u.EMAIL,category.CATEGORY_ID
+        from(select p.PRO_ID,p.PRO_NAME,p.PHONE_NUMBER,p.PRO_IMG,p.LOCATION_ID,u.EMAIL,category.CATEGORY_ID,career.AWARD,career.CAREERINFO_ID
              from tbl_pro p
                       join TBL_CATEGORY_LIST category on p.PRO_ID = category.PRO_ID
-                      join TBL_USER u on p.USER_ID = u.USER_ID)pro
+                      join TBL_USER u on p.USER_ID = u.USER_ID
+                      join TBL_CAREERINFO career on p.PRO_ID=career.PRO_ID)pro
                 join TBL_LOCATION l on l.LOCATION_ID = pro.LOCATION_ID
         where pro.PRO_ID = #{proId}
     </select>
@@ -86,10 +104,9 @@
 <!--    </select>-->
 
     <select id="cardFileList">
-        select f.*,c.PRO_ID
-        from TBL_CARDINFO_FILE f
-                 join TBL_CARDINFO c on f.CARDINFO_ID = c.CARDINFO_ID
-        where c.PRO_ID =#{proId}
+        select *
+        from TBL_CARDINFO_FILE
+        where PRO_ID =#{proId}
     </select>
 
 <!--    전문가 탈퇴-->
@@ -108,12 +125,6 @@
         update tbl_category_list
         set category_id = #{categoryId}
         where PRO_ID =#{proId}
-    </update>
-<!--    자격증 사진추가만 가능하도록-->
-    <update id="editCardInfoFile">
-        update TBL_CARDINFO_FILE
-        set CARDINFO_FILE_ROUTE = #{cardInfoFileRoute},CARDINFO_FILE_ORIGINAL =#{cardInfoFileOriginal}
-        where CARDINFO_FILE_ID =#{cardInfoFileId}
     </update>
 
     <update id="editCardInfo">

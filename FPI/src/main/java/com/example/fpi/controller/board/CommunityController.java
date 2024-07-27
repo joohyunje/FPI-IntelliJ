@@ -68,6 +68,11 @@ public class CommunityController {
 //        return "board/community";
 //    }
 
+    @GetMapping("/community")
+    public String list() {
+        return "community/community";
+    }
+
 //    커뮤니티 게시판상세보기
     @GetMapping("/community/detail/{communityId}")
     public String detail(@PathVariable("communityId") Long communityId, Model model,

@@ -43,8 +43,7 @@
 
         <div class="community-container">
             <div class="category-list aside">
-                <input name="search" type="hidden" >
-                <div id="community" >전체</div>
+                <div id="community" class="selected" >전체</div>
                 <div id="freeTalk"> 자유게시판</div>
                 <div id="proTip"> 전문가 팁</div>
             </div>
@@ -99,6 +98,8 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
+
+
 // 날짜 포맷
 function formatDate(dateString) {
     const now = new Date();
@@ -143,14 +144,13 @@ function enterkey() {
 <!--    페이지 시작시 해당 함수 실행-->
     window.onload = function(){
         search = $('input[name="search"]').val(); //input태그에 name이 search인곳 value를 ajax의 search에 넣을것임
-        subject = $('input[name="subject"]').val();
         getList(1);
         subjectValue();//해당 함수 실행,첫번째 페이지 뿌려줌
     }
     function getList(page){
         $.ajax({
             method:'get', //방식
-            url:'/community', //보낼곳,컨트롤러적을것임
+            url:'/community/list', //보낼곳,컨트롤러적을것임
             data: {
                 page: page,
                 size: pageSize,
@@ -177,49 +177,41 @@ function renderUploadList(uploads){
     const uploadContainer = $('.feed ul');
     uploadContainer.empty();
 
-    uploads.forEach(function(upload) {
-        let uploadRow = `  <li class="feed-item">
-                            <a href="/community/detail/${upload.communityId}">
-                                <div class="feed-container">
-                                    <div class="item-wrapper">
-                                        <h3 class="item-title">
-                                            ${upload.communityTitle}
-                                        </h3>
-                                        <div class="item-content">
-                                        ${upload.communityContent}
-                                        </div>
-                                    </div>
+    uploads.forEach(upload => {
+        // div에서는 if사용불가, 이미지띄워주는거 다르게 하기위해 따로 변수사용
+        const thumbnailSrc = (upload.communityContent && upload.communityContent.trim() !== '' && upload.communityContent.trim() !== 'dd' && upload.communityThumbnail)
+            ? upload.communityThumbnail
+            : '/img/basicIMG.png';
 
-                                    <div if = "${upload.communityContent} != null and ${upload.communityContent} !='' and ${upload.communityContent} != 'dd'">
-                                    <img style="background-repeat: no-repeat;width: 150px;height: 150px" src="${upload.communityThumbnail}" alt="img">
-                                    </div>
 
-                                    <div if = "${upload.communityContent}== null or ${upload.communityContent}=='' or ${upload.communityContent} == 'dd'">
-                                    <img style="background-repeat: no-repeat;width: 150px;height: 150px" src="/img/커뮤니티 기본.png" alt="img">
-                                    </div>
+        //
+        const uploadRow = `
+        <li class="feed-item">
+            <a href="/community/detail/${upload.communityId}">
+                <div class="feed-container">
+                    <div class="item-wrapper">
+                        <h3 class="item-title">${upload.communityTitle}</h3>
+                        <div class="item-content">${upload.communityContent}</div>
+                    </div>
+                    <div>
+                        <img style="background-repeat: no-repeat; width: 150px; height: 150px;" src="${thumbnailSrc}" alt="img">
+                    </div>
+                </div>
+            </a>
+            <div class="feed-footer">
+                <div>
+                    <div class="footer-like">${upload.likeCount}</div>
+                    <div class="footer-comment">0</div>
+                </div>
+                <div>
+                    <div class="footer-date" style="margin-right: 2rem;">작성자: ${upload.userName}</div>
+                    <div class="footer-date">${new Date(upload.communityRegisterDate).toLocaleDateString()}</div>
+                </div>
+            </div>
+        </li>
+    `;
 
-                                </div>
-                            </a>
-                            <div class="feed-footer">
-                                <div>
-                                    <div class="footer-like">
-                                    ${upload.likeCount}
-                                    </div>
-                                    <div class="footer-comment">
-                                        0
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="footer-date" style="margin-right: 2rem" >
-                                    작성자 : ${upload.userName}
-                                    </div>
-
-                                    <div class="footer-date" >
-                                     ${formatDate(upload.communityRegisterDate)}
-                                    </div>
-                                </div>
-                            </div>
-                        </li>`;
+        //  해당 요소만큼 추가
         uploadContainer.append(uploadRow);
     });
 }
@@ -277,6 +269,19 @@ function renderUploadList(uploads){
         getList(1);
     }
 
+    document.getElementById('freeTalk').addEventListener("click", function (){
+       subject = '자유게시판'
+       getList(1);
+    });
+    document.getElementById('proTip').addEventListener("click", function (){
+        subject = '전문가팁'
+        getList(1);
+    });
+    document.getElementById('community').addEventListener("click", function (){
+        subject = ''
+        getList(1);
+    });
+
     function subjectValue(){
         const subjectName = {
             community: document.getElementById('community')[0],
@@ -293,7 +298,6 @@ function renderUploadList(uploads){
             subjectName.community.classList.add('selected');
             subjectName.freeTalk.classList.remove('selected');
             subjectName.proTip.classList.remove('selected');
-            $('input[name="subject"]').val('');
 
         });
 
@@ -301,7 +305,6 @@ function renderUploadList(uploads){
             subjectName.community.classList.remove('selected');
             subjectName.freeTalk.classList.add('selected');
             subjectName.proTip.classList.remove('selected');
-            $('input[name="subject"]').val('자유게시판');
 
         });
 
@@ -309,11 +312,7 @@ function renderUploadList(uploads){
             subjectName.community.classList.remove('selected');
             subjectName.freeTalk.classList.remove('selected');
             subjectName.proTip.classList.add('selected');
-            $('input[name="subject"]').val('전문가팁');
-
-
         });
-
     }
 </script>
 </html>
