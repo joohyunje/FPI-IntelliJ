@@ -83,6 +83,7 @@
 
                     <!-- 상대방이 작업 완료를 누른다면 리뷰 작성하기 띄우기 -->
                     <button th:style="${userRequest.userRequestProgress != 'POST' ? 'display:none' : ''}" type="button"
+                            th:onclick="|location.href='@{/user/proReview/{proId}(proId=${proRequest.proId})}'|"
                             class="btn-accept">리뷰 작성하기
                     </button>
                 </div>

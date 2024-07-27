@@ -1,10 +1,7 @@
 package com.example.fpi.controller.user;
 
 import com.example.fpi.domain.dto.file.ProUploadFileDTO;
-import com.example.fpi.domain.dto.pro.ProCareerInfoListDTO;
-import com.example.fpi.domain.dto.pro.ProRequestDetailDTO;
-import com.example.fpi.domain.dto.pro.ProReviewDTO;
-import com.example.fpi.domain.dto.pro.ProUploadDetailDTO;
+import com.example.fpi.domain.dto.pro.*;
 import com.example.fpi.domain.dto.user.UserLocationDTO;
 import com.example.fpi.domain.dto.user.UserRequestDTO;
 import com.example.fpi.domain.dto.user.UserRequestDetailDTO;
@@ -72,6 +69,7 @@ public class UserController {
         System.out.println(careerInfo);
 
 
+        model.addAttribute("proAccuse", new ProAccuseDTO());
         model.addAttribute("proRequest", proRequest);
         model.addAttribute("careerInfo", careerInfo);
 
@@ -175,10 +173,13 @@ public class UserController {
 
     }
 
-    @GetMapping("/proReview")
-    public String proReviewForm(Model model) {
+    @GetMapping("/proReview/{proId}")
+    public String proReviewForm(@PathVariable Long proId,
+                                Model model) {
 
         model.addAttribute("proReview", new ProReviewDTO());
+        model.addAttribute("proId", proId);
+        model.addAttribute("proName", proService.getProName(proId));
 
         return "/user/req_list/reviewWrite";
     }
@@ -189,17 +190,52 @@ public class UserController {
                             @RequestParam Long proId) {
 
         String userId = customOAuth2User.getUserId();
+//        String userName = userService.getUserName(userId);
         proReview.setUserId(userId);
         proReview.setProId(proId);
 
+        System.out.println(proReview.toString());
+
+
         userService.userWriteProReview(proReview);
 
-        return "redirect:/user/main";
+        return "redirect:/main/user";
 
     }
 
     @PostMapping("/proDetail/delete/{proRequestId}")
     public String deleteProRequest(@PathVariable Long proRequestId) {
+        userService.deleteProRequest(proRequestId);
+
+        return "redirect:/user/requests";
+    }
+
+    @PostMapping("/proDetail/updateAccept/{proRequestId}")
+    public String updateAccept(@PathVariable Long proRequestId) {
+
+        userService.updateUserAccept(proRequestId);
+        return "redirect:/user/proDetail/" + proRequestId;
+    }
+
+    @PostMapping("/proDetail/updateComplete/{proRequestId}")
+    public String updateComplete(@PathVariable Long proRequestId) {
+
+        userService.updateUserComplete(proRequestId);
+        return "redirect:/user/proDetail/" + proRequestId;
+    }
+
+    @PostMapping("/accusePro")
+    public String accusePro(@RequestParam Long proRequestId,
+                            ProAccuseDTO proAccuse,
+                            @AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
+
+        String userId = customOAuth2User.getUserId();
+        Long proId = userService.selectProIdByProRequestId(proRequestId);
+
+        proAccuse.setUserId(userId);
+        proAccuse.setProId(proId);
+
+        userService.userAccusePro(proAccuse);
         userService.deleteProRequest(proRequestId);
 
         return "redirect:/user/requests";

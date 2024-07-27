@@ -55,6 +55,7 @@
                  INNER JOIN TBL_USER tu
                             ON TPR.USER_ID = TU.USER_ID
         WHERE TPR.PRO_ID = #{proId}
+        ORDER BY tpr.PRO_REVIEW_DATE DESC
     </select>
 
 </mapper>
