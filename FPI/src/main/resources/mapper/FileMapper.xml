@@ -51,4 +51,16 @@
         VALUES (seq_file.nextval,#{communityFileRoute},#{communityFileOriginal},#{communityId})
 
     </insert>
+
+<!--    사진 클릭시 삭제-->
+    <delete id="deleteCardPhotoFile">
+        delete from TBL_CARDINFO_FILE
+        where CARDINFO_FILE_ID =#{cardInfoFileId}
+    </delete>
+<!--    서버에서도 삭제하기위해 필요-->
+    <select id="cardFindImg">
+        select *
+        from TBL_CARDINFO_FILE
+        where CARDINFO_FILE_ID = #{cardInfoFileId}
+    </select>
 </mapper>

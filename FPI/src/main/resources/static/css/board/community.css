@@ -107,7 +107,7 @@
 .category-list{
     width: 18rem;
     display: block;
-    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .category-list ul{
@@ -130,6 +130,15 @@
 }
 .pointer{
     cursor: pointer;
+    width: 14rem;
+    height: 2rem;
+    text-align: left;
+    font-size: 18px;
+    margin: 5px 0;
+    padding: 5px 0px 15px 20px;
+    &:hover{
+        cursor: pointer
+    }
 }
 
 .category-list ul li a{

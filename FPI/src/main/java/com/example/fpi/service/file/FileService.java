@@ -5,6 +5,7 @@ import com.example.fpi.domain.dto.file.ProUploadFileDTO;
 import com.example.fpi.domain.dto.file.UserUploadFileDTO;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -15,5 +16,5 @@ public interface FileService {
 
     //    회원 견적 올리기
     List<UserUploadFileDTO> selectUserUploadFileList(Long userUploadId);
-
+    void deleteCardPhotoFile(Long cardInfoFileId) throws IOException;
 }
