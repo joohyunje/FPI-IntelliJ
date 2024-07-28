@@ -64,16 +64,15 @@
 
             <div class="underline">
               <div class="fontSize15">보유 자격증사진 </div>
-              <div class="cardPhotoList" style="display: flex; margin-top: 10px;flex-wrap:wrap;">
-
-<!--                <img class="imgSize" style="margin:0 10px 15px 0" th:each="file:${files}" th:src="${file.cardInfoFileRoute}" >-->
+              <div style="display: flex; margin-top: 10px;flex-wrap:wrap;">
+                <img class="imgSize" style="margin:0 10px 15px 0" th:each="file:${files}" th:src="${file.cardInfoFileRoute}" >
               </div>
             </div>
 
             <div class="underline">
               <div class="fontSize15">보유 자격증정보</div>
-              <div class="cardList" style="margin-top: 10px">
-<!--                <div style="margin-bottom: 10px" th:text="'발급기관 : '+ ${card.certiOrgan} + ' 자격증 번호 : ' + ${card.certiNum}"></div>-->
+              <div th:each="card :${cards}" style="margin-top: 10px">
+                <div style="margin-bottom: 10px" th:text="'발급기관 : '+ ${card.certiOrgan} + ' 자격증 번호 : ' + ${card.certiNum}"></div>
               </div>
 
             </div>
@@ -150,133 +149,5 @@
     proInput.style.borderColor='red';
     const p = document.querySelector('#modal .error');
     p.style.display="flex";
-</script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script>
-  $(document).ready(function () {
-    let proId= $('input[name="proId"]').val(); //j쿼리 문법
-    selectCardInfoFile(proId);
-    selectCard(proId);
-  })
-
-  // 자격증사진선택시 사진삭제
-  function selectCardInfoFile(proId) {
-    $.ajax({
-      method : 'get',
-      url : '/cardfiles/' + proId,
-      success : function(data) {
-        let photoListArea = $('.cardPhotoList')
-
-        photoListArea.empty();
-
-        if(data.length === 0){
-          photoListArea.append(
-                  `<div class="">
-                         등록된 자격증사진이 없습니다
-                    </div>`
-          );
-        }
-
-        data.forEach(function(photo) {
-
-          // 종합적으로 뿌려줄 html
-          let photoElement = `
-                <div id=""></div>
-                 <img class="imgSize" style="margin:0 10px 15px 0" src="${photo.cardInfoFileRoute}" onclick="deleteCardPhotoFile(${photo.cardInfoFileId},${data.length})">
-
-                `
-          // 해당 섹션에  갯 수 만큼 차례대로 추가될 것이다.
-          photoListArea.append(photoElement);
-        })
-      },
-      error : function(data) {
-        console.error(data, "불러오기 실패");
-      }
-    })
-  }
-  function deleteCardPhotoFile(cardInfoFileId,totalPhotos){
-    if (totalPhotos <= 1) {
-      alert("사진은 한개이상 등록되어야합니다.");
-      return;
-    }
-    if(!confirm('등록된 자격증사진을 삭제하시겠습니까?')){
-      return;
-    }
-    $.ajax({
-      method:'delete',
-      url:'/cardfiles/'+cardInfoFileId,
-      success:function (){
-        alert("선택한 자격증 사진을 삭제하였습니다."),
-        selectCardInfoFile($('input[name="proId"]').val());
-
-      },
-      error:function (data){
-        console.error(data,'삭제 실패')
-      }
-    })
-  }
-
-
-//   자격증 정보 삭제
-  // 자격증사진선택시 사진삭제
-  function selectCard(proId) {
-    $.ajax({
-      method : 'get',
-      url : '/card/' + proId,
-      success : function(data) {
-        let cardListArea = $('.cardList')
-
-        cardListArea.empty();
-
-        if(data.length === 0){
-          cardListArea.append(
-                  `<div class="" style="margin-bottom: 10px;">
-                         등록된 자격증이 없습니다
-                    </div>`
-          );
-        }
-
-        data.forEach(function(card) {
-
-          // 종합적으로 뿌려줄 html
-          let cardElement = `
-                <div style="display: flex">
-                    <div style="margin-bottom: 10px">
-                        발급기관 : ${card.certiOrgan}  자격증 번호 : ${card.certiNum}
-                    </div>
-                    <div onclick="deleteCardInfo(${card.cardInfoId},${data.length})" style="cursor: pointer" >(삭제)</div>
-                </div>
-`
-
-          // 해당 섹션에  갯 수 만큼 차례대로 추가될 것이다.
-          cardListArea.append(cardElement);
-        })
-      },
-      error : function(data) {
-        console.error(data, "불러오기 실패");
-      }
-    })
-  }
-  function deleteCardInfo(cardInfoId,cardLength){
-    if (cardLength <= 1) {
-      alert("자격증정보는 한개이상 등록되어야합니다.");
-      return;
-    }
-    if(!confirm('등록된 자격증을 삭제하시겠습니까?')){
-      return;
-    }
-    $.ajax({
-      method:'delete',
-      url:'/card/'+cardInfoId,
-      success:function (){
-        alert("선택한 자격증 사진을 삭제하였습니다."),
-                selectCard($('input[name="proId"]').val());
-
-      },
-      error:function (data){
-        console.error(data,'삭제 실패')
-      }
-    })
-  }
 </script>
 </html>

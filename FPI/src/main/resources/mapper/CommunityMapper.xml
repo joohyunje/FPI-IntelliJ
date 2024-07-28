@@ -69,6 +69,93 @@
         WHERE RN &gt; #{startRow}
     </select>
 
+
+
+
+    <!--  자유게시판 목록 가져오기  -->
+<!--    <select id="SelectBoardList" resultType="CommunityDTO">-->
+<!--        SELECT *-->
+<!--        FROM (-->
+<!--                 SELECT ROWNUM AS RN, COMMUNITY.*-->
+<!--                 FROM (-->
+<!--                          SELECT-->
+<!--                              C.COMMUNITY_ID,-->
+<!--                              C.SUBJECT,-->
+<!--                              C.COMMUNITY_TITLE,-->
+<!--                              C.COMMUNITY_CONTENT,-->
+<!--                              U.USER_NAME,-->
+<!--                              C.COMMUNITY_REGISTER_DATE,-->
+<!--                              C.COMMUNITY_UPDATE_DATE,-->
+<!--                              U.USER_ID,-->
+<!--                              (SELECT COUNT(*) FROM TBL_LIKE L  WHERE L.COMMUNITY_ID = C.COMMUNITY_ID) AS LIKE_COUNT-->
+<!--                          FROM-->
+<!--                              TBL_COMMUNITY C JOIN TBL_USER U-->
+<!--                                                   ON-->
+<!--                                                       U.USER_ID = C.USER_ID-->
+<!--                          where c.subject = '자유게시판'-->
+<!--                          ORDER BY-->
+<!--                              C.COMMUNITY_UPDATE_DATE DESC-->
+<!--                      ) COMMUNITY-->
+<!--                 WHERE ROWNUM &lt;= #{endRow}-->
+<!--             )-->
+<!--        WHERE rn &gt; #{startRow}-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash;  전문가팁 목록 가져오기  &ndash;&gt;-->
+<!--    <select id="SelectProTipList" resultType="CommunityDTO">-->
+<!--        SELECT *-->
+<!--        FROM (-->
+<!--                 SELECT ROWNUM AS RN, COMMUNITY.*-->
+<!--                 FROM (-->
+<!--                          SELECT-->
+<!--                              C.COMMUNITY_ID,-->
+<!--                              C.SUBJECT,-->
+<!--                              C.COMMUNITY_TITLE,-->
+<!--                              C.COMMUNITY_CONTENT,-->
+<!--                              U.USER_NAME,-->
+<!--                              C.COMMUNITY_REGISTER_DATE,-->
+<!--                              C.COMMUNITY_UPDATE_DATE,-->
+<!--                              U.USER_ID,-->
+<!--                              (SELECT COUNT(*) FROM TBL_LIKE L  WHERE L.COMMUNITY_ID = C.COMMUNITY_ID) AS LIKE_COUNT-->
+<!--                          FROM-->
+<!--                              TBL_COMMUNITY C JOIN TBL_USER U-->
+<!--                                                   ON-->
+<!--                                                       U.USER_ID = C.USER_ID-->
+<!--                          where c.subject = '전문가팁'-->
+<!--                          ORDER BY-->
+<!--                              C.COMMUNITY_UPDATE_DATE DESC-->
+<!--                      ) COMMUNITY-->
+<!--                 WHERE ROWNUM &lt;= #{endRow}-->
+<!--             )-->
+<!--        WHERE rn &gt; #{startRow}-->
+<!--    </select>-->
+
+
+
+
+    <!-- community 총 게시글의 갯수  -->
+<!--    <select id="countCommunity">-->
+<!--        select count(*)-->
+<!--        from tbl_Community-->
+<!--        <where>-->
+<!--            <if test="search != null">-->
+<!--                <choose>-->
+<!--                    <when test="subject =='자유게시판'">tbl_community.subject == '자유게시판' and-->
+<!--                        (tbl_community.community_content LIKE '%' || #{search} || '%' or tbl_community.community_title-->
+<!--                        LIKE '%' || #{search} || '%')-->
+<!--                    </when>-->
+<!--                    <when test="subject == '전문가팁'">tbl_community.subject == '전문가팁' and-->
+<!--                        (tbl_community.community_content LIKE '%' || #{search} || '%' or tbl_community.community_title-->
+<!--                        LIKE '%' || #{search} || '%')-->
+<!--                    </when>-->
+<!--                    <otherwise>-->
+<!--                        tbl_community.community_content LIKE '%' || #{search} || '%' or tbl_community.community_title-->
+<!--                        LIKE '%' || #{search} || '%'-->
+<!--                    </otherwise>-->
+<!--                </choose>-->
+<!--            </if>-->
+<!--        </where>-->
+<!--    </select>-->
     <select id="countCommunity">
         SELECT COUNT(*)
         FROM tbl_Community
@@ -85,6 +172,14 @@
             </otherwise>
         </choose>
     </select>
+
+
+
+
+
+
+
+
 
 
 

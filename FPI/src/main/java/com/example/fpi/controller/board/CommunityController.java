@@ -71,6 +71,8 @@ public class CommunityController {
         communityInfo.setLoginUserId(customOAuth2User.getUserId());
         model.addAttribute("communityInfo",communityInfo);
 
+        System.out.println(model+"뭐가들어있니");
+
         return "/community/write";
     }
 

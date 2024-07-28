@@ -28,7 +28,7 @@
     border-color: #8da4d0;
   }
   &:focus{
-    outline: #8da4d0;
+    outline: none;
   }
 }
 /* 서치창 끝 */
@@ -95,7 +95,7 @@
   }
   .post-slider{
     width:70%;
-    margin:0 auto;
+    margin:0px auto;
     position:relative;
   }
   /* 좌우 화살표 위치조정 */
