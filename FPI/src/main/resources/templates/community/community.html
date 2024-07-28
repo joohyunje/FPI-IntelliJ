@@ -43,9 +43,9 @@
 
         <div class="community-container">
             <div class="category-list aside">
-                <div id="community" class="selected pointer">전체</div>
-                <div id="freeTalk" class="pointer"> 자유게시판</div>
-                <div id="proTip" class="pointer"> 전문가 팁</div>
+                <div id="community" class="selected" >전체</div>
+                <div id="freeTalk"> 자유게시판</div>
+                <div id="proTip"> 전문가 팁</div>
             </div>
             <div class="content-layout">
                 <div class="feed">
@@ -144,8 +144,8 @@ function enterkey() {
 <!--    페이지 시작시 해당 함수 실행-->
     window.onload = function(){
         search = $('input[name="search"]').val(); //input태그에 name이 search인곳 value를 ajax의 search에 넣을것임
-        getList(1);//해당 함수 실행,첫번째 페이지 뿌려줌
-
+        getList(1);
+        subjectValue();//해당 함수 실행,첫번째 페이지 뿌려줌
     }
     function getList(page){
         $.ajax({
@@ -179,7 +179,7 @@ function renderUploadList(uploads){
 
     uploads.forEach(upload => {
         // div에서는 if사용불가, 이미지띄워주는거 다르게 하기위해 따로 변수사용
-        const thumbnailSrc = (upload.communityContent && upload.communityContent.trim() !== ''  && upload.communityThumbnail)
+        const thumbnailSrc = (upload.communityContent && upload.communityContent.trim() !== '' && upload.communityContent.trim() !== 'dd' && upload.communityThumbnail)
             ? upload.communityThumbnail
             : '/img/basicIMG.png';
 
@@ -191,7 +191,7 @@ function renderUploadList(uploads){
                 <div class="feed-container">
                     <div class="item-wrapper">
                         <h3 class="item-title">${upload.communityTitle}</h3>
-                        <div class="item-content">${upload.showContent}</div>
+                        <div class="item-content">${upload.communityContent}</div>
                     </div>
                     <div>
                         <img style="background-repeat: no-repeat; width: 150px; height: 150px;" src="${thumbnailSrc}" alt="img">
@@ -200,11 +200,9 @@ function renderUploadList(uploads){
             </a>
             <div class="feed-footer">
                 <div>
-                    <div class="footer-show">${upload.views}</div>
                     <div class="footer-like">${upload.likeCount}</div>
                     <div class="footer-comment">0</div>
                 </div>
-
                 <div>
                     <div class="footer-date" style="margin-right: 2rem;">작성자: ${upload.userName}</div>
                     <div class="footer-date">${new Date(upload.communityRegisterDate).toLocaleDateString()}</div>
@@ -273,28 +271,48 @@ function renderUploadList(uploads){
 
     document.getElementById('freeTalk').addEventListener("click", function (){
        subject = '자유게시판'
-        document.getElementById('freeTalk').classList.add('selected');
-        document.getElementById('proTip').classList.remove('selected');
-        document.getElementById('community').classList.remove('selected');
-
        getList(1);
     });
     document.getElementById('proTip').addEventListener("click", function (){
         subject = '전문가팁'
-        document.getElementById('freeTalk').classList.remove('selected');
-        document.getElementById('proTip').classList.add('selected');
-        document.getElementById('community').classList.remove('selected');
-
         getList(1);
     });
     document.getElementById('community').addEventListener("click", function (){
         subject = ''
-        document.getElementById('freeTalk').classList.remove('selected');
-        document.getElementById('proTip').classList.remove('selected');
-        document.getElementById('community').classList.add('selected');
         getList(1);
     });
 
+    function subjectValue(){
+        const subjectName = {
+            community: document.getElementById('community')[0],
+            freeTalk: document.getElementById('freeTalk')[0],
+            proTip: document.getElementById('proTip')[0]
+        };
 
+        // 초기 상태 설정
+        subjectName.community.classList.add('selected');
+
+
+        // 탭 클릭 이벤트 리스너
+        subjectName.community.addEventListener('click', function() {
+            subjectName.community.classList.add('selected');
+            subjectName.freeTalk.classList.remove('selected');
+            subjectName.proTip.classList.remove('selected');
+
+        });
+
+        subjectName.freeTalk.addEventListener('click', function() {
+            subjectName.community.classList.remove('selected');
+            subjectName.freeTalk.classList.add('selected');
+            subjectName.proTip.classList.remove('selected');
+
+        });
+
+        subjectName.proTip.addEventListener('click', function() {
+            subjectName.community.classList.remove('selected');
+            subjectName.freeTalk.classList.remove('selected');
+            subjectName.proTip.classList.add('selected');
+        });
+    }
 </script>
 </html>

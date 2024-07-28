@@ -1,15 +1,5 @@
 const loginUserId = $('input[name="loginUserId"]').val();
 const communityId = $('input[name="communityId"]').val();
-
-$(document).ready(function () {
-    $('#editBtn').click(function (){
-        var communityId = document.querySelector('input[name="communityId"]').value;
-        window.location.href = '/community/edit/' + communityId;
-    });
-    // const communityId = $('input[name="communityId"]').val(); //j쿼리 문법
-    getCommentsList(communityId); //
-})
-
 // 게시글 삭제
 document.getElementById('deleteBtn').addEventListener('click',function(){
     // var communityId = document.querySelector('input[name="communityId"]').value;
@@ -51,14 +41,11 @@ document.getElementById('like').addEventListener('click',function(){
 
 //페이지가 처음 로드 될때 댓글 목록 조회 함수가 실행되도록 함
 // ready : 제일 처음페이지 로드준비
-// $(document).ready(function () {
-//     $('#editBtn').click(function (){
-//         var communityId = document.querySelector('input[name="communityId"]').value;
-//         window.location.href = '/community/edit/' + communityId;
-//     });
-//     // const communityId = $('input[name="communityId"]').val(); //j쿼리 문법
-//     getCommentsList(communityId); //
-// })
+$(document).ready(function () {
+
+    // const communityId = $('input[name="communityId"]').val(); //j쿼리 문법
+    getCommentsList(communityId); //
+})
 // 댓글 리스트 가져옴
 function getCommentsList(communityId) {
     $.ajax({
@@ -73,7 +60,7 @@ function getCommentsList(communityId) {
             // 댓글 없을 때 표시할 html
             if(data.length === 0){
                 commentListArea.append(
-                    `<div class="comment-box" style="margin-top:10px;text-align: center;border: none !important">
+                    `<div class="alert alert-info">
                          작성된 댓글이 없습니다.
                     </div>`
                 );
@@ -94,25 +81,26 @@ function getCommentsList(communityId) {
                 // 현재 로그인된 계정과 댓글 작성자가 동일하다면 만들어줄 버튼
                 if(loginUserId === comment.userId){
                     buttons = `
-                        <div class="comment-actions" style="margin-top: 10px">
-                            <button onclick="updateComment(${comment.commentId})" class="report-button">수정</button>
-                            <button onclick="deleteComment(${comment.commentId})" class="send-button">삭제</button>
+                        <div class="comment-actions">
+                            <button onclick="updateComment(${comment.commentId})" class="btn btn-primary">수정</button>
+                            <button onclick="deleteComment(${comment.commentId})" class="btn btn-danger">삭제</button>
                         </div>
                     `
                 }
 
                 // 종합적으로 뿌려줄 html
                 let commentElement = `
-                    <li class="comment-box " id="comment-${comment.commentId}" style="display:flex;flex-direction: column;list-style-type: none;margin-bottom: 0.3rem;padding:0.625rem 1.875rem; ">
+                    <li class="comment-item">
                         <strong class="comment-title">
                             <img alt="#" src="https://static.cdn.soomgo.com/upload/profile-default/soomgo_65.jpg?h=320&w=320&webp=1">
-                            <span class="comment-nickname">${comment.userName}</span>
-                            <span class="comment-date">${commentDate}${editStr}</span>
+                            <span class="comment-nickname">인재파파</span>
+                            <span class="comment-date">(2024-07-04 06:39)</span>
                         </strong>
-<!--                        <img class="delete-icon" alt="#" width="10px" height="10px" src="https://w7.pngwing.com/pngs/447/77/png-transparent-computer-icons-x-mark-symbol-check-mark-symbol-miscellaneous-cross-sign.png">-->
-                        ${buttons}
+                        <img class="delete-icon" alt="#" width="10px" height="10px" src="https://w7.pngwing.com/pngs/447/77/png-transparent-computer-icons-x-mark-symbol-check-mark-symbol-miscellaneous-cross-sign.png">
+                        <button type="button" class="report-button">신고하기</button>
+                        <button type="button" class="send-button">견적요청</button>
                         <div class="comment-text">
-                            ${comment.commentContent}
+                            당기면 빠집니다 살살 땡기세요
                         </div>
                     </li>
                 `
@@ -126,59 +114,8 @@ function getCommentsList(communityId) {
     })
 }
 
-//댓글 추가
-function updateComment(){
-    let communityId = $('input[name="communityId"]').val();
-    let commentContent = $('#commentContent').val();
 
-    //textarea비어있으면 경고
-    if(!commentContent){
-        alert('내용을 입력하세요!');
-        return
-    }
-    $.ajax(
-        {
-            method : 'post',
-            url: '/comments',
-            contentType: 'application/json', //서버에서 내가 보낸 데이터를 읽을때 json으로 인식하여 읽어들임
-            data: JSON.stringify({//json형태를 문자열로 바꿔서 보냄 키:value를 문자열 형태로
-                communityId: communityId,
-                commentContent: commentContent,
-                userId : loginUserId
-            }),
-            success : function(data) {
-                $('#commentContent').val('')
-                getCommentsList(communityId);
-            },
-            error :function (data){ //매개변수 없어도 에러안남
-                console.error(data)
-            }
 
-        }
-    )
-}
-// 댓글 삭제
-function deleteComment(commentId){
-    // 매개 변수로 pk 잘 넘어왔는지 확인.
-    // alert(commentId)
-    // console.log(commentId)
-
-    if(!confirm('정말로 삭제하시겠습니까?')){
-        return;
-    }
-
-    $.ajax({
-        method : 'delete',
-        url : '/comments/' + commentId,
-        success : function(data) {
-            console.log(data, '삭제 성공')
-            getCommentsList($('input[name="communityId"]').val());
-        },
-        error : function(data) {
-            console.error(data, '삭제 실패')
-        }
-    })
-}
 
 
 
@@ -204,9 +141,9 @@ function formatDate(dateString) {
     let displayText = "";
 
     // 년, 월, 일이 모두 같은 경우 "오늘"로 표시
-    // if (nowYear === commentYear && nowMonth === commentMonth && nowDate === commentDateDate) {
-    //     displayText = "오늘";
-    // } else {
+    if (nowYear === commentYear && nowMonth === commentMonth && nowDate === commentDateDate) {
+        displayText = "오늘";
+    } else {
         // 그 외의 경우, 정해진 포맷으로 표시
         const yy = commentYear.toString().slice(-2); // 마지막 두 자리를 가지고 옴.
         const M = commentMonth + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
@@ -215,7 +152,7 @@ function formatDate(dateString) {
         const mm = commentDate.getMinutes().toString().padStart(2, '0'); // 두자리 수 일 때 앞에 0을 붙임.
 
         displayText = `${yy}년 ${M}월 ${d}일 ${HH}시 ${mm}분`;
-    // }
+    }
     return displayText;
 }
 

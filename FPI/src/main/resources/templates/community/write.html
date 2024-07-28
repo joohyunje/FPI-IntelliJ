@@ -27,14 +27,10 @@
                         게시판 선택 :
                     </div>
                     <label class="service-area" for="subject">
-                        <select  class="service-part" name="subject" id="subject" aria-required="false">
+                        <select class="service-part" name="subject" id="subject" aria-required="false">
                             <option value="자유게시판">자유게시판</option>
-                            <option th:if="*{proId != null}" value="전문가팁">전문가 팁</option>
+                            <option value="전문가팁">전문가 팁</option>
                         </select>
-<!--                        <select th:unless="*{proId != null}" class="service-part" name="subject" id="subject" aria-required="false">-->
-<!--                            <option value="자유게시판">자유게시판</option>-->
-<!--                            -->
-<!--                        </select>-->
                     </label>
                 </div>
             </div>
@@ -51,7 +47,7 @@
 
 <!--        작성자-->
         <input type="hidden" th:value="*{userId}" name="userId">
-        <input type="hidden" th:if="*{communityId != null}" th:value="*{communityId}" name="communityId">
+        <input type="hidden" th:value="*{communityId}" name="communityId">
 
 
 
