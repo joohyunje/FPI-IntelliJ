@@ -23,6 +23,10 @@ public class ProRequestDetailDTO {
     private Long proStarRate;
     private String proRequestProgress;
     private Long proRequestPay;
+    private Long checkProReview;
+    private Long checkUserReview;
+    private String proImg;
+
 
 //    나중에 리뷰 부분에 다시 해도 될듯!!
 //    private String userName;

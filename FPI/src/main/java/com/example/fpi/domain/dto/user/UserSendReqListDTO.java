@@ -17,5 +17,6 @@ public class UserSendReqListDTO {
     private Long proStarRate;
     private String proName;
     private Long empCnt;
+    private String proImg;
 
 }

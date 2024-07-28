@@ -16,5 +16,6 @@ public class UserUploadListDTO {
     private LocalDate userUploadDate;
     private String userName;
     private String serviceName;
+    private String userImg;
 
 }

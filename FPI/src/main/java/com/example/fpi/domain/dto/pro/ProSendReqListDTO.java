@@ -16,5 +16,6 @@ public class ProSendReqListDTO {
     private String userUploadTitle;
     private Long userStarRate;
     private String userName;
+    private String userImg;
 
 }

@@ -15,16 +15,18 @@ import java.time.LocalDate;
 @ToString
 public class UserRequestVO {
 
-    private String userRequestId;
+    private Long userRequestId;
     private Long userRequestPay;
     private String userRequestContent;
     private LocalDate userRequestDate;
     private String userRequestProgress;
     private String userId;
     private Long proUploadId;
+    private Long checkProReview;
+    private Long checkUserReview;
 
     @Builder
-    public UserRequestVO(String userRequestId, Long userRequestPay, String userRequestContent, LocalDate userRequestDate, String userRequestProgress, String userId, Long proUploadId) {
+    public UserRequestVO(Long userRequestId, Long userRequestPay, String userRequestContent, LocalDate userRequestDate, String userRequestProgress, String userId, Long proUploadId, Long checkProReview, Long checkUserReview) {
         this.userRequestId = userRequestId;
         this.userRequestPay = userRequestPay;
         this.userRequestContent = userRequestContent;
@@ -32,6 +34,8 @@ public class UserRequestVO {
         this.userRequestProgress = userRequestProgress;
         this.userId = userId;
         this.proUploadId = proUploadId;
+        this.checkProReview = checkProReview;
+        this.checkUserReview = checkUserReview;
     }
 
     public static UserRequestVO toEntity(UserRequestDTO userRequestDTO) {
@@ -42,6 +46,8 @@ public class UserRequestVO {
                 .userRequestProgress(userRequestDTO.getUserRequestProgress())
                 .userId(userRequestDTO.getUserId())
                 .proUploadId(userRequestDTO.getProUploadId())
+                .checkProReview(userRequestDTO.getCheckProReview())
+                .checkUserReview(userRequestDTO.getCheckUserReview())
                 .build();
     }
 

@@ -17,4 +17,5 @@ public class UserReceivedReqListDTO {
     private Long proStarRate;
     private Long empCnt;
     private String userUploadTitle;
+    private String proImg;
 }

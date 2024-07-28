@@ -7,6 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/main/common.css}">
     <link rel="stylesheet" th:href="@{/css/layout/header.css}">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
+
 </head>
 <body>
 <div th:replace="~{/layout/header :: header}"></div>
@@ -21,6 +22,8 @@
     <div class="page-body">
         <form method="post" th:action="@{/user/proReview}" class="review-input" th:object="${proReview}">
             <input type="hidden" name="proId" th:value="${proId}">
+            <input type="hidden" name="proRequestId" th:value="${proRequestId} != null ? ${proRequestId} : 0 ">
+            <input type="hidden" name="userRequestId" th:value="${userRequestId} != null ? ${userRequestId} : 0">
             <div class="request-info">
                 <div class="reviewer-info">
                     <div class="review-name-rate">
@@ -40,21 +43,42 @@
                     </div>
                 </div>
                 <!-- 이부분은 다시 수정할 필요 있음!! 별 주기 -->
-                <div class="star-rating">
-                    <span>별점</span>
-                    <input type="text" th:field="*{proReviewRate}">
-                    <input type="radio" class="star" value="1">
-                    <input type="radio" class="star" value="2">
-                    <input type="radio" class="star" value="3">
-                    <input type="radio" class="star" value="4">
-                    <input type="radio" class="star" value="5">
+                <div class="star_rating">
+                    <input type="hidden" id="starRate_input" name="proReviewRate">
+                    <span class="star on" onclick="proRating(1)"> </span>
+                    <span class="star" onclick="proRating(2)"> </span>
+                    <span class="star" onclick="proRating(3)"> </span>
+                    <span class="star" onclick="proRating(4)"> </span>
+                    <span class="star" onclick="proRating(5)"> </span>
                 </div>
             </div>
             <div class="submit-btn">
-                <button type="submit" class="btn">등록</button>
+                <button type="submit" class="btn" onclick="reviewed()">등록</button>
             </div>
         </form>
     </div>
 </div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  $('.star_rating > .star').click(function () {
+    $(this).parent().children('span').removeClass('on');
+    $(this).addClass('on').prevAll('span').addClass('on');
+  })
+
+  proRating = (serviceId) => {
+    const starRate_input = document.getElementById('starRate_input');
+    starRate_input.value = serviceId;
+  }
+
+
+</script>
+<!--<script>-->
+
+<!--  reviewed = () => {-->
+<!--    let reviewTrueFalse = 1;-->
+<!--    location.href = "user_received_req_info.html?" + reviewTrueFalse;-->
+<!--  }-->
+
+<!--</script>-->
 </html>

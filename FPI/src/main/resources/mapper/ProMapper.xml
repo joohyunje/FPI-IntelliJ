@@ -29,13 +29,13 @@
 
 
     <!--    고용횟수 가져옴-->
-    <select id="empCount">
+    <select id="empCount" resultType="Long">
         select sum(cnt) as proEmpCount
         from (select count(*) as cnt
               from TBL_USER_REQUEST u
                        join TBL_PRO_UPLOAD p
                             on u.PRO_UPLOAD_ID = p.PRO_UPLOAD_ID
-              where u.USER_REQUEST_PROGRESS = 'post'
+              where u.USER_REQUEST_PROGRESS = 'POST'
                 and p.PRO_ID = #{proId}
 
               union all
@@ -43,8 +43,15 @@
               select count(*) as cnt
               from TBL_PRO_REQUEST
               where PRO_ID = #{proId}
-                and PRO_REQUEST_PROGRESS = 'post')
+                and PRO_REQUEST_PROGRESS = 'POST')
     </select>
+
+    <!--    교용횟수 업데이트   -->
+    <update id="updateEmpCnt">
+        update TBL_PRO
+        set EMP_CNT = #{empCnt}
+        where PRO_ID = #{proId}
+    </update>
 
 
     <!--    <select id="starCount">-->
@@ -171,7 +178,7 @@
         SELECT ROWNUM AS RN, UPLOAD.*
         FROM (
         select TPU.PRO_UPLOAD_ID, TPU.PRO_ID, tpu.PRO_UPLOAD_TITLE, tpu.PRO_UPLOAD_DATE, tp.PRO_STAR_RATE, tp.PRO_NAME,
-        ts.SERVICE_NAME
+        ts.SERVICE_NAME, tp.PRO_IMG
         from TBL_PRO_UPLOAD TPU
         inner join TBL_PRO TP
         on TPU.PRO_ID = TP.PRO_ID
@@ -205,7 +212,7 @@
     <!-- 견적으로  전문가 경력 가져오기-->
     <select id="selectProCareerByUp" resultType="ProCareerInfoListDTO">
         select tpc.PRO_ID, tpc.AWARD, tpc.CAREERINFO_ID
-        from TBL_PRO_CAREERINFO TPC
+        from TBL_CAREERINFO TPC
                  inner join TBL_PRO_UPLOAD TPU
                             on TPU.PRO_ID = TPC.PRO_ID
         where TPU.PRO_UPLOAD_ID = #{proUploadId}
@@ -268,7 +275,7 @@
     <insert id="proRequest">
         insert into TBL_PRO_REQUEST
         values (SEQ_REQUEST.nextval, #{proRequestPay}, #{proRequestContent},
-                sysdate, 'PRE', #{proId}, #{userUploadId})
+                sysdate, 'PRE', #{proId}, #{userUploadId}, 0, 0)
     </insert>
 
     <!--    회원 올린 견적에 대해서 내가 보낸 요청이 있는 없는지 확인-->
@@ -305,17 +312,79 @@
         where USER_REQUEST_ID = #{userRequestId}
     </update>
 
+    <!--   회원이 보낸 요청에서 리뷰 작성하기 눌렀을때 업데이트   -->
+    <update id="updateUserRequestUserReview">
+        update TBL_USER_REQUEST
+        set CHECK_PRO_REVIEW = 1
+        where USER_REQUEST_ID = #{userRequestId}
+    </update>
+
+    <!--   내가 보낸 요청에서 리뷰 작성하기 눌렀을때 업데이트   -->
+    <update id="updateProRequestUserReview">
+        update TBL_PRO_REQUEST
+        set CHECK_PRO_REVIEW = 1
+        where PRO_REQUEST_ID = #{proRequestId}
+    </update>
+
     <!--    전문가가 유저 신고하기-->
     <insert id="proAccuseUser">
         insert into TBL_USER_ACCUSE
         values (SEQ_ACCUSE.nextval, #{userAccuseContent}, #{userId}, #{proId})
     </insert>
 
+
     <!--    유저가 전문가 신고 할때 리퀘스트 아이디를 통해 프로 아이디 가져오기-->
     <select id="selectUserIdByUserRequestId" resultType="String">
         select USER_ID
         from TBL_USER_REQUEST
         where USER_REQUEST_ID = #{userRequestId}
+    </select>
+
+
+    <!--    프로가 올린 서비스를 통해 아이디 가져오기 -->
+    <select id="selectProIdByProUploadId" resultType="Long">
+        select PRO_ID
+        from TBL_PRO_UPLOAD
+        where PRO_UPLOAD_ID = #{proUploadId}
+    </select>
+
+    <!--        전문가 별점 가져오기 -->
+    <select id="selectProRate" resultType="Long">
+        select round(avg(PRO_REVIEW_RATE), 0)
+        from TBL_PRO_REVIEW
+        where PRO_ID = #{proId}
+    </select>
+
+    <!--    전문가 별점 넣어주기 -->
+    <update id="updateProRate">
+        update TBL_PRO
+        set PRO_STAR_RATE = #{proStarRate}
+        where PRO_ID = #{proId}
+
+    </update>
+
+    <!--    회원 별점 가져오기 -->
+    <select id="selectUserRate" resultType="Long">
+        select round(avg(USER_REVIEW_RATE), 0)
+        from TBL_USER_REVIEW
+        where USER_ID = #{userId}
+    </select>
+
+    <!--    회원 별점 넣어주기 -->
+    <update id="updateUserRate">
+        update TBL_USER
+        set USER_STAR_RATE = #{userStarRate}
+        where USER_ID = #{userId}
+
+    </update>
+
+    <!--    유저가 올린 견적를 통해 아이디 가져오기 -->
+    <select id="selectUserIdByProRequestId" resultType="String">
+        select USER_ID
+        from TBL_PRO_REQUEST
+                 inner join TBL_USER_UPLOAD
+                            on TBL_PRO_REQUEST.USER_UPLOAD_ID = TBL_USER_UPLOAD.USER_UPLOAD_ID
+        where TBL_PRO_REQUEST.PRO_REQUEST_ID = #{proRequestId}
     </select>
 
 
