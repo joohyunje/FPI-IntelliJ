@@ -332,6 +332,7 @@
         values (SEQ_ACCUSE.nextval, #{userAccuseContent}, #{userId}, #{proId})
     </insert>
 
+
     <!--    유저가 전문가 신고 할때 리퀘스트 아이디를 통해 프로 아이디 가져오기-->
     <select id="selectUserIdByUserRequestId" resultType="String">
         select USER_ID

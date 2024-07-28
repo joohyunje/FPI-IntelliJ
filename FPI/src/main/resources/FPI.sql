@@ -50,6 +50,12 @@ CREATE TABLE TBL_PRO(
 
 
 
+CREATE TABLE TBL_LOCATION(
+             LOCATION_ID NUMBER PRIMARY KEY,
+             REGION VARCHAR2(50) NOT NULL,
+             CITY VARCHAR2(50) NOT NULL
+);
+
 -- 전문가 자격증번호,발급기관
 CREATE TABLE TBL_CARDINFO(
              CARDINFO_ID NUMBER PRIMARY KEY,
@@ -215,7 +221,7 @@ CREATE TABLE TBL_PRO_REVIEW(
            REFERENCES TBL_PRO (PRO_ID) ON DELETE CASCADE
 );
 
---프로가 받는 리뷰 인데 받는 사람 pro_id 도 들어가야하지 않나?
+
 
 -- 회원이 받는 리뷰
 CREATE TABLE TBL_USER_REVIEW(
@@ -613,6 +619,10 @@ WHERE TPU.PRO_UPLOAD_ID = 7
 
 -- 현제
 
+
+
+
+--     카테고리 insert
 insert into TBL_CATEGORY (CATEGORY_ID, CATEGORY_NAME)
 values (SEQ_CATEGORY.nextval, '이사/청소');
 
@@ -806,6 +816,53 @@ from(
         from TBL_PRO_REQUEST
         where PRO_ID=1 and PRO_REQUEST_PROGRESS= 'POST'
     );
+
+select count(*) as cnt
+from TBL_USER_REQUEST u join TBL_PRO_UPLOAD p
+                             on u.PRO_UPLOAD_ID = p.PRO_UPLOAD_ID
+where u.USER_REQUEST_PROGRESS ='POST' and p.PRO_ID = 1
+
+
+SELECT USER_REQUEST_ID, USER_REQUEST_PAY, USER_REQUEST_DATE, USER_REQUEST_PROGRESS,
+       TBL_PRO_UPLOAD.PRO_UPLOAD_TITLE,NVL(PR.PRO_STAR_RATE , '0') AS pro_Star_Rate, PR.PRO_NAME, PR.EMP_CNT,
+       TBL_USER_REQUEST.PRO_UPLOAD_ID
+FROM TBL_USER_REQUEST
+         INNER JOIN TBL_PRO_UPLOAD
+                    ON TBL_USER_REQUEST.PRO_UPLOAD_ID = TBL_PRO_UPLOAD.PRO_UPLOAD_ID
+         INNER JOIN TBL_PRO PR
+                    ON TBL_PRO_UPLOAD.PRO_ID = PR.PRO_ID
+WHERE TBL_USER_REQUEST.USER_ID = 3619331702;
+
+
+alter table TBL_PRO_REQUEST
+    add CHECK_PRO_REVIEW NUMBER default 0;
+
+alter table TBL_PRO_REQUEST
+    add CHECK_USER_REVIEW NUMBER default 0;
+
+alter table TBL_USER_REQUEST
+    add CHECK_PRO_REVIEW NUMBER default 0;
+
+alter table TBL_USER_REQUEST
+    add CHECK_USER_REVIEW NUMBER default 0;
+
+select sum(cnt) as proEmpCount
+from(
+        select count(*) as cnt
+        from TBL_USER_REQUEST u join TBL_PRO_UPLOAD p
+                                     on u.PRO_UPLOAD_ID = p.PRO_UPLOAD_ID
+        where u.USER_REQUEST_PROGRESS ='POST' and p.PRO_ID = 1
+
+        union all
+
+        select count(*) as cnt
+        from TBL_PRO_REQUEST
+        where PRO_ID=1 and PRO_REQUEST_PROGRESS= 'POST'
+    );
+alter table TBL_COMMUNITY
+    add VIEWS NUMBER;
+alter table TBL_COMMUNITY
+    add show_content varchar2(1000)
 
 select count(*) as cnt
 from TBL_USER_REQUEST u join TBL_PRO_UPLOAD p
