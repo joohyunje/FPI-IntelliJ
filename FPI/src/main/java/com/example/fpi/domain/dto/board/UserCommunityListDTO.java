@@ -20,4 +20,8 @@ public class UserCommunityListDTO {
     private LocalDateTime communityUpdateDate;
     //좋아요 갯수
     private int likeCount;
+    private String myName;
+    private int commentCount;
+    private int views;
+    private String author;
 }

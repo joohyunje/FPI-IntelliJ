@@ -69,7 +69,7 @@
         where pro_id = #{proId}
     </select>
 
-
+<!--수정 폼으로 넘어갈때 가져갈 자료-->
     <select id="selectEditPro">
         select pro.*, l.REGION, l.CITY
         from (select p.PRO_ID,
@@ -318,5 +318,9 @@
         where USER_REQUEST_ID = #{userRequestId}
     </select>
 
-
+<!--    마이페이지에서 클릭으로 자격증정보 삭제-->
+    <delete id="clickDeleteCard">
+        delete from TBL_CARDINFO
+        where CARDINFO_ID = #{cardIndfoId}
+    </delete>
 </mapper>
