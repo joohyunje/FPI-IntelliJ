@@ -23,4 +23,6 @@ public class CommunityDTO {
     private String communityThumbnail;
     private String showContent;
     private int views;
+    private String author;
+
 }

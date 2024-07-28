@@ -748,8 +748,21 @@ where USER_ID=1 and COMMUNITY_ID=1;
 --              C.COMMUNITY_UPDATE_DATE DESC
 --      ) COMMUNITY
 -- WHERE ROWNUM &lt;= 4
+select Count(*)
+from(
+        select u.user_name, c.*
+        from tbl_user u join TBL_COMMENT c
+                             on u.USER_ID =c.USER_ID
+                                 and c.COMMUNITY_ID = 33);
+
+
+
 
 alter table TBL_COMMUNITY
     add VIEWS NUMBER;
 alter table TBL_COMMUNITY
-    add show_content varchar2(1000)
+    add show_content varchar2(1000);
+alter table TBL_COMMUNITY
+    add author varchar2(50);
+alter table TBL_COMMUNITY
+    add author varchar2(50)

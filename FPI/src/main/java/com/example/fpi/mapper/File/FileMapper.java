@@ -1,10 +1,10 @@
 package com.example.fpi.mapper.File;
 
-import com.example.fpi.domain.dto.board.CommunityFileDTO;
+//import com.example.fpi.domain.dto.board.CommunityFileDTO;
 import com.example.fpi.domain.dto.certify.CardInfoFileDTO;
 import com.example.fpi.domain.dto.file.ProUploadFileDTO;
 import com.example.fpi.domain.dto.file.UserUploadFileDTO;
-import com.example.fpi.domain.vo.board.CommunityFileVO;
+//import com.example.fpi.domain.vo.board.CommunityFileVO;
 import com.example.fpi.domain.vo.file.ProUploadFileVO;
 import com.example.fpi.domain.vo.file.UserUploadFileVO;
 import org.apache.ibatis.annotations.Mapper;
