@@ -121,6 +121,4 @@ public interface ProService {
     //    컨트롤러에서 생성하여 전문가 정보 수정시 input 추가되었을때
     List<CardInfoDTO> getCardInfoList(Long proId, String cardInfoId, String certiOrgan, String certiNum);
 
-//    마이페이지에서 클릭으로 자격증정보 삭제
-    void clickDeleteCard(Long cardInfoId);
 }

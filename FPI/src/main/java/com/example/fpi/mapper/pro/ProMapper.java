@@ -135,6 +135,5 @@ public interface ProMapper {
 
     String selectUserIdByUserRequestId(Long userRequestId);
 
-    void clickDeleteCard(Long cardInfoId);
 
 }

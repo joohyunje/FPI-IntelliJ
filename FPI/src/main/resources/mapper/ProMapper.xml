@@ -318,9 +318,5 @@
         where USER_REQUEST_ID = #{userRequestId}
     </select>
 
-<!--    마이페이지에서 클릭으로 자격증정보 삭제-->
-    <delete id="clickDeleteCard">
-        delete from TBL_CARDINFO
-        where CARDINFO_ID = #{cardIndfoId}
-    </delete>
+
 </mapper>

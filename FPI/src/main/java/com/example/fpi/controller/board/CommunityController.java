@@ -5,9 +5,7 @@ import com.example.fpi.domain.dto.board.CommunityDetailDTO;
 import com.example.fpi.domain.dto.board.LikeDTO;
 import com.example.fpi.domain.oauth.CustomOAuth2User;
 import com.example.fpi.service.board.CommunityService;
-import com.example.fpi.service.pro.ProService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -23,7 +21,6 @@ import java.util.List;
 public class CommunityController {
 
     private final CommunityService communityService;
-    private final ProService proService;
 
 //    @GetMapping({"/community", "/freeTalk", "/proTip"})
 //    public String list(@RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
@@ -82,7 +79,7 @@ public class CommunityController {
                          @AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
 
 
-        CommunityDetailDTO commu = communityService.getCommunityDetail(communityId,customOAuth2User);
+        CommunityDetailDTO commu = communityService.getCommunityDetail(communityId);
 
 //        로그인했다면, 그 로그인값을 detail에 넣어줌
         if(customOAuth2User != null && customOAuth2User.getUserId() != null){
@@ -99,29 +96,17 @@ public class CommunityController {
 
 //    게시글 작성시 이동할 폼 지정
     @GetMapping("/community/write")
-    public String writeForm(Model model, @AuthenticationPrincipal CustomOAuth2User customOAuth2User,HttpSession session){
-        CommunityDetailDTO communityInfo = new CommunityDetailDTO();
+    public String writeForm(Model model, @AuthenticationPrincipal CustomOAuth2User customOAuth2User){
+        CommunityDTO communityInfo = new CommunityDTO();
         communityInfo.setUserId(customOAuth2User.getUserId());
-        if(session.getAttribute("loginName") == null){
-            communityInfo.setProId(proService.selectProId(customOAuth2User.getUserId()));
-        }
-        else if(session.getAttribute("proName") == null){
-            communityInfo.setProId(null);
-        }
         model.addAttribute("communityInfo",communityInfo);
 
         return "/community/write";
     }
 //게시글 수정시 가지고 이동할 정보, 폼(postmapping) 지정
     @GetMapping("/community/edit/{communityId}")
-    public String goEdit(@PathVariable Long communityId, Model model, @AuthenticationPrincipal CustomOAuth2User customOAuth2User, HttpSession session){
-        CommunityDetailDTO communityInfo=communityService.getCommunityDetail(communityId,customOAuth2User);
-        if(session.getAttribute("user") == null){
-            communityInfo.setProId(proService.selectProId(customOAuth2User.getUserId()));
-        }
-        else if(session.getAttribute("pro") == null){
-            communityInfo.setProId(null);
-        }
+    public String goEdit(@PathVariable Long communityId,Model model, @AuthenticationPrincipal CustomOAuth2User customOAuth2User){
+        CommunityDetailDTO communityInfo=communityService.getCommunityDetail(communityId);
         communityInfo.setLoginUserId(customOAuth2User.getUserId());
         model.addAttribute("communityInfo",communityInfo);
 
@@ -132,10 +117,10 @@ public class CommunityController {
 
 //    게시글 수정,작성
     @PostMapping("/community/write")
-    public String write(CommunityDTO communityInfo,@AuthenticationPrincipal CustomOAuth2User customOAuth2User,RedirectAttributes redirectAttributes,HttpSession session){
+    public String write(CommunityDTO communityInfo,@AuthenticationPrincipal CustomOAuth2User customOAuth2User,RedirectAttributes redirectAttributes){
 
 //       작성자와 로그인된 사람이 같다면
-        if(communityInfo.getCommunityId() !=null && customOAuth2User.getUserId() != null){
+        if(communityInfo.getUserId().equals(customOAuth2User.getUserId())){
             communityService.updateCommunity(communityInfo);
 
             redirectAttributes.addFlashAttribute("msg","게시글이 수정 되었습니다.");

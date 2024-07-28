@@ -451,10 +451,4 @@ public class ProServiceImpl implements ProService {
 
         return cardInfoList;
     }
-
-//   전문가 마이페이지에서 클릭으로 정보삭제
-    @Override
-    public void clickDeleteCard(Long cardInfoId) {
-        proMapper.clickDeleteCard(cardInfoId);
-    }
 }
