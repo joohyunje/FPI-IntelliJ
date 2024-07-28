@@ -23,7 +23,7 @@ PagedResponse<CommunityDTO> getCommunityList(int page, int pageSize,String searc
 
 
 
-    CommunityDetailDTO getCommunityDetail(Long communityId); //게시판 상세보기
+    CommunityDetailDTO getCommunityDetail(Long communityId,CustomOAuth2User user); //게시판 상세보기
 
 
     void saveCommunity(CommunityDTO community); //게시판 작성
@@ -34,5 +34,6 @@ PagedResponse<CommunityDTO> getCommunityList(int page, int pageSize,String searc
 
 //    메인화면에 뿌려주는 최신 리스트
     List<CommunityDTO> maincommunityList();
+
 }
 

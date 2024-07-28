@@ -32,4 +32,7 @@ public interface CommunityMapper {
     long getLikeSeq(); //좋아요테이블 시퀀스 추가
     void insertLike(LikeVO vo);
     void deleteLike(Long likeId);
+
+//    조회수
+    void plusViews(Long communityId);
 }
