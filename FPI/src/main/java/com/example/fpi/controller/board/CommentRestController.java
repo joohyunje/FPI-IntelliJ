@@ -2,6 +2,7 @@ package com.example.fpi.controller.board;
 
 import com.example.fpi.domain.dto.board.CommentDTO;
 import com.example.fpi.service.board.CommentService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +23,21 @@ public class CommentRestController {
 
     //    댓글추가
     @PostMapping
-    public ResponseEntity<?> addComment(@RequestBody CommentDTO commentDTO) {
+    public ResponseEntity<?> addComment(@RequestBody CommentDTO commentDTO, HttpSession session) {
+        String loginName = (String) session.getAttribute("loginName");
+        String proName = (String) session.getAttribute("proName");
+        if(session.getAttribute("loginName") == null){
+         commentDTO.setAuthor(proName);
+        }
+        else if(session.getAttribute("proName") == null){
+          commentDTO.setAuthor(loginName);
+        }
+
+
         commentService.saveComment(commentDTO);
+
+
+
 
 //         ResponseEntity.ok() 응답만들때사용
 //        build: 최종 객체 생성,
