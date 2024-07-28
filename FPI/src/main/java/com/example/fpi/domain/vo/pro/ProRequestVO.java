@@ -15,16 +15,18 @@ import java.time.LocalDate;
 @ToString
 public class ProRequestVO {
 
-    private String proRequestId;
+    private Long proRequestId;
     private Long proRequestPay;
     private String proRequestContent;
     private LocalDate proRequestDate;
     private String proRequestProgress;
     private Long proId;
     private Long userUploadId;
+    private Long checkProReview;
+    private Long checkUserReview;
 
     @Builder
-    public ProRequestVO(String proRequestId,Long proRequestPay, String proRequestContent, LocalDate proRequestDate, String proRequestProgress, Long proId, Long userUploadId) {
+    public ProRequestVO(Long proRequestId, Long proRequestPay, String proRequestContent, LocalDate proRequestDate, String proRequestProgress, Long proId, Long userUploadId, Long checkProReview, Long checkUserReview) {
         this.proRequestId = proRequestId;
         this.proRequestPay = proRequestPay;
         this.proRequestContent = proRequestContent;
@@ -32,9 +34,11 @@ public class ProRequestVO {
         this.proRequestProgress = proRequestProgress;
         this.proId = proId;
         this.userUploadId = userUploadId;
+        this.checkProReview = checkProReview;
+        this.checkUserReview = checkUserReview;
     }
 
-    public static ProRequestVO toEntity(ProRequestDTO proRequestDTO){
+    public static ProRequestVO toEntity(ProRequestDTO proRequestDTO) {
         return ProRequestVO.builder().proRequestId(proRequestDTO.getProRequestId())
                 .proRequestPay(proRequestDTO.getProRequestPay())
                 .proRequestContent(proRequestDTO.getProRequestContent())
@@ -42,6 +46,8 @@ public class ProRequestVO {
                 .proRequestProgress(proRequestDTO.getProRequestProgress())
                 .proId(proRequestDTO.getProId())
                 .userUploadId(proRequestDTO.getUserUploadId())
+                .checkProReview(proRequestDTO.getCheckProReview())
+                .checkUserReview(proRequestDTO.getCheckUserReview())
                 .build();
     }
 

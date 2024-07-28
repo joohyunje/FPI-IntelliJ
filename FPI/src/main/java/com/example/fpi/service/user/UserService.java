@@ -78,4 +78,18 @@ public interface UserService {
     void userAccusePro(ProAccuseDTO proAccuseDTO);
 
     Long selectProIdByProRequestId(Long proRequestId);
+
+    Long selectProIdByUserRequestId(Long userRequestId);
+
+//    Long selectUserRate(String userId);
+//
+//    void updateUserRate(String userId, Long userStarRate);
+
+    Long selectProRate(Long proId);
+
+    void updateProRate(Long proId, Long proStarRate);
+
+    void updateProRequestProReview(Long proRequestId);
+
+    void updateUserRequestProReview(Long userRequestId);
 }

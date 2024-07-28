@@ -32,7 +32,7 @@ public class CommunityController {
     public String detail(@PathVariable("communityId") Long communityId, Model model,
                          @AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
 
-        CommunityDetailDTO commu = communityService.getCommunityDetail(communityId,customOAuth2User);
+        CommunityDetailDTO commu = communityService.getCommunityDetail(communityId);
 //        로그인했다면, 그 로그인값을 detail에 넣어줌
         if(customOAuth2User != null && customOAuth2User.getUserId() != null){
             commu.setLoginUserId(customOAuth2User.getUserId());
@@ -61,7 +61,7 @@ public class CommunityController {
 //게시글 수정시 가지고 이동할 정보, 폼(postmapping) 지정
     @GetMapping("/community/edit/{communityId}")
     public String goEdit(@PathVariable Long communityId, Model model, @AuthenticationPrincipal CustomOAuth2User customOAuth2User, HttpSession session){
-        CommunityDetailDTO communityInfo=communityService.getCommunityDetail(communityId,customOAuth2User);
+        CommunityDetailDTO communityInfo=communityService.getCommunityDetail(communityId);
         if(session.getAttribute("user") == null){
             communityInfo.setProId(proService.selectProId(customOAuth2User.getUserId()));
         }

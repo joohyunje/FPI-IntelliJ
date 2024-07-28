@@ -18,6 +18,8 @@
              , tp.EMP_CNT
              , tp.PRO_ID
              , TPR.PRO_REQUEST_PAY
+             , TPR.CHECK_PRO_REVIEW
+             , tpr.CHECK_USER_REVIEW
         FROM TBL_PRO_REQUEST TPR
                  INNER JOIN TBL_USER_UPLOAD
                             ON TPR.USER_UPLOAD_ID = TBL_USER_UPLOAD.USER_UPLOAD_ID
@@ -35,7 +37,7 @@
     <!--   요청으로 전문가 경력 가져오기-->
     <select id="selectProCareerByReq" resultType="ProCareerInfoListDTO">
         select tpc.PRO_ID, tpc.AWARD, tpc.CAREERINFO_ID
-        from TBL_PRO_CAREERINFO TPC
+        from TBL_CAREERINFO TPC
                  inner join TBL_PRO_REQUEST TPR
                             on tpr.PRO_ID = TPC.PRO_ID
         where tpr.PRO_REQUEST_ID = #{proRequestId}

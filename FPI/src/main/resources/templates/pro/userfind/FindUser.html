@@ -196,6 +196,8 @@
     uploadContainer.empty();
 
     uploads.forEach(function (upload) {
+      const userImgSrc = upload.userImg ? upload.userImg : '/img/basicIMG.png';
+
       let uploadRow = `<li class="feed-item">
                             <a href="/pro/uploadDetail/${upload.userUploadId}">
                                 <div class="feed-container">
@@ -208,7 +210,7 @@
                                             ${upload.userUploadTitle}
                                         </p>
                                     </div>
-                                    <img width="80" height="80" src="https://e7.pngegg.com/pngimages/982/97/png-clipart-computer-icons-camera-iphone-graphy-camera-photography-camera-icon.png" alt="img">
+                                    <img width="80" height="80" src="${userImgSrc}" alt="img">
                                 </div>
                                 <div class="feed-footer">
                                     <div class="star-icon">

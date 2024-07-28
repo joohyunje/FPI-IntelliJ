@@ -1,7 +1,6 @@
 package com.example.fpi.service.pro;
 
 import com.example.fpi.domain.dto.certify.CardInfoDTO;
-import com.example.fpi.domain.dto.certify.CardInfoFIleListDTO;
 import com.example.fpi.domain.dto.certify.CardInfoFileDTO;
 import com.example.fpi.domain.dto.certify.CareerInfoDTO;
 import com.example.fpi.domain.dto.file.ProUploadFileDTO;
@@ -10,7 +9,6 @@ import com.example.fpi.domain.dto.pro.*;
 import com.example.fpi.domain.dto.user.UserAccuseDTO;
 import com.example.fpi.domain.dto.user.UserReviewDTO;
 import com.example.fpi.domain.util.PagedResponse;
-import com.example.fpi.domain.vo.certify.CardInfoFileVO;
 import com.example.fpi.domain.vo.certify.CardInfoVO;
 import com.example.fpi.domain.vo.certify.CareerInfoVO;
 import com.example.fpi.domain.vo.file.ProUploadFileVO;
@@ -354,8 +352,12 @@ public class ProServiceImpl implements ProService {
     }
 
     @Override
+    @Transactional
     public void proWriteUserReview(UserReviewDTO userReview) {
         proMapper.proWriteUserReview(userReview);
+        String userId = userReview.getUserId();
+        Long userStarRate = selectUserRate(userId);
+        updateUserRate(userId, userStarRate);
     }
 
     @Override
@@ -451,4 +453,56 @@ public class ProServiceImpl implements ProService {
 
         return cardInfoList;
     }
+
+    @Override
+    public Long selectProIdByProUploadId(Long proUploadId) {
+        return proMapper.selectProIdByProUploadId(proUploadId);
+    }
+
+//    @Override
+//    public Long selectProRate(Long proId) {
+//        return proMapper.selectProRate(proId);
+//    }
+//
+//    @Override
+//    public void updateProRate(Long proId, Long proStarRate) {
+//        proMapper.updateProRate(proId, proStarRate);
+//    }
+
+    @Override
+    public Long selectUserRate(String userId) {
+        return proMapper.selectUserRate(userId);
+    }
+
+    @Override
+    public void updateUserRate(String userId, Long userStarRate) {
+        proMapper.updateUserRate(userId, userStarRate);
+    }
+
+    @Override
+    public String selectUserIdByProRequestId(Long proRequestId) {
+        return proMapper.selectUserIdByProRequestId(proRequestId);
+    }
+
+    @Override
+    public void updateUserRequestUserReview(Long userRequestId) {
+        proMapper.updateUserRequestUserReview(userRequestId);
+    }
+
+    @Override
+    public void updateProRequestUserReview(Long proRequestId) {
+        proMapper.updateProRequestUserReview(proRequestId);
+    }
+
+    @Override
+    public void updateEmpCnt(Long proId, Long empCnt) {
+        proMapper.updateEmpCnt(proId, empCnt);
+    }
+
+    @Override
+    public Long empCount(Long proId) {
+        return proMapper.empCount(proId);
+    }
+
+
 }

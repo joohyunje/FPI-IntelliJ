@@ -1,5 +1,6 @@
 package com.example.fpi.controller.pro;
 
+import com.example.fpi.domain.dto.file.ProCardInfoFileDTO;
 import com.example.fpi.domain.dto.file.UserUploadFileDTO;
 import com.example.fpi.domain.dto.pro.*;
 import com.example.fpi.domain.dto.user.UserAccuseDTO;
@@ -37,11 +38,17 @@ public class ProController {
     @GetMapping("/proDetail/{proRequestId}")
     public String proReqDetail(@PathVariable("proRequestId") Long proRequestId, Model model) {
 
+        Long proId = userService.selectProIdByProRequestId(proRequestId);
         ProRequestDetailDTO proRequest = proService.selectProReqDetail(proRequestId);
         List<ProCareerInfoListDTO> careerInfo = proService.selectProCareerByReq(proRequestId);
+        List<ProCardInfoFileDTO> proCardInfoFiles = fileMapper.selectProCardFileList(proId);
+        String userId = proService.selectUserIdByProRequestId(proRequestId);
+        System.out.println(userId);
 
+        model.addAttribute("proCardInfoFiles", proCardInfoFiles);
         model.addAttribute("proRequest", proRequest);
         model.addAttribute("careerInfo", careerInfo);
+        model.addAttribute("userId", userId);
 
         return "/pro/req_list/pro_send_req_info";
 
@@ -102,6 +109,9 @@ public class ProController {
         Long proId = proService.selectProId(userId);
         ProLocationDTO proLocation = proService.selectProLocation(proId);
 
+        ProDetailDTO proDetail = proService.detailPro(proId);
+
+        model.addAttribute("proDetail", proDetail);
         model.addAttribute("proUpload", new ProUploadDTO());
         model.addAttribute("proLocation", proLocation);
 
@@ -144,12 +154,33 @@ public class ProController {
 
     }
 
-    @GetMapping("/userReview/{userId}")
-    public String userReviewForm(@PathVariable String userId,
+    @GetMapping("/userReview/{userRequestId}")
+    public String userReviewForm(@PathVariable Long userRequestId,
                                  Model model) {
+
+        String userId = proService.selectUserIdByUserRequestId(userRequestId);
 
         String userName = userService.getUserName(userId);
 
+        model.addAttribute("userRequestId", userRequestId);
+        model.addAttribute("userReview", new UserReviewDTO());
+        model.addAttribute("userId", userId);
+        model.addAttribute("userName", userName);
+        System.out.println(userId);
+        System.out.println(userName);
+
+        return "/pro/req_list/reviewWrite";
+    }
+
+    @GetMapping("/userReview2/{proRequestId}")
+    public String userReviewForm2(@PathVariable Long proRequestId,
+                                  Model model) {
+
+        String userId = proService.selectUserIdByProRequestId(proRequestId);
+
+        String userName = userService.getUserName(userId);
+
+        model.addAttribute("proRequestId", proRequestId);
         model.addAttribute("userReview", new UserReviewDTO());
         model.addAttribute("userId", userId);
         model.addAttribute("userName", userName);
@@ -162,12 +193,20 @@ public class ProController {
     @PostMapping("/userReview")
     public String userReview(UserReviewDTO userReview,
                              @AuthenticationPrincipal CustomOAuth2User customOAuth2User,
-                             @RequestParam String userId) {
+                             @RequestParam String userId,
+                             @RequestParam Long userRequestId,
+                             @RequestParam Long proRequestId) {
 
         String user = customOAuth2User.getUserId();
         Long proId = proService.selectProId(user);
         userReview.setProId(proId);
         userReview.setUserId(userId);
+
+        if (userRequestId == 0) {
+            proService.updateProRequestUserReview(proRequestId);
+        } else {
+            proService.updateUserRequestUserReview(userRequestId);
+        }
 
         proService.proWriteUserReview(userReview);
 
@@ -192,6 +231,10 @@ public class ProController {
 
     @PostMapping("/userDetail/updateComplete/{userRequestId}")
     public String updateComplete(@PathVariable Long userRequestId) {
+
+        Long proId = userService.selectProIdByUserRequestId(userRequestId);
+        Long empCnt = proService.empCount(proId);
+        proService.updateEmpCnt(proId, empCnt);
 
         proService.updateProComplete(userRequestId);
         return "redirect:/pro/userDetail/" + userRequestId;

@@ -6,8 +6,8 @@
     <link rel="stylesheet" th:href="@{/css/user/req_list/received_req_info.css}">
     <link rel="stylesheet" th:href="@{/css/main/common.css}">
     <link rel="stylesheet" th:href="@{/css/layout/header.css}">
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/common(2)/font.css">
+    <!--    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">-->
+    <!--    <link rel="stylesheet" href="/static/css/common(2)/font.css">-->
 </head>
 <body>
 <div th:replace="~{/layout/header :: header}"></div>
@@ -80,31 +80,11 @@
                     <div class="certificate-image">
                         <h2>자격증 및 기타 서류</h2>
                         <ul class="image-veiwer">
-                            <li>
-                                <img src="/static/img/certificate.jpeg" alt="">
-                            </li>
-                            <li>
-                                <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F9pQ5k%2FbtrmGXmIuQe%2F6XTySrahwqBSlJ5YkfsdJ1%2Fimg.jpg"
-                                     alt="">
-                            </li>
-                            <li>
-                                <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F9pQ5k%2FbtrmGXmIuQe%2F6XTySrahwqBSlJ5YkfsdJ1%2Fimg.jpg"
-                                     alt="">
+                            <li th:each="proCardInfoFile : ${proCardInfoFiles}">
+                                <img th:src="${proCardInfoFile.cardInfoFileRoute}" alt="이미지">
+                                <!--                                    여기 부분 사진 받아오기-->
                             </li>
                         </ul>
-                    </div>
-                </div>
-                <div class="pro-photos">
-                    <div class="photos-container">
-                        <h2>사진</h2>
-                        <div>
-                            <ul class="image-veiwer">
-                                <li>
-                                    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F9pQ5k%2FbtrmGXmIuQe%2F6XTySrahwqBSlJ5YkfsdJ1%2Fimg.jpg"
-                                         alt="">
-                                </li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -131,9 +111,15 @@
                     </button>
 
                     <!-- 상대방이 작업 완료를 누른다면 리뷰 작성하기 띄우기 -->
-                    <button th:style="${proRequest.proRequestProgress != 'POST' ? 'display:none' : ''}" type="button"
-                            th:onclick="|location.href='@{/pro/userReview/{userId}(userId=${userRequest.userId})}'|"
+                    <button th:unless="${proRequest.checkProReview == 1}"
+                            th:style="${proRequest.proRequestProgress != 'POST' ? 'display:none' : ''}" type="button"
+                            th:onclick="|location.href='@{/pro/userReview2/{proRequestId}(proRequestId=${proRequest.proRequestId})}'|"
                             class="btn-accept">리뷰 작성하기
+                    </button>
+                    <button th:if="${proRequest.checkProReview == 1}"
+                            th:style="${proRequest.proRequestProgress != 'POST' ? 'display:none' : ''}" type="button"
+                            th:onclick="|location.href='@{/pro/userReview2/{proRequestId}(proRequestId=${proRequest.proRequestId})}'|"
+                            class="btn-accept" disabled>리뷰를 이미 작성하셨습니다
                     </button>
                 </div>
             </div>

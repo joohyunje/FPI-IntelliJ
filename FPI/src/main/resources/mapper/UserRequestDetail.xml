@@ -17,6 +17,9 @@
              , TU.USER_ID
              , TBL_PRO_UPLOAD.PRO_UPLOAD_TITLE
              , TUR.USER_REQUEST_PAY
+             , TUR.PRO_UPLOAD_ID
+             , TUR.CHECK_USER_REVIEW
+             , TUR.CHECK_PRO_REVIEW
         FROM TBL_USER_REQUEST TUR
                  INNER JOIN TBL_PRO_UPLOAD
                             ON TUR.PRO_UPLOAD_ID = TBL_PRO_UPLOAD.PRO_UPLOAD_ID
