@@ -24,12 +24,12 @@
             <div class="request-info">
                 <div class="pro-info">
                     <div class="imgSize" style="margin-bottom: 20px;">
-                        <img src="프로필사진" class="imgSize">
+                        <img th:src="${proDetail.proImg}" class="imgSize">
                     </div>
                     <div class="pro-name-rate">
-                        <div class="pro-name">FPI 건축</div>
+                        <div class="pro-name" th:text="${proDetail.proName}"></div>
                         <div class="service-address">
-                            <div class="service-name">주택 건축</div>
+                            <!--                            <div class="service-name">주택 건축</div>-->
                             <div class="address">
                                 <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMCAyMGgyMFYwSDB6Ii8+PGcgc3Ryb2tlPSIjNzM3MzczIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiI+PHBhdGggZD0iTTE2LjIxOCA3LjI3NGMwIDQuOTQzLTUuODMzIDEwLjIyNi01LjgzMyAxMC4yMjZTNC41NSAxMi41NDIgNC41NSA3LjI3NGMwLTMuMDk3IDIuNjEyLTUuNjA3IDUuODM0LTUuNjA3IDMuMjIxIDAgNS44MzMgMi41MSA1LjgzMyA1LjYwN3oiLz48cGF0aCBkPSJNMTIuNjI4IDcuOTE3YTIuMDg0IDIuMDg0IDAgMTEtNC4xNjctLjAwMSAyLjA4NCAyLjA4NCAwIDAxNC4xNjcgMHoiLz48L2c+PC9nPjwvc3ZnPg=="
                                      alt="">

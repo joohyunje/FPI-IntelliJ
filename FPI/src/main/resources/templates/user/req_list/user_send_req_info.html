@@ -82,9 +82,15 @@
                     </button>
 
                     <!-- 상대방이 작업 완료를 누른다면 리뷰 작성하기 띄우기 -->
-                    <button th:style="${userRequest.userRequestProgress != 'POST' ? 'display:none' : ''}" type="button"
-                            th:onclick="|location.href='@{/user/proReview/{proId}(proId=${proRequest.proId})}'|"
+                    <button th:unless="${userRequest.checkUserReview == 1}"
+                            th:style="${userRequest.userRequestProgress != 'POST' ? 'display:none' : ''}"
+                            th:onclick="|location.href='@{/user/proReview2/{userRequestId}(userRequestId=${userRequestId})}'|"
                             class="btn-accept">리뷰 작성하기
+                    </button>
+                    <button th:if="${userRequest.checkUserReview == 1}"
+                            th:style="${userRequest.userRequestProgress != 'POST' ? 'display:none' : ''}"
+                            th:onclick="|location.href='@{/user/proReview2/{userRequestId}(userRequestId=${userRequestId})}'|"
+                            class="btn-accept" disabled>리뷰를 이미 작성하셨습니다
                     </button>
                 </div>
             </div>

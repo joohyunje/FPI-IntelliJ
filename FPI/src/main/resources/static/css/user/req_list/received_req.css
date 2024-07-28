@@ -1,7 +1,8 @@
-body{
+body {
     margin-top: 100px;
 }
-.container{
+
+.container {
     padding: 0 20px;
     width: 100%;
     max-width: 1200px;
@@ -9,7 +10,7 @@ body{
     margin-bottom: 100px;
 }
 
-.page-h1{
+.page-h1 {
     margin-top: 0;
     display: flex;
     justify-content: space-between;
@@ -18,7 +19,7 @@ body{
     line-height: 1.4;
 }
 
-.sorting-options{
+.sorting-options {
     font-size: 12px;
     display: flex;
     justify-content: flex-end;
@@ -28,8 +29,8 @@ body{
 
 
 /* 보낸 요청이나 받은게 없으면 flex로하고 none 은 주석 그리고 밑에 grid-container도 none으로*/
-.no-req{
-     display: flex;
+.no-req {
+    display: flex;
     /*display: none;*/
     flex-wrap: wrap;
     margin-right: -.9375rem;
@@ -58,10 +59,9 @@ body{
 }
 
 
-
 .send-btn > a {
     font-weight: 500;
-    display:flex;
+    display: flex;
     width: 215px;
     height: 48px;
     color: #fff;
@@ -79,18 +79,18 @@ body{
 }
 
 
-.grid-container{
+.grid-container {
     display: grid;
     /* display: none; */
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(3, 1fr);
 }
 
-.grid-requests-container{
-    padding : 5px 20px;
+.grid-requests-container {
+    padding: 5px 20px;
     max-width: 100%;
 }
 
-.grid-requests{
+.grid-requests {
     display: flex;
     flex-direction: column;
     height: 248px;
@@ -99,7 +99,7 @@ body{
     border-radius: 4px;
 }
 
-.requests-header{
+.requests-header {
     display: flex;
     /* color: #737373; */
     font-size: 17px;
@@ -109,14 +109,14 @@ body{
     gap: 5px;
 }
 
-.userInfo{
+.userInfo {
     display: flex;
     justify-content: center;
     align-items: center;
     /*gap: 10px;*/
 }
 
-.requests-body{
+.requests-body {
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -124,7 +124,7 @@ body{
     margin-top: 16px;
 }
 
-.request-date-cnt{
+.request-date-cnt {
     text-align: center;
     display: flex;
     justify-content: space-between;
@@ -135,38 +135,38 @@ body{
 #progress {
     appearance: none;
     width: 100%;
-  }
-  
-  #progress::-webkit-progress-bar {
+}
+
+#progress::-webkit-progress-bar {
     background: #f2f2f2;
     border-radius: 4px;
     height: 8px;
     overflow: hidden;
-  }
+}
 
-  #progress::-webkit-progress-value {
+#progress::-webkit-progress-value {
     background: #F8CACC;
     border-radius: 4px;
-  }
+}
 
-  .progress-info{
+.progress-info {
     margin-top: 4px;
     display: flex;
     justify-content: space-between;
-  }
+}
 
-  .price{
+.price {
     display: flex;
     height: 24px;
     align-items: center;
-  }
+}
 
-  .button-wrapper{
+.button-wrapper {
     display: flex;
     gap: 12px;
-  }
+}
 
-  .button-wrapper > a{
+.button-wrapper > a {
     flex: 1;
     cursor: pointer;
     font-weight: 500px;
@@ -177,4 +177,10 @@ body{
     padding: 11px 12px;
     text-decoration: none;
     border-radius: 4px;
-  }
+}
+
+.userInfo > img {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+}

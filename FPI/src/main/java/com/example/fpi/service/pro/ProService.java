@@ -1,9 +1,7 @@
 package com.example.fpi.service.pro;
 
 import com.example.fpi.domain.dto.certify.CardInfoDTO;
-import com.example.fpi.domain.dto.certify.CardInfoFIleListDTO;
 import com.example.fpi.domain.dto.certify.CardInfoFileDTO;
-import com.example.fpi.domain.dto.certify.CareerInfoDTO;
 import com.example.fpi.domain.dto.pro.*;
 import com.example.fpi.domain.dto.user.UserAccuseDTO;
 import com.example.fpi.domain.dto.user.UserReviewDTO;
@@ -120,5 +118,25 @@ public interface ProService {
 
     //    컨트롤러에서 생성하여 전문가 정보 수정시 input 추가되었을때
     List<CardInfoDTO> getCardInfoList(Long proId, String cardInfoId, String certiOrgan, String certiNum);
+
+    Long selectProIdByProUploadId(Long proUploadId);
+
+//    Long selectProRate(Long proId);
+//
+//    void updateProRate(Long proId, Long proStarRate);
+
+    Long selectUserRate(String userId);
+
+    void updateUserRate(String userId, Long userStarRate);
+
+    String selectUserIdByProRequestId(Long proRequestId);
+
+    void updateUserRequestUserReview(Long userRequestId);
+
+    void updateProRequestUserReview(Long proRequestId);
+
+    void updateEmpCnt(Long proId, Long empCnt);
+
+    Long empCount(Long proId);
 
 }

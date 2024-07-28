@@ -9,11 +9,13 @@ import java.time.LocalDate;
 @Data
 public class ProRequestDTO {
 
-    private String proRequestId;
+    private Long proRequestId;
     private Long proRequestPay;
     private String proRequestContent;
     private LocalDate proRequestDate;
     private String proRequestProgress;
     private Long proId;
     private Long userUploadId;
+    private Long checkProReview;
+    private Long checkUserReview;
 }

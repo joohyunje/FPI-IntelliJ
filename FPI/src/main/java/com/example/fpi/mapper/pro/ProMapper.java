@@ -1,9 +1,7 @@
 package com.example.fpi.mapper.pro;
 
 import com.example.fpi.domain.dto.certify.CardInfoDTO;
-import com.example.fpi.domain.dto.certify.CardInfoFIleListDTO;
 import com.example.fpi.domain.dto.certify.CardInfoFileDTO;
-import com.example.fpi.domain.dto.certify.CareerInfoDTO;
 import com.example.fpi.domain.dto.pro.*;
 import com.example.fpi.domain.dto.user.UserReviewDTO;
 import com.example.fpi.domain.vo.certify.CardInfoFileVO;
@@ -51,7 +49,9 @@ public interface ProMapper {
     List<CardInfoDTO> selectCard(Long proId);
 
 
-    int empCount(Long proId);
+    Long empCount(Long proId);
+
+    void updateEmpCnt(Long proId, Long empCnt);
 
 
 //    마이페이지 전문가 수정하기에 뿌려줌
@@ -134,6 +134,22 @@ public interface ProMapper {
     void proAccuseUser(UserAccuseVO userAccuseVO);
 
     String selectUserIdByUserRequestId(Long userRequestId);
+
+    Long selectProIdByProUploadId(Long proUploadId);
+
+//    Long selectProRate(Long proId);
+//
+//    void updateProRate(Long proId, Long proStarRate);
+
+    Long selectUserRate(String userId);
+
+    void updateUserRate(String userId, Long userStarRate);
+
+    String selectUserIdByProRequestId(Long proRequestId);
+
+    void updateUserRequestUserReview(Long userRequestId);
+
+    void updateProRequestUserReview(Long proRequestId);
 
 
 }

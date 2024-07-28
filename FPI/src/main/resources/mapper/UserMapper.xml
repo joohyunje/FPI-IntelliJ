@@ -85,7 +85,7 @@
         SELECT ROWNUM AS RN, UPLOAD.*
         FROM (
         select TUU.USER_UPLOAD_ID, TUU.USER_ID, TUU.USER_UPLOAD_TITLE, TUU.USER_UPLOAD_DATE, TU.USER_STAR_RATE,
-        TU.USER_NAME, ts.SERVICE_NAME
+        TU.USER_NAME, ts.SERVICE_NAME , tu.USER_IMG
         from TBL_USER_UPLOAD TUU
         inner join TBL_USER TU
         on TUU.USER_ID = TU.USER_ID
@@ -178,7 +178,7 @@
     <insert id="userRequest">
         insert into TBL_USER_REQUEST
         values (SEQ_REQUEST.nextval, #{userRequestPay}, #{userRequestContent},
-                sysdate, 'PRE', #{userId}, #{proUploadId})
+                sysdate, 'PRE', #{userId}, #{proUploadId}, 0, 0)
     </insert>
 
     <!--    전문가가 올린 견적에 대해서 내가 보낸 요청이 있는 없는지 확인-->
@@ -220,6 +220,20 @@
         where PRO_REQUEST_ID = #{proRequestId}
     </update>
 
+    <!--   전문가가 보낸 요청에서 리뷰 작성하기 눌렀을때 업데이트   -->
+    <update id="updateProRequestProReview">
+        update TBL_PRO_REQUEST
+        set CHECK_USER_REVIEW = 1
+        where PRO_REQUEST_ID = #{proRequestId}
+    </update>
+
+    <!--   내가 보낸 요청에서 리뷰 작성하기 눌렀을때 업데이트   -->
+    <update id="updateUserRequestProReview">
+        update TBL_USER_REQUEST
+        set CHECK_USER_REVIEW = 1
+        where USER_REQUEST_ID = #{userRequestId}
+    </update>
+
     <!--    유저가 전문가 신고하기-->
     <insert id="userAccusePro">
         insert into TBL_PRO_ACCUSE
@@ -232,4 +246,42 @@
         from TBL_PRO_REQUEST
         where PRO_REQUEST_ID = #{proRequestId}
     </select>
+
+    <!--    프로가 올린 서비스를 통해 아이디 가져오기 -->
+    <select id="selectProIdByUserRequestId" resultType="Long">
+        select PRO_ID
+        from TBL_USER_REQUEST
+                 inner join TBL_PRO_UPLOAD
+                            on TBL_USER_REQUEST.PRO_UPLOAD_ID = TBL_PRO_UPLOAD.PRO_UPLOAD_ID
+        where TBL_USER_REQUEST.USER_REQUEST_ID = #{userRequestId}
+    </select>
+
+    <!--    &lt;!&ndash;    회원 별점 가져오기 &ndash;&gt;-->
+    <!--    <select id="selectUserRate" resultType="Long">-->
+    <!--        select round(avg(USR_REVIEW_RATE), 0)-->
+    <!--        from TBL_USER_REVIEW-->
+    <!--        where USER_ID = #{userId}-->
+    <!--    </select>-->
+
+    <!--    &lt;!&ndash;    회원 별점 넣어주기 &ndash;&gt;-->
+    <!--    <update id="updateUserRate">-->
+    <!--        update TBL_USER-->
+    <!--        set USER_STAR_RATE = #{userStarRate}-->
+    <!--        where USER_ID = #{userId}-->
+
+    <!--    </update>-->
+
+    <select id="selectProRate" resultType="Long">
+        select round(avg(PRO_REVIEW_RATE), 0)
+        from TBL_PRO_REVIEW
+        where PRO_ID = #{proId}
+    </select>
+
+    <!--    전문가 별점 넣어주기 -->
+    <update id="updateProRate">
+        update TBL_PRO
+        set PRO_STAR_RATE = #{proStarRate}
+        where PRO_ID = #{proId}
+
+    </update>
 </mapper>

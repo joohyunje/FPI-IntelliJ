@@ -1,5 +1,6 @@
 package com.example.fpi.service.file;
 
+import com.example.fpi.domain.dto.file.ProCardInfoFileDTO;
 import com.example.fpi.domain.dto.file.ProUploadFileDTO;
 import com.example.fpi.domain.dto.file.UserUploadFileDTO;
 import com.example.fpi.mapper.File.FileMapper;
@@ -23,4 +24,11 @@ public class FileServiceImpl implements FileService {
     public List<UserUploadFileDTO> selectUserUploadFileList(Long userUploadId) {
         return fileMapper.selectUserUploadFileList(userUploadId);
     }
+
+    @Override
+    public List<ProCardInfoFileDTO> selectProCardFileList(Long proId) {
+        return fileMapper.selectProCardFileList(proId);
+    }
+
+
 }

@@ -1,6 +1,7 @@
 package com.example.fpi.service.file;
 
 
+import com.example.fpi.domain.dto.file.ProCardInfoFileDTO;
 import com.example.fpi.domain.dto.file.ProUploadFileDTO;
 import com.example.fpi.domain.dto.file.UserUploadFileDTO;
 import org.springframework.stereotype.Service;
@@ -15,5 +16,7 @@ public interface FileService {
 
     //    회원 견적 올리기
     List<UserUploadFileDTO> selectUserUploadFileList(Long userUploadId);
+
+    List<ProCardInfoFileDTO> selectProCardFileList(Long proId);
 
 }

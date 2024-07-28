@@ -21,6 +21,13 @@
         where PRO_UPLOAD_ID = #{proUploadId}
     </select>
 
+    <!--    전문가 자격증 사진 가져오기 -->
+    <select id="selectProCardFileList" resultType="ProCardInfoFileDTO">
+        select CARDINFO_FILE_ID, CARDINFO_FILE_ORIGINAL, CARDINFO_FILE_ROUTE, PRO_ID
+        from TBL_CARDINFO_FILE
+        where PRO_ID = #{proId}
+    </select>
+
     <!--   회원 견적 올리기시 첨부파일 추가-->
     <insert id="insertUserUploadFile">
         INSERT INTO TBL_USER_UPLOAD_FILE (USER_UPLOAD_FILE_ID, USER_UPLOAD_FILE_ORIGINAL, USER_UPLOAD_FILE_ROUTE,
@@ -45,10 +52,10 @@
         VALUES #{proImg}
     </insert>
 
-<!--    게시판에서 선택한 파일을 테이블에 추가-->
+    <!--    게시판에서 선택한 파일을 테이블에 추가-->
     <insert id="insertSummernoteImg">
         INSERT INTO TBL_COMMUNITY_FILE
-        VALUES (seq_file.nextval,#{communityFileRoute},#{communityFileOriginal},#{communityId})
+        VALUES (seq_file.nextval, #{communityFileRoute}, #{communityFileOriginal}, #{communityId})
 
     </insert>
 </mapper>

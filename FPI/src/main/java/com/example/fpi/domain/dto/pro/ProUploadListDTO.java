@@ -16,5 +16,6 @@ public class ProUploadListDTO {
     private LocalDate proUploadDate;
     private String proName;
     private String serviceName;
+    private String proImg;
 
 }

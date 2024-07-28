@@ -33,7 +33,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
     private final FileMapper fileMapper;
-    private final ProAccuseVO proAccuseVO;
 
     //    받은 요청 목록
     @Override
@@ -204,11 +203,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void userWriteProReview(ProReviewDTO proReview) {
         Long proReviewId = userMapper.getReviewSeq();
         proReview.setProReviewId(proReviewId);
-
         userMapper.userWriteProReview(ProReviewVO.toEntity(proReview));
+        Long proId = proReview.getProId();
+        Long proStarRate = selectProRate(proId);
+        updateProRate(proId, proStarRate);
     }
 
     @Override
@@ -235,6 +237,41 @@ public class UserServiceImpl implements UserService {
     @Override
     public Long selectProIdByProRequestId(Long proRequestId) {
         return userMapper.selectProIdByProRequestId(proRequestId);
+    }
+
+    @Override
+    public Long selectProIdByUserRequestId(Long userRequestId) {
+        return userMapper.selectProIdByUserRequestId(userRequestId);
+    }
+
+//    @Override
+//    public Long selectUserRate(String userId) {
+//        return userMapper.selectUserRate(userId);
+//    }
+//
+//    @Override
+//    public void updateUserRate(String userId, Long userStarRate) {
+//        userMapper.updateUserRate(userId, userStarRate);
+//    }
+
+    @Override
+    public Long selectProRate(Long proId) {
+        return userMapper.selectProRate(proId);
+    }
+
+    @Override
+    public void updateProRate(Long proId, Long proStarRate) {
+        userMapper.updateProRate(proId, proStarRate);
+    }
+
+    @Override
+    public void updateProRequestProReview(Long proRequestId) {
+        userMapper.updateProRequestProReview(proRequestId);
+    }
+
+    @Override
+    public void updateUserRequestProReview(Long userRequestId) {
+        userMapper.updateUserRequestProReview(userRequestId);
     }
 
 

@@ -21,4 +21,8 @@ public class UserRequestDetailDTO {
     private Long userStarRate;
     private String userRequestProgress;
     private Long userRequestPay;
+    private Long proUploadId;
+    private Long checkProReview;
+    private Long checkUserReview;
+    private String userImg;
 }
