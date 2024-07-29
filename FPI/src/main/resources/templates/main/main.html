@@ -129,11 +129,11 @@
           <div class="post-wrapper">
 
             <!-- 슬라이드 1 -->
-            <div class="post">
-              <img src="" class="slider-image">
+            <div class="post"th:each="proUploadList:${proUploadLists}" th:object="${proUploadList}">
+              <img th:src="*{proUploadFileRoute}" class="slider-image">
               <div class="post-info">
-                <h5><a href="#" class="post-subject">투룸 이사 도와주실 전문가분 구합니다 </a></h5>
-                <i class="far fa-user post-icon" >이사</i>
+                <h5><a th:href="@{/user/uploadDetail/{proUploadId}(proUploadId=*{proUploadId})}" class="post-subject" th:text="*{proUploadTitle}">투룸 이사 도와주실 전문가분 구합니다 </a></h5>
+                <i class="far fa-user post-icon" th:text="*{serviceName}">이사</i>
               </div>
             </div>
 
@@ -187,6 +187,7 @@
               </div>
             </div>
           </div>
+
         </div>
       </div> <!-- 커뮤니티 나열 끝 -->
 

@@ -146,10 +146,5 @@ public class CommunityServiceImpl implements CommunityService {
 
     }
 
-    //    메인에서 보여주는 최신커뮤니티 리스트
-    @Override
-    public List<CommunityDTO> maincommunityList() {
-        return communityMapper.communityList();
-    }
 
 }

@@ -15,7 +15,7 @@ public interface CommunityMapper {
 
     List<CommunityDetailDTO> communitySelectAll(int startRow, int endRow,String search,String subject); //전체 커뮤니티 리스트
 
-    List<CommunityDTO> communityList(); //메인에서 뿌려주는 최근커뮤니티 리스트
+//    List<CommunityDTO> communityList(); //메인에서 뿌려주는 최근커뮤니티 리스트
 
     int countCommunity(String search,String subject); //페이징을위한 게시판 수
 

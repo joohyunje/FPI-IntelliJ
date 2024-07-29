@@ -156,20 +156,20 @@
     </delete>
 
 
-    <!--    최근 게시글 4개뿌려주기,메인에서 사용-->
-    <select id="communityList" resultType="CommunityDTO">
-        SELECT ROWNUM AS RN, COMMUNITY.*
-        FROM (
-                 SELECT
-                     *
-                 FROM
-                     TBL_COMMUNITY C
-                 ORDER BY
-                     C.COMMUNITY_UPDATE_DATE DESC
-             ) COMMUNITY
-        WHERE ROWNUM &lt;= 4
+<!--    &lt;!&ndash;    최근 게시글 4개뿌려주기,메인에서 사용&ndash;&gt;-->
+<!--    <select id="communityList" resultType="CommunityDTO">-->
+<!--        SELECT ROWNUM AS RN, COMMUNITY.*-->
+<!--        FROM (-->
+<!--                 SELECT-->
+<!--                     *-->
+<!--                 FROM-->
+<!--                     TBL_COMMUNITY C-->
+<!--                 ORDER BY-->
+<!--                     C.COMMUNITY_UPDATE_DATE DESC-->
+<!--             ) COMMUNITY-->
+<!--        WHERE ROWNUM &lt;= 4-->
 
-    </select>
+<!--    </select>-->
 
     <!--    조회수-->
     <update id="plusViews">

@@ -5,10 +5,12 @@ import com.example.fpi.domain.dto.user.UserDTO;
 import com.example.fpi.domain.oauth.CustomOAuth2User;
 import com.example.fpi.domain.vo.user.UserVO;
 
+import com.example.fpi.mapper.main.MainListMapper;
 import com.example.fpi.mapper.pro.ProMapper;
 import com.example.fpi.mapper.user.UserMapper;
 import com.example.fpi.service.board.CommunityService;
 import com.example.fpi.service.main.FormService;
+import com.example.fpi.service.main.MainListService;
 import com.example.fpi.service.pro.ProService;
 import com.example.fpi.service.user.CouponService;
 import com.example.fpi.service.user.UserService;
@@ -30,10 +32,10 @@ public class MainLoginController {
     private final UserService userService;
     private final CouponService couponService;
     private final ProService proService;
-    private final ProMapper proMapper;
-    private final CommunityService communityService;
 
-//헤더에서 회원,전문가일때 구분 위해서 필요
+    private final MainListService mainListService;
+
+    //헤더에서 회원,전문가일때 구분 위해서 필요
     @GetMapping(value = {"/{status}", ""})
     public String index(@AuthenticationPrincipal CustomOAuth2User customOAuth2User,
                         @PathVariable(required = false) String status,
@@ -51,7 +53,8 @@ public class MainLoginController {
                 session.setAttribute("loginName", userService.detailUser(userId).getUserName());
             }
         }
-        model.addAttribute("communityList", communityService.maincommunityList());
+        model.addAttribute("communityList", mainListService.mainCommunityList());
+        model.addAttribute("proUploadLists",mainListService.proUploadList());
 
 
         return "main/main";

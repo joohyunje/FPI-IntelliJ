@@ -32,8 +32,7 @@ public interface CommunityService {
     void deleteCommunity(Long communityId); //게시판 삭제
     void selectLike(String userId,Long communityId); //게시판 좋아요기능
 
-    //    메인화면에 뿌려주는 최신 리스트
-    List<CommunityDTO> maincommunityList();
+
 
 }
 
