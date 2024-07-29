@@ -63,10 +63,16 @@ public class UserController {
 
         List<ProCareerInfoListDTO> careerInfo = proService.selectProCareerByReq(proRequestId);
 
+        Long proId = userService.selectProIdByProRequestId(proRequestId);
+
+        List<ProCardInfoFileDTO> proCardInfoFiles = fileMapper.selectProCardFileList(proId);
+
+
         System.out.println(proRequestId);
         System.out.println(careerInfo);
 
 
+        model.addAttribute("proCardInfoFiles", proCardInfoFiles);
         model.addAttribute("proAccuse", new ProAccuseDTO());
         model.addAttribute("proRequest", proRequest);
         model.addAttribute("careerInfo", careerInfo);
