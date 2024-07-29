@@ -27,10 +27,10 @@ public class CommentRestController {
         String loginName = (String) session.getAttribute("loginName");
         String proName = (String) session.getAttribute("proName");
         if(session.getAttribute("loginName") == null){
-         commentDTO.setAuthor(proName);
+            commentDTO.setAuthor(proName);
         }
         else if(session.getAttribute("proName") == null){
-          commentDTO.setAuthor(loginName);
+            commentDTO.setAuthor(loginName);
         }
 
 
@@ -45,7 +45,7 @@ public class CommentRestController {
         return  ResponseEntity.ok().build();
     }
 
-//    댓글 수정
+    //    댓글 수정
     @PutMapping("/{commentId}")
     public ResponseEntity<?> updateComment(@PathVariable Long commentId, @RequestBody CommentDTO commentDTO) {
         commentService.updateComment(commentDTO);

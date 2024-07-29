@@ -19,7 +19,7 @@
 </head>
 <body>
 <div th:replace="~{/layout/header :: header}"></div>
-  <!--  자격증사진 자격증발급기관,자격증번호작성,경력 혹은 수상내역 작성 -->
+<!--  자격증사진 자격증발급기관,자격증번호작성,경력 혹은 수상내역 작성 -->
 <div class="detail-container">
   <div class="certify-container">
     <div>
@@ -27,90 +27,90 @@
       <p>전문가로 활동하기 위해서는 인증이 필요합니다.</p>
     </div>
     <div class="sub-container">
-        <form method="post" name="certify" id="CertifyForm" class="certifyForm"  enctype="multipart/form-data" th:object="${certify}" th:action="@{/user/certify}">
-            <div class="marginR-40">
-              <div id="proImg"></div>
-              <img  class="imgSize" id="proImgChange">
-              <div class="file-upload">
-                <label for="fileInput">
-                  <div id="customButton" >전문가 활동 사진</div>
-                </label>
-                <input type="file"  id="fileInput" name="proProfile" accept="image/*">
-              </div>
+      <form method="post" name="certify" id="CertifyForm" class="certifyForm"  enctype="multipart/form-data" th:object="${certify}" th:action="@{/user/certify}">
+        <div class="marginR-40">
+          <div id="proImg"></div>
+          <img  class="imgSize" id="proImgChange">
+          <div class="file-upload">
+            <label for="fileInput">
+              <div id="customButton" >전문가 활동 사진</div>
+            </label>
+            <input type="file"  id="fileInput" name="proProfile" accept="image/*">
+          </div>
+        </div>
+
+        <div style="width: 100%;">
+          <div class="col underline">
+            <label for="proName" class="fontSize15 label">전문가 활동 이름</label>
+            <input type="text" id="proName" name="proName" class="form-control" th:field="*{proName}">
+            <p>* 전문가 활동시 사용할 이름을 작성해주세요.</p>
+          </div>
+
+
+          <div class="col underline">
+            <label for="phoneNumber" class="fontSize15 label">전화번호</label>
+            <input type="tel" maxlength="11" id="phoneNumber" name="phoneNumber" class="form-control" placeholder="01012345678" th:field="*{phoneNumber}">
+            <p>* 회원과 매칭시 연락할 전화번호를 숫자로만 입력해주세요. </p>
+          </div>
+
+
+          <!-- 주소  -->
+          <div class="col underline2">
+            <label for="region" class="fontSize15 label">지역</label>
+            <div style="display: flex; margin-bottom:5px ; ">
+              <select name="region" id="region" class="form-select" style="margin-right: 10px;"></select>
+              <select name="city" id="city" aria-required="true" class="form-select">
+              </select>
             </div>
+          </div>
 
-            <div style="width: 100%;">
-              <div class="col underline">
-                <label for="proName" class="fontSize15 label">전문가 활동 이름</label>
-                <input type="text" id="proName" name="proName" class="form-control" th:field="*{proName}">
-                <p>* 전문가 활동시 사용할 이름을 작성해주세요.</p>
-              </div>
+          <div class="col underline2">
+            <label for="category" class="fontSize15 label margin5">제공 서비스</label>
+            <select name="categoryId" id="category" aria-required="false" class="form-select" style="margin-bottom: 5px;">
+              <option value="none">카테고리</option>
+              <option value="1">이사/청소</option>
+              <option value="2">설치/수리</option>
+              <option value="3">인테리어</option>
+              <option value="4">취미/자기개발</option>
+              <option value="5">기타</option>
+            </select>
+          </div>
 
+          <div class="col underline2">
+            <label for="upload" class="fontSize15 label margin5">자격증 사진첨부</label>
+            <input type="file" class="form-control" id="upload" name="files" accept="image/*" multiple>
+          </div>
 
-              <div class="col underline">
-                <label for="phoneNumber" class="fontSize15 label">전화번호</label>
-                <input type="tel" maxlength="11" id="phoneNumber" name="phoneNumber" class="form-control" placeholder="01012345678" th:field="*{phoneNumber}">
-                <p>* 회원과 매칭시 연락할 전화번호를 숫자로만 입력해주세요. </p>
-              </div>
-        
-  
-              <!-- 주소  -->
-              <div class="col underline2">
-                <label for="region" class="fontSize15 label">지역</label>
-                <div style="display: flex; margin-bottom:5px ; ">
-                  <select name="region" id="region" class="form-select" style="margin-right: 10px;"></select>
-                  <select name="city" id="city" aria-required="true" class="form-select">
-                  </select>
-                </div>
-              </div>
-    
-              <div class="col underline2">
-                <label for="category" class="fontSize15 label margin5">제공 서비스</label>
-                <select name="categoryId" id="category" aria-required="false" class="form-select" style="margin-bottom: 5px;">
-                  <option value="none">카테고리</option>
-                  <option value="1">이사/청소</option>
-                  <option value="2">설치/수리</option>
-                  <option value="3">인테리어</option>
-                  <option value="4">취미/자기개발</option>
-                  <option value="5">기타</option>
-                </select>
-              </div>
-  
-              <div class="col underline2">
-                <label for="upload" class="fontSize15 label margin5">자격증 사진첨부</label>
-                <input type="file" class="form-control" id="upload" name="files" accept="image/*" multiple>
-              </div>
+          <div class="col underline2 plusPoint">
+            <div class="certi-label" >
+              <label for="certiOrgan" class="fontSize15">자격증 발급기관/ </label>
 
-              <div class="col underline2 plusPoint">
-                <div class="certi-label" >
-                  <label for="certiOrgan" class="fontSize15">자격증 발급기관/ </label>
-                  
-                  <label for="certiNum" class="fontSize15">자격증 번호</label>
-                  <div class="plus">+</div>
-<!--                  <div class="minus">-</div>-->
-                </div>
-<!--                <input type="hidden" id="certiCount" name="certiCount">-->
-                <div class="certi-label certiCount" >
-
-                  <input type="text" id="certiOrgan" name="certiOrgan" class="form-control" style=" margin-right: 10px;" placeholder="자격증 발급기관을 입력하세요" >
-                  <input type="text" id="certiNum" name="certiNum" class="form-control"
-                         placeholder="자격증 번호를 입력하세요" >
-                </div>
-              </div>
-
-
-              <div class="col height200">
-                <span for="career" class="fontSize15 label">경력 혹은 수상내역 작성</span>
-                <textarea  id="award" name="award" maxlength="400" class="textarea"></textarea>
-              </div>
-
-
-              <div class="left">
-<!--                <button type="button" onclick="CertifyForm()">인증하기</button>-->
-                <button type="button" id="submitBtn" >인증하기</button>
-              </div>
+              <label for="certiNum" class="fontSize15">자격증 번호</label>
+              <div class="plus">+</div>
+              <!--                  <div class="minus">-</div>-->
             </div>
-        </form> <!-- 폼작성 끝 -->
+            <!--                <input type="hidden" id="certiCount" name="certiCount">-->
+            <div class="certi-label certiCount" >
+
+              <input type="text" id="certiOrgan" name="certiOrgan" class="form-control" style=" margin-right: 10px;" placeholder="자격증 발급기관을 입력하세요" >
+              <input type="text" id="certiNum" name="certiNum" class="form-control"
+                     placeholder="자격증 번호를 입력하세요" >
+            </div>
+          </div>
+
+
+          <div class="col height200">
+            <span for="career" class="fontSize15 label">경력 혹은 수상내역 작성</span>
+            <textarea  id="award" name="award" maxlength="400" class="textarea"></textarea>
+          </div>
+
+
+          <div class="left">
+            <!--                <button type="button" onclick="CertifyForm()">인증하기</button>-->
+            <button type="button" id="submitBtn" >인증하기</button>
+          </div>
+        </div>
+      </form> <!-- 폼작성 끝 -->
     </div><!-- 폼감싸는 div -->
 
   </div> <!-- 메인 전체 컨테이너 중앙배치 -->

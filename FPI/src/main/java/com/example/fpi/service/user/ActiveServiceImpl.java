@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ActiveServiceImpl implements ActiveService {
     private final ActiveListMapper activeListMapper;
-//활동 게시글
+    //활동 게시글
     @Override
     @Transactional
     public List<UserCommunityListDTO> selectUserCommuList(String userId,String myName,int page, int pageSize) {
@@ -31,7 +31,7 @@ public class ActiveServiceImpl implements ActiveService {
         return activeListMapper.countUserCommu(userId,myName);
     }
 
-//    활동 댓글
+    //    활동 댓글
     @Override
     @Transactional
     public List<CommentListDTO> selectUserCommentList(String userId, String myName, int page, int pageSize) {

@@ -2,42 +2,42 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.fpi.mapper.user.ActiveListMapper">
-<!--    내가 작성한 게시글 페이징-->
+    <!--    내가 작성한 게시글 페이징-->
     <select id="selectUserCommuList" resultType="UserCommunityListDTO">
         select *
         from (select ROWNUM AS RN ,c.*
-                from(
-                    select *
-                    from TBL_COMMUNITY
-                    where USER_ID=#{userId} and author = #{myName}
-                    order by COMMUNITY_REGISTER_DATE DESC,COMMUNITY_ID desc) c
-                where ROWNUM &lt;= #{endRow})
+              from(
+                      select *
+                      from TBL_COMMUNITY
+                      where USER_ID=#{userId} and author = #{myName}
+                      order by COMMUNITY_REGISTER_DATE DESC,COMMUNITY_ID desc) c
+              where ROWNUM &lt;= #{endRow})
         where RN &gt; #{startRow}
     </select>
 
-<!--    내가 작성한 게시글 페이징위해 전체 갯수-->
+    <!--    내가 작성한 게시글 페이징위해 전체 갯수-->
     <select id="countUserCommu">
         select count(*)
         from TBL_COMMUNITY
         where USER_ID=#{userId} and author = #{myName}
     </select>
-<!--    내가 작성한 댓글 페이징-->
-<select id="selectUserCommentList" resultType="CommentListDTO">
-    select *
-    from (select ROWNUM AS RN ,c.*
-          from(
-                  select *
-                  from TBL_Comment
-                  where USER_ID=#{userId} and author = #{myName}
-                  order by Comment_REGISTER_DATE DESC,Comment_ID desc) c
-          where ROWNUM &lt;= #{endRow})
-    where RN &gt; #{startRow}
-</select>
+    <!--    내가 작성한 댓글 페이징-->
+    <select id="selectUserCommentList" resultType="CommentListDTO">
+        select *
+        from (select ROWNUM AS RN ,c.*
+              from(
+                      select *
+                      from TBL_Comment
+                      where USER_ID=#{userId} and author = #{myName}
+                      order by Comment_REGISTER_DATE DESC,Comment_ID desc) c
+              where ROWNUM &lt;= #{endRow})
+        where RN &gt; #{startRow}
+    </select>
 
-<!--    내가 작성한 댓글 페이징위해 전체 갯수-->
-<select id="countUserComment">
-    select count(*)
-    from TBL_Comment
-    where USER_ID=#{userId} and author = #{myName}
-</select>
+    <!--    내가 작성한 댓글 페이징위해 전체 갯수-->
+    <select id="countUserComment">
+        select count(*)
+        from TBL_Comment
+        where USER_ID=#{userId} and author = #{myName}
+    </select>
 </mapper>

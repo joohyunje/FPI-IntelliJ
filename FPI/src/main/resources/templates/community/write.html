@@ -13,41 +13,45 @@
 
 <div class="main">
     <form method="post" enctype="multipart/form-data" th:action="@{/community/write}" th:object="${communityInfo}">
-            <div style="display: flex">
-                <div class="write-box">
-                    <div class="title-info">
-                        제목 :
-                    </div>
-                    <label class="title-input">
-                        <input type="text" th:field="*{communityTitle}">
-                    </label>
+        <div style="display: flex">
+            <div class="write-box">
+                <div class="title-info">
+                    제목 :
                 </div>
-                <div class="write-box">
-                    <div class="title-info">
-                        게시판 선택 :
-                    </div>
-                    <label class="service-area" for="subject">
-                        <select class="service-part" name="subject" id="subject" aria-required="false">
-                            <option value="자유게시판">자유게시판</option>
-                            <option value="전문가팁">전문가 팁</option>
-                        </select>
-                    </label>
+                <label class="title-input">
+                    <input type="text" th:field="*{communityTitle}">
+                </label>
+            </div>
+            <div class="write-box">
+                <div class="title-info">
+                    게시판 선택 :
                 </div>
+                <label class="service-area" for="subject">
+                    <select  class="service-part" name="subject" id="subject" aria-required="false">
+                        <option value="자유게시판">자유게시판</option>
+                        <option th:if="*{proId != null}" value="전문가팁">전문가 팁</option>
+                    </select>
+                    <!--                        <select th:unless="*{proId != null}" class="service-part" name="subject" id="subject" aria-required="false">-->
+                    <!--                            <option value="자유게시판">자유게시판</option>-->
+                    <!--                            -->
+                    <!--                        </select>-->
+                </label>
             </div>
-            <div class="content">
-                <textarea rows="6" placeholder="Content" style="resize: none;" th:field="*{communityContent}"></textarea>
-            </div>
-            <div class="content-footer">
-                <button type="submit" th:unless="*{communityId != null}">작성 완료</button>
-                <button type="submit" th:if="*{communityId != null}">수정 완료</button>
-                <button type="button" id="backBtn">취소</button>
+        </div>
+        <div class="content">
+            <textarea rows="6" placeholder="Content" style="resize: none;" th:field="*{communityContent}"></textarea>
+        </div>
+        <div class="content-footer">
+            <button type="submit" th:unless="*{communityId != null}">작성 완료</button>
+            <button type="submit" th:if="*{communityId != null}">수정 완료</button>
+            <button type="button" id="backBtn">취소</button>
 
 
-            </div>
+        </div>
 
-<!--        작성자-->
+        <!--        작성자-->
         <input type="hidden" th:value="*{userId}" name="userId">
-        <input type="hidden" th:value="*{communityId}" name="communityId">
+        <input type="hidden" th:if="*{communityId != null}" th:value="*{communityId}" name="communityId">
 
 
 

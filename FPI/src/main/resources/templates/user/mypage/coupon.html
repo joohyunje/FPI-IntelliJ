@@ -11,64 +11,64 @@
 
 </head>
 <body>
-  <div th:replace="~{/layout/header :: header}"></div>
-  <div id="main-body" >
-    <div class="container">
-      <div class="padding3" style="margin-bottom: 15px">
-        <h1>쿠폰함</h1>
-      </div>
-      <div class="center padding3" id="noCoupon" th:if="${coupons[0].count == 0}">
-        <i>
-          <img src="https://assets.cdn.soomgo.com/icons/icon-coupon-empty.svg">
-        </i>
-        <h3>사용 가능한 쿠폰이 없습니다</h3>
-      </div>
+<div th:replace="~{/layout/header :: header}"></div>
+<div id="main-body" >
+  <div class="container">
+    <div class="padding3" style="margin-bottom: 15px">
+      <h1>쿠폰함</h1>
+    </div>
+    <div class="center padding3" id="noCoupon" th:if="${coupons[0].count == 0}">
+      <i>
+        <img src="https://assets.cdn.soomgo.com/icons/icon-coupon-empty.svg">
+      </i>
+      <h3>사용 가능한 쿠폰이 없습니다</h3>
+    </div>
 
 
-      <div th:each="coupon : ${coupons}" th:object="${coupon}">
+    <div th:each="coupon : ${coupons}" th:object="${coupon}">
 
-        <!-- 사용할 수 있는 쿠폰이 없을때,count로 사용쿠폰 유무 확인-->
+      <!-- 사용할 수 있는 쿠폰이 없을때,count로 사용쿠폰 유무 확인-->
 
 
-        <!-- 사용할 수 있는 쿠폰이 있을때,count로 사용쿠폰 유무 확인-->
-        <div class="coupon-container" id="YesCoupon" th:unless="*{count == 0}" >
-          <div class="coupon">
-            <div class="oneline">
-              <h2 th:text="*{discount}">10000</h2>
-              <h2>원 할인 쿠폰</h2> <!-- 쿠폰내용 -->
+      <!-- 사용할 수 있는 쿠폰이 있을때,count로 사용쿠폰 유무 확인-->
+      <div class="coupon-container" id="YesCoupon" th:unless="*{count == 0}" >
+        <div class="coupon">
+          <div class="oneline">
+            <h2 th:text="*{discount}">10000</h2>
+            <h2>원 할인 쿠폰</h2> <!-- 쿠폰내용 -->
+          </div>
+          <div class="oneline" >
+            <div class="oneline" style="margin-right: 5rem;">
+              <p>쿠폰번호:&ensp;</p>
+              <p style="letter-spacing:1px;" th:text="*{couponNum}">123456789qwe</p>
             </div>
-            <div class="oneline" >
-              <div class="oneline" style="margin-right: 5rem;">
-                <p>쿠폰번호:&ensp;</p>
-                <p style="letter-spacing:1px;" th:text="*{couponNum}">123456789qwe</p>
-              </div>
-              <div class="oneline">
-                <p>사용기간:&ensp;</p>
-                <p style="letter-spacing:1px;" th:text="*{#temporals.format(couponValDate, 'yyyy년 MM월 dd일')}">2024-12-31</p>
-              </div>
+            <div class="oneline">
+              <p>사용기간:&ensp;</p>
+              <p style="letter-spacing:1px;" th:text="*{#temporals.format(couponValDate, 'yyyy년 MM월 dd일')}">2024-12-31</p>
             </div>
           </div>
         </div>
       </div>
-
-
-
     </div>
-    <!-- 발급된 쿠폰유무상관없이 보여줌 -->
-    <div class="coupon-box">
-      <div class="container">
-        <h3>쿠폰이용안내</h3>
-        <ul>
-          <li>회원가입한 회원만 이용할 수 있습니다.</li>
-          <li>지급된 쿠폰은 타 회원에게 양도하거나, 현금 환급이 불가합니다.</li>
-          <li>거래금액, 서비스 등 조건이 맞는 쿠폰만 사용할 수 있습니다.</li>
-          <li>쿠폰은 중복사용이 불가합니다.</li>
-          <li>유효기간이 만료된 쿠폰은 사용 여부와 관계없이 삭제됩니다.</li>
-        </ul>
-      </div>
+
+
+
+  </div>
+  <!-- 발급된 쿠폰유무상관없이 보여줌 -->
+  <div class="coupon-box">
+    <div class="container">
+      <h3>쿠폰이용안내</h3>
+      <ul>
+        <li>회원가입한 회원만 이용할 수 있습니다.</li>
+        <li>지급된 쿠폰은 타 회원에게 양도하거나, 현금 환급이 불가합니다.</li>
+        <li>거래금액, 서비스 등 조건이 맞는 쿠폰만 사용할 수 있습니다.</li>
+        <li>쿠폰은 중복사용이 불가합니다.</li>
+        <li>유효기간이 만료된 쿠폰은 사용 여부와 관계없이 삭제됩니다.</li>
+      </ul>
     </div>
   </div>
-  <div th:replace="~{/layout/footer :: footer}"></div>
+</div>
+<div th:replace="~{/layout/footer :: footer}"></div>
 
 </body>
 </html>
