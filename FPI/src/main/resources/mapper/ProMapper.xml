@@ -76,7 +76,7 @@
         where pro_id = #{proId}
     </select>
 
-
+<!--수정 폼으로 넘어갈때 가져갈 자료-->
     <select id="selectEditPro">
         select pro.*, l.REGION, l.CITY
         from (select p.PRO_ID,
@@ -341,13 +341,6 @@
     </select>
 
 
-    <!--    프로가 올린 서비스를 통해 아이디 가져오기 -->
-    <select id="selectProIdByProUploadId" resultType="Long">
-        select PRO_ID
-        from TBL_PRO_UPLOAD
-        where PRO_UPLOAD_ID = #{proUploadId}
-    </select>
-
     <!--        전문가 별점 가져오기 -->
     <select id="selectProRate" resultType="Long">
         select round(avg(PRO_REVIEW_RATE), 0)
@@ -388,4 +381,18 @@
     </select>
 
 
+    <!--    프로가 올린 서비스를 통해 아이디 가져오기 -->
+    <select id="selectProIdByProUploadId" resultType="Long">
+        select PRO_ID
+        from TBL_PRO_UPLOAD
+        where PRO_UPLOAD_ID = #{proUploadId}
+    </select>
+
+
+
+<!--    마이페이지에서 클릭으로 자격증정보 삭제-->
+    <delete id="clickDeleteCard">
+        delete from TBL_CARDINFO
+        where CARDINFO_ID = #{cardIndfoId}
+    </delete>
 </mapper>

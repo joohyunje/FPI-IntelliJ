@@ -10,166 +10,166 @@
   <link rel="stylesheet" th:href="@{/css/main/common.css}">
   <link rel="stylesheet" th:href="@{/css/layout/header.css}">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
 <div th:replace="~{/layout/header :: header}"></div>
-  <div class="detail-container">
-    <div class="container">
-      <!-- 좌측 메뉴 -->
-      <div class="aside">
-        <h1>계정 설정</h1>
-        <hr class="hr">
-        <a th:href="@{/pro/detail}">전문가 정보</a>
-        <a th:href="@{/pro/edit}" style="font-weight: bold;">전문가 정보 수정</a>
-        <button id="btn-modal">전문가 탈퇴</button>
-      </div>
+<div class="detail-container">
+  <div class="container">
+    <!-- 좌측 메뉴 -->
+    <div class="aside">
+      <h1>계정 설정</h1>
+      <hr class="hr">
+      <a th:href="@{/pro/detail}">전문가 정보</a>
+      <a th:href="@{/pro/edit}" style="font-weight: bold;">전문가 정보 수정</a>
+      <button id="btn-modal">전문가 탈퇴</button>
+    </div>
 
-      <!-- 우측 정보수정 -->
+    <!-- 우측 정보수정 -->
 
-      <div class="marginL-40">
-        <h2>내 정보 수정</h2>
-        <p>연락처는 매칭시 회원에게 공개 됩니다.</p>
-        <form name="proEdit" id="proEdit" enctype="multipart/form-data" th:action="@{/pro/edit}" th:object="${edit}" method="post">
-          <input class="userId" type="hidden" th:value="*{proId}"  name="proId" style="display: none !important;" >
+    <div class="marginL-40">
+      <h2>내 정보 수정</h2>
+      <p>연락처는 매칭시 회원에게 공개 됩니다.</p>
+      <form name="proEdit" id="proEdit" enctype="multipart/form-data" th:action="@{/pro/edit}" th:object="${edit}" method="post">
+        <input class="userId" type="hidden" th:value="*{proId}"  name="proId" style="display: none !important;" >
 
-          <div class="sub-container">
-            <div class="marginR-40">
-              <div id="proImg"></div>
-              <img  class="imgSize" id="proImgChange"  th:src="*{proImg}">
-              <div class="file-upload">
-                <label for="fileInput">
-                  <div id="pro-customButton" >활동 사진 변경</div>
-                </label>
-                <input type="file" id="fileInput" name="proProfile" accept="image/*">
+        <div class="sub-container">
+          <div class="marginR-40">
+            <div id="proImg"></div>
+            <img  class="imgSize" id="proImgChange"  th:src="*{proImg}">
+            <div class="file-upload">
+              <label for="fileInput">
+                <div id="pro-customButton" >활동 사진 변경</div>
+              </label>
+              <input type="file" id="fileInput" name="proProfile" accept="image/*">
+            </div>
+          </div>
+
+
+          <div style="width: 100%;">
+
+            <div class="col underline">
+              <label for="proName" class="fontSize15 label">전문가 활동 이름</label>
+              <input type="text" id="proName" name="proName" class="form-control" th:value="*{proName}">
+              <p>* 전문가로 활동할 이름을 입력해주세요</p>
+            </div>
+
+            <div class="col underline">
+              <label for="phoneNumber" class="fontSize15 label">연락처</label>
+              <input type="tel" maxlength="11" id="phoneNumber" name="phoneNumber" class="form-control" th:value="*{phoneNumber}">
+              <p>* 회원과 매칭시 연락할 전화번호를 입력해주세요</p>
+            </div>
+
+            <div class="col underline">
+              <label for="email" class="fontSize15 label">이메일</label>
+              <input type="email" id="email" name="email" class="form-control" th:value="*{email}"disabled>
+              <p>* 일반회원으로 전환하여 이메일을 변경하세요</p>
+            </div>
+
+            <!-- 주소 API -->
+            <div class="col underline2">
+              <label for="region" class="fontSize15 label">지역</label>
+              <div style="display: flex; margin-bottom:5px ; ">
+                <select name="region" id="region" class="form-select" style="margin-right: 10px;"></select>
+                <select name="city" id="city" aria-required="true" class="form-select">
+                </select>
+              </div>
+            </div>
+
+            <!-- 카테고리 -->
+            <div class="col underline pro">
+              <label for="category" class="fontSize15 label">활동 서비스</label>
+              <select name="categoryId" id="category" aria-required="true" class="form-select" style="margin-bottom: 17px;">
+                <option value="none">카테고리</option>
+                <option value="1">이사/청소</option>
+                <option value="2">설치/수리</option>
+                <option value="3">인테리어</option>
+                <option value="4">취미/자기개발</option>
+                <option value="5">기타</option>
+              </select>
+            </div>
+
+            <div class="col underline2">
+              <label for="upload" class="fontSize15 label">자격증 사진추가</label>
+              <input type="file" class="form-control" id="upload" name="files" accept="image/*" multiple>
+            </div>
+            <!--              <div th:each="card:${edit.cardInfoFileRoute}" th:object="card">-->
+            <!--                <img th:src="*{}">-->
+            <!--              </div>-->
+
+
+            <div class="underline2 plusPoint">
+              <div class="certi-label" >
+                <label for="certiOrgan" class="fontSize15">자격증 발급기관/ </label>
+                <label for="certiNum" class="fontSize15">자격증 번호</label>
+                <div class="plus">+</div>
+              </div>
+
+              <div class="certi-label" th:each="card : ${cards}" id="cards" >
+                <input type="hidden" th:value="${card.proId}"  name="proId" >
+                <input type="hidden" th:value="${card.cardInfoId}" name="cardInfoId">
+                <input th:value="${card.certiOrgan}" type="text" id="certiOrgan" name="certiOrgan" class="form-control" style=" margin-right: 10px;" placeholder="자격증 발급기관을 입력하세요">
+                <input th:value="${card.certiNum}" type="text" id="certiNum" name="certiNum" class="form-control"
+                       placeholder="자격증 번호를 입력하세요">
               </div>
             </div>
 
 
-            <div style="width: 100%;">
-
-                <div class="col underline">
-                  <label for="proName" class="fontSize15 label">전문가 활동 이름</label>
-                  <input type="text" id="proName" name="proName" class="form-control" th:value="*{proName}">
-                  <p>* 전문가로 활동할 이름을 입력해주세요</p>
-                </div>
-
-                <div class="col underline">
-                  <label for="phoneNumber" class="fontSize15 label">연락처</label>
-                  <input type="tel" maxlength="11" id="phoneNumber" name="phoneNumber" class="form-control" th:value="*{phoneNumber}">
-                  <p>* 회원과 매칭시 연락할 전화번호를 입력해주세요</p>
-                </div>
-
-                <div class="col underline">
-                  <label for="email" class="fontSize15 label">이메일</label>
-                  <input type="email" id="email" name="email" class="form-control" th:value="*{email}"disabled>
-                  <p>* 일반회원으로 전환하여 이메일을 변경하세요</p>
-                </div>
-
-                <!-- 주소 API -->
-                <div class="col underline2">
-                  <label for="region" class="fontSize15 label">지역</label>
-                  <div style="display: flex; margin-bottom:5px ; ">
-                    <select name="region" id="region" class="form-select" style="margin-right: 10px;"></select>
-                    <select name="city" id="city" aria-required="true" class="form-select">
-                    </select>
-                  </div>
-                </div>
-
-  <!-- 카테고리 -->
-                <div class="col underline pro">
-                  <label for="category" class="fontSize15 label">활동 서비스</label>
-                  <select name="categoryId" id="category" aria-required="true" class="form-select" style="margin-bottom: 17px;">
-                    <option value="none">카테고리</option>
-                    <option value="1">이사/청소</option>
-                    <option value="2">설치/수리</option>
-                    <option value="3">인테리어</option>
-                    <option value="4">취미/자기개발</option>
-                    <option value="5">기타</option>
-                  </select>
-                </div>
-
-                <div class="col underline2">
-                  <label for="upload" class="fontSize15 label">자격증 사진추가</label>
-                  <input type="file" class="form-control" id="upload" name="files" accept="image/*" multiple>
-                </div>
-<!--              <div th:each="card:${edit.cardInfoFileRoute}" th:object="card">-->
-<!--                <img th:src="*{}">-->
-<!--              </div>-->
-
-
-                <div class="underline2 plusPoint">
-                  <div class="certi-label" >
-                    <label for="certiOrgan" class="fontSize15">자격증 발급기관/ </label>
-                    <label for="certiNum" class="fontSize15">자격증 번호</label>
-                    <div class="plus">+</div>
-                  </div>
-
-                  <div class="certi-label" th:each="card : ${cards}" id="cards" >
-                    <input type="hidden" th:value="${card.proId}"  name="proId" >
-                    <input type="hidden" th:value="${card.cardInfoId}" name="cardInfoId">
-                    <input th:value="${card.certiOrgan}" type="text" id="certiOrgan" name="certiOrgan" class="form-control" style=" margin-right: 10px;" placeholder="자격증 발급기관을 입력하세요">
-                    <input th:value="${card.certiNum}" type="text" id="certiNum" name="certiNum" class="form-control"
-                    placeholder="자격증 번호를 입력하세요">
-                  </div>
-                </div>
-
-
-              <div class="col height200">
-                <span for="career" class="fontSize15 label">경력 혹은 수상내역 작성</span>
-                <input type="hidden" th:value="*{careerInfoId}" name="careerInfoId">
-                <textarea  id="award" name="award" maxlength="400" class="textarea" th:field="*{award}"></textarea>
-              </div>
-
-
-
-                <div class="left">
-                  <button type="submit" class="probtn">수정완료</button>
-                </div>
-
-            </div> <!-- 입력폼 끝 -->
-          </div>
-        </form>
-
-        </div> <!-- 우측 폼컨테이너박스 -->
-  
-    </div> <!-- 전체 컨테이너,내용물 중앙 배치-->
-
-  </div> <!-- 메인을 감싸는 컨테이너 -->
-
-  <!-- 전문가 탈퇴모달 -->
-    <div id=modal class="container">
-      <div class="container">
-        <div class="box-container">
-          <div class="box-header">전문가탈퇴</div>
-          <div class="box-content">
-            <div class="description">
-              <h3>정말로 전문가 탈퇴 하시겠습니까?</h3>
-              탈퇴시 입력하신 전문가 정보가 삭제되며
-              <br>
-              전문가 활동을 다시 원하실 경우
-              <br>
-              전문가 인증과정이 다시 이루어집니다.
-
+            <div class="col height200">
+              <span for="career" class="fontSize15 label">경력 혹은 수상내역 작성</span>
+              <input type="hidden" th:value="*{careerInfoId}" name="careerInfoId">
+              <textarea  id="award" name="award" maxlength="400" class="textarea" th:field="*{award}"></textarea>
             </div>
-            <form method="post" id="deleteForm" th:action="@{/pro/delete}">
-              <input class="proId" type="hidden" th:field="${edit.proId}"  name="proId">
-              <div class="title">탈퇴하시려면 전문가 활동 이름을 작성해주세요</div>
-              <input class="pro-input-box input-box" name="proName" placeholder="전문가 활동 이름 작성" type="text">
-              <p class="error">이름이 일치하지 않습니다.</p>
 
 
 
-              <!--모달 창 닫음 -->
-              <button type="button" id="close-modal"  class=" pro-btn btn">탈퇴하지 않겠습니다</button>
-              <!-- 탈퇴완료창->로그아웃&메인페이지로이동 -->
-              <button type="submit" class="btn pro-btn">탈퇴하기</button>
-            </form>
-          </div>
+            <div class="left">
+              <button type="submit" class="probtn">수정완료</button>
+            </div>
+
+          </div> <!-- 입력폼 끝 -->
         </div>
+      </form>
+
+    </div> <!-- 우측 폼컨테이너박스 -->
+
+  </div> <!-- 전체 컨테이너,내용물 중앙 배치-->
+
+</div> <!-- 메인을 감싸는 컨테이너 -->
+
+<!-- 전문가 탈퇴모달 -->
+<div id=modal class="container">
+  <div class="container">
+    <div class="box-container">
+      <div class="box-header">전문가탈퇴</div>
+      <div class="box-content">
+        <div class="description">
+          <h3>정말로 전문가 탈퇴 하시겠습니까?</h3>
+          탈퇴시 입력하신 전문가 정보가 삭제되며
+          <br>
+          전문가 활동을 다시 원하실 경우
+          <br>
+          전문가 인증과정이 다시 이루어집니다.
+
+        </div>
+        <form method="post" id="deleteForm" th:action="@{/pro/delete}">
+          <input class="proId" type="hidden" th:field="${edit.proId}"  name="proId">
+          <div class="title">탈퇴하시려면 전문가 활동 이름을 작성해주세요</div>
+          <input class="pro-input-box input-box" name="proName" placeholder="전문가 활동 이름 작성" type="text">
+          <p class="error">이름이 일치하지 않습니다.</p>
+
+
+
+          <!--모달 창 닫음 -->
+          <button type="button" id="close-modal"  class=" pro-btn btn">탈퇴하지 않겠습니다</button>
+          <!-- 탈퇴완료창->로그아웃&메인페이지로이동 -->
+          <button type="submit" class="btn pro-btn">탈퇴하기</button>
+        </form>
       </div>
     </div>
   </div>
+</div>
+</div>
 
 <script th:src="@{/js/location.js}"></script>
 <script th:src="@{/js/file.js}"></script>

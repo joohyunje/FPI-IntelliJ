@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.fpi.mapper.main.MainListMapper">
+    <!--    최근 게시글 4개뿌려주기,메인에서 사용-->
+    <select id="mainCommunityList" resultType="CommunityDTO">
+        SELECT ROWNUM AS RN, COMMUNITY.*
+        FROM (
+                 SELECT
+                     *
+                 FROM
+                     TBL_COMMUNITY C
+                 ORDER BY
+                     C.COMMUNITY_UPDATE_DATE DESC
+             ) COMMUNITY
+        WHERE ROWNUM &lt;= 4
+
+    </select>
+
+
+    <select id="proUploadList" resultType="ProUploadListDTO">
+        SELECT ROWNUM AS RN, pro.*
+        FROM (      SELECT TPU.PRO_UPLOAD_ID
+                         , TPU.PRO_UPLOAD_DATE
+                         , TC.CATEGORY_NAME
+                         , TS.SERVICE_NAME
+                         , TL.REGION
+                         , TL.CITY
+                         , TPU.PRO_UPLOAD_CONTENT
+                         , TP.PRO_STAR_RATE
+                         , TPU.PRO_UPLOAD_ADDRESS
+                         , TPU.PRO_UPLOAD_PAY_RANGE
+                         , TP.PRO_NAME
+                         , TP.PRO_ID
+                         , TPU.PRO_UPLOAD_TITLE
+                         , TPU.PRO_UPLOAD_PAY
+                         , TP.EMP_CNT
+                         , puf.PRO_UPLOAD_FILE_ROUTE
+                    FROM TBL_PRO_UPLOAD TPU
+                             INNER JOIN TBL_SERVICE ts
+                                        ON TPU.SERVICE_ID = TS.SERVICE_ID
+                             INNER JOIN TBL_CATEGORY tc
+                                        ON TS.CATEGORY_ID = TC.CATEGORY_ID
+                             INNER JOIN TBL_PRO TP
+                                        ON TP.PRO_ID = TPU.PRO_ID
+                             INNER JOIN TBL_LOCATION tl
+                                        ON TP.LOCATION_ID = TL.LOCATION_ID
+                            JOIN TBL_PRO_UPLOAD_FILE puf
+                                On TPU.PRO_UPLOAD_ID = puf.PRO_UPLOAD_ID
+                    ) pro
+        WHERE ROWNUM &lt;= 4
+
+    </select>
+
+</mapper>

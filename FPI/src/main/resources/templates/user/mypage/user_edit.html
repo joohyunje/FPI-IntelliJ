@@ -9,128 +9,128 @@
   <link rel="stylesheet" th:href="@{/css/user/mypage/withdrawmodal.css}">
   <link rel="stylesheet" th:href="@{/css/main/common.css}">
   <link rel="stylesheet" th:href="@{/css/layout/header.css}">
-  
+
   <!-- j쿼리 -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
-  <div th:replace="~{/layout/header :: header}"></div>
+<div th:replace="~{/layout/header :: header}"></div>
 
-  <div class="detail-container">
-    <div class="container">
-      <!-- 좌측 사이드 -->
-      <div class="aside">
-        <a th:href="@{/user/mypage}" style="padding: 0"><h1>마이페이지/계정 설정</h1></a>
-        <hr class="hr">
-        <a th:href="@{/user/detail}">회원 정보</a>
-        <a th:href="@{/user/edit}" style="font-weight: bold;">회원 정보 수정</a>
-        <button id="btn-modal" style="color: #323232">회원 탈퇴</button>
-      </div>
+<div class="detail-container">
+  <div class="container">
+    <!-- 좌측 사이드 -->
+    <div class="aside">
+      <a th:href="@{/user/mypage}" style="padding: 0"><h1>마이페이지/계정 설정</h1></a>
+      <hr class="hr">
+      <a th:href="@{/user/detail}">회원 정보</a>
+      <a th:href="@{/user/edit}" style="font-weight: bold;">회원 정보 수정</a>
+      <button id="btn-modal" style="color: #323232">회원 탈퇴</button>
+    </div>
 
-      <!-- 우측 정보수정 -->
+    <!-- 우측 정보수정 -->
 
-      <div class="marginL-40">
-        <h2>내 정보 수정</h2>
-        <p>간편회원가입하신 회원은 프로필사진 변경이 불가능합니다.</p>
-        <div class="sub-container">
-            <div class="marginR-40">
-              <img  class="imgSize" th:src="${edit.userImg}"><!-- src"" = 프로필이미지링크넣어야함 -->
-            </div>
-          <div style="width: 100%;">
-              <form method="post" name="userEdit" id="userEdit" th:action="@{/user/edit}" th:object="${edit}">
-                <input class="userId" type="hidden" th:value="${edit.userId}"  name="userId" >
-
-
-                <div style="width: 100%;">
-                  <!-- 만약 폼로그인 기능이 구현된다면 readonly속성 없애면됨  -->
-                  <div class="col underline">
-                    <label for="userName" class="fontSize15 label">이름</label>
-                    <input type="text" id="userName" name="userName" class="form-control"  th:field="*{userName}"  disabled>
-                    <p>* 이름은 수정이 불가능합니다</p>
-                  </div>
-
-                  <div class="col underline">
-                    <label for="phoneNumber" class="fontSize15 label">연락처</label>
-                    <input type="tel" maxlength="11" id="phoneNumber" name="phoneNumber" class="form-control" th:field="*{phoneNumber}">
-                    <p>* 전문가와 매칭시 연락할 전화번호를 입력해주세요</p>
-                  </div>
-
-                  <div class="col underline2">
-                    <label for="email" class="fontSize15 label">이메일</label>
-                    <input type="email" id="email" name="email" class="form-control" th:field="*{email}" >
-                  </div>
+    <div class="marginL-40">
+      <h2>내 정보 수정</h2>
+      <p>간편회원가입하신 회원은 프로필사진 변경이 불가능합니다.</p>
+      <div class="sub-container">
+        <div class="marginR-40">
+          <img  class="imgSize" th:src="${edit.userImg}"><!-- src"" = 프로필이미지링크넣어야함 -->
+        </div>
+        <div style="width: 100%;">
+          <form method="post" name="userEdit" id="userEdit" th:action="@{/user/edit}" th:object="${edit}">
+            <input class="userId" type="hidden" th:value="${edit.userId}"  name="userId" >
 
 
-                  <div class="con underline2" >
-                    <label for="region" class="fontSize15 label" >지역</label>
+            <div style="width: 100%;">
+              <!-- 만약 폼로그인 기능이 구현된다면 readonly속성 없애면됨  -->
+              <div class="col underline">
+                <label for="userName" class="fontSize15 label">이름</label>
+                <input type="text" id="userName" name="userName" class="form-control"  th:field="*{userName}"  disabled>
+                <p>* 이름은 수정이 불가능합니다</p>
+              </div>
 
-                    <div style="display: flex; margin:0 0 5px 0;">
-                      <select name="region" id="region" class="form-select" style="margin-right: 10px;"></select>
-                      <select name="city" id="city" aria-required="true" class="form-select" ></select>
-                    </div>
-                  </div>
+              <div class="col underline">
+                <label for="phoneNumber" class="fontSize15 label">연락처</label>
+                <input type="tel" maxlength="11" id="phoneNumber" name="phoneNumber" class="form-control" th:field="*{phoneNumber}">
+                <p>* 전문가와 매칭시 연락할 전화번호를 입력해주세요</p>
+              </div>
 
-                  <div class="col underline">
-                    <label for="category" class="fontSize15 label">관심 서비스</label>
-                    <select name="categoryId" id="category" aria-required="false" class="form-select" style="margin-bottom: 17px;" >
-                      <option value="none">카테고리</option>
-                      <option value="1">이사/청소</option>
-                      <option value="2">설치/수리</option>
-                      <option value="3">인테리어</option>
-                      <option value="4">취미/자기개발</option>
-                      <option value="5">기타</option>
-                    </select>
-                  </div>
-                  <div class="left">
-                    <button type="submit">수정완료</button>
-                  </div>
+              <div class="col underline2">
+                <label for="email" class="fontSize15 label">이메일</label>
+                <input type="email" id="email" name="email" class="form-control" th:field="*{email}" >
+              </div>
+
+
+              <div class="con underline2" >
+                <label for="region" class="fontSize15 label" >지역</label>
+
+                <div style="display: flex; margin:0 0 5px 0;">
+                  <select name="region" id="region" class="form-select" style="margin-right: 10px;"></select>
+                  <select name="city" id="city" aria-required="true" class="form-select" ></select>
                 </div>
-              </form> <!-- 폼작성 끝 -->
-            </div> <!-- 폼 컨테이너 -->
-        </div>
-      </div> <!-- 우측전체 컨테이너 -->
-    </div> <!-- 메인 전체 컨테이너 중앙배치 -->
-  </div><!-- 메인 전체 컨테이너 -->
+              </div>
 
-    <!-- 회원탈퇴모달 -->
-  <div id=modal class="container">
-    <div class="box-container">
-      <div class="box-header">회원탈퇴</div>
-      <div class="box-content">
-        <div class="description">
-          <h3>정말로 회원탈퇴 하시겠습니까?</h3>
-          탈퇴시 모든 개인정보가 삭제되며
-          <br>
-          보유하신 포인트는 환불되지 않습니다
-        </div>
-        <form method="post" id="deleteForm" th:action="@{/user/delete}">
-          <input class="userId" type="hidden" th:value="${edit.userId}"  name="userId" style="display: none !important;" >
-          <div class="title">탈퇴하시려면 본인 이름을 작성해주세요</div>
-          <input class="input-box" name="userName" placeholder="본인이름 작성" type="text">
-          <p class="error">이름이 일치하지 않습니다.</p>
-
-          <!--모달 창 닫음 -->
-          <button type="button" id="close-modal"  class="btn">탈퇴하지 않겠습니다</button>
-          <!-- 탈퇴완료창->로그아웃&메인페이지로이동 -->
-          <button type="submit" class="btn" onclick="deleteForm()">탈퇴하기</button>
-        </form>
+              <div class="col underline">
+                <label for="category" class="fontSize15 label">관심 서비스</label>
+                <select name="categoryId" id="category" aria-required="false" class="form-select" style="margin-bottom: 17px;" >
+                  <option value="none">카테고리</option>
+                  <option value="1">이사/청소</option>
+                  <option value="2">설치/수리</option>
+                  <option value="3">인테리어</option>
+                  <option value="4">취미/자기개발</option>
+                  <option value="5">기타</option>
+                </select>
+              </div>
+              <div class="left">
+                <button type="submit">수정완료</button>
+              </div>
+            </div>
+          </form> <!-- 폼작성 끝 -->
+        </div> <!-- 폼 컨테이너 -->
       </div>
+    </div> <!-- 우측전체 컨테이너 -->
+  </div> <!-- 메인 전체 컨테이너 중앙배치 -->
+</div><!-- 메인 전체 컨테이너 -->
+
+<!-- 회원탈퇴모달 -->
+<div id=modal class="container">
+  <div class="box-container">
+    <div class="box-header">회원탈퇴</div>
+    <div class="box-content">
+      <div class="description">
+        <h3>정말로 회원탈퇴 하시겠습니까?</h3>
+        탈퇴시 모든 개인정보가 삭제되며
+        <br>
+        보유하신 포인트는 환불되지 않습니다
+      </div>
+      <form method="post" id="deleteForm" th:action="@{/user/delete}">
+        <input class="userId" type="hidden" th:value="${edit.userId}"  name="userId" style="display: none !important;" >
+        <div class="title">탈퇴하시려면 본인 이름을 작성해주세요</div>
+        <input class="input-box" name="userName" placeholder="본인이름 작성" type="text">
+        <p class="error">이름이 일치하지 않습니다.</p>
+
+        <!--모달 창 닫음 -->
+        <button type="button" id="close-modal"  class="btn">탈퇴하지 않겠습니다</button>
+        <!-- 탈퇴완료창->로그아웃&메인페이지로이동 -->
+        <button type="submit" class="btn" onclick="deleteForm()">탈퇴하기</button>
+      </form>
     </div>
   </div>
+</div>
 
-  <script th:src="@{/js/deleteUser.js}"></script>
+<script th:src="@{/js/deleteUser.js}"></script>
 
 <!--  파일선택시 미리보기처럼 이미지띄워주는 js-->
-  <script th:src="@{/js/file.js}"></script>
+<script th:src="@{/js/file.js}"></script>
 
 <!--지역선택하는 js-->
-  <script th:src="@{/js/location.js}"></script>
+<script th:src="@{/js/location.js}"></script>
 
 <!--자바스크립트 파일에서 타임리프문법을 사용하기 위해서 필요,카테고리에 선택한 옵셥띄워주기위해 사용-->
-  <script th:inline="javascript">
-    var categoryId = /*[[ ${edit.categoryId} ]]*/ null;
+<script th:inline="javascript">
+  var categoryId = /*[[ ${edit.categoryId} ]]*/ null;
 
-  </script>
+</script>
 
 
 

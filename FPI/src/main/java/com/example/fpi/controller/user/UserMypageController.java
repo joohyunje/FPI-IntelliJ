@@ -58,7 +58,7 @@ public class UserMypageController {
         return "user/mypage/user_mypage";
 
     }
-// 상세페이지
+    // 상세페이지
     @GetMapping("/detail")
     public String detail(@AuthenticationPrincipal CustomOAuth2User customOAuth2User, Model model) {
 
@@ -69,7 +69,7 @@ public class UserMypageController {
 
     }
 
-//    쿠폰함
+    //    쿠폰함
     @GetMapping("/couponlist")
     public String coupon(@AuthenticationPrincipal CustomOAuth2User customOAuth2User,Model model){
         String userId = customOAuth2User.getUserId();
@@ -97,7 +97,7 @@ public class UserMypageController {
         return "user/mypage/user_edit";
     }
 
-//html에서 edit에 정보가 담겨있음,getter에서 edit에 담아서 넘겨줌
+    //html에서 edit에 정보가 담겨있음,getter에서 edit에 담아서 넘겨줌
     @PostMapping("/edit")
     public String edit(UserDTO edit) {
 
@@ -116,7 +116,7 @@ public class UserMypageController {
         return "redirect:/user/detail";
     }
 
-//    전문가 인증폼으로 이동
+    //    전문가 인증폼으로 이동
     @GetMapping("/certify")
     public String certifyForm(Model model) {
 //        List<CareerInfoDTO> awards = new ArrayList<>();
@@ -169,55 +169,6 @@ public class UserMypageController {
             redirectAttributes.addFlashAttribute("error", true);
             return "redirect:/user/detail";
         }
-    }
-
-//    @GetMapping({"/activeList/community","/activeList/review","/activeList/comment"})
-//    public String active(@AuthenticationPrincipal CustomOAuth2User customOAuth2User,
-//                         @RequestParam(value="page", defaultValue = "1")int page,
-//                         @RequestParam (value="pageSize", defaultValue = "8")int pageSize,
-//                         Model model) {
-//        String userId = customOAuth2User.getUserId();
-//        int totalCommu = activeService.countUserCommu(userId); //전체 게시글
-//        int totalPages =(int) Math.ceil((double)totalCommu/pageSize); //페이지 수
-//
-//        List<UserCommunityListDTO> lists = activeService.selectUserCommuList(userId,page,pageSize);
-//        int pageGroupSize=5; //페이지 그룹
-//        int startPage=((page-1)/pageGroupSize)* pageGroupSize +1; //그룹의 시작페이지 구함
-//        int endPage= Math.min(startPage+pageGroupSize -1,totalPages); //
-//
-//        model.addAttribute("lists",lists);
-//        model.addAttribute("currentPage",page);
-//        model.addAttribute("pageSize",pageSize);
-//        model.addAttribute("totalPages",totalPages);
-//        model.addAttribute("startPage",startPage);
-//        model.addAttribute("endPage",endPage);
-//
-//
-//        return "/user/mypage/creationList1";
-//    }
-    @GetMapping("/activeList")
-    public String active(@AuthenticationPrincipal CustomOAuth2User customOAuth2User,
-                         @RequestParam(value="page", defaultValue = "1")int page,
-                         @RequestParam (value="pageSize", defaultValue = "8")int pageSize,
-                         Model model) {
-        String userId = customOAuth2User.getUserId();
-        int totalCommu = activeService.countUserCommu(userId); //전체 게시글
-        int totalPages =(int) Math.ceil((double)totalCommu/pageSize); //페이지 수
-
-        List<UserCommunityListDTO> lists = activeService.selectUserCommuList(userId,page,pageSize);
-        int pageGroupSize=5; //페이지 그룹
-        int startPage=((page-1)/pageGroupSize)* pageGroupSize +1; //그룹의 시작페이지 구함
-        int endPage= Math.min(startPage+pageGroupSize -1,totalPages); //
-
-        model.addAttribute("lists",lists);
-        model.addAttribute("currentPage",page);
-        model.addAttribute("pageSize",pageSize);
-        model.addAttribute("totalPages",totalPages);
-        model.addAttribute("startPage",startPage);
-        model.addAttribute("endPage",endPage);
-
-
-        return "/user/mypage/creationList1";
     }
 
 

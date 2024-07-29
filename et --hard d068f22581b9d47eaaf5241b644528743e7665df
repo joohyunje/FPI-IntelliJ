@@ -1,0 +1,639 @@
+[33mcommit ad76b32beb10c5c1173f86e8642d3f83c50ae049[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdevelop[m[33m)[m
+Merge: d068f22 3aee0f4
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Mon Jul 29 01:41:04 2024 +0900
+
+    Merge pull request #31 from joohyunje/main
+    
+    현제 병합중
+
+[33mcommit 3aee0f446673d51b7ff5d760519c8533b7a39427[m
+Merge: 580965f d068f22
+Author: joohyunje <joohj8677@naver.com>
+Date:   Sun Jul 28 23:46:16 2024 +0900
+
+    Merge branch 'main' into develop
+
+[33mcommit d068f22581b9d47eaaf5241b644528743e7665df[m
+Merge: 5407318 c118668
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Sun Jul 28 23:42:51 2024 +0900
+
+    Merge pull request #30 from Find-Pro-Island/revert-29-main
+    
+    Revert "발표 전 병합중"
+
+[33mcommit c11866843292143e13eab2dd491e8d02e73a36c8[m
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Sun Jul 28 23:42:40 2024 +0900
+
+    Revert "발표 전 병합중"
+
+[33mcommit 540731849f8f91991de1608d0368bdb2874f1fc6[m
+Merge: 497c0bf b571e1f
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Sun Jul 28 23:38:37 2024 +0900
+
+    Merge pull request #29 from Park-MJeong/main
+    
+    마이페이지- 게시글,댓글 select완료(회원,전문가 구분해서)
+    댓글 작성,삭제 완료
+    게시판 리스트에서 댓글 보여주기 완료
+    댓글수정작업은 진행해야함
+
+[33mcommit 580965f5aa9591ecbf2805b9294463d566fd015c[m
+Author: joohyunje <joohj8677@naver.com>
+Date:   Sun Jul 28 23:34:30 2024 +0900
+
+    7월 28일 병합중
+
+[33mcommit b571e1f15def660950d505120f71e08f33274df4[m
+Author: Park-MJeong <pmj7511@gmail.com>
+Date:   Sun Jul 28 05:21:29 2024 +0900
+
+    민정-게시판 댓글작성,삭제& 전문가 마이페이지 자격증사진,정보 삭제
+
+[33mcommit 5bd4ca57e3789adc3ff5aba0330c73a78fc31eef[m
+Author: Park-MJeong <pmj7511@gmail.com>
+Date:   Sun Jul 28 00:53:18 2024 +0900
+
+    게시판 select, 작성,수정,삭제 완료
+
+[33mcommit 497c0bfad6b01b4e28fda9e7a2e28c11bbae98e6[m
+Merge: 7a98dcb b6a5e02
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Sat Jul 27 18:05:57 2024 +0900
+
+    Merge pull request #28 from joohyunje/main
+    
+    7월 27일 병합중
+
+[33mcommit b6a5e025a003d46d94d8e2d8b6842511ab360520[m
+Merge: 58c8c78 7a98dcb
+Author: joohyunje <joohj8677@naver.com>
+Date:   Sat Jul 27 18:04:44 2024 +0900
+
+    현제 병합중
+
+[33mcommit 7a98dcb6b18572ec84e0aab72db64add000c76d5[m
+Merge: 11c0fed bf5b9e6
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Sat Jul 27 17:57:24 2024 +0900
+
+    Merge pull request #27 from Park-MJeong/main
+    
+    전문가자격증 수정시 자격증추추가,사진추가 완료
+
+[33mcommit bf5b9e6268f612a7cd6b0f5570d9664efd9a42b5[m
+Author: Park-MJeong <pmj7511@gmail.com>
+Date:   Sat Jul 27 17:55:49 2024 +0900
+
+    전문가자격증 수정시 자격증추추가,사진추가 완료
+
+[33mcommit 58c8c7866c3af804f3618b3b71549421201c5d16[m
+Author: joohyunje <joohj8677@naver.com>
+Date:   Sat Jul 27 17:55:39 2024 +0900
+
+    7월 27일 현제 병합중
+
+[33mcommit fc59c4809bfd46b20bb541e8c436d021485055b5[m
+Merge: aa85272 11c0fed
+Author: joohyunje <joohj8677@naver.com>
+Date:   Fri Jul 26 20:10:57 2024 +0900
+
+    현제 병합 완료
+
+[33mcommit aa85272863127ee2a7b8647a9b001e10d1eb75dd[m
+Author: joohyunje <joohj8677@naver.com>
+Date:   Fri Jul 26 20:00:18 2024 +0900
+
+    7월 26일 현제 병합중
+
+[33mcommit 11c0fed0caeee2aec4e89bb700fcad4cadb64ba7[m
+Merge: 0b530c8 f0282a5
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Fri Jul 26 17:42:44 2024 +0900
+
+    Merge pull request #26 from Park-MJeong/main
+    
+    민정/좋아요구현(완),커뮤니티페이징과 댓글구현중
+
+[33mcommit f0282a5b60c83a68cafe545b0b6895d9a83403a1[m
+Author: Park-MJeong <pmj7511@gmail.com>
+Date:   Fri Jul 26 17:40:11 2024 +0900
+
+    민정/좋아요구현(완),커뮤니티페이징과 댓글구현중
+
+[33mcommit 0b530c888f0464935ae99487c7dfccd44918300b[m
+Merge: ba1eb70 a306e00
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Tue Jul 23 20:22:05 2024 +0900
+
+    Merge pull request #25 from Park-MJeong/main
+    
+    Delete 루트경로
+
+[33mcommit a306e006f51ff09eb57e1497e214a395acc6d155[m
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Tue Jul 23 20:20:08 2024 +0900
+
+    Delete 루트경로
+
+[33mcommit ba1eb704f048893354635e82820136eafe315aca[m
+Merge: 8313230 b0f159a
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Tue Jul 23 20:08:35 2024 +0900
+
+    Merge pull request #24 from joohyunje/main
+    
+    현제 병합중
+
+[33mcommit b0f159adceaa627c8d7887833c50bff0ee74e615[m
+Merge: 8313230 0796dde
+Author: joohyunje <joohj8677@naver.com>
+Date:   Tue Jul 23 20:07:46 2024 +0900
+
+    현제 병합중
+
+[33mcommit 0796ddee4e45c3f9d02e44072dbde5574a1dc1ea[m
+Author: joohyunje <joohj8677@naver.com>
+Date:   Tue Jul 23 20:00:16 2024 +0900
+
+    병합중
+
+[33mcommit 83132300f19343596cb46b3e1fbd3273e0c8642f[m
+Merge: 1a39340 6c6a612
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Tue Jul 23 19:35:30 2024 +0900
+
+    Merge pull request #23 from Park-MJeong/main
+    
+    1차발표 병합중
+
+[33mcommit 6c6a61278d7f2c28b1cfd7e37b80dfcee0d48c58[m
+Merge: 902ffe4 b99dd80
+Author: Park-MJeong <pmj7511@gmail.com>
+Date:   Tue Jul 23 19:34:12 2024 +0900
+
+    1차발표병합중
+
+[33mcommit 902ffe43ad83d646ad708a064bd3eaf308fa6900[m
+Author: Park-MJeong <pmj7511@gmail.com>
+Date:   Tue Jul 23 19:29:26 2024 +0900
+
+    1차발표자료 병합중
+
+[33mcommit b99dd8066956bd7e0986d359c3e034e57265be18[m
+Merge: 50ad906 1a39340
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Tue Jul 23 19:26:16 2024 +0900
+
+    Merge branch 'Find-Pro-Island:main' into main
+
+[33mcommit 1a39340b53762ff8d916c95f425f9d80c344f165[m
+Merge: f06f2db e50f8d8
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Tue Jul 23 19:26:00 2024 +0900
+
+    Merge pull request #22 from ananganang/main
+    
+    한 곳 까지
+
+[33mcommit fa1f518a1eead68b06c8278cb942862417fdf2e1[m
+Author: joohyunje <joohj8677@naver.com>
+Date:   Tue Jul 23 19:25:18 2024 +0900
+
+    현제 develop push
+
+[33mcommit e50f8d86d61b34ff4e9424f3c653c9c4f8946287[m
+Author: ananganang <bluesky990902@gmail.com>
+Date:   Tue Jul 23 04:26:29 2024 +0900
+
+    한 곳 까지
+
+[33mcommit 50ad906f9647dd08163ff9337dda9c6130f477a3[m
+Merge: be2c4d4 f06f2db
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Sun Jul 21 18:38:55 2024 +0900
+
+    Merge branch 'Find-Pro-Island:main' into main
+
+[33mcommit be2c4d459428ee9c5f7b86a81179c8ebea44894b[m
+Author: Park-MJeong <pmj7511@gmail.com>
+Date:   Sun Jul 21 18:38:22 2024 +0900
+
+    민정 - 전문가 인증,정보 수정 진행중(자격증정보입력제외 완료)
+
+[33mcommit f06f2dba2d65315fb8a6eb600c92acbcff173cc8[m
+Merge: d562bc9 d4a861f
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Sat Jul 20 17:57:57 2024 +0900
+
+    Merge pull request #21 from ananganang/main
+    
+    noti faq 추가 꾸미기 제외 완. comment js 작업 아직미완. 현재 summernote 강의영상보는중..
+
+[33mcommit d4a861f0534471e2f08e7b07d1e22777c86c7aa5[m
+Author: ananganang <bluesky990902@gmail.com>
+Date:   Sat Jul 20 17:44:27 2024 +0900
+
+    noti faq 추가 꾸미기 제외 완. comment js 작업 아직미완. 현재 summernote 강의영상보는중..
+
+[33mcommit d562bc94351d3e9d89ac5ecf94dd2350e5f18fbe[m
+Merge: df7babb e3c5434
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Tue Jul 16 21:49:25 2024 +0900
+
+    Merge pull request #20 from Park-MJeong/main
+    
+    회원가입,헤더 이름뿌려주기 최종 완
+
+[33mcommit e3c54345f65afe0fc5900d23679648007c8284e3[m
+Author: Park-MJeong <pmj7511@gmail.com>
+Date:   Tue Jul 16 21:47:48 2024 +0900
+
+    회원가입 완료
+
+[33mcommit f0c82a35a273790afe2499d1db0166c19e699b17[m
+Merge: 9513373 df7babb
+Author: Park-MJeong <pmj7511@gmail.com>
+Date:   Tue Jul 16 21:42:12 2024 +0900
+
+    Merge branch 'main' of https://github.com/Park-MJeong/FPI-IntelliJ into develop
+
+[33mcommit df7babb1a79f52d08fa93131250208d766d1ceab[m
+Merge: 40594b8 b586d75
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Tue Jul 16 21:41:43 2024 +0900
+
+    Merge pull request #19 from joohyunje/main
+    
+    현제 - select완료, 견적 올리기 작업중
+
+[33mcommit 9513373a6558a1f7ceb3abacf98da61361e36833[m
+Author: Park-MJeong <pmj7511@gmail.com>
+Date:   Tue Jul 16 21:41:09 2024 +0900
+
+    회원가입 수정중
+
+[33mcommit b586d75a14516993f1ccbe905c36331924f91425[m
+Merge: dec08b4 40594b8
+Author: joohyunje <joohj8677@naver.com>
+Date:   Tue Jul 16 21:38:52 2024 +0900
+
+    현제 - select완료, 견적 올리기 작업중
+
+[33mcommit 40594b8adce4ec2cb7ade16ff624cc4addc6fd24[m
+Merge: a22c254 f493adf
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Tue Jul 16 21:24:42 2024 +0900
+
+    Merge pull request #18 from Park-MJeong/main
+    
+    전문가 헤더 완료
+
+[33mcommit dec08b4c1d685713305b35832228803cb450d533[m
+Merge: a5bc046 a22c254
+Author: joohyunje <joohj8677@naver.com>
+Date:   Tue Jul 16 21:20:53 2024 +0900
+
+    Merge branch 'main' into develop
+
+[33mcommit f493adfd2dcf8553a42c9d83748f0c7ca12a5f58[m
+Merge: e0856dd a22c254
+Author: Park-MJeong <pmj7511@gmail.com>
+Date:   Tue Jul 16 21:18:58 2024 +0900
+
+    Merge branch 'main' of https://github.com/Park-MJeong/FPI-IntelliJ into develop
+
+[33mcommit a5bc046b0009411e220cf8f0639103c375f25210[m
+Author: joohyunje <joohj8677@naver.com>
+Date:   Tue Jul 16 21:18:52 2024 +0900
+
+    현제 - select완, 견적 올리기 작업중
+
+[33mcommit a22c25495edbd9a932a5a382d7daf6754401c348[m
+Merge: e956e5e 6eef582
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Tue Jul 16 21:18:22 2024 +0900
+
+    Merge pull request #17 from ananganang/main
+    
+    noti detail , faq List까지
+
+[33mcommit e0856dd442fa73d4143cdd47790481d4910bc249[m
+Author: Park-MJeong <pmj7511@gmail.com>
+Date:   Tue Jul 16 21:17:10 2024 +0900
+
+    전문가 헤드,이름표시 완료
+
+[33mcommit 6eef582fcb203ac7f03a8d3d8fbd41ff5f797b36[m
+Author: ananganang <bluesky990902@gmail.com>
+Date:   Tue Jul 16 21:14:13 2024 +0900
+
+    noti detail faq까지
+
+[33mcommit 1f3940187a6d41a9fe40ad8b006d6e20c0c68b34[m
+Merge: a8aca06 e956e5e
+Author: Park-MJeong <pmj7511@gmail.com>
+Date:   Mon Jul 15 18:56:12 2024 +0900
+
+    Merge branch 'main' of https://github.com/Park-MJeong/FPI-IntelliJ into develop
+
+[33mcommit a8aca06f38b4f0f4aede26864158ef5abe75f3c4[m
+Author: Park-MJeong <pmj7511@gmail.com>
+Date:   Mon Jul 15 18:55:12 2024 +0900
+
+     전문가인증페이지 진행중
+
+[33mcommit e956e5e4692c86ee2363cfecb5b6ef4264b9ddb4[m
+Merge: 1c47094 d46d924
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Mon Jul 15 18:53:34 2024 +0900
+
+    Merge pull request #16 from ananganang/main
+    
+    Noti쪽과 NotiDetail쪽 CRUD 작업진행중
+
+[33mcommit d46d9244cccf88190f36ffef8ca09757c9ca5765[m
+Author: ananganang <bluesky990902@gmail.com>
+Date:   Mon Jul 15 18:50:01 2024 +0900
+
+    Noti쪽과 NotiDetail쪽 CRUD 작업진행중
+
+[33mcommit 1c47094b39b68a61feb49951f0121a2bc2433ac8[m
+Merge: 8d26497 12f5b61
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Sun Jul 14 22:54:23 2024 +0900
+
+    Merge pull request #15 from joohyunje/main
+    
+    현제 - select 작업중
+
+[33mcommit 12f5b610af0255108c54ba685de4c6970dfdcbbb[m
+Merge: 78e1e9e 8d26497
+Author: joohyunje <joohj8677@naver.com>
+Date:   Sun Jul 14 22:48:48 2024 +0900
+
+    현제 - select
+
+[33mcommit 8d26497dc3eeb8a921a09870eca4a62714fd59bf[m
+Merge: 00f1aba 20a3880
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Sun Jul 14 22:33:56 2024 +0900
+
+    Merge pull request #14 from Park-MJeong/main
+    
+    민정 - 전문가 헤더 수정
+
+[33mcommit 20a38804067b4b8ca37c3019b49157a65d2cc8a8[m
+Author: Park-MJeong <pmj7511@gmail.com>
+Date:   Sun Jul 14 22:33:08 2024 +0900
+
+    민정 - 전문가 헤더 수정
+
+[33mcommit 78e1e9ec7e02b032109121999ef5b863fc7ee7de[m
+Author: joohyunje <joohj8677@naver.com>
+Date:   Sun Jul 14 22:32:58 2024 +0900
+
+    현제-select
+
+[33mcommit bced3af9a09e92b4a6edfee5999639f0ee4d1ad9[m
+Merge: d3e9421 00f1aba
+Author: joohyunje <joohj8677@naver.com>
+Date:   Sat Jul 13 21:39:50 2024 +0900
+
+    Merge branch 'main' into develop
+
+[33mcommit d3e94219edc96a9a555298f895a5299f19a1d9d1[m
+Author: joohyunje <joohj8677@naver.com>
+Date:   Sat Jul 13 21:38:55 2024 +0900
+
+    현제-수정중
+
+[33mcommit 00f1abae8f98781af067b618a61fbb7cd3cab532[m
+Merge: dbcbedc 69bbae0
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Sat Jul 13 03:34:52 2024 +0900
+
+    Merge pull request #13 from Park-MJeong/main
+    
+    민정-쿠폰생성,뿌려주기완료, 리스트 출력 (일부 값을 서버에서 못 받아와서 수정중)
+
+[33mcommit 69bbae0c0336559496d43846d3170d67e75a22e3[m
+Author: Park-MJeong <pmj7511@gmail.com>
+Date:   Sat Jul 13 03:32:10 2024 +0900
+
+    쿠폰생성,리스트 보여지기 완료.일부 수정
+
+[33mcommit dbcbedc44c3cef3a5cccbafd32550e79a25b24cc[m
+Merge: 9be0b75 120ca62
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Fri Jul 12 22:24:23 2024 +0900
+
+    Merge pull request #12 from Park-MJeong/main
+    
+    민정- 카카오 로그인 최종 완료
+
+[33mcommit 120ca622ae7826a82f3a3c24948226e3dfc79f7f[m
+Author: Park-MJeong <pmj7511@gmail.com>
+Date:   Fri Jul 12 22:22:23 2024 +0900
+
+    민정- 카카오 로그인 최종 완료
+
+[33mcommit 4c6db58bfdf68e4bb68647e7289beecab868dc24[m
+Merge: f7c37eb 9be0b75
+Author: joohyunje <joohj8677@naver.com>
+Date:   Fri Jul 12 20:18:08 2024 +0900
+
+    Merge branch 'main' into develop
+
+[33mcommit f7c37eb182a1f1629fe46a7a2feeaf944a5926ef[m
+Author: joohyunje <joohj8677@naver.com>
+Date:   Fri Jul 12 20:17:03 2024 +0900
+
+    sql 수정
+
+[33mcommit 9be0b75f54636958557728a03718e66124cb4217[m
+Merge: 62f0b51 b74ce2b
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Fri Jul 12 20:14:57 2024 +0900
+
+    Merge pull request #11 from Park-MJeong/main
+    
+    카카오회원가입완료
+
+[33mcommit 55425fb89d339a494fbb461d04b8de4b0ad42aec[m
+Author: joohyunje <joohj8677@naver.com>
+Date:   Fri Jul 12 20:13:40 2024 +0900
+
+    sql 수정
+
+[33mcommit b74ce2bcb2b27869b70ae5d12f165bf3f1574621[m
+Author: Park-MJeong <pmj7511@gmail.com>
+Date:   Fri Jul 12 20:13:23 2024 +0900
+
+    카카오회원가입완료
+
+[33mcommit 62f0b51522de3c3cf65c3ac500442620bcdf9e76[m
+Merge: cb15498 3590ca8
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Fri Jul 12 17:35:20 2024 +0900
+
+    Merge pull request #10 from Park-MJeong/main
+    
+    민정 - 상세보기완,회원가입완
+
+[33mcommit 3590ca8e2f64fa29aa9d30246a742aa5b693ca3f[m
+Author: Park-MJeong <pmj7511@gmail.com>
+Date:   Fri Jul 12 17:33:15 2024 +0900
+
+    민정 - 상세보기완,회원가입완
+
+[33mcommit cb15498dcfac5363953bc689f54aa002504d62da[m
+Merge: 7a33dc6 0282748
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Thu Jul 11 22:39:49 2024 +0900
+
+    Merge pull request #9 from joohyunje/main
+    
+    현제 - 깃 확인
+
+[33mcommit 0282748edb3fdffd536b0537518a68ca78079273[m
+Author: joohyunje <joohj8677@naver.com>
+Date:   Thu Jul 11 21:51:28 2024 +0900
+
+    현제 - 깃 확인
+
+[33mcommit 7a33dc6db67ccf9d65cdfff5c88ef7c594926237[m
+Merge: 8cb769e 94ce4bf
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Thu Jul 11 21:48:28 2024 +0900
+
+    Merge pull request #8 from joohyunje/main
+    
+    보낸 요청 받은 요청 sql , 테이블 수정
+
+[33mcommit 94ce4bf9c89dbe208e4164a9ed7d18158319ac07[m
+Merge: 8cb769e 534e1ea
+Author: joohyunje <joohj8677@naver.com>
+Date:   Thu Jul 11 21:27:16 2024 +0900
+
+    보낸요청, 받은 요청 sql 수정
+
+[33mcommit 534e1ea66732b24ddaf401a97410a3df73851fe8[m
+Author: joohyunje <joohj8677@naver.com>
+Date:   Thu Jul 11 20:37:16 2024 +0900
+
+    현제 - 받은요청, 보낸요청, 상세보기페이지 select 완료했는데 수정필요
+
+[33mcommit 8cb769e784ae5b4e746312d867565c0e712a34e7[m
+Merge: 9aa2b6c f9ffd87
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Sat Jul 6 04:01:50 2024 +0900
+
+    Merge pull request #7 from joohyunje/main
+    
+    현제-fpi.sql등록
+
+[33mcommit f9ffd87cb2938db8ffefdf075d2216efcc195c34[m
+Author: joohyunje <joohj8677@naver.com>
+Date:   Sat Jul 6 03:59:33 2024 +0900
+
+    현제-fpi.sql등록
+
+[33mcommit 9aa2b6ceef4816e03ddafd2d424fb54de7d85456[m
+Merge: 8326fd8 b36b7ad
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Sat Jul 6 03:38:11 2024 +0900
+
+    Merge pull request #6 from Park-MJeong/main
+    
+    주소,카테고리 js작업,퍼블리싱 완료
+
+[33mcommit b36b7add4b921e53227e5eb0aa77277a04272cc2[m
+Author: Park-MJeong <pmj7511@gmail.com>
+Date:   Sat Jul 6 03:22:48 2024 +0900
+
+    주소,카테고리 js작업
+
+[33mcommit 8326fd84430655735a0d72dfd1e24b0b04c1a5ee[m
+Merge: ddc6357 32872cf
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Sat Jul 6 00:06:32 2024 +0900
+
+    Merge pull request #5 from ananganang/main
+    
+    재원- detail 수정 삭제 추가 edit form과 연결될 부분
+
+[33mcommit 32872cf5b998824a15542fbf26cb2520f58d0045[m
+Author: ananganang <bluesky990902@gmail.com>
+Date:   Fri Jul 5 23:59:06 2024 +0900
+
+    재원- detail 수정 삭제 추가 edit form과 연결될 부분
+
+[33mcommit ddc63573061b973ac0890d8e96c9c8e07d37fbec[m
+Merge: 7733fd7 a6294e8
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Fri Jul 5 21:44:24 2024 +0900
+
+    Merge pull request #4 from ananganang/main
+    
+    헤더까지포함 최종 마지막 전
+
+[33mcommit a6294e8738b83b84dad388491c3a95f0aeb290b1[m
+Author: ananganang <bluesky990902@gmail.com>
+Date:   Fri Jul 5 21:42:56 2024 +0900
+
+    헤더까지포함 최종 마지막 전
+
+[33mcommit 7733fd75bde6a9f4e39ba085977e2cda2bd4d1fa[m
+Merge: 61c5c54 6e2459f
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Fri Jul 5 21:38:35 2024 +0900
+
+    Merge pull request #3 from ananganang/main
+    
+    재원ㅡ헤더페이지 수정
+
+[33mcommit 6e2459f0f0396cd479c52e211c2b34854c03c724[m
+Author: ananganang <bluesky990902@gmail.com>
+Date:   Fri Jul 5 20:55:12 2024 +0900
+
+    재원ㅡ헤더페이지 수정
+
+[33mcommit 61c5c542749285b1b774a6fecbb49bb1402a85c6[m
+Merge: 9c9b540 b28464b
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Fri Jul 5 19:14:29 2024 +0900
+
+    Merge pull request #2 from Park-MJeong/main
+    
+    폴더 재구성
+
+[33mcommit b28464b169b7265dc113f5a99000c490cfdf3db9[m
+Author: Park-MJeong <pmj7511@gmail.com>
+Date:   Fri Jul 5 19:13:09 2024 +0900
+
+    폴더 재구성
+
+[33mcommit 9c9b540f9c4e66f90f4169ea4cbd33c388ef7da9[m
+Merge: 1407448 b646875
+Author: m._jj <136244456+Park-MJeong@users.noreply.github.com>
+Date:   Thu Jul 4 21:37:05 2024 +0900
+
+    Merge pull request #1 from Park-MJeong/main
+    
+    인텔리제이 폴더구성
+
+[33mcommit b6468751dacf40cc0015bf8aab72a377a9dd95c0[m
+Author: Park-MJeong <pmj7511@gmail.com>
+Date:   Thu Jul 4 21:34:52 2024 +0900
+
+    폴더생성
+
+[33mcommit 1407448eae2c681e96f1f2095633d5bf8424d878[m
+Author: Park-MJeong <pmj7511@gmail.com>
+Date:   Thu Jul 4 19:35:43 2024 +0900
+
+    인텔리제이 폴더 생성

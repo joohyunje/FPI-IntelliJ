@@ -129,11 +129,11 @@
           <div class="post-wrapper">
 
             <!-- 슬라이드 1 -->
-            <div class="post">
-              <img src="" class="slider-image">
+            <div class="post"th:each="proUploadList:${proUploadLists}" th:object="${proUploadList}">
+              <img th:src="*{proUploadFileRoute}" class="slider-image">
               <div class="post-info">
-                <h5><a href="#" class="post-subject">투룸 이사 도와주실 전문가분 구합니다 </a></h5>
-                <i class="far fa-user post-icon" >이사</i>
+                <h5><a th:href="@{/user/uploadDetail/{proUploadId}(proUploadId=*{proUploadId})}" class="post-subject" th:text="*{proUploadTitle}">투룸 이사 도와주실 전문가분 구합니다 </a></h5>
+                <i class="far fa-user post-icon" th:text="*{serviceName}">이사</i>
               </div>
             </div>
 
@@ -178,7 +178,7 @@
                 <div style="width: 70%;">
                   <h5 class="card-title" th:text="*{communityTitle}">글 제목 </h5>
                   <p class="card-text" th:text="*{subject}">자유게시판</p>
-                  <p th:text="*{communityRegisterDate != communityUpdateDate ? userName+'(수정)':userName+'(New)'}"></p>
+                  <p th:text="*{communityRegisterDate != communityUpdateDate ? author+'(수정)':author+'(New)'}"></p>
                   <a th:href="@{/community/detail/{communityId}(communityId=*{communityId})}" class="btn btn-light" style="width: 95%;margin-top: 40px" >보러가기</a>
                 </div>
                 <div th:unless="*{communityThumbnail == null or communityThumbnail == '' or communityThumbnail == 'dd'}">
@@ -187,6 +187,7 @@
               </div>
             </div>
           </div>
+
         </div>
       </div> <!-- 커뮤니티 나열 끝 -->
 

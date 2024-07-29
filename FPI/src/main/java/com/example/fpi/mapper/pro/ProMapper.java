@@ -151,5 +151,7 @@ public interface ProMapper {
 
     void updateProRequestUserReview(Long proRequestId);
 
+    void clickDeleteCard(Long cardInfoId);
+
 
 }
