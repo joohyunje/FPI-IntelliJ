@@ -123,7 +123,13 @@
                         <span th:text="${userUpload.userUploadPay}+${userUpload.userUploadPayRange}">30000원</span>
                     </div>
                     <div class="accept-cancle-btn">
-                        <button type="button" th:disabled="${checkRequest} != 0" id="btn-modal" class="btn-accept">서비스 견적드리기</button>
+                        <button th:if="${checkRequest == 0}"
+                                type="button" id="btn-modal" class="btn-accept">서비스 견적드리기</button>
+                        <button
+                                th:unless="${checkRequest == 0}"
+                                type="button"
+                                class="btn-accept" style="background-color: #9aa0a6">이미 견적을 드렸습니다
+                        </button>
                     </div>
                 </div>
                  </div>

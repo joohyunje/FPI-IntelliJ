@@ -168,10 +168,15 @@
                 </div>
                 <div class="accept-cancle-btn">
                     <button
-                            th:disabled="${checkRequest} != 0"
+                            th:if="${checkRequest == 0}"
                             type="button"
                             id="btn-modal"
                             class="btn-accept">요청하기
+                    </button>
+                    <button
+                            th:unless="${checkRequest == 0}"
+                            type="button"
+                            class="btn-accept" style="background-color: #9aa0a6">이미 요청 하셨습니다
                     </button>
                 </div>
             </div>
