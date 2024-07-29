@@ -57,16 +57,16 @@
             </table>
             <ul class="list-number ">
                 <li style="margin-right: 0.5rem" th:classappend="${startPage == 1} ? 'disabled' : ''" class="page-item">
-                    <a class="page-link" th:href="@{/user/activeList(page=${startPage - 1}, pageSize=${pageSize})}" aria-label="Previous">
+                    <a class="page-link" th:href="@{/activeList/community(page=${startPage - 1}, pageSize=${pageSize})}" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
 
                 <li th:each="i : ${#numbers.sequence(startPage, endPage)}" th:classappend="${currentPage == i} ? 'active' : ''" class="page-item" style="display: flex;">
-                    <a th:href="@{/user/activeList(page=${i}, pageSize=${pageSize})}" class="page-link" th:text="${i}">1</a>
+                    <a th:href="@{/activeList/community(page=${i}, pageSize=${pageSize})}" class="page-link" th:text="${i}">1</a>
                 </li>
                 <li th:classappend="${endPage == totalPages} ? 'disabled' : ''" class="page-item" style="margin-left: 0.5rem">
-                    <a class="page-link" th:href="@{/user/activeList(page=${startPage - 1}, pageSize=${pageSize})}" aria-label="Next">
+                    <a class="page-link" th:href="@{/activeList/community(page=${startPage - 1}, pageSize=${pageSize})}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
@@ -75,7 +75,7 @@
     </div>
 </div>
 <div th:replace="~{/layout/footer :: footer}"></div>
-<script th:src="@{/js/activeList.js}"></script>
+<!--<script th:src="@{/js/activeList.js}"></script>-->
 
 </body>
 </html>
