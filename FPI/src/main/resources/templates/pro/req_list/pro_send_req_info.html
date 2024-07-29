@@ -119,7 +119,7 @@
                     <button th:if="${proRequest.checkProReview == 1}"
                             th:style="${proRequest.proRequestProgress != 'POST' ? 'display:none' : ''}" type="button"
                             th:onclick="|location.href='@{/pro/userReview2/{proRequestId}(proRequestId=${proRequest.proRequestId})}'|"
-                            class="btn-accept" disabled>리뷰를 이미 작성하셨습니다
+                            class="btn-accept" style="background-color: #9aa0a6 !important;" disabled>리뷰를 이미 작성하셨습니다
                     </button>
                 </div>
             </div>
