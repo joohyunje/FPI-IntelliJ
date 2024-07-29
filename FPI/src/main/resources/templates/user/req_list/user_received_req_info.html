@@ -96,34 +96,14 @@
                     <div class="certificate-image">
                         <h2>자격증 및 기타 서류</h2>
                         <ul class="image-veiwer">
-                            <li>
-                                <img src="/static/img/certificate.jpeg" alt="">
-                            </li>
-                            <li>
-                                <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F9pQ5k%2FbtrmGXmIuQe%2F6XTySrahwqBSlJ5YkfsdJ1%2Fimg.jpg"
-                                     alt="">
-                            </li>
-                            <li>
-                                <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F9pQ5k%2FbtrmGXmIuQe%2F6XTySrahwqBSlJ5YkfsdJ1%2Fimg.jpg"
-                                     alt="">
+                            <li th:each="proCardInfoFile : ${proCardInfoFiles}">
+                                <img th:src="${proCardInfoFile.cardInfoFileRoute}" alt="이미지">
+                                <!--                                    여기 부분 사진 받아오기-->
                             </li>
                         </ul>
                     </div>
                 </div>
                 <!-- 사진 -->
-                <div class="pro-photos">
-                    <div class="photos-container">
-                        <h2>사진</h2>
-                        <div>
-                            <ul class="image-veiwer">
-                                <li>
-                                    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F9pQ5k%2FbtrmGXmIuQe%2F6XTySrahwqBSlJ5YkfsdJ1%2Fimg.jpg"
-                                         alt="">
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
                 <!-- 리뷰 -->
                 <div class="reviews">
                     <h2>리뷰</h2>
@@ -189,7 +169,7 @@
                     <button th:if="${proRequest.checkUserReview == 1}"
                             th:style="${proRequest.proRequestProgress != 'POST' ? 'display:none' : ''}"
                             th:onclick="|location.href='@{/user/proReview/{proRequestId}(proRequestId=${proRequest.proRequestId})}'|"
-                            class="btn-accept" disabled>리뷰를 이미 작성하셨습니다
+                            class="btn-accept" style="background-color: #9aa0a6 !important;" disabled>리뷰를 이미 작성하셨습니다
                     </button>
 
                 </div>
