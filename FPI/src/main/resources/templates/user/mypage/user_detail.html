@@ -11,90 +11,90 @@
 </head>
 <body>
 <div th:replace="~{/layout/header :: header}"></div>
-  <div class="detail-container">
-    <div class="container">
-      <!-- 좌측 사이드 -->
-      <div class="aside">
-        <a th:href="@{/user/mypage}" style="padding: 0"><h1>마이페이지/계정 설정</h1></a>
-        <hr class="hr">
-        <a th:href="@{/user/detail}" style="font-weight: bold;">회원 정보</a>
-        <a th:href="@{/user/edit}">회원 정보 수정</a>
-        <button id="btn-modal">회원 탈퇴</button>
-      </div>
+<div class="detail-container">
+  <div class="container">
+    <!-- 좌측 사이드 -->
+    <div class="aside">
+      <a th:href="@{/user/mypage}" style="padding: 0"><h1>마이페이지/계정 설정</h1></a>
+      <hr class="hr">
+      <a th:href="@{/user/detail}" style="font-weight: bold;">회원 정보</a>
+      <a th:href="@{/user/edit}">회원 정보 수정</a>
+      <button id="btn-modal">회원 탈퇴</button>
+    </div>
 
-      <!-- 우측 정보 -->
-      <div class="marginL-40">
-        <h2>내 정보</h2>
-        <p>연락처는 매칭시 전문가에게 공개 됩니다.</p>
-        <div class="sub-container">
-          <div class="marginR-40">
-            <img  class="imgSize" th:src="${detail.userImg}"><!-- src"" = 프로필이미지링크넣어야함 -->
+    <!-- 우측 정보 -->
+    <div class="marginL-40">
+      <h2>내 정보</h2>
+      <p>연락처는 매칭시 전문가에게 공개 됩니다.</p>
+      <div class="sub-container">
+        <div class="marginR-40">
+          <img  class="imgSize" th:src="${detail.userImg}"><!-- src"" = 프로필이미지링크넣어야함 -->
+        </div>
+        <div th:object="${detail}">
+          <div class="underline">
+            <div  class="fontSize15">이름</div>
+            <p th:text="*{userName}">이름뿌려줌</p>
           </div>
-          <div th:object="${detail}">
-            <div class="underline">
-              <div  class="fontSize15">이름</div>
-              <p th:text="*{userName}">이름뿌려줌</p>
+          <div class="underline">
+            <div class="fontSize15">연락처</div>
+            <p th:text="*{phoneNumber}">연락처뿌려줌</p>
+          </div>
+          <div class="underline">
+            <div  class="fontSize15">이메일</div>
+            <p th:text="*{email} ">이메일뿌려줌</p>
+          </div>
+          <div class="underline">
+            <div class="fontSize15">지역</div>
+            <div class="oneline">
+              <span th:text="*{region}">지역뿌려줌(시/도)</span>
+              <span th:text="*{city}">지역뿌려줌(군/구)</span>
             </div>
-            <div class="underline">
-              <div class="fontSize15">연락처</div>
-              <p th:text="*{phoneNumber}">연락처뿌려줌</p>
-            </div>
-            <div class="underline">
-              <div  class="fontSize15">이메일</div>
-              <p th:text="*{email} ">이메일뿌려줌</p>
-            </div>
-            <div class="underline">
-              <div class="fontSize15">지역</div>
-              <div class="oneline">
-                <span th:text="*{region}">지역뿌려줌(시/도)</span>
-                <span th:text="*{city}">지역뿌려줌(군/구)</span>
-              </div>
-            </div>
-            <div class="underline">
-              <div class="fontSize15">관심서비스</div>
-              <p th:text="*{categoryName}">관심서비스뿌려줌</p>
-            </div>
-            <div>
-              <div class="fontSize15">받은 별점 </div>
-<!--              th:if="${star == null}"-->
-              <p th:if="*{userStarRate == null}">받은 별점이 없습니다.</p>
-              <p th:text="*{userStarRate}" th:unless="*{userStarRate == null}">받은 별점 평균 뿌려줌</p>
-            </div>
+          </div>
+          <div class="underline">
+            <div class="fontSize15">관심서비스</div>
+            <p th:text="*{categoryName}">관심서비스뿌려줌</p>
+          </div>
+          <div>
+            <div class="fontSize15">받은 별점 </div>
+            <!--              th:if="${star == null}"-->
+            <p th:if="*{userStarRate == null}">받은 별점이 없습니다.</p>
+            <p th:text="*{userStarRate}" th:unless="*{userStarRate == null}">받은 별점 평균 뿌려줌</p>
+          </div>
         </div>
       </div>
-      </div>
     </div>
-
   </div>
 
-    <!-- 회원탈퇴모달 -->
-    <div id=modal class="container">
-      <div class="box-container">
-        <div class="box-header">회원탈퇴</div>
-          <div class="box-content">
-            <div class="description">
-              <h3>정말로 회원탈퇴 하시겠습니까?</h3>
-              탈퇴시 모든 개인정보가 삭제되며
-              <br>
-              보유하신 포인트는 환불되지 않습니다
-            </div>
-            <form method="post" id="deleteForm" th:action="@{/user/delete}">
-              <input class="userId" type="hidden" th:value="${detail.userId}"  name="userId" style="display: none !important;" >
-              <div class="title">탈퇴하시려면 본인 이름을 작성해주세요</div>
-              <input class="input-box" name="userName" placeholder="본인이름 작성" type="text">
-              <p class="error">이름이 일치하지 않습니다.</p>
+</div>
 
-            <!--모달 창 닫음 -->
-            <button type="button" id="close-modal"  class="btn">탈퇴하지 않겠습니다</button>
-            <!-- 탈퇴완료창->로그아웃&메인페이지로이동 -->
-            <button type="submit" class="btn" onclick="deleteForm()">탈퇴하기</button>
-            </form>
-          </div>
+<!-- 회원탈퇴모달 -->
+<div id=modal class="container">
+  <div class="box-container">
+    <div class="box-header">회원탈퇴</div>
+    <div class="box-content">
+      <div class="description">
+        <h3>정말로 회원탈퇴 하시겠습니까?</h3>
+        탈퇴시 모든 개인정보가 삭제되며
+        <br>
+        보유하신 포인트는 환불되지 않습니다
       </div>
+      <form method="post" id="deleteForm" th:action="@{/user/delete}">
+        <input class="userId" type="hidden" th:value="${detail.userId}"  name="userId" style="display: none !important;" >
+        <div class="title">탈퇴하시려면 본인 이름을 작성해주세요</div>
+        <input class="input-box" name="userName" placeholder="본인이름 작성" type="text">
+        <p class="error">이름이 일치하지 않습니다.</p>
+
+        <!--모달 창 닫음 -->
+        <button type="button" id="close-modal"  class="btn">탈퇴하지 않겠습니다</button>
+        <!-- 탈퇴완료창->로그아웃&메인페이지로이동 -->
+        <button type="submit" class="btn" onclick="deleteForm()">탈퇴하기</button>
+      </form>
     </div>
+  </div>
+</div>
 
 
-    <script src="/js/deleteUser.js"></script>
+<script src="/js/deleteUser.js"></script>
 
 </body>
 <!--이름불일치시 모달스타일변경-->

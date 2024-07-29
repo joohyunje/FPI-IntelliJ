@@ -54,7 +54,7 @@ public class CertifyServiceImpl implements CertifyService {
         certifyMapper.addPro(proVO);
     }
 
-//    자격증 발급기관, 자격증번호 정보테이블
+    //    자격증 발급기관, 자격증번호 정보테이블
     @Override
     public void addCardInfo(Long cardInfoId,Long proId,String certiOrgan, String certiNum) {
         CardInfoDTO cardInfoDTO = new CardInfoDTO();
@@ -70,7 +70,7 @@ public class CertifyServiceImpl implements CertifyService {
 //        System.out.println(vo);
     }
 
-//    경력작성
+    //    경력작성
     @Override
     public void addCareerInfo(Long careerInfoId, String award, Long proId) {
         CareerInfoDTO careerInfoDTO = new CareerInfoDTO();
@@ -82,7 +82,7 @@ public class CertifyServiceImpl implements CertifyService {
         certifyMapper.addCareerInfo(CareerInfoVO.toEntity(careerInfoDTO));
     }
 
-// 카테고리 선택
+    // 카테고리 선택
     @Override
     public void insertProCategory(Long categoryId,Long proId) {
         Long nextval = formMapper.getCaSeq();
@@ -99,7 +99,7 @@ public class CertifyServiceImpl implements CertifyService {
 
 
 
-//  최종적으로 전문가 인증되는곳
+    //  최종적으로 전문가 인증되는곳
     @Override
     @Transactional
     public void addCertify(CertifyDTO dto,List<MultipartFile> files, MultipartFile proProfile,String certiOrgan,String certiNum) throws IOException {
@@ -144,7 +144,7 @@ public class CertifyServiceImpl implements CertifyService {
         certifyMapper.updateApproval(userId);
     }
 
-//   전문가 프로필사진관리
+    //   전문가 프로필사진관리
     @Override
     public String saveProImage(MultipartFile proProfile) throws IOException {
 
@@ -173,7 +173,7 @@ public class CertifyServiceImpl implements CertifyService {
         return fileUrl;
     }
 
-//    자격증 사진관리
+    //    자격증 사진관리
     @Override
     public void saveCertifyImage(Long proId,List<MultipartFile> files) throws IOException {
         // 현재 날짜를 기반으로 폴더 경로 생성

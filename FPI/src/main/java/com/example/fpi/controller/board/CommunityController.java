@@ -21,18 +21,18 @@ public class CommunityController {
     private final CommunityService communityService;
     private final ProService proService;
 
-//페이징처리장소
+    //페이징처리장소
     @GetMapping("/community")
     public String list() {
         return "community/community";
     }
 
-//    커뮤니티 게시판상세보기
+    //    커뮤니티 게시판상세보기
     @GetMapping("/community/detail/{communityId}")
     public String detail(@PathVariable("communityId") Long communityId, Model model,
                          @AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
 
-        CommunityDetailDTO commu = communityService.getCommunityDetail(communityId);
+        CommunityDetailDTO commu = communityService.getCommunityDetail(communityId,customOAuth2User);
 //        로그인했다면, 그 로그인값을 detail에 넣어줌
         if(customOAuth2User != null && customOAuth2User.getUserId() != null){
             commu.setLoginUserId(customOAuth2User.getUserId());
@@ -41,7 +41,7 @@ public class CommunityController {
         return "/community/detail";
     }
 
-//    게시글 작성시 가지고 이동할 정보
+    //    게시글 작성시 가지고 이동할 정보
     @GetMapping("/community/write")
     public String writeForm(Model model, @AuthenticationPrincipal CustomOAuth2User customOAuth2User,HttpSession session){
         CommunityDetailDTO communityInfo = new CommunityDetailDTO();
@@ -58,10 +58,10 @@ public class CommunityController {
 
         return "/community/write";
     }
-//게시글 수정시 가지고 이동할 정보, 폼(postmapping) 지정
+    //게시글 수정시 가지고 이동할 정보, 폼(postmapping) 지정
     @GetMapping("/community/edit/{communityId}")
     public String goEdit(@PathVariable Long communityId, Model model, @AuthenticationPrincipal CustomOAuth2User customOAuth2User, HttpSession session){
-        CommunityDetailDTO communityInfo=communityService.getCommunityDetail(communityId);
+        CommunityDetailDTO communityInfo=communityService.getCommunityDetail(communityId,customOAuth2User);
         if(session.getAttribute("user") == null){
             communityInfo.setProId(proService.selectProId(customOAuth2User.getUserId()));
         }
@@ -71,12 +71,10 @@ public class CommunityController {
         communityInfo.setLoginUserId(customOAuth2User.getUserId());
         model.addAttribute("communityInfo",communityInfo);
 
-        System.out.println(model+"뭐가들어있니");
-
         return "/community/write";
     }
 
-//    게시글 수정,작성,,수정과 작성 폼 주소 같음
+    //    게시글 수정,작성,,수정과 작성 폼 주소 같음
     @PostMapping("/community/write")
     public String write(CommunityDTO communityInfo,@AuthenticationPrincipal CustomOAuth2User customOAuth2User,HttpSession session){
 
@@ -103,14 +101,14 @@ public class CommunityController {
         return "redirect:/community";
     }
 
-//    게시글 삭제
+    //    게시글 삭제
     @PostMapping("/community/delete/{communityId}")
     public String delete(@PathVariable Long communityId){
         communityService.deleteCommunity(communityId);
         return "redirect:/community";
     }
 
-//    게시글 좋아요
+    //    게시글 좋아요
     @PostMapping("/community/like/{communityId}")
     public String like(@PathVariable Long communityId, @RequestParam("loginUserId") String loginUserId){
         communityService.selectLike(loginUserId,communityId);

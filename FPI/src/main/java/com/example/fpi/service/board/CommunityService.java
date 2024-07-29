@@ -16,14 +16,14 @@ import java.util.List;
 @Service
 public interface CommunityService {
 
-//    게시판리스트 select
-PagedResponse<CommunityDetailDTO> getCommunityList(int page, int pageSize,String search,String subject); //전체게시판,페이징
+    //    게시판리스트 select
+    PagedResponse<CommunityDetailDTO> getCommunityList(int page, int pageSize,String search,String subject); //전체게시판,페이징
 //    List<CommunityDTO> SelectBoardList(int page, int pageSize); //자유게시판
 //    List<CommunityDTO> SelectProTipList(int page, int pageSize); //전문가팁
 
 
 
-    CommunityDetailDTO getCommunityDetail(Long communityId); //게시판 상세보기
+    CommunityDetailDTO getCommunityDetail(Long communityId,CustomOAuth2User user); //게시판 상세보기
 
 
     void saveCommunity(CommunityDTO community); //게시판 작성
@@ -32,7 +32,7 @@ PagedResponse<CommunityDetailDTO> getCommunityList(int page, int pageSize,String
     void deleteCommunity(Long communityId); //게시판 삭제
     void selectLike(String userId,Long communityId); //게시판 좋아요기능
 
-//    메인화면에 뿌려주는 최신 리스트
-    List<CommunityDTO> maincommunityList();
+
+
 }
 

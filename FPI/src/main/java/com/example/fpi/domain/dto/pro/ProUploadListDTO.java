@@ -18,4 +18,6 @@ public class ProUploadListDTO {
     private String serviceName;
     private String proImg;
 
+    private String proUploadFileRoute;
+
 }

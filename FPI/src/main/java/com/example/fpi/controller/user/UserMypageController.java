@@ -58,7 +58,7 @@ public class UserMypageController {
         return "user/mypage/user_mypage";
 
     }
-// 상세페이지
+    // 상세페이지
     @GetMapping("/detail")
     public String detail(@AuthenticationPrincipal CustomOAuth2User customOAuth2User, Model model) {
 
@@ -69,7 +69,7 @@ public class UserMypageController {
 
     }
 
-//    쿠폰함
+    //    쿠폰함
     @GetMapping("/couponlist")
     public String coupon(@AuthenticationPrincipal CustomOAuth2User customOAuth2User,Model model){
         String userId = customOAuth2User.getUserId();
@@ -97,7 +97,7 @@ public class UserMypageController {
         return "user/mypage/user_edit";
     }
 
-//html에서 edit에 정보가 담겨있음,getter에서 edit에 담아서 넘겨줌
+    //html에서 edit에 정보가 담겨있음,getter에서 edit에 담아서 넘겨줌
     @PostMapping("/edit")
     public String edit(UserDTO edit) {
 
@@ -116,7 +116,7 @@ public class UserMypageController {
         return "redirect:/user/detail";
     }
 
-//    전문가 인증폼으로 이동
+    //    전문가 인증폼으로 이동
     @GetMapping("/certify")
     public String certifyForm(Model model) {
 //        List<CareerInfoDTO> awards = new ArrayList<>();

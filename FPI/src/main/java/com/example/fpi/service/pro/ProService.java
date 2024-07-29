@@ -139,4 +139,7 @@ public interface ProService {
 
     Long empCount(Long proId);
 
+    //    마이페이지에서 클릭으로 자격증정보 삭제
+    void clickDeleteCard(Long cardInfoId);
+
 }

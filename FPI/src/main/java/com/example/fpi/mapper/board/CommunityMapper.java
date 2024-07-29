@@ -15,7 +15,7 @@ public interface CommunityMapper {
 
     List<CommunityDetailDTO> communitySelectAll(int startRow, int endRow,String search,String subject); //전체 커뮤니티 리스트
 
-    List<CommunityDTO> communityList(); //메인에서 뿌려주는 최근커뮤니티 리스트
+//    List<CommunityDTO> communityList(); //메인에서 뿌려주는 최근커뮤니티 리스트
 
     int countCommunity(String search,String subject); //페이징을위한 게시판 수
 
@@ -25,9 +25,12 @@ public interface CommunityMapper {
     void editCommunity(CommunityVO communityVO);
     void deleteCommunity(Long communityId); //게시글 삭제
 
-//    좋아요 기능관련
+    //    좋아요 기능관련
     Long selectLike(String userId,Long communityId); //좋아요한적있는지 확인
     long getLikeSeq(); //좋아요테이블 시퀀스 추가
     void insertLike(LikeVO vo);
     void deleteLike(Long likeId);
+
+    //    조회수
+    void plusViews(Long communityId);
 }

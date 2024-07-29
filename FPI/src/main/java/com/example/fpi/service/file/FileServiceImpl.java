@@ -7,6 +7,10 @@ import com.example.fpi.mapper.File.FileMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Service
@@ -30,5 +34,16 @@ public class FileServiceImpl implements FileService {
         return fileMapper.selectProCardFileList(proId);
     }
 
+    //    전문가 마이페이지에서 자격증 사진 선택시 자격증파일 삭제
+    @Override
+    public void deleteCardPhotoFile(Long cardInfoFileId) throws IOException {
+        //전문가 탈퇴,탈퇴시 서버에 저장된 프로필사진도 함께삭제
+        Path cardPhoto = Paths.get("src/main/resources/static" + fileMapper.cardFindImg(cardInfoFileId).getCardInfoFileRoute());
+
+        if (Files.exists(cardPhoto)) {
+            Files.delete(cardPhoto);
+        }
+        fileMapper.deleteCardPhotoFile(cardInfoFileId);
+    }
 
 }

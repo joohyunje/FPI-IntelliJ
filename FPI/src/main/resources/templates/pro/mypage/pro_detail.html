@@ -15,139 +15,268 @@
 </head>
 <body>
 <div th:replace="~{/layout/header :: header}"></div>
-  <div class="detail-container">
-    <div class="container">
+<div class="detail-container">
+  <div class="container">
 
-      <!-- 좌측 메뉴 -->
-      <div class="aside">
-        <h1>계정 설정</h1>
-        <hr class="hr">
-        <a th:href="@{/pro/detail}" style="font-weight: bold;">전문가 정보</a>
-        <a th:href="@{/pro/edit}">전문가 정보 수정</a>
-        <button id="btn-modal">전문가 탈퇴</button>
-      </div>
-      <!-- 우측 정보수정 -->
-      <div class="marginL-40">
-        <h2>내 정보</h2>
-        <p>연락처는 매칭시 회원에게 공개 됩니다.</p>
-        <div class="sub-container">
-          <!-- 프로필사진 -->
-          <div class="marginR-40">
-            <img  class="imgSize" th:src="${detail.proImg}" ><!-- src"" = 프로필이미지링크넣어야함 -->
+    <!-- 좌측 메뉴 -->
+    <div class="aside">
+      <h1>계정 설정</h1>
+      <hr class="hr">
+      <a th:href="@{/pro/detail}" style="font-weight: bold;">전문가 정보</a>
+      <a th:href="@{/pro/edit}">전문가 정보 수정</a>
+      <button id="btn-modal">전문가 탈퇴</button>
+    </div>
+    <!-- 우측 정보수정 -->
+    <div class="marginL-40">
+      <h2>내 정보</h2>
+      <p>연락처는 매칭시 회원에게 공개 됩니다.</p>
+      <div class="sub-container">
+        <!-- 프로필사진 -->
+        <div class="marginR-40">
+          <img  class="imgSize" th:src="${detail.proImg}" ><!-- src"" = 프로필이미지링크넣어야함 -->
+        </div>
+
+        <div th:object="${detail}">
+          <div class="underline">
+            <div class="fontSize15">전문가 활동 이름</div>
+            <p th:text="*{proName}">이름뿌려줌</p>
+          </div>
+          <div class="underline">
+            <div class="fontSize15">전문가 활동 연락처</div>
+            <p th:text="*{phoneNumber}">연락처뿌려줌</p>
+          </div>
+          <div class="underline">
+            <div class="fontSize15">이메일</div>
+            <p th:text="*{email}">회원 이메일과 동일하게 사용됩니다.</p>
+          </div>
+          <div class="underline">
+            <div class="fontSize15">활동 지역</div>
+            <div class="oneline">
+              <span th:text="*{region}">지역뿌려줌(시/도)</span>
+              <span th:text="*{city}">지역뿌려줌(군/구)</span>
+            </div>
+
+          </div>
+          <div class="underline">
+            <div class="fontSize15">제공서비스</div>
+            <p th:text="*{categoryName}">제공서비스뿌려줌</p>
           </div>
 
-          <div th:object="${detail}">
-            <div class="underline">
-              <div class="fontSize15">전문가 활동 이름</div>
-              <p th:text="*{proName}">이름뿌려줌</p>
-            </div>
-            <div class="underline">
-              <div class="fontSize15">전문가 활동 연락처</div>
-              <p th:text="*{phoneNumber}">연락처뿌려줌</p>
-            </div>
-            <div class="underline">
-              <div class="fontSize15">이메일</div>
-              <p th:text="*{email}">회원 이메일과 동일하게 사용됩니다.</p>
-            </div>
-            <div class="underline">
-              <div class="fontSize15">활동 지역</div>
-              <div class="oneline">
-                <span th:text="*{region}">지역뿌려줌(시/도)</span>
-                <span th:text="*{city}">지역뿌려줌(군/구)</span>
-              </div>
+          <div class="underline">
+            <div class="fontSize15">보유 자격증사진 </div>
+            <div class="cardPhotoList" style="display: flex; margin-top: 10px;flex-wrap:wrap;">
 
+              <!--                <img class="imgSize" style="margin:0 10px 15px 0" th:each="file:${files}" th:src="${file.cardInfoFileRoute}" >-->
             </div>
-            <div class="underline">
-              <div class="fontSize15">제공서비스</div>
-              <p th:text="*{categoryName}">제공서비스뿌려줌</p>
+          </div>
+
+          <div class="underline">
+            <div class="fontSize15">보유 자격증정보</div>
+            <div class="cardList" style="margin-top: 10px">
+              <!--                <div style="margin-bottom: 10px" th:text="'발급기관 : '+ ${card.certiOrgan} + ' 자격증 번호 : ' + ${card.certiNum}"></div>-->
             </div>
 
-            <div class="underline">
-              <div class="fontSize15">보유 자격증사진 </div>
-              <div style="display: flex; margin-top: 10px;flex-wrap:wrap;">
-                <img class="imgSize" style="margin:0 10px 15px 0" th:each="file:${files}" th:src="${file.cardInfoFileRoute}" >
-              </div>
-            </div>
+          </div>
 
-            <div class="underline">
-              <div class="fontSize15">보유 자격증정보</div>
-              <div th:each="card :${cards}" style="margin-top: 10px">
-                <div style="margin-bottom: 10px" th:text="'발급기관 : '+ ${card.certiOrgan} + ' 자격증 번호 : ' + ${card.certiNum}"></div>
-              </div>
+          <div class="underline" style="padding:0 0 1rem 0">
+            <div class="fontSize15">경력 혹은 수상내역</div>
+            <div class="word"  th:text="*{award}" ></div>
+          </div>
 
-            </div>
-
-            <div class="underline" style="padding:0 0 1rem 0">
-              <div class="fontSize15">경력 혹은 수상내역</div>
-              <div class="word"  th:text="*{award}" ></div>
-            </div>
-
-            <div class="underline">
-              <div class="fontSize15">고용횟수</div>
-              <p th:if="*{empCnt == 0}">아직 서비스를 제공한 적이 없습니다.</p>
-              <span th:unless="*{empCnt == 0}" th:text="*{empCnt}">고용횟수뿌려줌</span>
-              <span th:unless="*{empCnt == 0}">회</span>
-            </div>
-            <div>
-              <div class="fontSize15">받은 별점 </div>
-              <p th:if="*{proStarRate == 0}">받은 별점이 없습니다.</p>
-              <p th:text="*{proStarRate}" th:unless="*{proStarRate == 0}">받은 별점 평균 뿌려줌</p>
-            </div>
+          <div class="underline">
+            <div class="fontSize15">고용횟수</div>
+            <p th:if="*{empCnt == 0}">아직 서비스를 제공한 적이 없습니다.</p>
+            <span th:unless="*{empCnt == 0}" th:text="*{empCnt}">고용횟수뿌려줌</span>
+            <span th:unless="*{empCnt == 0}">회</span>
+          </div>
+          <div>
+            <div class="fontSize15">받은 별점 </div>
+            <p th:if="*{proStarRate == 0}">받은 별점이 없습니다.</p>
+            <p th:text="*{proStarRate}" th:unless="*{proStarRate == 0}">받은 별점 평균 뿌려줌</p>
+          </div>
 
         </div>
 
-  
+
       </div>
-  
+
     </div>
 
   </div>
-  </div>
+</div>
 
 <!--탈퇴 모달-->
 
-  <div id=modal class="container">
-    <div class="container">
-      <div class="box-container">
-        <div class="box-header">전문가탈퇴</div>
-        <div class="box-content">
-          <div class="description">
-            <h3>정말로 전문가 탈퇴 하시겠습니까?</h3>
-            탈퇴시 입력하신 전문가 정보가 삭제되며
-            <br>
-            전문가 활동을 다시 원하실 경우
-            <br>
-            전문가 인증과정이 다시 이루어집니다.
+<div id=modal class="container">
+  <div class="container">
+    <div class="box-container">
+      <div class="box-header">전문가탈퇴</div>
+      <div class="box-content">
+        <div class="description">
+          <h3>정말로 전문가 탈퇴 하시겠습니까?</h3>
+          탈퇴시 입력하신 전문가 정보가 삭제되며
+          <br>
+          전문가 활동을 다시 원하실 경우
+          <br>
+          전문가 인증과정이 다시 이루어집니다.
 
-          </div>
-          <form method="post" id="deleteForm" th:action="@{/pro/delete}">
-            <input class="proId" type="hidden" th:field="${detail.proId}"  name="proId">
-            <div class="title">탈퇴하시려면 전문가 활동 이름을 작성해주세요</div>
-            <input class="pro-input-box input-box" name="proName" placeholder="전문가 활동 이름 작성" type="text">
-            <p class="error">이름이 일치하지 않습니다.</p>
+        </div>
+        <form method="post" id="deleteForm" th:action="@{/pro/delete}">
+          <input class="proId" type="hidden" th:field="${detail.proId}"  name="proId">
+          <div class="title">탈퇴하시려면 전문가 활동 이름을 작성해주세요</div>
+          <input class="pro-input-box input-box" name="proName" placeholder="전문가 활동 이름 작성" type="text">
+          <p class="error">이름이 일치하지 않습니다.</p>
 
 
 
-            <!--모달 창 닫음 -->
-            <button type="button" id="close-modal"  class=" pro-btn btn">탈퇴하지 않겠습니다</button>
-            <!-- 탈퇴완료창->로그아웃&메인페이지로이동 -->
-            <button type="submit" class="btn pro-btn" onclick="deleteForm()">탈퇴하기</button>
-          </form>
-        </div> 
+          <!--모달 창 닫음 -->
+          <button type="button" id="close-modal"  class=" pro-btn btn">탈퇴하지 않겠습니다</button>
+          <!-- 탈퇴완료창->로그아웃&메인페이지로이동 -->
+          <button type="submit" class="btn pro-btn" onclick="deleteForm()">탈퇴하기</button>
+        </form>
       </div>
     </div>
   </div>
+</div>
 
-  <script th:src="@{/js/deletePro.js}"></script>
+<script th:src="@{/js/deletePro.js}"></script>
 
 </body>
 
 <!--이름불일치시 알림창-->
 <script th:if="${error}">
-    document.getElementById("modal").style.display="flex"
-    const proInput = document.querySelector('#modal #deleteForm .pro-input-box');
-    proInput.style.borderColor='red';
-    const p = document.querySelector('#modal .error');
-    p.style.display="flex";
+  document.getElementById("modal").style.display="flex"
+  const proInput = document.querySelector('#modal #deleteForm .pro-input-box');
+  proInput.style.borderColor='red';
+  const p = document.querySelector('#modal .error');
+  p.style.display="flex";
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  $(document).ready(function () {
+    let proId= $('input[name="proId"]').val(); //j쿼리 문법
+    selectCardInfoFile(proId);
+    selectCard(proId);
+  })
+
+  // 자격증사진선택시 사진삭제
+  function selectCardInfoFile(proId) {
+    $.ajax({
+      method : 'get',
+      url : '/cardfiles/' + proId,
+      success : function(data) {
+        let photoListArea = $('.cardPhotoList')
+
+        photoListArea.empty();
+
+        if(data.length === 0){
+          photoListArea.append(
+                  `<div class="">
+                         등록된 자격증사진이 없습니다
+                    </div>`
+          );
+        }
+
+        data.forEach(function(photo) {
+
+          // 종합적으로 뿌려줄 html
+          let photoElement = `
+                <div id=""></div>
+                 <img class="imgSize" style="margin:0 10px 15px 0" src="${photo.cardInfoFileRoute}" onclick="deleteCardPhotoFile(${photo.cardInfoFileId},${data.length})">
+
+                `
+          // 해당 섹션에  갯 수 만큼 차례대로 추가될 것이다.
+          photoListArea.append(photoElement);
+        })
+      },
+      error : function(data) {
+        console.error(data, "불러오기 실패");
+      }
+    })
+  }
+  function deleteCardPhotoFile(cardInfoFileId,totalPhotos){
+    if (totalPhotos <= 1) {
+      alert("사진은 한개이상 등록되어야합니다.");
+      return;
+    }
+    if(!confirm('등록된 자격증사진을 삭제하시겠습니까?')){
+      return;
+    }
+    $.ajax({
+      method:'delete',
+      url:'/cardfiles/'+cardInfoFileId,
+      success:function (){
+        alert("선택한 자격증 사진을 삭제하였습니다."),
+                selectCardInfoFile($('input[name="proId"]').val());
+
+      },
+      error:function (data){
+        console.error(data,'삭제 실패')
+      }
+    })
+  }
+
+
+  //   자격증 정보 삭제
+  // 자격증사진선택시 사진삭제
+  function selectCard(proId) {
+    $.ajax({
+      method : 'get',
+      url : '/card/' + proId,
+      success : function(data) {
+        let cardListArea = $('.cardList')
+
+        cardListArea.empty();
+
+        if(data.length === 0){
+          cardListArea.append(
+                  `<div class="" style="margin-bottom: 10px;">
+                         등록된 자격증이 없습니다
+                    </div>`
+          );
+        }
+
+        data.forEach(function(card) {
+
+          // 종합적으로 뿌려줄 html
+          let cardElement = `
+                <div style="display: flex">
+                    <div style="margin-bottom: 10px">
+                        발급기관 : ${card.certiOrgan}  자격증 번호 : ${card.certiNum}
+                    </div>
+                    <div onclick="deleteCardInfo(${card.cardInfoId},${data.length})" style="cursor: pointer" >(삭제)</div>
+                </div>
+`
+
+          // 해당 섹션에  갯 수 만큼 차례대로 추가될 것이다.
+          cardListArea.append(cardElement);
+        })
+      },
+      error : function(data) {
+        console.error(data, "불러오기 실패");
+      }
+    })
+  }
+  function deleteCardInfo(cardInfoId,cardLength){
+    if (cardLength <= 1) {
+      alert("자격증정보는 한개이상 등록되어야합니다.");
+      return;
+    }
+    if(!confirm('등록된 자격증을 삭제하시겠습니까?')){
+      return;
+    }
+    $.ajax({
+      method:'delete',
+      url:'/card/'+cardInfoId,
+      success:function (){
+        alert("선택한 자격증 정보를 삭제하였습니다."),
+                selectCard($('input[name="proId"]').val());
+
+      },
+      error:function (data){
+        console.error(data,'삭제 실패')
+      }
+    })
+  }
 </script>
 </html>

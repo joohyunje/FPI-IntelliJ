@@ -28,6 +28,6 @@ public class CardInfoVO {
                 .certiOrgan(cardInfoDTO.getCertiOrgan())
                 .certiNum(cardInfoDTO.getCertiNum())
                 .proId(cardInfoDTO.getProId())
-        .build();
+                .build();
     }
 }

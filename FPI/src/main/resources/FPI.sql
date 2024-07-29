@@ -901,7 +901,12 @@ from(
 alter table TBL_COMMUNITY
     add VIEWS NUMBER;
 alter table TBL_COMMUNITY
-    add show_content varchar2(1000)
+    add show_content varchar2(1000);
+alter table TBL_COMMunity
+    add author varchar2(50);
+alter table TBL_COMMENT
+    add author varchar2(50);
+
 
 select count(*) as cnt
 from TBL_USER_REQUEST u join TBL_PRO_UPLOAD p
