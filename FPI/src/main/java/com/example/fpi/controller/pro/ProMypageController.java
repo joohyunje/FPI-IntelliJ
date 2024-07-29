@@ -85,10 +85,10 @@ public class ProMypageController {
 
     @PostMapping("/edit")
     public String edit(ProEditDTO edit
-                        ,@RequestParam String cardInfoId
-                       ,@RequestParam String certiOrgan
-                       ,@RequestParam String certiNum
-                       ,@RequestParam List<MultipartFile> files,
+            ,@RequestParam String cardInfoId
+            ,@RequestParam String certiOrgan
+            ,@RequestParam String certiNum
+            ,@RequestParam List<MultipartFile> files,
                        @RequestParam MultipartFile proProfile) throws IOException {
 
         System.out.println(cardInfoId);
@@ -109,7 +109,7 @@ public class ProMypageController {
     }
 
 
-//    전문가 회원탈퇴
+    //    전문가 회원탈퇴
     @PostMapping("/delete")
     public String delete(@RequestParam Long proId,
                          @RequestParam String proName, //폼에서 적은 프로이름

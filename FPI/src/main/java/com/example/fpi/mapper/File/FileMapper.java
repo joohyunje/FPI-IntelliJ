@@ -26,14 +26,15 @@ public interface FileMapper {
 
     void insertSummernoteImg(CommunityFileVO communityFileVO);
 
-//    전문가 마이페이지에서 자격증 사진 선택시 삭제, 서버에서도 삭제위해 전문가아이디도필요
-    void deleteCardPhotoFile(Long cardInfoFileId);
-    CardInfoFileDTO cardFindImg(Long cardInfoFileId);
 
 //    void insertSummernoteImg(CommunityFileVO communityFileVO);
 
     List<ProCardInfoFileDTO> selectProCardFileList(Long proId);
+    //    전문가 마이페이지에서 자격증 사진 선택시 삭제, 서버에서도 삭제위해 전문가아이디도필요
+    void deleteCardPhotoFile(Long cardInfoFileId);
+    CardInfoFileDTO cardFindImg(Long cardInfoFileId);
 
-    List<ProCardInfoFileDTO> selectProCardFileList(Long proId);
+
+
 
 }

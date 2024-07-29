@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Component
 @Data
 public class CommunityDetailDTO {
-//커뮤니티 상세보기
+    //커뮤니티 상세보기
     private Long communityId;
     private String subject;
     private String communityTitle;

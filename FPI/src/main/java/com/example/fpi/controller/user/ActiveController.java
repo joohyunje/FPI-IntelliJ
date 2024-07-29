@@ -20,14 +20,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ActiveController {
 
-//    마이페이지 활동내역 게시글
+    //    마이페이지 활동내역 게시글
     private final ActiveService activeService;
     @GetMapping("/community")
     public String activeListcommunity(@AuthenticationPrincipal CustomOAuth2User customOAuth2User,
-                         HttpSession session,
-                         @RequestParam(value="page", defaultValue = "1")int page,
-                         @RequestParam (value="pageSize", defaultValue = "8")int pageSize,
-                         Model model) {
+                                      HttpSession session,
+                                      @RequestParam(value="page", defaultValue = "1")int page,
+                                      @RequestParam (value="pageSize", defaultValue = "8")int pageSize,
+                                      Model model) {
         String userId = customOAuth2User.getUserId();
         String loginName = (String) session.getAttribute("loginName");
         String proName = (String) session.getAttribute("proName");
@@ -55,10 +55,10 @@ public class ActiveController {
 
     @GetMapping("/comment")
     public String activeListComment(@AuthenticationPrincipal CustomOAuth2User customOAuth2User,
-                         HttpSession session,
-                         @RequestParam(value="page", defaultValue = "1")int page,
-                         @RequestParam (value="pageSize", defaultValue = "8")int pageSize,
-                         Model model) {
+                                    HttpSession session,
+                                    @RequestParam(value="page", defaultValue = "1")int page,
+                                    @RequestParam (value="pageSize", defaultValue = "8")int pageSize,
+                                    Model model) {
         String userId = customOAuth2User.getUserId();
         String loginName = (String) session.getAttribute("loginName");
         String proName = (String) session.getAttribute("proName");
