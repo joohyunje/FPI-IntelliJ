@@ -8,6 +8,7 @@
     <!--    <link rel="stylesheet" th:href="@{/css/main/main.css}">-->
     <link rel="stylesheet" th:href="@{/css/main/common.css}">
     <link rel="stylesheet" th:href="@{/css/layout/header.css}">
+    <link rel="stylesheet" th:href="@{/css/layout/footer.css}">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
     <!--    <link rel="stylesheet" th:href="@{/css/user/font.css}">-->
 </head>
@@ -67,6 +68,7 @@
         </div>
     </div>
 </div>
+<div th:replace="~{/layout/footer :: footer}"></div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
@@ -182,7 +184,7 @@
                                 <progress
                                 class="progress"
                                 id="progress"
-                                name="progress"
+                                name="proRequestProgress"
                                 value="100"
                                 min="0"
                                 max="100"
@@ -202,18 +204,19 @@
                     </div>
                 </div>`;
 
-      if (requests.proRequestProgress === 'POST') {
-        $('progress[name=progress]').attr('value', 100);
-        console.log(requests.proRequestProgress);
-      } else if (requests.proRequestProgress === 'ING') {
-        $('progress[name=progress]').attr('value', 50);
-        console.log(requests.proRequestProgress);
-      } else {
-        $('progress[name=progress]').attr('value', 0);
-        console.log(requests.proRequestProgress);
-      }
 
       receivedRequestContainer.append(requestBox);
+
+      if (requests.proRequestProgress === 'POST') {
+        $('.received .grid-requests:last progress[name=proRequestProgress]').attr('value', 100);
+        console.log(requests.proRequestProgress);
+      } else if (requests.proRequestProgress === 'ING') {
+        $('.received .grid-requests:last progress[name=proRequestProgress]').attr('value', 50);
+        console.log(requests.proRequestProgress);
+      } else {
+        $('.received .grid-requests:last progress[name=proRequestProgress]').attr('value', 0);
+        console.log(requests.proRequestProgress);
+      }
 
     });
   }
@@ -337,6 +340,7 @@
                                 <progress
                                 class="progress"
                                 id="progress"
+                                name="userRequestProgress"
                                     value="50"
                                 min="0"
                                 max="100"
@@ -356,6 +360,17 @@
                     </div>
                 </div>`;
       sendRequestContainer.append(requestBox);
+
+      if (requests.userRequestProgress === 'POST') {
+        $('.send .grid-requests:last progress[name=userRequestProgress]').attr('value', 100);
+        console.log(requests.userRequestProgress);
+      } else if (requests.userRequestProgress === 'ING') {
+        $('.send .grid-requests:last progress[name=userRequestProgress]').attr('value', 50);
+        console.log(requests.userRequestProgress);
+      } else {
+        $('.send .grid-requests:last progress[name=userRequestProgress]').attr('value', 0);
+        console.log(requests.userRequestProgress);
+      }
     });
   }
 

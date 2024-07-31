@@ -25,9 +25,9 @@ public class UserRestController {
 
     @GetMapping("/received")
     public ResponseEntity<PagedResponse<UserReceivedReqListDTO>> getReceivedRequestsList(@AuthenticationPrincipal CustomOAuth2User customOAuth2User,
-                                                                              @RequestParam(defaultValue = "1") int page,
-                                                                              @RequestParam(defaultValue = "6") int size,
-                                                                              @RequestParam(defaultValue = "") String sort) {
+                                                                                         @RequestParam(defaultValue = "1") int page,
+                                                                                         @RequestParam(defaultValue = "6") int size,
+                                                                                         @RequestParam(defaultValue = "") String sort) {
         String userId = customOAuth2User.getUserId();
         System.out.println(customOAuth2User);
         System.out.println(userId);
@@ -50,14 +50,17 @@ public class UserRestController {
 //        };
 
 
-
         return ResponseEntity.ok(userService.selectSendReq(userId, page, size, sort));
     }
 
     @GetMapping("/ProFind")
     public ResponseEntity<PagedResponse<ProUploadListDTO>> getBoardList(@RequestParam(defaultValue = "1") int page,
                                                                         @RequestParam(defaultValue = "7") int size,
-                                                                        @RequestParam String search) {
+                                                                        @RequestParam String search,
+                                                                        @RequestParam String searchType) {
+
+        System.out.println(searchType + "djalkdsfjlkadsjfklajsdklfj");
+        System.out.println(search + "djalkdsfjlkadsjfklajsdklfj");
 
 
 //        PagedResponse<BoardListDTO> sortedBoards = switch (sort){
@@ -66,9 +69,8 @@ public class UserRestController {
 //            default -> boardService.selectAllByDateDESC(page, size);
 //        };
 
-        return ResponseEntity.ok(proService.selectProUploadList(page, size, search));
+        return ResponseEntity.ok(proService.selectProUploadList(page, size, search, searchType));
     }
-
 
 
 }

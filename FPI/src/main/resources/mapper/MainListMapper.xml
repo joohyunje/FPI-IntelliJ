@@ -5,74 +5,55 @@
     <!--    인기 게시글 4개뿌려주기,메인에서 사용-->
     <select id="mainCommunityList" resultType="CommunityDetailDTO">
         SELECT ROWNUM AS RN, COMMUNITY.*
-        FROM (
-                 SELECT
-                     c.*,
-                     (SELECT COUNT(*) FROM TBL_LIKE L  WHERE L.COMMUNITY_ID = C.COMMUNITY_ID) AS LIKE_COUNT
-                 FROM
-                     TBL_COMMUNITY C
-                 ORDER BY
-                     c.VIEWS DESC,LIKE_COUNT DESC
-             ) COMMUNITY
+        FROM (SELECT c.*,
+                     (SELECT COUNT(*) FROM TBL_LIKE L WHERE L.COMMUNITY_ID = C.COMMUNITY_ID) AS LIKE_COUNT
+              FROM TBL_COMMUNITY C
+              ORDER BY c.VIEWS DESC, LIKE_COUNT DESC) COMMUNITY
         WHERE ROWNUM &lt;= 4
 
     </select>
 
-<!--전문가가 올린 서비스 -->
+    <!--전문가가 올린 서비스 -->
     <select id="proUploadList" resultType="ProUploadListDTO">
-        SELECT ROWNUM , pro.*
-        FROM (      SELECT TPU.PRO_UPLOAD_ID
-                         , TPU.PRO_UPLOAD_DATE
-                         , TC.CATEGORY_NAME
-                         , TS.SERVICE_NAME
-                         , TL.REGION
-                         , TL.CITY
-                         , TPU.PRO_UPLOAD_CONTENT
-                         , TP.PRO_STAR_RATE
-                         , TPU.PRO_UPLOAD_ADDRESS
-                         , TPU.PRO_UPLOAD_PAY_RANGE
-                         , TP.PRO_NAME
-                         , TP.PRO_ID
-                         , TPU.PRO_UPLOAD_TITLE
-                         , TP.EMP_CNT
-                         , puf.PRO_UPLOAD_FILE_ROUTE
-                    FROM TBL_PRO_UPLOAD TPU
-                             INNER JOIN TBL_SERVICE ts
-                                        ON TPU.SERVICE_ID = TS.SERVICE_ID
-                             INNER JOIN TBL_CATEGORY tc
-                                        ON TS.CATEGORY_ID = TC.CATEGORY_ID
-                             INNER JOIN TBL_PRO TP
-                                        ON TP.PRO_ID = TPU.PRO_ID
-                             INNER JOIN TBL_LOCATION tl
-                                        ON TP.LOCATION_ID = TL.LOCATION_ID
-                            JOIN TBL_PRO_UPLOAD_FILE puf
-                                On TPU.PRO_UPLOAD_ID = puf.PRO_UPLOAD_ID
-                    order by TPU.PRO_UPLOAD_DATE desc
-                    ) pro
-        WHERE ROWNUM &lt;= 8
+
+        SELECT ROWNUM, pro.*
+        FROM (select TPU.PRO_UPLOAD_ID,
+                     TPU.PRO_ID,
+                     tpu.PRO_UPLOAD_TITLE,
+                     tpu.PRO_UPLOAD_DATE,
+                     tp.PRO_STAR_RATE,
+                     tp.PRO_NAME,
+                     ts.SERVICE_NAME,
+                     tp.PRO_IMG
+              from TBL_PRO_UPLOAD TPU
+                       inner join TBL_PRO TP
+                                  on TPU.PRO_ID = TP.PRO_ID
+                       inner join TBL_SERVICE TS
+                                  on tpu.SERVICE_ID = ts.SERVICE_ID
+                       inner join TBL_CATEGORY tg
+                                  on tg.CATEGORY_ID = ts.CATEGORY_ID
+              order by TPU.PRO_UPLOAD_DATE desc) pro
+        WHERE ROWNUM &lt;= 6
+
 
     </select>
     <select id="userUploadList" resultType="UserUploadListDTO">
-        SELECT ROWNUM ,users.*
-        FROM ( select TUU.USER_UPLOAD_ID,
-                        TUU.USER_ID,
-                        TUU.USER_UPLOAD_TITLE,
-                        TUU.USER_UPLOAD_DATE,
-                        TU.USER_NAME,
-                        ts.SERVICE_NAME,
-                        uuf.user_UPLOAD_FILE_ROUTE
-               from TBL_USER_UPLOAD TUU
-                            inner join TBL_USER TU
-                                    on TUU.USER_ID = TU.USER_ID
-                            inner join TBL_SERVICE TS
-                                    on tuu.SERVICE_ID = ts.SERVICE_ID
-                            INNER JOIN TBL_CATEGORY tc
-                                       ON TS.CATEGORY_ID = TC.CATEGORY_ID
-                            JOIN TBL_user_UPLOAD_FILE uuf
-                                 On TUU.user_UPLOAD_ID = uuf.user_UPLOAD_ID
-                ORDER BY
-                    TUU.USER_UPLOAD_DATE DESC
-                     ) users
+        SELECT ROWNUM, users.*
+        FROM (select TUU.USER_UPLOAD_ID,
+                     TUU.USER_ID,
+                     TUU.USER_UPLOAD_TITLE,
+                     TUU.USER_UPLOAD_DATE,
+                     TU.USER_NAME,
+                     ts.SERVICE_NAME,
+                     tu.USER_IMG
+              from TBL_USER_UPLOAD TUU
+                       inner join TBL_USER TU
+                                  on TUU.USER_ID = TU.USER_ID
+                       inner join TBL_SERVICE TS
+                                  on tuu.SERVICE_ID = ts.SERVICE_ID
+                       INNER JOIN TBL_CATEGORY tc
+                                  ON TS.CATEGORY_ID = TC.CATEGORY_ID
+              ORDER BY TUU.USER_UPLOAD_DATE DESC) users
         WHERE ROWNUM &lt;= 8
 
     </select>

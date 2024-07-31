@@ -59,7 +59,7 @@ public class UserController {
 
     //    전문가가 보낸 요청의 상세보기
     @GetMapping("/proDetail/{proRequestId}")
-    public String proReqDetail(@PathVariable("proRequestId") Long proRequestId, Model model,@AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
+    public String proReqDetail(@PathVariable("proRequestId") Long proRequestId, Model model, @AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
 
         ProRequestDetailDTO proRequest = proService.selectProReqDetail(proRequestId);
 
@@ -70,12 +70,15 @@ public class UserController {
         List<ProCardInfoFileDTO> proCardInfoFiles = fileMapper.selectProCardFileList(proId);
 
         //        보유캐시보다 수락할 금액이 작으면 작업완료 불가능
-        String userId=customOAuth2User.getUserId();
-        Long userCash = userId.equals("0")? 0L :userService.detailUser(userId).getUserCash();
+        String userId = customOAuth2User.getUserId();
+        Long userCash = userId.equals("0") ? 0L : userService.detailUser(userId).getUserCash();
 
         System.out.println(proRequestId);
         System.out.println(careerInfo);
 
+        Long proReviewCnt = proService.selectProReviewCnt(proId);
+
+        model.addAttribute("proReviewCnt", proReviewCnt);
         model.addAttribute("proCardInfoFiles", proCardInfoFiles);
         model.addAttribute("proAccuse", new ProAccuseDTO());
         model.addAttribute("proRequest", proRequest);
@@ -110,14 +113,19 @@ public class UserController {
         return "user/profind/FindPro";
     }
 
+    @GetMapping("/proFind/{searchType}")
+    public String uploadRest2(Model model, @PathVariable("searchType") String searchType) {
+        model.addAttribute("searchType", searchType);
+        return "user/profind/FindPro";
+    }
+
     //    전문가 찾기를 통해 전문가가 올리 견적 상세보기
     @GetMapping("/uploadDetail/{proUploadId}")
     public String uploadDetail(@PathVariable("proUploadId") Long proUploadId, Model model,
                                @AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
 //        비로그인 상태면 userId에 null을 주고, 클릭시 우측 견적요청 부분이 안보이게 함
-        String userId = customOAuth2User == null? "0":customOAuth2User.getUserId();
-        Long userCash = userId.equals("0")? 0L :userService.detailUser(userId).getUserCash();
-
+        String userId = customOAuth2User == null ? "0" : customOAuth2User.getUserId();
+        Long userCash = userId.equals("0") ? 0L : userService.detailUser(userId).getUserCash();
 
 
         Long proId = proService.selectProIdByProUploadId(proUploadId);
@@ -131,8 +139,12 @@ public class UserController {
 
         List<ProCardInfoFileDTO> proCardInfoFiles = fileMapper.selectProCardFileList(proId);
 
+        Long proReviewCnt = proService.selectProReviewCnt(proId);
+
 
         Long checkRequest = userService.checkUserRequest(proUploadId, userId);
+
+        model.addAttribute("proReviewCnt", proReviewCnt);
 
         model.addAttribute("careerInfo", careerInfo);
 
@@ -147,7 +159,7 @@ public class UserController {
         model.addAttribute("userRequest", new UserRequestDTO());
 
         model.addAttribute("checkRequest", checkRequest);
-        model.addAttribute("loginOk",userId);
+        model.addAttribute("loginOk", userId);
         model.addAttribute("userCash", userCash);
 
 
@@ -276,9 +288,10 @@ public class UserController {
         userService.updateUserAccept(proRequestId);
         return "redirect:/user/proDetail/" + proRequestId;
     }
-//회원이 올린 글에 전문가가 견적요청 보냈음,회원이 수락,작업완료
+
+    //회원이 올린 글에 전문가가 견적요청 보냈음,회원이 수락,작업완료
     @PostMapping("/proDetail/updateComplete/{proRequestId}")
-    public String updateComplete(@PathVariable Long proRequestId,@AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
+    public String updateComplete(@PathVariable Long proRequestId, @AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
         Long proId = userService.selectProIdByProRequestId(proRequestId); //전문가요청아이디로 전문가 아이디 찾기
         Long empCnt = proService.empCount(proId);
         String userId = customOAuth2User.getUserId();
@@ -288,7 +301,7 @@ public class UserController {
         System.out.println(empCnt);
 
         userService.updateUserComplete(proRequestId);
-        payCouponService.proRequsestPay(proRequestId,userId,proId); //캐쉬결제하는서비스
+        payCouponService.proRequsestPay(proRequestId, userId, proId); //캐쉬결제하는서비스
 
         return "redirect:/user/proDetail/" + proRequestId;
     }

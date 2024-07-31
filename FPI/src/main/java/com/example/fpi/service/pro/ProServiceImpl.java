@@ -379,15 +379,15 @@ public class ProServiceImpl implements ProService {
 
     //  전문가 찾기
     @Override
-    public PagedResponse<ProUploadListDTO> selectProUploadList(int page, int pageSize, String search) {
+    public PagedResponse<ProUploadListDTO> selectProUploadList(int page, int pageSize, String search, String searchType) {
 
         int startRow = (page - 1) * pageSize;
         int endRow = page * pageSize;
 
-        int totalUploads = proMapper.countProUpload(search);
+        int totalUploads = proMapper.countProUpload(search, searchType);
         int totalPages = (int) Math.ceil((double) totalUploads / pageSize);
 
-        List<ProUploadListDTO> uploads = proMapper.selectProUploadList(startRow, endRow, search);
+        List<ProUploadListDTO> uploads = proMapper.selectProUploadList(startRow, endRow, search, searchType);
 
         return new PagedResponse<>(uploads, page, totalPages, pageSize, totalUploads);
     }
@@ -509,4 +509,11 @@ public class ProServiceImpl implements ProService {
     public void clickDeleteCard(Long cardInfoId) {
         proMapper.clickDeleteCard(cardInfoId);
     }
+
+    @Override
+    public Long selectProReviewCnt(Long proId) {
+        return proMapper.selectProReviewCnt(proId);
+    }
+
+
 }
