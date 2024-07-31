@@ -10,5 +10,6 @@ public class UserLocationDTO {
     private String region;
     private String city;
     private String userName;
+    private String userId;
 
 }

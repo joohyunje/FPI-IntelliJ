@@ -1,28 +1,14 @@
 package com.example.fpi.controller.user;
 
-import com.example.fpi.domain.dto.board.CommunityDTO;
-import com.example.fpi.domain.dto.board.UserCommunityListDTO;
-import com.example.fpi.domain.dto.certify.CardInfoDTO;
-import com.example.fpi.domain.dto.certify.CareerInfoDTO;
 import com.example.fpi.domain.dto.certify.CertifyDTO;
 import com.example.fpi.domain.dto.main.CategoryListDTO;
-import com.example.fpi.domain.dto.pro.ProDTO;
 import com.example.fpi.domain.dto.user.CouponDTO;
-import com.example.fpi.domain.dto.user.CouponListDTO;
 import com.example.fpi.domain.dto.user.UserDTO;
-import com.example.fpi.domain.dto.user.UserEditDTO;
 import com.example.fpi.domain.oauth.CustomOAuth2User;
-import com.example.fpi.domain.vo.certify.CareerInfoVO;
-import com.example.fpi.domain.vo.main.CategoryListVO;
-import com.example.fpi.domain.vo.user.UserVO;
-import com.example.fpi.mapper.user.CertifyMapper;
-import com.example.fpi.mapper.user.CouponMapper;
-import com.example.fpi.mapper.user.UserMapper;
 import com.example.fpi.service.main.FormService;
-import com.example.fpi.service.pro.ProService;
 import com.example.fpi.service.user.ActiveService;
 import com.example.fpi.service.user.CertifyService;
-import com.example.fpi.service.user.CouponService;
+import com.example.fpi.service.user.PayCouponService;
 import com.example.fpi.service.user.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -34,16 +20,14 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserMypageController {
     private final UserService userService;
-    private final CouponService couponService;
+    private final PayCouponService couponService;
     private final CertifyService certifyService;
     private final FormService formService;
     private final ActiveService activeService;

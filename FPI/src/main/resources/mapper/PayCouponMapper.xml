@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.fpi.mapper.user.PayCouponMapper">
+<!--    쿠폰갯수가 0이면 보여줄 화면이 달라져서 필요-->
+    <select id="couponCount">
+        select count(*)
+        from tbl_coupon
+        where USER_ID = #{userId} and state ='NO'
+    </select>
+<!--   쿠폰 생성,쿠폰 유효기간은 3달-->
+    <insert id="makeCoupon">
+        insert into tbl_coupon
+        values (SEQ_COUPON.nextval,#{couponNumber},add_months(sysdate,+3),default,#{discount},#{userId})
+    </insert>
+
+    <!--    쿠폰페이지에 뿌려주기 위해 필요-->
+    <select id="couponInfo" resultType="CouponDTO">
+        select *
+        from TBL_COUPON
+        where USER_ID=#{userId} and STATE = 'NO'
+    </select>
+
+
+    <!--    카카오페이로 캐시 충전시 사용-->
+    <update id="updateCash">
+        update tbl_user
+        set USER_CASH = USER_CASH + #{userPlusCash}
+        where USER_ID = #{userId}
+    </update>
+    <update id="useCoupon">
+        update TBL_COUPON
+        set STATE = 'YES'
+        where COUPON_ID =#{couponId}
+    </update>
+
+
+    <!--                       회원이 작성한 글에 전문가가 보낸 요청에 대한 결제금액 주고받기-->
+    <!--    전문가에게 보낼 결제금액-->
+    <select id="cashRequest">
+        select PRO_REQUEST_PAY
+        from TBL_PRO_REQUEST
+        where PRO_REQUEST_ID=#{proRequestId}
+    </select>
+    <!--    금액이 빠지는 회원정보-->
+    <update id="UserMinusCash">
+        update tbl_user
+        set USER_CASH = USER_CASH- #{proRequestPay}
+        where user_ID = #{userId}
+    </update>
+
+    <!--    금액을 받는 전문가의 회원정보-->
+    <update id="ProPlusCash">
+        update tbl_user
+        set USER_CASH =USER_CASH + #{proRequestPay}
+        where user_ID = #{userId}
+    </update>
+
+    <!--          전문가가 작성한 글에 회원이 보낸 요청에 대한 결제금액 주고받기-->
+    <!--    전문가에게 보낼 결제금액-->
+    <select id="userCashRequest">
+        select USER_REQUEST_PAY
+        from HR.TBL_USER_REQUEST
+        where USER_REQUEST_ID=#{userRequestId}
+    </select>
+    <!--    금액이 빠지는 회원정보-->
+    <update id="UserRequestMinusCash">
+        update tbl_user
+        set USER_CASH = USER_CASH- #{userRequestPay}
+        where user_ID = #{userId}
+    </update>
+
+    <!--    금액을 받는 전문가의 회원정보-->
+    <update id="UserRequestProPlusCash">
+        update tbl_user
+        set USER_CASH =USER_CASH + #{userRequestPay}
+        where user_ID = #{userId}
+    </update>
+</mapper>

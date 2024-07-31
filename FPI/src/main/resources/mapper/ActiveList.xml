@@ -40,4 +40,44 @@
         from TBL_Comment
         where USER_ID=#{userId} and author = #{myName}
     </select>
+
+<!--    회원이 작성한 리뷰-->
+    <select id="selectUserWriteReview" resultType="ProReviewListDTO">
+        select *
+        from (select ROWNUM AS RN,ur.*
+              from(select tp.PRO_NAME, tu.USER_NAME,pr.*
+                   from TBL_PRO_REVIEW pr
+                                     join TBL_PRO tp on pr.PRO_ID = tp.PRO_ID
+                                     join TBL_USER tu on pr.USER_ID =tu.USER_ID
+                   where pr.USER_ID=#{userId}
+                   order by pr.PRO_REVIEW_DATE DESC,pr.PRO_REVIEW_ID desc)ur
+              where ROWNUM &lt;= #{endRow})
+        where RN &gt; #{startRow}
+    </select>
+<!--    회원이 작성한 리뷰 페이징 갯수-->
+    <select id="countUserWriteReview">
+        select count(*)
+        from TBL_PRO_REVIEW
+        where USER_ID=#{userId}
+    </select>
+
+    <!--    회원이 전문가에게 받은 리뷰-->
+    <select id="selectUserReceiveReview" resultType="UserReviewListDTO">
+        select *
+        from (select ROWNUM AS RN,ur.*
+               from(    select tp.PRO_NAME,TUR.*
+                        from TBL_USER_REVIEW TUR
+                                 join TBL_PRO tp on TUR.PRO_ID = tp.PRO_ID
+                        where TUR.USER_ID=#{userId}
+                        order by TUR.USER_REVIEW_DATE DESC,TUR.USER_REVIEW_ID desc)ur
+              where ROWNUM &lt;= #{endRow})
+        where RN &gt; #{startRow}
+    </select>
+    <!--    회원이 전문가에게 받은 리뷰 페이징 갯수-->
+    <select id="countUserReceiveReview">
+        select count(*)
+        from TBL_USER_REVIEW
+        where USER_ID=#{userId}
+    </select>
+
 </mapper>

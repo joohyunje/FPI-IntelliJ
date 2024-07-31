@@ -1,6 +1,7 @@
 package com.example.fpi.controller.pay;
 
 import com.example.fpi.domain.oauth.CustomOAuth2User;
+import com.example.fpi.service.user.PayCouponService;
 import com.example.fpi.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,12 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PayController {
 
     private final UserService userService;
+    private final PayCouponService payCouponService;
 
     @GetMapping("/pay")
     public String pay(@AuthenticationPrincipal CustomOAuth2User customOAuth2User, Model model) {
 
         String userId = customOAuth2User.getUserId();
         model.addAttribute("user",userService.detailUser(userId));
+        model.addAttribute("couponList",payCouponService.couponlist(userId));
 
         return "/pay/cash";
     }

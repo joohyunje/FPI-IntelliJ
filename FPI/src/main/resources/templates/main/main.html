@@ -37,11 +37,11 @@
           <h3>검증된 전문가에게 원하는 서비스를 맡겨보세요.</h3>
         </div>
         
-        <div class="input-area">
-            <i class="fa-solid fa-magnifying-glass search"></i>
-            <!-- 카테고리,서비스 입력창 -->
-            <input type="txt" placeholder="원하는 서비스를 입력하세요" class="input-box">
-        </div>
+<!--        <div class="input-area">-->
+<!--            <i class="fa-solid fa-magnifying-glass search"></i>-->
+<!--            &lt;!&ndash; 카테고리,서비스 입력창 &ndash;&gt;-->
+<!--            <input type="txt" placeholder="원하는 서비스를 입력하세요" class="input-box">-->
+<!--        </div>-->
   
         <!-- 카테고리 a태그 나열 -->
         <div class="category-container">
@@ -121,46 +121,46 @@
       </div> <!-- 서치& 카테고리 나열 끝 -->
 
       <!-- 견적요청 슬라이드 -->
+<!--     비로그인 또는 회원임, 전문가가 쓴 글이 보여짐-->
       <div class="page-wrapper">
-        <div class="post-slider">
-          <h4>최근 올라온 견적요청</h4>
+        <div class="post-slider" th:if="${session.proName}==null">
+          <h4>최근 올라온 제공 서비스</h4>
           <i class="fas fa-chevron-left prev"></i>  
           <i class="fas fa-chevron-right next"></i>   
           <div class="post-wrapper">
+            <!-- 슬라이드  -->
+            <div class="post" th:each="proUploadList:${proUploadLists}" th:object="${proUploadList}">
+              <a th:href="@{/user/uploadDetail/{proUploadId}(proUploadId=*{proUploadId})}">
+                <img th:src="*{proUploadFileRoute}" class="slider-image">
+                <div class="post-info">
+                  <h5 th:text="*{proUploadTitle}">  </h5>
+                  <i class="far fa-user post-icon" th:text="*{serviceName}">이사</i>
+                </div>
+              </a>
 
-            <!-- 슬라이드 1 -->
-            <div class="post"th:each="proUploadList:${proUploadLists}" th:object="${proUploadList}">
-              <img th:src="*{proUploadFileRoute}" class="slider-image">
-              <div class="post-info">
-                <h5><a th:href="@{/user/uploadDetail/{proUploadId}(proUploadId=*{proUploadId})}" class="post-subject" th:text="*{proUploadTitle}">투룸 이사 도와주실 전문가분 구합니다 </a></h5>
-                <i class="far fa-user post-icon" th:text="*{serviceName}">이사</i>
-              </div>
+<!--              <img th:src="*{proUploadFileRoute}" class="slider-image">-->
+<!--              <div class="post-info">-->
+<!--                <h5><a th:href="@{/user/uploadDetail/{proUploadId}(proUploadId=*{proUploadId})}" class="post-subject" th:text="*{proUploadTitle}">투룸 이사 도와주실 전문가분 구합니다 </a></h5>-->
+<!--                <i class="far fa-user post-icon" th:text="*{serviceName}">이사</i>-->
+<!--              </div>-->
             </div>
-
-            <!-- 슬라이드 2-->
-            <div class="post">
-              <img src="" class="slider-image">
-              <div class="post-info">
-                <h5><a href="#"> 아기방 인테리어 조언해주실 전문가님 구해요 </a></h5>
-                <i class="far fa-user post-icon">인테리어</i>
-              </div>
-            </div>
-            
-            <!-- 슬라이드 3 -->
-            <div class="post">
-              <img src="" class="slider-image">
-              <div class="post-info">
-                <h5><a href="#">빠른 시일내에 입주청소가능한 업체구해요 </a></h5>
-                <i class="far fa-user post-icon">청소</i>
-              </div>
-            </div>
-            <!-- 슬라이드 4 -->
-            <div class="post">
-              <img src="" class="slider-image">
-              <div class="post-info">
-                <h5><a href="#">성인 피아노배우고 싶습니다.</a></h5>
-                <i class="far fa-user post-icon" >취미</i>
-              </div>
+          </div>
+        </div>
+<!--       전문가에게 보여줘야함, 회원이 쓴 글이 보여짐-->
+        <div class="post-slider" th:unless="${session.proName}==null">
+          <h4>최근 올라온 견적 요청</h4>
+          <i class="fas fa-chevron-left prev"></i>
+          <i class="fas fa-chevron-right next"></i>
+          <div class="post-wrapper">
+            <!-- 슬라이드  -->
+            <div class="post" th:each="userUploadList:${userUploadLists}" th:object="${userUploadList}">
+              <a th:href="@{/pro/uploadDetail/{userUploadId}(userUploadId=*{userUploadId})}">
+                <img th:src="*{userUploadFileRoute}" class="slider-image">
+                <div class="post-info">
+                  <h5 class="post-subject" th:text="*{userUploadTitle}">투룸 이사 도와주실 전문가분 구합니다 </h5>
+                  <i class="far fa-user post-icon" th:text="*{serviceName}">이사</i>
+                </div>
+              </a>
             </div>
           </div>
         </div>
@@ -168,7 +168,7 @@
 
       <!-- 커뮤니티 -->
       <div class="post-slider">
-        <h4>최근 커뮤니티글</h4>
+        <h4>인기 커뮤니티글</h4>
         <div class="row" >
 
           <!-- 커뮤니티 목록뿌려줌 -->
@@ -206,10 +206,10 @@
         arrows: true,           // 이전/다음 버튼 보이기 설정 (true or false)
         infinite: true,         // 무한 롤링 설정 (true or false)
         speed: 500,             // 슬라이드 전환 속도 (밀리초 단위)
-        slidesToShow: 2,        // 한 화면에 보여줄 슬라이드 개수
+        slidesToShow:3,        // 한 화면에 보여줄 슬라이드 개수
         slidesToScroll: 1,       // 한 번에 넘길 슬라이드 개수
         nextArrow:$('.next'),
-        prevArrow:$('.prev'),
+        prevArrow:$('.prev')
       });
   });
 </script>
