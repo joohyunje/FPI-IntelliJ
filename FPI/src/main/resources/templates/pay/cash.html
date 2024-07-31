@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" th:href="@{/css/user/mypage/withdrawmodal.css}">
+
   <link rel="stylesheet" th:href="@{/css/main/common.css}">
 
 
@@ -33,6 +34,19 @@
             <form id="pointForm" method="post">
               <div class="title">충전하실 금액을 입력하세요</div>
               <input class="input-box" type="number" id="userPlusCash" name="userPlusCash" placeholder="100원 이상 정확한 금액을 입력하세요">
+              <div class="col underline">
+                <label for="couponList" class="fontSize15 label">쿠폰사용</label>
+                <select name="count" id="couponList" aria-required="false" class="form-select coupon-select" onchange="selectOption()">
+                  <option value="0">쿠폰사용안함</option>
+                  <option th:each="coupon:${couponList}" th:id="*{couponId}" th:object="${coupon}" th:value="*{discount}" th:text="*{discount}+'원 할인 쿠폰'">
+                  </option>
+                </select>
+              </div>
+
+              <div class="title" id="selectValue"></div>
+
+
+
               <button type="button" class="btn kakaoPay">충전하기</button>
               <a th:href="@{/user/mypage}" type="button" id="close-modal"  class="btn">취소하기</a>
             </form>
@@ -45,11 +59,18 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://js.bootpay.co.kr/bootpay-5.0.0.min.js" type="application/javascript"></script>
     <script>
+
+        let payCash = 0; //충전할 금액
+        let userPlusCash = document.getElementById('userPlusCash'); //입력한 금액
+        // var couponId = document.querySelector("select[id=couponList] option:checked").id;
+
       function cashSave(pay) {
         $.ajax({
           url: "/pay/rest/cash",
           type: "post",
           data: JSON.stringify(pay),
+
+
           contentType: "application/json; charset=utf-8",
           success: function(url) {
             window.location.href = 'http://localhost:8070'+url;
@@ -66,7 +87,7 @@
         // 결제 완료가 될 때까지 기다려야함
         const response = await Bootpay.requestPayment({
           "application_id": "59a4d323396fa607cbe75de4", /*WEB Application ID*/
-          "price": $("#userPlusCash").val(), /*결제 요청할 금액*/
+          "price": payCash, /*결제 요청할 금액*/
           "order_name": "FPI 포인트 충전", /*결제할 상품명*/
           "order_id": 'order_id_' + new Date().getTime(), /*주문번호*/
           "pg": "카카오페이", /*결제 요청할 PG Symbol*/
@@ -79,7 +100,7 @@
               "id": 'id_' + new Date().getTime(), /*상품의 고유 ID*/
               "name": "FPI 포인트 충전", /*상품명*/
               "qty": 1, /*상품 구매 개수*/
-              "price": $("#userPlusCash").val() /*상품 하나의 단가*/
+              "price": payCash /*상품 하나의 단가*/
             }
           ],
           "extra": {
@@ -88,14 +109,15 @@
             "display_success_result" : "true"
           }
         })
-        const userPlusCash = response.data.price
+
         switch (response.event) {
           case 'done':
-            alert(userPlusCash+"원 결제 완료")
+            alert(payCash+"원 결제 완료")
             // 결제 완료 처리
             cashSave({
-              userPlusCash: userPlusCash,
-              userId : $("#userId").val()
+              userPlusCash: userPlusCash.value,
+              userId : $("#userId").val(),
+              couponId:document.querySelector("select[id=couponList] option:checked").id
             });
             break;
         }
@@ -103,6 +125,31 @@
       $(".kakaoPay").on("click", function () {
         kakaoPay();
       })
+
+
+      function selectOption(){
+          var couponList = document.getElementById('couponList');
+          var selectValue = document.getElementById('selectValue');
+          var couponId = document.querySelector("select[id=couponList] option:checked").id;
+          // var userPlusCash = document.getElementById('userPlusCash');
+          payCash = userPlusCash.value - couponList.value;
+          // 충전금액이 0이거나 음수면 쿠폰사용불가, 입력한 금액으로 충전하게끔
+          if(payCash<=0){
+            confirm("할인금액이 충전금액보다 크거나 같습니다")
+            couponList.value = 0;
+            selectValue.textContent=`총 결제 금액은 ${userPlusCash.value}원 입니다.`;
+            return;
+          }
+          selectValue.textContent=`총 결제 금액은 ${payCash}원 입니다.`;
+
+          // console.log(document.querySelector("select[id=couponList] option:checked").id)
+
+
+          // couponId=`<input class="couponId" type="hidden" th:value="${coupon.couponId}" id="couponId"  name="couponId">`
+          // selectValue.appendChild(couponId)
+
+
+      }
 
     </script>
   </body>

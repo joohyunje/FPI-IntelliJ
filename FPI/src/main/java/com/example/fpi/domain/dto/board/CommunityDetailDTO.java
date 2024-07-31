@@ -26,6 +26,7 @@ public class CommunityDetailDTO {
     private int views;
     private String author;
     private int commentCount;
+    private String loginName;
 
 
 }

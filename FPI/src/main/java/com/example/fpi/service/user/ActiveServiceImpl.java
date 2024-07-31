@@ -3,6 +3,8 @@ package com.example.fpi.service.user;
 import com.example.fpi.domain.dto.board.CommentListDTO;
 import com.example.fpi.domain.dto.board.CommunityDTO;
 import com.example.fpi.domain.dto.board.UserCommunityListDTO;
+import com.example.fpi.domain.dto.pro.ProReviewListDTO;
+import com.example.fpi.domain.dto.user.UserReviewListDTO;
 import com.example.fpi.mapper.user.ActiveListMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -42,9 +44,35 @@ public class ActiveServiceImpl implements ActiveService {
 
         return activeListMapper.selectUserCommentList(userId,myName,startRow,endRow);
     }
-
     @Override
     public int countUserComment(String userId, String myName) {
         return activeListMapper.countUserComment(userId,myName);
+    }
+
+//    작성한 리뷰
+    @Override
+    @Transactional
+    public List<ProReviewListDTO> selectUserWriteReview(String userId, int page, int pageSize) {
+        int startRow = (page - 1) * pageSize;
+        int endRow = page * pageSize;
+        countUserWriteReview(userId);
+        return activeListMapper.selectUserWriteReview(userId,startRow,endRow);
+    }
+    @Override
+    public int countUserWriteReview(String userId) {
+        return activeListMapper.countUserWriteReview(userId);
+    }
+
+    @Override
+    public List<UserReviewListDTO> selectUserReceiveReview(String userId, int page, int pageSize) {
+        int startRow = (page - 1) * pageSize;
+        int endRow = page * pageSize;
+        countUserWriteReview(userId);
+        return activeListMapper.selectUserReceiveReview(userId,startRow,endRow);
+    }
+
+    @Override
+    public int countUserReceiveReview(String userId) {
+        return activeListMapper.countUserReceiveReview(userId);
     }
 }

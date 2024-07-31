@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface CertifyMapper {
+//    전문가인증폼
 //   입력항목마다 관리하는 테이블이 다름
     void addPro(ProVO vo); //proId,phoneNumber,proImg,locationId
     void addCardInfo(CardInfoVO vo); //자격증 발급기관,자격증번호

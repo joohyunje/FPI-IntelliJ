@@ -50,7 +50,8 @@ public class CommunityServiceImpl implements CommunityService {
     public CommunityDetailDTO getCommunityDetail(Long communityId,CustomOAuth2User user) {
         CommunityDetailDTO community= communityMapper.selectCommunityDetail(communityId);
 
-        if (user ==null) {
+//        로그인을 안했거나
+        if (user ==null || !community.getAuthor().equals(community.getLoginName())) {
 //            조회수가 플러스 1이되는 update쿼리문
             communityMapper.plusViews(communityId);
             System.out.println(community);
@@ -90,6 +91,7 @@ public class CommunityServiceImpl implements CommunityService {
 //        System.out.println(community);
     }
 
+//    게시글 수정 update
     @Override
     public void updateCommunity(CommunityDTO community) {
 

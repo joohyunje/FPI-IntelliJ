@@ -7,6 +7,7 @@ import com.example.fpi.domain.dto.user.*;
 import com.example.fpi.domain.oauth.CustomOAuth2User;
 import com.example.fpi.mapper.File.FileMapper;
 import com.example.fpi.service.pro.ProService;
+import com.example.fpi.service.user.PayCouponService;
 import com.example.fpi.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -25,6 +26,7 @@ public class UserController {
     private final UserService userService;
     private final ProService proService;
     private final FileMapper fileMapper;
+    private final PayCouponService payCouponService;
 
 //    @GetMapping("/received_req")
 //    public String received_req(@RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
@@ -57,7 +59,7 @@ public class UserController {
 
     //    전문가가 보낸 요청의 상세보기
     @GetMapping("/proDetail/{proRequestId}")
-    public String proReqDetail(@PathVariable("proRequestId") Long proRequestId, Model model) {
+    public String proReqDetail(@PathVariable("proRequestId") Long proRequestId, Model model,@AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
 
         ProRequestDetailDTO proRequest = proService.selectProReqDetail(proRequestId);
 
@@ -67,15 +69,18 @@ public class UserController {
 
         List<ProCardInfoFileDTO> proCardInfoFiles = fileMapper.selectProCardFileList(proId);
 
+        //        보유캐시보다 수락할 금액이 작으면 작업완료 불가능
+        String userId=customOAuth2User.getUserId();
+        Long userCash = userId.equals("0")? 0L :userService.detailUser(userId).getUserCash();
 
         System.out.println(proRequestId);
         System.out.println(careerInfo);
-
 
         model.addAttribute("proCardInfoFiles", proCardInfoFiles);
         model.addAttribute("proAccuse", new ProAccuseDTO());
         model.addAttribute("proRequest", proRequest);
         model.addAttribute("careerInfo", careerInfo);
+        model.addAttribute("userCash", userCash);
 
         return "/user/req_list/user_received_req_info";
 
@@ -109,7 +114,12 @@ public class UserController {
     @GetMapping("/uploadDetail/{proUploadId}")
     public String uploadDetail(@PathVariable("proUploadId") Long proUploadId, Model model,
                                @AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
-        String userId = customOAuth2User.getUserId();
+//        비로그인 상태면 userId에 null을 주고, 클릭시 우측 견적요청 부분이 안보이게 함
+        String userId = customOAuth2User == null? "0":customOAuth2User.getUserId();
+        Long userCash = userId.equals("0")? 0L :userService.detailUser(userId).getUserCash();
+
+
+
         Long proId = proService.selectProIdByProUploadId(proUploadId);
         UserLocationDTO userLocation = userService.selectUserLocation(userId);
 
@@ -137,6 +147,9 @@ public class UserController {
         model.addAttribute("userRequest", new UserRequestDTO());
 
         model.addAttribute("checkRequest", checkRequest);
+        model.addAttribute("loginOk",userId);
+        model.addAttribute("userCash", userCash);
+
 
         return "/user/profind/proFind_info";
     }
@@ -263,17 +276,19 @@ public class UserController {
         userService.updateUserAccept(proRequestId);
         return "redirect:/user/proDetail/" + proRequestId;
     }
-
+//회원이 올린 글에 전문가가 견적요청 보냈음,회원이 수락,작업완료
     @PostMapping("/proDetail/updateComplete/{proRequestId}")
-    public String updateComplete(@PathVariable Long proRequestId) {
-        Long proId = userService.selectProIdByProRequestId(proRequestId);
+    public String updateComplete(@PathVariable Long proRequestId,@AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
+        Long proId = userService.selectProIdByProRequestId(proRequestId); //전문가요청아이디로 전문가 아이디 찾기
         Long empCnt = proService.empCount(proId);
+        String userId = customOAuth2User.getUserId();
         proService.updateEmpCnt(proId, empCnt);
 
         System.out.println(proId);
         System.out.println(empCnt);
 
         userService.updateUserComplete(proRequestId);
+        payCouponService.proRequsestPay(proRequestId,userId,proId); //캐쉬결제하는서비스
 
         return "redirect:/user/proDetail/" + proRequestId;
     }

@@ -12,6 +12,8 @@ import com.example.fpi.domain.vo.pro.ProAccuseVO;
 import com.example.fpi.domain.vo.pro.ProReviewVO;
 import com.example.fpi.domain.vo.user.UserVO;
 import com.example.fpi.mapper.File.FileMapper;
+import com.example.fpi.mapper.pro.ProMapper;
+import com.example.fpi.mapper.user.PayCouponMapper;
 import com.example.fpi.mapper.user.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,8 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
     private final FileMapper fileMapper;
+    private final ProMapper proMapper;
+    private final PayCouponMapper payCouponMapper;
 
     //    받은 요청 목록
     @Override
@@ -129,15 +133,7 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectUserUploadDetail(userUploadId);
     }
 
-    @Override
-    public void updateCash(String userId, int userCash, int userPlusCash) {
-        UserDTO dto = new UserDTO();
-        dto.setUserId(userId);
-        dto.setUserCash(userCash + userPlusCash);
-        UserVO vo = UserVO.toEntity(dto);
-        userMapper.updateCash(vo);
 
-    }
 
 
     //  회원 견적 작성하기
@@ -273,6 +269,7 @@ public class UserServiceImpl implements UserService {
     public void updateUserRequestProReview(Long userRequestId) {
         userMapper.updateUserRequestProReview(userRequestId);
     }
+
 
 
 }

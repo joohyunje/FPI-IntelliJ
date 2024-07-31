@@ -8,5 +8,6 @@ public class CashDTO {
     int userCash;
     int userPlusCash;
     String userId;
+    Long couponId;
 
 }

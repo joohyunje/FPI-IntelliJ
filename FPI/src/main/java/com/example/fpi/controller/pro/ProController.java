@@ -10,6 +10,7 @@ import com.example.fpi.domain.dto.user.UserUploadDetailDTO;
 import com.example.fpi.domain.oauth.CustomOAuth2User;
 import com.example.fpi.mapper.File.FileMapper;
 import com.example.fpi.service.pro.ProService;
+import com.example.fpi.service.user.PayCouponService;
 import com.example.fpi.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -28,6 +29,7 @@ public class ProController {
     private final ProService proService;
     private final UserService userService;
     private final FileMapper fileMapper;
+    private final PayCouponService payCouponService;
 
     @GetMapping("/requests")
     public String rest() {
@@ -228,15 +230,17 @@ public class ProController {
         proService.updateProAccept(userRequestId);
         return "redirect:/pro/userDetail/" + userRequestId;
     }
-
+//전문가가 올린글에 회원이 요청 보냈음,캐시교환 이루어짐
     @PostMapping("/userDetail/updateComplete/{userRequestId}")
-    public String updateComplete(@PathVariable Long userRequestId) {
+    public String updateComplete(@PathVariable Long userRequestId,@RequestParam("userId") String userId) {
 
         Long proId = userService.selectProIdByUserRequestId(userRequestId);
         Long empCnt = proService.empCount(proId);
         proService.updateEmpCnt(proId, empCnt);
 
         proService.updateProComplete(userRequestId);
+
+      payCouponService.userRequsestPay(userRequestId,userId,proId); //캐쉬결제하는서비스
         return "redirect:/pro/userDetail/" + userRequestId;
     }
 

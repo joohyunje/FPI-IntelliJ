@@ -1,9 +1,9 @@
 package com.example.fpi.service.user;
 
 import com.example.fpi.domain.dto.user.CouponDTO;
-import com.example.fpi.domain.dto.user.CouponListDTO;
 import com.example.fpi.domain.vo.user.CouponVO;
-import com.example.fpi.mapper.user.CouponMapper;
+import com.example.fpi.mapper.pro.ProMapper;
+import com.example.fpi.mapper.user.PayCouponMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +12,14 @@ import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
-public class CouponServiceImpl implements CouponService {
-    private final CouponMapper couponMapper;
+public class PayCouponServiceImpl implements PayCouponService {
+    private final PayCouponMapper payCouponMapper;
+    private final ProMapper proMapper;
 
 //    사용가능한 쿠폰갯수 리턴
     @Override
     public int useCouponCount(String userId) {
-        return couponMapper.couponCount(userId);
+        return payCouponMapper.couponCount(userId);
     }
 
 //    쿠폰지급 관련
@@ -61,7 +62,7 @@ public class CouponServiceImpl implements CouponService {
             }
 
 
-            couponMapper.makeCoupon(CouponVO.toEntity(couponDTO));
+            payCouponMapper.makeCoupon(CouponVO.toEntity(couponDTO));
         }
 
     }
@@ -69,6 +70,37 @@ public class CouponServiceImpl implements CouponService {
 //    쿠폰 정보 가져옴
     @Override
     public List<CouponDTO> couponlist(String userId) {
-        return couponMapper.couponInfo(userId);
+        return payCouponMapper.couponInfo(userId);
+    }
+
+//    포인트 충전기능
+    @Override
+    public void updateCash(String userId, int userPlusCash) {
+        payCouponMapper.updateCash(userId, userPlusCash);
+    }
+
+    @Override
+    public void useCoupon(Long couponId) {
+        payCouponMapper.useCoupon(couponId);
+    }
+
+
+    //    회원이 받은 요청에서 작업완료 누르면 서로 포인트 주고받아짐
+    @Override
+    public void proRequsestPay(Long proRequestId, String userId,Long proId) {
+        Long proRequestPay = payCouponMapper.cashRequest(proRequestId);
+        payCouponMapper.UserMinusCash(userId,proRequestPay); //회원의 포인트 빠져나감
+
+        String payUserID = proMapper.selectProInfo(proId).getUserId(); //전문가 아이디로 그사람의 유저아이디 찾기
+        payCouponMapper.ProPlusCash(payUserID,proRequestPay); //전문가포인트 추가
+    }
+
+    @Override
+    public void userRequsestPay(Long userRequestId, String userId, Long proId) {
+        Long userRequestPay = payCouponMapper.userCashRequest(userRequestId);
+        payCouponMapper.UserRequestMinusCash(userId,userRequestPay); //회원의 포인트 빠져나감
+
+        String payUserID = proMapper.selectProInfo(proId).getUserId(); //전문가 아이디로 그사람의 유저아이디 찾기
+        payCouponMapper.UserRequestProPlusCash(payUserID,userRequestPay); //전문가포인트 추가
     }
 }

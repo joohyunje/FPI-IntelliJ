@@ -52,9 +52,6 @@ public interface UserService {
     UserUploadDetailDTO selectUserUploadDetail(Long userUploadId);
 
 
-    void updateCash(String userId, int cash, int plusCash);
-
-
     //회원 견적 올리기
     void saveUserUpload(UserUploadDTO userUpload, List<MultipartFile> files);
 
@@ -92,4 +89,6 @@ public interface UserService {
     void updateProRequestProReview(Long proRequestId);
 
     void updateUserRequestProReview(Long userRequestId);
+
+
 }
