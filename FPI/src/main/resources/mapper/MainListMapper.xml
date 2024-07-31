@@ -49,7 +49,7 @@
                                 On TPU.PRO_UPLOAD_ID = puf.PRO_UPLOAD_ID
                     order by TPU.PRO_UPLOAD_DATE desc
                     ) pro
-        WHERE ROWNUM &lt;= 6
+        WHERE ROWNUM &lt;= 8
 
     </select>
     <select id="userUploadList" resultType="UserUploadListDTO">

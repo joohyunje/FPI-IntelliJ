@@ -184,7 +184,7 @@
                         </div>
                     </div>
                     <form th:action="@{/user/sendUserRequest}"
-                          th:object="${userRequest}" id="form" name="user_receviemodal" method="post" onsubmit="userRecevieModalSubmit()">
+                          th:object="${userRequest}" id="form" name="user_receviemodal" method="post">
                         <input type="hidden" th:value="${proUpload.proUploadId}" name="proUploadId">
                         <input type="hidden" th:value="${userCash}" name="userCash">
 
@@ -203,7 +203,7 @@
 
 
                         <!--모달 창 닫음 -->
-                        <button type="submit" id="close-modal" class="btn">견적 요청 하기</button>
+                        <button type="button" id="close-modal" class="btn" onclick="userRecevieModalSubmit()">견적 요청 하기</button>
                     </form>
                 </div>
             </div>
@@ -322,15 +322,16 @@
       // value는 string으로 값이넘어가서, 숫자비교를 위해 형변환을 해준다
       var userRequestPay = parseInt(document.querySelector('input[name="userRequestPay"]').value);
       var userCash = parseInt(document.querySelector('input[name="userCash"]').value);
-      let resultFlag=true;
-      try{}
 
       if(userRequestPay>userCash){
           alert("요청금액보다 보유금액이 작습니다.캐시충전 후 이용해주세요");
-          resultFlag=false;
+
+      }
+      else {
+          document.getElementById('form').submit();
       }
 
-      return resultFlag;
+
 
   }
 </script>

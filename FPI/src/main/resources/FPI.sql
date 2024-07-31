@@ -925,3 +925,34 @@ from(select tpr.*,c.CATEGORY_NAME
      join TBL_CATEGORY c on c.CATEGORY_ID=tpr.CATEGORY_ID)ur
      where USER_ID=3614057925
      order by ur.PRO_REVIEW_DATE DESC,ur.PRO_REVIEW_ID desc;
+
+SELECT ROWNUM , pro.*
+FROM (      SELECT TPU.PRO_UPLOAD_ID
+                 , TPU.PRO_UPLOAD_DATE
+                 , TC.CATEGORY_NAME
+                 , TS.SERVICE_NAME
+                 , TL.REGION
+                 , TL.CITY
+                 , TPU.PRO_UPLOAD_CONTENT
+                 , TP.PRO_STAR_RATE
+                 , TPU.PRO_UPLOAD_ADDRESS
+                 , TPU.PRO_UPLOAD_PAY_RANGE
+                 , TP.PRO_NAME
+                 , TP.PRO_ID
+                 , TPU.PRO_UPLOAD_TITLE
+                 , TP.EMP_CNT
+                 , puf.PRO_UPLOAD_FILE_ROUTE
+            FROM TBL_PRO_UPLOAD TPU
+                     INNER JOIN TBL_SERVICE ts
+                                ON TPU.SERVICE_ID = TS.SERVICE_ID
+                     INNER JOIN TBL_CATEGORY tc
+                                ON TS.CATEGORY_ID = TC.CATEGORY_ID
+                     INNER JOIN TBL_PRO TP
+                                ON TP.PRO_ID = TPU.PRO_ID
+                     INNER JOIN TBL_LOCATION tl
+                                ON TP.LOCATION_ID = TL.LOCATION_ID
+                     JOIN TBL_PRO_UPLOAD_FILE puf
+                          On TPU.PRO_UPLOAD_ID = puf.PRO_UPLOAD_ID
+            order by TPU.PRO_UPLOAD_DATE desc
+     ) pro
+WHERE ROWNUM <= 8
