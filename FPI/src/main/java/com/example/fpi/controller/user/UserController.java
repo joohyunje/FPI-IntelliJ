@@ -71,6 +71,10 @@ public class UserController {
         System.out.println(proRequestId);
         System.out.println(careerInfo);
 
+        Long proReviewCnt = proService.selectProReviewCnt(proId);
+
+        model.addAttribute("proReviewCnt", proReviewCnt);
+
 
         model.addAttribute("proCardInfoFiles", proCardInfoFiles);
         model.addAttribute("proAccuse", new ProAccuseDTO());
@@ -105,6 +109,12 @@ public class UserController {
         return "user/profind/FindPro";
     }
 
+    @GetMapping("/proFind/{searchType}")
+    public String uploadRest2(Model model, @PathVariable("searchType") String searchType) {
+        model.addAttribute("searchType", searchType);
+        return "user/profind/FindPro";
+    }
+
     //    전문가 찾기를 통해 전문가가 올리 견적 상세보기
     @GetMapping("/uploadDetail/{proUploadId}")
     public String uploadDetail(@PathVariable("proUploadId") Long proUploadId, Model model,
@@ -121,8 +131,12 @@ public class UserController {
 
         List<ProCardInfoFileDTO> proCardInfoFiles = fileMapper.selectProCardFileList(proId);
 
+        Long proReviewCnt = proService.selectProReviewCnt(proId);
+
 
         Long checkRequest = userService.checkUserRequest(proUploadId, userId);
+
+        model.addAttribute("proReviewCnt", proReviewCnt);
 
         model.addAttribute("careerInfo", careerInfo);
 

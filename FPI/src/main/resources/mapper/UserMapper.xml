@@ -91,10 +91,29 @@
         on TUU.USER_ID = TU.USER_ID
         inner join TBL_SERVICE TS
         on tuu.SERVICE_ID = ts.SERVICE_ID
+        inner join TBL_CATEGORY tg
+        on tg.CATEGORY_ID = ts.CATEGORY_ID
         <where>
-            <if test="search != null">
-                TUU.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%'
-            </if>
+            <choose>
+                <when test="searchType == ''">
+                    and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%'
+                </when>
+                <when test='"1".equals(searchType)'>
+                    and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 1
+                </when>
+                <when test='"2".equals(searchType)'>
+                    and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 2
+                </when>
+                <when test='"3".equals(searchType)'>
+                    and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 3
+                </when>
+                <when test='"4".equals(searchType)'>
+                    and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 4
+                </when>
+                <when test='"5".equals(searchType)'>
+                    and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 5
+                </when>
+            </choose>
         </where>
         ORDER BY
         USER_UPLOAD_DATE DESC
@@ -108,11 +127,32 @@
     <!--    유저가 올린 견적 갯수  -->
     <select id="countUserUpload">
         select count(*)
-        from TBL_USER_UPLOAD
+        from TBL_USER_UPLOAD TUU
+        inner join TBL_SERVICE TS
+        on TUU.SERVICE_ID = ts.SERVICE_ID
+        inner join TBL_CATEGORY tg
+        on tg.CATEGORY_ID = ts.CATEGORY_ID
         <where>
-            <if test="search != null">
-                USER_UPLOAD_TITLE LIKE '%' || #{search} || '%'
-            </if>
+            <choose>
+                <when test="searchType == ''">
+                    and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%'
+                </when>
+                <when test='"1".equals(searchType)'>
+                    and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 1
+                </when>
+                <when test='"2".equals(searchType)'>
+                    and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 2
+                </when>
+                <when test='"3".equals(searchType)'>
+                    and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 3
+                </when>
+                <when test='"4".equals(searchType)'>
+                    and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 4
+                </when>
+                <when test='"5".equals(searchType)'>
+                    and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 5
+                </when>
+            </choose>
         </where>
     </select>
 
@@ -284,4 +324,11 @@
         where PRO_ID = #{proId}
 
     </update>
+
+    <!--    회원의 리뷰 갯수 가져오기 -->
+    <select id="selectUserReviewCnt" resultType="Long">
+        select count(*)
+        from TBL_USER_REVIEW
+        where USER_ID = #{userId}
+    </select>
 </mapper>

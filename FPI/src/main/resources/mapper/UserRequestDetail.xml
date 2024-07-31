@@ -46,7 +46,7 @@
                tur.USER_REVIEW_DATE
         FROM TBL_USER_REVIEW tur
                  INNER JOIN TBL_PRO tp
-                            ON TUR.USER_ID = TP.PRO_ID
+                            ON TUR.PRO_ID = TP.PRO_ID
         WHERE TUR.USER_ID = #{userId}
         ORDER BY TUR.USER_REVIEW_DATE DESC
     </select>

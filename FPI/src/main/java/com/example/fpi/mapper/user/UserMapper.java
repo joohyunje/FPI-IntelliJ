@@ -35,10 +35,10 @@ public interface UserMapper {
     List<UserReviewListDTO> selectUserReview(String userId);
 
     //    전뭄가 찾기 동적
-    List<UserUploadListDTO> selectUserUploadList(int startRow, int endRow, String search);
+    List<UserUploadListDTO> selectUserUploadList(int startRow, int endRow, String search, String searchType);
 
     //    전문가 찾기 갯수 동적
-    int countUserUpload(String search);
+    int countUserUpload(String search, String searchType);
 
     //    유저가 올리 견적 상세보기
     UserUploadDetailDTO selectUserUploadDetail(Long userUploadId);
@@ -110,4 +110,6 @@ public interface UserMapper {
     void updateProRequestProReview(Long proRequestId);
 
     void updateUserRequestProReview(Long userRequestId);
+
+    Long selectUserReviewCnt(String userId);
 }

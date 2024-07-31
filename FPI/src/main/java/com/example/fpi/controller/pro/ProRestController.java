@@ -61,7 +61,8 @@ public class ProRestController {
     @GetMapping("/UserFind")
     public ResponseEntity<PagedResponse<UserUploadListDTO>> getBoardList(@RequestParam(defaultValue = "1") int page,
                                                                          @RequestParam(defaultValue = "7") int size,
-                                                                         @RequestParam String search) {
+                                                                         @RequestParam String search,
+                                                                         @RequestParam String searchType) {
 
 
         System.out.println("여기");
@@ -72,9 +73,8 @@ public class ProRestController {
 //            default -> boardService.selectAllByDateDESC(page, size);
 //        };
 
-        return ResponseEntity.ok(userService.selectUserUploadList(page, size, search));
+        return ResponseEntity.ok(userService.selectUserUploadList(page, size, search, searchType));
     }
-
 
 
 }

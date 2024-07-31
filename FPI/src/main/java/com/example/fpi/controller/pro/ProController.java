@@ -45,6 +45,10 @@ public class ProController {
         String userId = proService.selectUserIdByProRequestId(proRequestId);
         System.out.println(userId);
 
+        Long proReviewCnt = proService.selectProReviewCnt(proId);
+
+        model.addAttribute("proReviewCnt", proReviewCnt);
+
         model.addAttribute("proCardInfoFiles", proCardInfoFiles);
         model.addAttribute("proRequest", proRequest);
         model.addAttribute("careerInfo", careerInfo);
@@ -59,6 +63,11 @@ public class ProController {
     public String userReqDetail(@PathVariable("userRequestId") Long userRequestId, Model model) {
 
         UserRequestDetailDTO userRequest = userService.selectUserReqDetail(userRequestId);
+        String userId = proService.selectUserIdByUserRequestId(userRequestId);
+
+        Long userReviewCnt = userService.selectUserReviewCnt(userId);
+
+        model.addAttribute("userReviewCnt", userReviewCnt);
 
         model.addAttribute("userRequest", userRequest);
         model.addAttribute("userAccuse", new UserAccuseDTO());
@@ -70,6 +79,12 @@ public class ProController {
     //    회원 찾기
     @GetMapping("/userFind")
     public String uploadRest() {
+        return "pro/userfind/FindUser";
+    }
+
+    @GetMapping("/userFind/{searchType}")
+    public String uploadRest2(Model model, @PathVariable("searchType") String searchType) {
+        model.addAttribute("searchType", searchType);
         return "pro/userfind/FindUser";
     }
 
@@ -87,6 +102,9 @@ public class ProController {
         ProLocationDTO proLocation = proService.selectProLocation(proId);
 
         Long checkRequest = proService.checkProRequest(userUploadId, proId);
+        Long userReviewCnt = userService.selectUserReviewCnt(userId);
+
+        model.addAttribute("userReviewCnt", userReviewCnt);
 
         model.addAttribute("userUpload", Upload);
 

@@ -112,14 +112,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PagedResponse<UserUploadListDTO> selectUserUploadList(int page, int pageSize, String search) {
+    public PagedResponse<UserUploadListDTO> selectUserUploadList(int page, int pageSize, String search, String searchType) {
         int startRow = (page - 1) * pageSize;
         int endRow = page * pageSize;
 
-        int totalUploads = userMapper.countUserUpload(search);
+        int totalUploads = userMapper.countUserUpload(search, searchType);
         int totalPages = (int) Math.ceil((double) totalUploads / pageSize);
 
-        List<UserUploadListDTO> uploads = userMapper.selectUserUploadList(startRow, endRow, search);
+        List<UserUploadListDTO> uploads = userMapper.selectUserUploadList(startRow, endRow, search, searchType);
 
         return new PagedResponse<>(uploads, page, totalPages, pageSize, totalUploads);
     }
@@ -272,6 +272,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUserRequestProReview(Long userRequestId) {
         userMapper.updateUserRequestProReview(userRequestId);
+    }
+
+    @Override
+    public Long selectUserReviewCnt(String userId) {
+        return userMapper.selectUserReviewCnt(userId);
     }
 
 

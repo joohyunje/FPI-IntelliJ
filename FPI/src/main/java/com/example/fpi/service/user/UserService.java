@@ -46,7 +46,7 @@ public interface UserService {
     void editApproval(String userId);
 
     //    회원 찾기
-    PagedResponse<UserUploadListDTO> selectUserUploadList(int page, int pageSize, String search);
+    PagedResponse<UserUploadListDTO> selectUserUploadList(int page, int pageSize, String search, String searchType);
 
     //    유저가 올리 견적 상세보기
     UserUploadDetailDTO selectUserUploadDetail(Long userUploadId);
@@ -92,4 +92,6 @@ public interface UserService {
     void updateProRequestProReview(Long proRequestId);
 
     void updateUserRequestProReview(Long userRequestId);
+
+    Long selectUserReviewCnt(String userId);
 }
