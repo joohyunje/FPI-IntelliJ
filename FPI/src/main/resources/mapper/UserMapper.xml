@@ -24,7 +24,7 @@
     </select>
 
 
-    <!--    회원가입 사용자 정보 조회-->
+    <!--    회원가입 사용자 정보 조회,회원가입 되어있는 회원인지에 사용-->
     <select id="findByUserId">
         select *
         from tbl_user
@@ -184,12 +184,6 @@
         WHERE TUU.USER_UPLOAD_ID = #{userUploadId}
     </select>
 
-    <!--    카카오페이로 충전시 사용-->
-    <update id="updateCash">
-        update tbl_user
-        set USER_CASH =#{userCash}
-        where USER_ID = #{userId}
-    </update>
 
     <!--    회원 견적 올리기-->
     <!--    회원이 견적 올리기 다음 시퀀스 가져오기-->

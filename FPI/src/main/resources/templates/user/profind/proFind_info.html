@@ -142,7 +142,7 @@
                 </div>
             </div>
         </div>
-        <div class="request-price-side">
+        <div class="request-price-side" th:if="${!userLocation.userName.equals('0')}">
             <div class="side-wrapper">
                 <span th:text="${proUpload.proName}"></span>
                 <span>에게 원하는 서비스의 견적을 받아보세요</span>
@@ -185,8 +185,10 @@
                         </div>
                     </div>
                     <form th:action="@{/user/sendUserRequest}"
-                          th:object="${userRequest}" name="user_receviemodal" method="post">
+                          th:object="${userRequest}" id="form" name="user_receviemodal" method="post" onsubmit="userRecevieModalSubmit()">
                         <input type="hidden" th:value="${proUpload.proUploadId}" name="proUploadId">
+                        <input type="hidden" th:value="${userCash}" name="userCash">
+
                         <div class="title">요청을 보내면 전문가가 수락시 연락처가 공개됩니다.</div>
                         <div class="col underline">
                             <label for="user_receive_modal" class="fontSize15 label">요청 금액 (원)</label>
@@ -203,7 +205,6 @@
 
                         <!--모달 창 닫음 -->
                         <button type="submit" id="close-modal" class="btn">견적 요청 하기</button>
-
                     </form>
                 </div>
             </div>
@@ -314,5 +315,25 @@
   closeModal.addEventListener("click", e => {
     modalOff()
   })
+
+
+  const $form = document.querySelector('form');
+
+
+  function userRecevieModalSubmit(){
+      // value는 string으로 값이넘어가서, 숫자비교를 위해 형변환을 해준다
+      var userRequestPay = parseInt(document.querySelector('input[name="userRequestPay"]').value);
+      var userCash = parseInt(document.querySelector('input[name="userCash"]').value);
+      let resultFlag=true;
+      try{}
+
+      if(userRequestPay>userCash){
+          alert("요청금액보다 보유금액이 작습니다.캐시충전 후 이용해주세요");
+          resultFlag=false;
+      }
+
+      return resultFlag;
+
+  }
 </script>
 </html>

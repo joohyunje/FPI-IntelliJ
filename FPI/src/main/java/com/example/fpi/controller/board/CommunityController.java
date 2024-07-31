@@ -30,7 +30,7 @@ public class CommunityController {
     //    커뮤니티 게시판상세보기
     @GetMapping("/community/detail/{communityId}")
     public String detail(@PathVariable("communityId") Long communityId, Model model,
-                         @AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
+                         @AuthenticationPrincipal CustomOAuth2User customOAuth2User,HttpSession Session) {
 
         CommunityDetailDTO commu = communityService.getCommunityDetail(communityId,customOAuth2User);
 //        로그인했다면, 그 로그인값을 detail에 넣어줌
@@ -62,14 +62,21 @@ public class CommunityController {
     @GetMapping("/community/edit/{communityId}")
     public String goEdit(@PathVariable Long communityId, Model model, @AuthenticationPrincipal CustomOAuth2User customOAuth2User, HttpSession session){
         CommunityDetailDTO communityInfo=communityService.getCommunityDetail(communityId,customOAuth2User);
-        if(session.getAttribute("user") == null){
+
+//        전문가임
+        if(session.getAttribute("loginName") == null){
             communityInfo.setProId(proService.selectProId(customOAuth2User.getUserId()));
+            communityInfo.setLoginName((String) session.getAttribute("proName"));
         }
-        else if(session.getAttribute("pro") == null){
+//        회원임
+        else if(session.getAttribute("proName") == null){
             communityInfo.setProId(null);
+            communityInfo.setLoginName( (String) session.getAttribute("loginName"));
         }
+
         communityInfo.setLoginUserId(customOAuth2User.getUserId());
         model.addAttribute("communityInfo",communityInfo);
+        System.out.println(communityInfo);
 
         return "/community/write";
     }
@@ -77,16 +84,17 @@ public class CommunityController {
     //    게시글 수정,작성,,수정과 작성 폼 주소 같음
     @PostMapping("/community/write")
     public String write(CommunityDTO communityInfo,@AuthenticationPrincipal CustomOAuth2User customOAuth2User,HttpSession session){
+        String loginName = (String) session.getAttribute("loginName");
+        String proName = (String) session.getAttribute("proName");
 
-//       작성자와 로그인된 사람이 같다면
-        if(communityInfo.getCommunityId() !=null && customOAuth2User.getUserId() != null){
+//       게시글 아이디가 없고 작성자와 로그인된 사람이 같다면
+        if(communityInfo.getCommunityId() !=null && ( communityInfo.getAuthor() == loginName || communityInfo.getAuthor() == proName)){
             communityService.updateCommunity(communityInfo);
 
             return "redirect:/community/detail/" + communityInfo.getCommunityId();
         }
 
-        String loginName = (String) session.getAttribute("loginName");
-        String proName = (String) session.getAttribute("proName");
+
         if(session.getAttribute("loginName") == null){
             communityInfo.setAuthor(proName);
         }

@@ -16,5 +16,8 @@ public class ProReviewListDTO {
     private String proReviewContent;
     private String proReviewRate;
     private LocalDate proReviewDate;
+    private Long proReviewId;
+    private String proName;
+    private Long RN;
 
 }

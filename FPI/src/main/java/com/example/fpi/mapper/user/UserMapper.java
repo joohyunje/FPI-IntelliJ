@@ -66,7 +66,6 @@ public interface UserMapper {
 
     void editCategory(CategoryListVO vo);
 
-    void updateCash(UserVO vo);
 
     //    견적 올리기
 //    시퀀스 가져오기
@@ -112,4 +111,5 @@ public interface UserMapper {
     void updateUserRequestProReview(Long userRequestId);
 
     Long selectUserReviewCnt(String userId);
+
 }

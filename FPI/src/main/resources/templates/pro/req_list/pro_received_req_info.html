@@ -34,7 +34,7 @@
                         <img src="https://dmmj3ljielax6.cloudfront.net/upload/requestForm/25f0e364-93ad-4d49-b710-3a2f073dc547.svg">
                     </div>
                     <div class="pro-name-rate">
-                        <input type="hidden" name="userId" th:value="${userRequest.userId}">
+                        <input type="hidden" name="userId" id="userId" th:value="${userRequest.userId}">
                         <div class="pro-name user-name" th:text="${userRequest.userName}"></div>
                         <div class="service-address">
                             <div class="service-name" th:text="${userRequest.serviceName}"></div>
@@ -103,7 +103,7 @@
         <div class="request-price-side">
             <div class="side-wrapper">
                 <div class="request-price">
-                    <span th:text="${userRequest.userRequestPay}">10000</span>
+                    <span id="userRequestPay" th:text="${userRequest.userRequestPay}"></span>
                     <span>원에 요청을 보내주셨습니다. 수락하시겠습니까?</span>
 
                     <!-- 작업이 완료 되면 띄우도록 -->
@@ -305,11 +305,23 @@
   }
 
   function Complete() {
+    var userRequestPay = document.querySelector('#userRequestPay').textContent.trim();
+    confirm((userRequestPay + '캐시를 ' + $('.user-name').text() + ' 회원으로 부터 받았습니다.'))
+
     var userRequestId = document.querySelector('input[name="userRequestId"]').value;
     var form = document.createElement('form');
     form.method = 'post';
     form.action = '/pro/userDetail/updateComplete/' + userRequestId;
     document.body.appendChild(form);
+
+    // 컨트롤러에서 postmapping으로 @RequestParam 넘길때 이렇게 담아서 넘겨줘야함
+    var userIdInput = document.createElement('input');
+    userIdInput.type = 'hidden';
+    userIdInput.name = 'userId';
+    userIdInput.value = $('input[name="userId"]').val();
+    form.appendChild(userIdInput);
+
+
     form.submit();
   }
 

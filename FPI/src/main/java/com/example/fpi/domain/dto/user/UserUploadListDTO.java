@@ -18,4 +18,5 @@ public class UserUploadListDTO {
     private String serviceName;
     private String userImg;
 
+    private String userUploadFileRoute;
 }
