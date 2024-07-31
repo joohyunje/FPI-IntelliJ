@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/main")
 @RequiredArgsConstructor
 public class MainLoginController {
-    private final  UserMapper userMapper;
+    private final UserMapper userMapper;
     private final FormService formService;
     private final UserService userService;
     private final PayCouponService couponService;
@@ -37,35 +37,35 @@ public class MainLoginController {
                         Model model,
                         HttpSession session) {
 
-        if(customOAuth2User != null){
+        if (customOAuth2User != null) {
             String userId = customOAuth2User.getUserId();
-            if(status.equals("pro")){
+            if (status.equals("pro")) {
                 session.removeAttribute("loginName");
                 session.setAttribute("proName", proService.getProName(proService.selectProId(userId)));
-            }
-            else if(status.equals("user")){
+            } else if (status.equals("user")) {
                 session.removeAttribute("proName");
                 session.setAttribute("loginName", userService.detailUser(userId).getUserName());
             }
         }
+
+        System.out.println(mainListService.proUploadList().toString());
+
         model.addAttribute("communityList", mainListService.mainCommunityList());
-        model.addAttribute("proUploadLists",mainListService.proUploadList());
-        model.addAttribute("userUploadLists",mainListService.userUploadList());
+        model.addAttribute("proUploadLists", mainListService.proUploadList());
+        model.addAttribute("userUploadLists", mainListService.userUploadList());
 
 
         return "main/main";
     }
 
 
-
-
-// 회원가입 폼으로 이동
+    // 회원가입 폼으로 이동
     @GetMapping("/sign")
-    public String sign(){
+    public String sign() {
         return "main/OAuthform";
     }
 
-//회원가입 폼
+    //회원가입 폼
     @PostMapping("/sign")
     public String sign(@RequestParam("userName") String userName, // form에서 입력한 이름
                        @RequestParam("phoneNumber") String phoneNumber,
@@ -74,7 +74,7 @@ public class MainLoginController {
                        @RequestParam("city") String city,
                        @RequestParam("category") Long category,
                        @AuthenticationPrincipal CustomOAuth2User customOAuth2User,
-                       HttpSession session){
+                       HttpSession session) {
 
         UserDTO userDTO = userMapper.findByUserId(customOAuth2User.getUserId());
         userDTO.setRole("basic");
@@ -84,23 +84,24 @@ public class MainLoginController {
         userDTO.setRegion(region);
         userDTO.setCity(city);
         userDTO.setCategoryId(category);
-        userDTO.setLocationId(formService.selectLocation(region,city));
+        userDTO.setLocationId(formService.selectLocation(region, city));
 
 //        OAuth 가입 필수 폼입력시 카테고리리스트 테이블에 정보 추가
-        formService.insertCategoryList(category,customOAuth2User.getUserId());
+        formService.insertCategoryList(category, customOAuth2User.getUserId());
 //       입력한 정보를 회원테이블에 업데이트
         userMapper.updateUser(UserVO.toEntity(userDTO));
         couponService.userCoupon(userDTO.getUserId());
 //        홈페이지가 바뀔때 헤더에서 계속 가지고 있어야 하기 때문에 회원가입 시 db에 담긴 이름을 세션에 담아줌
         session.setAttribute("loginName", userService.getUserName(userDTO.getUserId()));
 //        전문가 전환 버튼에 필요
-        session.setAttribute("userProApproval","NO");
+        session.setAttribute("userProApproval", "NO");
 
         return "redirect:/main/user";
 
     }
+
     @GetMapping("login")
-    public String goForm(HttpSession session){
+    public String goForm(HttpSession session) {
 
         session.invalidate();
 
