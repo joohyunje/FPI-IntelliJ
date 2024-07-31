@@ -15,6 +15,7 @@
 
     <!--전문가가 올린 서비스 -->
     <select id="proUploadList" resultType="ProUploadListDTO">
+
         SELECT ROWNUM, pro.*
         FROM (select TPU.PRO_UPLOAD_ID,
                      TPU.PRO_ID,
@@ -33,6 +34,7 @@
                                   on tg.CATEGORY_ID = ts.CATEGORY_ID
               order by TPU.PRO_UPLOAD_DATE desc) pro
         WHERE ROWNUM &lt;= 6
+
 
     </select>
     <select id="userUploadList" resultType="UserUploadListDTO">
