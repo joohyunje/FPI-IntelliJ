@@ -50,7 +50,7 @@ public interface ProService {
     List<ProCareerInfoListDTO> selectProCareerByReq(Long proRequestId);
 
     //    전문가 찾기
-    PagedResponse<ProUploadListDTO> selectProUploadList(int page, int pageSize, String search);
+    PagedResponse<ProUploadListDTO> selectProUploadList(int page, int pageSize, String search, String searchType);
 
 
     //    전문가 상세보기
@@ -141,5 +141,7 @@ public interface ProService {
 
     //    마이페이지에서 클릭으로 자격증정보 삭제
     void clickDeleteCard(Long cardInfoId);
+
+    Long selectProReviewCnt(Long proId);
 
 }

@@ -914,6 +914,55 @@ from TBL_USER_REQUEST u join TBL_PRO_UPLOAD p
                              on u.PRO_UPLOAD_ID = p.PRO_UPLOAD_ID
 where u.USER_REQUEST_PROGRESS ='POST' and p.PRO_ID = 1;
 
+SELECT tur.USER_ID,
+       tur.PRO_ID,
+       tp.PRO_NAME,
+       tur.USER_REVIEW_TITLE,
+       tur.USER_REVIEW_CONTENT,
+       tur.USER_REVIEW_RATE,
+       tur.USER_REVIEW_DATE
+FROM TBL_USER_REVIEW tur
+         INNER JOIN TBL_PRO tp
+                    ON TUR.PRO_ID = TP.PRO_ID
+WHERE TUR.USER_ID = 3619331702
+ORDER BY TUR.USER_REVIEW_DATE DESC;
+
+select TPU.PRO_UPLOAD_ID, TPU.PRO_ID, tpu.PRO_UPLOAD_TITLE, tpu.PRO_UPLOAD_DATE, tp.PRO_STAR_RATE, tp.PRO_NAME,
+       ts.SERVICE_NAME, tp.PRO_IMG
+from TBL_PRO_UPLOAD TPU
+         inner join TBL_PRO TP
+                    on TPU.PRO_ID = TP.PRO_ID
+         inner join TBL_SERVICE TS
+                    on tpu.SERVICE_ID = ts.SERVICE_ID
+         inner join TBL_CATEGORY tg
+                    on tg.CATEGORY_ID = ts.CATEGORY_ID
+    where
+    TPU.PRO_UPLOAD_TITLE LIKE '%' || '' || '%' AND TG.CATEGORY_ID = 1
+        ORDER BY
+        PRO_UPLOAD_DATE DESC
+
+
+
+SELECT *
+FROM (
+         SELECT ROWNUM AS RN, UPLOAD.*
+         FROM (
+                  select TPU.PRO_UPLOAD_ID, TPU.PRO_ID, tpu.PRO_UPLOAD_TITLE, tpu.PRO_UPLOAD_DATE, tp.PRO_STAR_RATE, tp.PRO_NAME,
+                         ts.SERVICE_NAME, tp.PRO_IMG
+                  from TBL_PRO_UPLOAD TPU
+                           inner join TBL_PRO TP
+                                      on TPU.PRO_ID = TP.PRO_ID
+                           inner join TBL_SERVICE TS
+                                      on tpu.SERVICE_ID = ts.SERVICE_ID
+                           inner join TBL_CATEGORY tg
+                                      on tg.CATEGORY_ID = ts.CATEGORY_ID
+                  WHERE  tpu.PRO_UPLOAD_TITLE LIKE '%' || '''''' || '%' AND TG.CATEGORY_ID = 1
+                  ORDER BY
+                      PRO_UPLOAD_DATE DESC
+              ) UPLOAD
+         WHERE ROWNUM <= 10
+     )
+WHERE rn > 0;
 
 select ROWNUM AS RN ,ur.*
 from(select tpr.*,c.CATEGORY_NAME

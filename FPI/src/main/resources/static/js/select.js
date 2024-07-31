@@ -8,6 +8,7 @@ let service5 = 0;
 window.onload = () => {
   document.querySelector('.dropbtn').onclick = () => {
     dropdown();
+    console.log('버튼 눌')
   }
 
 //   카테고리 1
