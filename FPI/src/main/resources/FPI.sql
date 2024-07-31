@@ -974,3 +974,38 @@ from(select tpr.*,c.CATEGORY_NAME
      join TBL_CATEGORY c on c.CATEGORY_ID=tpr.CATEGORY_ID)ur
      where USER_ID=3614057925
      order by ur.PRO_REVIEW_DATE DESC,ur.PRO_REVIEW_ID desc;
+
+
+SELECT ROWNUM , pro.*
+FROM (  select    TPU.PRO_UPLOAD_ID, TPU.PRO_ID, tpu.PRO_UPLOAD_TITLE, tpu.PRO_UPLOAD_DATE, tp.PRO_STAR_RATE, tp.PRO_NAME,
+        ts.SERVICE_NAME, tp.PRO_IMG
+        from TBL_PRO_UPLOAD TPU
+        inner join TBL_PRO TP
+        on TPU.PRO_ID = TP.PRO_ID
+        inner join TBL_SERVICE TS
+        on tpu.SERVICE_ID = ts.SERVICE_ID
+        inner join TBL_CATEGORY tg
+        on tg.CATEGORY_ID = ts.CATEGORY_ID
+            order by TPU.PRO_UPLOAD_DATE desc
+     ) pro
+WHERE ROWNUM <= 6
+
+
+SELECT ROWNUM, pro.*
+FROM (select TPU.PRO_UPLOAD_ID,
+             TPU.PRO_ID,
+             tpu.PRO_UPLOAD_TITLE,
+             tpu.PRO_UPLOAD_DATE,
+             tp.PRO_STAR_RATE,
+             tp.PRO_NAME,
+             ts.SERVICE_NAME,
+             tp.PRO_IMG
+      from TBL_PRO_UPLOAD TPU
+               inner join TBL_PRO TP
+                          on TPU.PRO_ID = TP.PRO_ID
+               inner join TBL_SERVICE TS
+                          on tpu.SERVICE_ID = ts.SERVICE_ID
+               inner join TBL_CATEGORY tg
+                          on tg.CATEGORY_ID = ts.CATEGORY_ID
+      order by tpu.PRO_UPLOAD_DATE desc) pro
+WHERE ROWNUM <= 6
