@@ -25,4 +25,12 @@ public interface ActiveService {
     //    회원이 전문가에게  받은 리뷰
     List<UserReviewListDTO> selectUserReceiveReview(String userId, int page, int pageSize);
     int countUserReceiveReview(String userId);
+
+    //    전문가가 작성한 리뷰
+    List<UserReviewListDTO> selectProWriteReview(Long proId, int page, int pageSize);
+    int countProWriteReview(Long proId);
+
+    //    전문가가 회원에게  받은 리뷰
+    List<ProReviewListDTO> selectProReceiveReview(Long proId, int page, int pageSize);
+    int countProReceiveReview(Long proId);
 }

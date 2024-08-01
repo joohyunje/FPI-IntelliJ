@@ -17,5 +17,6 @@ public class UserReviewListDTO {
     private String userReviewRate;
     private LocalDate userReviewDate;
     private Long RN;
+    private String userName;
 
 }

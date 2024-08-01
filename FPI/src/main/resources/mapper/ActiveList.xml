@@ -2,7 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.fpi.mapper.user.ActiveListMapper">
+
     <!--    내가 작성한 게시글 페이징-->
+<!--    #{myName}에 헤더의 이름들어감    -->
     <select id="selectUserCommuList" resultType="UserCommunityListDTO">
         select *
         from (select ROWNUM AS RN ,c.*
@@ -78,6 +80,46 @@
         select count(*)
         from TBL_USER_REVIEW
         where USER_ID=#{userId}
+    </select>
+
+    <!--    전문가가 작성한 리뷰-->
+    <select id="selectProWriteReview" resultType="UserReviewListDTO">
+            select *
+            from(select  ROWNUM AS RN,pro.*
+                 from(select tu.USER_NAME,tur.*
+                     from TBL_USER_REVIEW tur
+                            join TBL_PRO tp on tur.PRO_ID= tp.PRO_ID
+                            join TBL_USER tu on tp.USER_ID = tu.USER_ID
+                     where tur.PRO_ID=#{proId}
+                     order by  tur.USER_REVIEW_DATE desc,tur.USER_REVIEW_ID desc)pro
+                 where ROWNUM &lt;= #{endRow})
+            where RN &gt; #{startRow}
+    </select>
+    <!--    전문가가 작성한 리뷰 페이징 갯수-->
+    <select id="countProWriteReview">
+        select count(*)
+        from TBL_USER_REVIEW
+        where PRO_ID=#{proId}
+    </select>
+
+    <!--    전문가가 회원에게 받은 리뷰-->
+    <select id="selectProReceiveReview" resultType="ProReviewListDTO">
+        select *
+        from(select  ROWNUM AS RN,pro.*
+             from(select tu.USER_NAME,tpr.*
+                  from TBL_PRO_REVIEW tpr
+                           join TBL_PRO tp on tpr.PRO_ID= tp.PRO_ID
+                           join TBL_USER tu on tpr.USER_ID = tu.USER_ID
+                  where tpr.PRO_ID=#{proId}
+                  order by  tpr.PRO_REVIEW_DATE desc,tpr.PRO_REVIEW_ID desc)pro
+             where ROWNUM &lt;= #{endRow})
+        where RN &gt; #{startRow}
+    </select>
+    <!--    전문가가 회원에게 받은 리뷰 페이징 갯수-->
+    <select id="countProReceiveReview">
+        select count(*)
+        from TBL_PRO_REVIEW
+        where PRO_ID=#{proId}
     </select>
 
 </mapper>

@@ -8,6 +8,7 @@ import com.example.fpi.domain.dto.pro.ProUploadListDTO;
 import com.example.fpi.domain.oauth.CustomOAuth2User;
 import com.example.fpi.domain.util.PagedResponse;
 import com.example.fpi.domain.vo.board.CommunityVO;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,7 +24,7 @@ public interface CommunityService {
 
 
 
-    CommunityDetailDTO getCommunityDetail(Long communityId,CustomOAuth2User user); //게시판 상세보기
+    CommunityDetailDTO getCommunityDetail(Long communityId, CustomOAuth2User user, HttpSession session); //게시판 상세보기
 
 
     void saveCommunity(CommunityDTO community); //게시판 작성

@@ -11,7 +11,9 @@
 <div th:replace="~{/layout/header :: header}"></div>
 
 <div class="main" th:object="${commu}">
-    <h2 th:text="*{subject}" style="margin-top: 0"></h2>
+    <a th:href="@{/community}">
+        <h2 th:text="*{subject}" style="margin-top: 0"></h2>
+    </a>
     <div class="article" >
         <div class="article-title">
             <h3 th:text="*{communityTitle}"></h3>
@@ -74,7 +76,7 @@
                     <textarea  name="comment-input" id="commentContent"  onkeyup="enterkey()"  placeholder="본 게시판에서는 모든 사용자가 쾌적한 환경에서 소통할 수 있도록 비방, 모욕, 불쾌감을 주는 댓글은 관리자의 재량에 의해 삭제될 수 있습니다. "></textarea>
                 </div>
                 <div class="enter-box">
-                    <button type="button" onclick="updateComment()" id="enter-button" alt="댓글 등록">
+                    <button type="button" onclick="addComment()" id="enter-button" alt="댓글 등록">
                         등록
                     </button>
                 </div>

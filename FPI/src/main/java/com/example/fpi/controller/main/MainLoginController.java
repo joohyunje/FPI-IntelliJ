@@ -36,9 +36,9 @@ public class MainLoginController {
                         @PathVariable(required = false) String status,
                         Model model,
                         HttpSession session) {
+        String userId = customOAuth2User != null ? customOAuth2User.getUserId() :"0";
 
         if (customOAuth2User != null) {
-            String userId = customOAuth2User.getUserId();
             if (status.equals("pro")) {
                 session.removeAttribute("loginName");
                 session.setAttribute("proName", proService.getProName(proService.selectProId(userId)));

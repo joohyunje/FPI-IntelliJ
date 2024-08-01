@@ -5,6 +5,7 @@ import com.example.fpi.domain.dto.board.UserCommunityListDTO;
 import com.example.fpi.domain.dto.pro.ProReviewListDTO;
 import com.example.fpi.domain.dto.user.UserReviewListDTO;
 import com.example.fpi.domain.oauth.CustomOAuth2User;
+import com.example.fpi.service.pro.ProService;
 import com.example.fpi.service.user.ActiveService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,11 @@ import java.util.List;
 public class ActiveController {
 
     //    마이페이지 활동내역 게시글
+
+    private final ProService proService;
     private final ActiveService activeService;
+
+
     @GetMapping("/community")
     public String activeListcommunity(@AuthenticationPrincipal CustomOAuth2User customOAuth2User,
                                       HttpSession session,
@@ -89,25 +94,48 @@ public class ActiveController {
 
     @GetMapping("/writeReview")
     public String activeListWriteReview(@AuthenticationPrincipal CustomOAuth2User customOAuth2User,
-                                    @RequestParam(value="page", defaultValue = "1")int page,
-                                    @RequestParam (value="pageSize", defaultValue = "8")int pageSize,
-                                    Model model) {
+                                        HttpSession session,
+                                        @RequestParam(value="page", defaultValue = "1")int page,
+                                        @RequestParam (value="pageSize", defaultValue = "8")int pageSize,
+                                        Model model) {
         String userId = customOAuth2User.getUserId();
+        Long proId = proService.selectProId(userId);
 
-//        게시글 페이징 처리 부분
-        int totalCommu = activeService.countUserWriteReview(userId); //전체 게시글
-        int totalPages =(int) Math.ceil((double)totalCommu/pageSize); //페이지 수
-        List<ProReviewListDTO> lists = activeService.selectUserWriteReview(userId,page,pageSize);
-        int pageGroupSize=5; //페이지 그룹
-        int startPage=((page-1)/pageGroupSize)* pageGroupSize +1; //그룹의 시작페이지 구함
-        int endPage= Math.min(startPage+pageGroupSize -1,totalPages); //
+        if(session.getAttribute("loginName") == null){
+            int totalCommu = activeService.countProWriteReview(proId); //전체 글
+            int totalPages =(int) Math.ceil((double)totalCommu/pageSize); //페이지 수
+            List<UserReviewListDTO> lists = activeService.selectProWriteReview(proId,page,pageSize);
+            int pageGroupSize=5; //페이지 그룹
+            int startPage=((page-1)/pageGroupSize)* pageGroupSize +1; //그룹의 시작페이지 구함
+            int endPage= Math.min(startPage+pageGroupSize -1,totalPages); //
 
-        model.addAttribute("lists",lists);
-        model.addAttribute("currentPage",page);
-        model.addAttribute("pageSize",pageSize);
-        model.addAttribute("totalPages",totalPages);
-        model.addAttribute("startPage",startPage);
-        model.addAttribute("endPage",endPage);
+            model.addAttribute("lists",lists);
+            model.addAttribute("currentPage",page);
+            model.addAttribute("pageSize",pageSize);
+            model.addAttribute("totalPages",totalPages);
+            model.addAttribute("startPage",startPage);
+            model.addAttribute("endPage",endPage);
+            model.addAttribute("session",session);
+
+        }
+        else if(session.getAttribute("proName") == null){
+
+            int totalCommu = activeService.countUserWriteReview(userId); //전체 글
+            int totalPages =(int) Math.ceil((double)totalCommu/pageSize); //페이지 수
+            List<ProReviewListDTO> lists = activeService.selectUserWriteReview(userId,page,pageSize);
+            int pageGroupSize=5; //페이지 그룹
+            int startPage=((page-1)/pageGroupSize)* pageGroupSize +1; //그룹의 시작페이지 구함
+            int endPage= Math.min(startPage+pageGroupSize -1,totalPages); //
+
+            model.addAttribute("lists",lists);
+            model.addAttribute("currentPage",page);
+            model.addAttribute("pageSize",pageSize);
+            model.addAttribute("totalPages",totalPages);
+            model.addAttribute("startPage",startPage);
+            model.addAttribute("endPage",endPage);
+            model.addAttribute("session",session);
+
+        }
 
 
         return "/user/activeList/writeReview";
@@ -117,25 +145,51 @@ public class ActiveController {
 
     @GetMapping("/receiveReview")
     public String activeListReceiveReview(@AuthenticationPrincipal CustomOAuth2User customOAuth2User,
+                                        HttpSession session,
                                         @RequestParam(value="page", defaultValue = "1")int page,
                                         @RequestParam (value="pageSize", defaultValue = "8")int pageSize,
                                         Model model) {
         String userId = customOAuth2User.getUserId();
+        Long proId = proService.selectProId(userId);
 
-//        게시글 페이징 처리 부분
-        int totalCommu = activeService.countUserReceiveReview(userId); //전체 게시글
-        int totalPages =(int) Math.ceil((double)totalCommu/pageSize); //페이지 수
-        List<UserReviewListDTO> lists = activeService.selectUserReceiveReview(userId,page,pageSize);
-        int pageGroupSize=5; //페이지 그룹
-        int startPage=((page-1)/pageGroupSize)* pageGroupSize +1; //그룹의 시작페이지 구함
-        int endPage= Math.min(startPage+pageGroupSize -1,totalPages); //
+//        헤더가 전문가일때
+        if(session.getAttribute("loginName") == null){
+            int totalCommu = activeService.countProReceiveReview(proId); //전체 게시글
+            int totalPages =(int) Math.ceil((double)totalCommu/pageSize); //페이지 수
+            List<ProReviewListDTO> lists = activeService.selectProReceiveReview(proId,page,pageSize);
+            int pageGroupSize=5; //페이지 그룹
+            int startPage=((page-1)/pageGroupSize)* pageGroupSize +1; //그룹의 시작페이지 구함
+            int endPage= Math.min(startPage+pageGroupSize -1,totalPages); //
 
-        model.addAttribute("lists",lists);
-        model.addAttribute("currentPage",page);
-        model.addAttribute("pageSize",pageSize);
-        model.addAttribute("totalPages",totalPages);
-        model.addAttribute("startPage",startPage);
-        model.addAttribute("endPage",endPage);
+            model.addAttribute("lists",lists);
+            model.addAttribute("currentPage",page);
+            model.addAttribute("pageSize",pageSize);
+            model.addAttribute("totalPages",totalPages);
+            model.addAttribute("startPage",startPage);
+            model.addAttribute("endPage",endPage);
+
+        }
+//          헤더가 회원일때
+        else if(session.getAttribute("proName") == null){
+
+            int totalCommu = activeService.countUserReceiveReview(userId); //전체 게시글
+            int totalPages =(int) Math.ceil((double)totalCommu/pageSize); //페이지 수
+            List<UserReviewListDTO> lists = activeService.selectUserReceiveReview(userId,page,pageSize);
+            int pageGroupSize=5; //페이지 그룹
+            int startPage=((page-1)/pageGroupSize)* pageGroupSize +1; //그룹의 시작페이지 구함
+            int endPage= Math.min(startPage+pageGroupSize -1,totalPages); //
+
+            model.addAttribute("lists",lists);
+            model.addAttribute("currentPage",page);
+            model.addAttribute("pageSize",pageSize);
+            model.addAttribute("totalPages",totalPages);
+            model.addAttribute("startPage",startPage);
+            model.addAttribute("endPage",endPage);
+
+        }
+
+
+
 
 
         return "/user/activeList/receiveReview";

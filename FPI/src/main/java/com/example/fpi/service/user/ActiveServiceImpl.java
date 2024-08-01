@@ -64,6 +64,7 @@ public class ActiveServiceImpl implements ActiveService {
     }
 
     @Override
+    @Transactional
     public List<UserReviewListDTO> selectUserReceiveReview(String userId, int page, int pageSize) {
         int startRow = (page - 1) * pageSize;
         int endRow = page * pageSize;
@@ -74,5 +75,33 @@ public class ActiveServiceImpl implements ActiveService {
     @Override
     public int countUserReceiveReview(String userId) {
         return activeListMapper.countUserReceiveReview(userId);
+    }
+
+    @Override
+    @Transactional
+    public List<UserReviewListDTO> selectProWriteReview(Long proId, int page, int pageSize) {
+        int startRow = (page - 1) * pageSize;
+        int endRow = page * pageSize;
+        countProWriteReview(proId);
+        return activeListMapper.selectProWriteReview(proId,startRow,endRow);
+    }
+
+    @Override
+    public int countProWriteReview(Long proId) {
+        return activeListMapper.countProWriteReview(proId);
+    }
+
+    @Override
+    @Transactional
+    public List<ProReviewListDTO> selectProReceiveReview(Long proId, int page, int pageSize) {
+        int startRow = (page - 1) * pageSize;
+        int endRow = page * pageSize;
+        countProReceiveReview(proId);
+        return activeListMapper.selectProReceiveReview(proId,startRow,endRow);
+    }
+
+    @Override
+    public int countProReceiveReview(Long proId) {
+        return activeListMapper.countProReceiveReview(proId);
     }
 }

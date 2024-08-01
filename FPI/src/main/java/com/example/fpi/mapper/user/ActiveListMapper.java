@@ -23,9 +23,17 @@ public interface ActiveListMapper {
 //    회원이 작성한 리뷰
     List<ProReviewListDTO> selectUserWriteReview(String userId, int startRow, int endRow);
     int countUserWriteReview(String userId);
+
     //    회원이 전문가에게  받은 리뷰
     List<UserReviewListDTO> selectUserReceiveReview(String userId, int startRow, int endRow);
     int countUserReceiveReview(String userId);
 
 
+    //    전문가가 작성한 리뷰
+    List<UserReviewListDTO> selectProWriteReview(Long proId, int startRow, int endRow);
+    int countProWriteReview(Long ProId);
+
+    //    전문가가 회원에게  받은 리뷰
+    List<ProReviewListDTO> selectProReceiveReview(Long proId, int startRow, int endRow);
+    int countProReceiveReview(Long proId);
 }

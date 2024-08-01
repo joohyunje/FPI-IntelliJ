@@ -18,25 +18,29 @@
 
 <div class="main">
     <div class="main-container">
-        <div class="main-container-title">
-            <div class="main-container-title-container">
-                <h2 class="title">
-                    <span class="title-content">
+        <div class="main-container-titles">
+            <div class="main-container-title-containers">
+                <h2 class="titles">
+                    <span class="title-contents">
                         커뮤니티
                     </span>
                 </h2>
-            </div>
-        </div>
-
-        <div class="search-container">
-            <div class="search-input">
-                <input  name="search" type="text" onkeyup="enterkey()" placeholder="검색해보세요!" >
-                <div class="delete-button">
-                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTAgMGgyNHYyNEgweiIvPgogICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDMgMykiPgogICAgICAgICAgICA8Y2lyY2xlIGZpbGw9IiNDNUM1QzUiIGN4PSI5IiBjeT0iOSIgcj0iOSIvPgogICAgICAgICAgICA8cGF0aCBzdHJva2U9IiNGRkYiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Im02IDYgNi4wMDUgNi4wMDZNMTIuMDA1IDYgNiAxMi4wMDYiLz4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPgo=" alt="검색어 삭제아이콘">
+                <div class="write-boxs">
+                    <label class="service-area">
+                        <select id="select-category" class="service-parts" name="search-type"
+                                onchange="selectCategory()">
+                            <option value="">
+                                최신순
+                            </option>
+                            <option value="1">
+                                좋아요순
+                            </option>
+                            <option value="2">
+                                댓글많은순
+                            </option>
+                        </select>
+                    </label>
                 </div>
-            </div>
-            <div>
-                <a class="write-box" sec:authorize ="isAuthenticated()"  th:href="@{/community/write}">글쓰기</a>
             </div>
         </div>
 
@@ -46,8 +50,17 @@
                 <div id="community" class="selected pointer">전체</div>
                 <div id="freeTalk" class="pointer"> 자유게시판</div>
                 <div id="proTip" class="pointer"> 전문가 팁</div>
+                <a class="write-box" sec:authorize ="isAuthenticated()"  th:href="@{/community/write}">글쓰기</a>
             </div>
             <div class="content-layout">
+                <div class="search-container">
+                    <div class="search-input">
+                        <input  name="search" id="searchInput" type="text" onkeyup="enterkey()" placeholder="제목이나 내용을 검색해보세요" >
+                        <div id="delete-button" class="delete-button">
+                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTAgMGgyNHYyNEgweiIvPgogICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDMgMykiPgogICAgICAgICAgICA8Y2lyY2xlIGZpbGw9IiNDNUM1QzUiIGN4PSI5IiBjeT0iOSIgcj0iOSIvPgogICAgICAgICAgICA8cGF0aCBzdHJva2U9IiNGRkYiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Im02IDYgNi4wMDUgNi4wMDZNMTIuMDA1IDYgNiAxMi4wMDYiLz4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPgo=" alt="검색어 삭제아이콘">
+                        </div>
+                    </div>
+                </div>
                 <div class="feed">
                     <ul class="feed-list">
                         <!--                        <li class="feed-item">-->
@@ -198,7 +211,10 @@
             const thumbnailSrc = (upload.communityContent && upload.communityContent.trim() !== ''  && upload.communityThumbnail)
                 ? upload.communityThumbnail
                 : '/img/basicIMG.png'; //나의 프로젝트폴더에 직접 저장되어있는 사진
-
+            const isUpdated = (upload.communityRegisterDate !== upload.communityUpdateDate )
+                ? upload.communityUpdateDate
+                : upload.communityRegisterDate
+            const displayText = (upload.communityRegisterDate !== upload.communityUpdateDate ) ? '(수정)' : '(New)'
 
             //
             const uploadRow = `
@@ -223,7 +239,8 @@
 
                 <div>
                     <div class="footer-date" style="margin-right: 2rem;">작성자: ${upload.author}</div>
-                    <div class="footer-date">${new Date(upload.communityRegisterDate).toLocaleDateString()}</div>
+                    <div class="footer-date">${new Date(isUpdated).toLocaleDateString()+displayText}</div>
+<!--                    th:text="*{communityRegisterDate != communityUpdateDate ? author+'(수정)':author+'(New)'}"-->
                 </div>
             </div>
         </li>
@@ -313,6 +330,13 @@
         document.getElementById('community').classList.add('selected');
         getList(1);
     });
+
+    // 검색창의 x버튼 누르면 검색어 사라지고 다시 서치항목뜨게함
+    document.getElementById('delete-button').addEventListener("click",function (){
+        document.getElementById('searchInput').value = '';
+        saveKeyword();
+    });
+
 
 
 </script>

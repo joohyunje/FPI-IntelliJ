@@ -39,14 +39,14 @@
                 <thead>
                 <tr>
                     <th style="width: 5%">번호</th>
-                    <th style="width: 10%">전문가 이름</th>
+                    <th style="width: 10%" th:text="${session.proName == null ? '전문가이름' : '회원이름'}">전문가 이름</th>
                     <th style="width: 60%">받은 리뷰 내용</th>
                     <th style="width: 10%">받은 별점</th>
                     <th style="width: 10%">등록일</th>
                 </tr>
                 </thead>
                 <tbody id ="commuList">
-                <tr th:each="list : ${lists}" th:object="${list}">
+                <tr th:if="${session.proName}==null" th:each="list : ${lists}" th:object="${list}">
                     <td th:text="*{RN}" class="list-num">1</td>
                     <td th:text="*{proName}" class="list-num">전문가이름</td>
                     <td th:text="*{userReviewContent}" class="list-num">받은 리뷰 내용</td>
@@ -54,9 +54,17 @@
                         <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=" alt="">
                         <div th:text="*{userReviewRate}"></div>
                     </td>
-
-<!--                    <td class="list-title"><a th:text="*{communityTitle}" th:href="@{/community/detail/{communityId}(communityId=*{communityId})}">샘플용 제목입니다.</a></td>-->
                     <td th:text="*{#temporals.format(userReviewDate, 'yy년 MM월 dd일')}" class="list-date">01-01</td>
+                </tr>
+                <tr th:unless="${session.proName}==null" th:each="list : ${lists}" th:object="${list}">
+                    <td th:text="*{RN}" class="list-num">1</td>
+                    <td th:text="*{userName}" class="list-num">전문가이름</td>
+                    <td th:text="*{proReviewContent}" class="list-num">받은 리뷰 내용</td>
+                    <td class="list-num" style="display: flex;justify-content: center">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=" alt="">
+                        <div th:text="*{proReviewRate}"></div>
+                    </td>
+                    <td th:text="*{#temporals.format(proReviewDate, 'yy년 MM월 dd일')}" class="list-date">01-01</td>
                 </tr>
                 </tbody>
             </table>

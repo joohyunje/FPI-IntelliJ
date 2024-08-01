@@ -11,6 +11,7 @@ import com.example.fpi.domain.vo.board.LikeVO;
 import com.example.fpi.mapper.File.FileMapper;
 import com.example.fpi.mapper.board.CommentMapper;
 import com.example.fpi.mapper.board.CommunityMapper;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,8 +48,15 @@ public class CommunityServiceImpl implements CommunityService {
     //    게시판 상세페이지
     @Override
     @Transactional
-    public CommunityDetailDTO getCommunityDetail(Long communityId,CustomOAuth2User user) {
+    public CommunityDetailDTO getCommunityDetail(Long communityId, CustomOAuth2User user, HttpSession session) {
         CommunityDetailDTO community= communityMapper.selectCommunityDetail(communityId);
+//        로그인되어있는 사람의 이름을 가져옴(헤더이름)
+        if(session.getAttribute("loginName") == null){
+            community.setLoginName((String) session.getAttribute("proName"));
+        }
+        else if(session.getAttribute("proName") == null){
+            community.setLoginName((String) session.getAttribute("loginName"));
+        }
 
 //        로그인을 안했거나
         if (user ==null || !community.getAuthor().equals(community.getLoginName())) {

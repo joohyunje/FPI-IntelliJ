@@ -153,6 +153,7 @@
     border: 0;
     height: 0;
     outline: none;
+    word-wrap:break-word !important;
 }
 
 .enter-box{
@@ -222,6 +223,7 @@
     font-size: 13px;
     margin-left:10px;
     margin-top: 14px;
+    word-wrap:break-word !important;
 }
 
 
@@ -269,4 +271,8 @@ ul, ol {
     text-indent: 0px !important;
     text-align: start !important;
     text-align-last: start !important;
+}
+.comment-body{
+    display: flex;
+    flex-direction: column;
 }

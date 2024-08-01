@@ -27,14 +27,11 @@
                     게시판 선택 :
                 </div>
                 <label class="service-area" for="subject">
-                    <select  class="service-part" name="subject" id="subject" aria-required="false">
-                        <option value="자유게시판">자유게시판</option>
-                        <option th:if="*{proId != null}" value="전문가팁">전문가 팁</option>
+                    <select class="service-part" name="subject" id="subject" aria-required="false">
+                        <option th:selected="${communityInfo.subject == '자유게시판'}" value="자유게시판">자유게시판</option>
+                        <option th:if="${communityInfo.proId != null}" th:selected="${communityInfo.subject == '전문가팁'}" value="전문가팁">전문가 팁</option>
                     </select>
-                    <!--                        <select th:unless="*{proId != null}" class="service-part" name="subject" id="subject" aria-required="false">-->
-                    <!--                            <option value="자유게시판">자유게시판</option>-->
-                    <!--                            -->
-                    <!--                        </select>-->
+
                 </label>
             </div>
         </div>
@@ -62,20 +59,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-lite.min.js"></script>
 
-<script th:inline="javascript">
-    // var subject = /*[[ ${communityInfo.subject} ]]*/ null;
-</script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
 
-        var subject = /*[[ ${communityInfo.subject} ]]*/ '자유게시판'; // 기본값으로 설정
-
-        // select 요소를 가져옴
-        var selectElement = document.getElementById('subject');
-
-        // select 요소의 값을 설정
-        selectElement.value = subject;
-    });
     document.getElementById('backBtn').addEventListener('click',function (){
         window.history.back();
     });
