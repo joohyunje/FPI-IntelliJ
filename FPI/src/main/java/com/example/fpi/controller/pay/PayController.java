@@ -17,7 +17,7 @@ public class PayController {
 
     private final UserService userService;
     private final PayCouponService payCouponService;
-
+//포인트 충전
     @GetMapping("/pay")
     public String pay(@AuthenticationPrincipal CustomOAuth2User customOAuth2User, Model model) {
 

@@ -5,6 +5,7 @@ import com.example.fpi.domain.dto.board.CommunityDTO;
 import com.example.fpi.domain.dto.board.UserCommunityListDTO;
 import com.example.fpi.domain.dto.pro.ProReviewListDTO;
 import com.example.fpi.domain.dto.user.UserReviewListDTO;
+import com.example.fpi.domain.util.PagedResponse;
 import com.example.fpi.mapper.user.ActiveListMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,61 +19,73 @@ public class ActiveServiceImpl implements ActiveService {
     private final ActiveListMapper activeListMapper;
     //활동 게시글
     @Override
-    @Transactional
-    public List<UserCommunityListDTO> selectUserCommuList(String userId,String myName,int page, int pageSize) {
+    public PagedResponse <UserCommunityListDTO> selectUserCommuList(String userId, String myName, int page, int pageSize,String sort) {
         int startRow = (page - 1) * pageSize;
         int endRow = page * pageSize;
+        int totalRequest = activeListMapper.countUserCommu(userId,myName);
+        int totalPages = (int) Math.ceil((double) totalRequest / pageSize);
+        List<UserCommunityListDTO> communityList = activeListMapper.selectUserCommuList(userId,myName,startRow,endRow,sort);
 
-        countUserCommu(userId,myName);
-
-        return activeListMapper.selectUserCommuList(userId,myName,startRow,endRow);
+        return new PagedResponse<>(communityList, page, totalPages, pageSize, totalRequest);
     }
 
-    @Override
-    public int countUserCommu(String userId,String myName) {
-        return activeListMapper.countUserCommu(userId,myName);
-    }
 
     //    활동 댓글
     @Override
-    @Transactional
-    public List<CommentListDTO> selectUserCommentList(String userId, String myName, int page, int pageSize) {
+    public PagedResponse<CommentListDTO> selectUserCommentList(String userId, String myName, int page, int pageSize,String sort) {
         int startRow = (page - 1) * pageSize;
         int endRow = page * pageSize;
+        int totalRequest = activeListMapper.countUserComment(userId,myName);
+        int totalPages = (int) Math.ceil((double) totalRequest / pageSize);
+        List <CommentListDTO> CommentList = activeListMapper.selectUserCommentList(userId,myName,startRow,endRow,sort);
 
-        countUserCommu(userId,myName);
-
-        return activeListMapper.selectUserCommentList(userId,myName,startRow,endRow);
-    }
-    @Override
-    public int countUserComment(String userId, String myName) {
-        return activeListMapper.countUserComment(userId,myName);
+        return new PagedResponse<>(CommentList, page, totalPages, pageSize, totalRequest);
     }
 
-//    작성한 리뷰
+//    회원이 작성한 리뷰
     @Override
-    @Transactional
-    public List<ProReviewListDTO> selectUserWriteReview(String userId, int page, int pageSize) {
+    public PagedResponse<ProReviewListDTO> selectUserWriteReview(String userId, int page, int pageSize,String sort) {
         int startRow = (page - 1) * pageSize;
         int endRow = page * pageSize;
-        countUserWriteReview(userId);
-        return activeListMapper.selectUserWriteReview(userId,startRow,endRow);
-    }
-    @Override
-    public int countUserWriteReview(String userId) {
-        return activeListMapper.countUserWriteReview(userId);
+        int totalRequest = activeListMapper.countUserWriteReview(userId);
+        int totalPages = (int) Math.ceil((double) totalRequest / pageSize);
+        List <ProReviewListDTO> UserWriteReviewList = activeListMapper.selectUserWriteReview(userId,startRow,endRow,sort);
+        return new PagedResponse<>(UserWriteReviewList, page, totalPages, pageSize, totalRequest);
     }
 
+//    회원이 받은 리뷰
     @Override
-    public List<UserReviewListDTO> selectUserReceiveReview(String userId, int page, int pageSize) {
+    public PagedResponse<UserReviewListDTO> selectUserReceiveReview(String userId, int page, int pageSize,String sort) {
         int startRow = (page - 1) * pageSize;
         int endRow = page * pageSize;
-        countUserWriteReview(userId);
-        return activeListMapper.selectUserReceiveReview(userId,startRow,endRow);
+        int totalRequest = activeListMapper.countUserReceiveReview(userId);
+        int totalPages = (int) Math.ceil((double) totalRequest / pageSize);
+        List <UserReviewListDTO> UserReceiveReviewList = activeListMapper.selectUserReceiveReview(userId,startRow,endRow,sort);
+        return new PagedResponse<>(UserReceiveReviewList, page, totalPages, pageSize, totalRequest);
     }
 
+
+
+// 전문가가 작성한 리뷰
     @Override
-    public int countUserReceiveReview(String userId) {
-        return activeListMapper.countUserReceiveReview(userId);
+    public PagedResponse<UserReviewListDTO> selectProWriteReview(Long proId, int page, int pageSize,String sort) {
+        int startRow = (page - 1) * pageSize;
+        int endRow = page * pageSize;
+        int totalRequest = activeListMapper.countProWriteReview(proId);
+        int totalPages = (int) Math.ceil((double) totalRequest / pageSize);
+        List <UserReviewListDTO> ProWriteReviewList = activeListMapper.selectProWriteReview(proId,startRow,endRow,sort);
+        return new PagedResponse<>(ProWriteReviewList, page, totalPages, pageSize, totalRequest);
     }
+
+//    전문가가 받은 리뷰
+    @Override
+    public PagedResponse<ProReviewListDTO> selectProReceiveReview(Long proId, int page, int pageSize,String sort) {
+        int startRow = (page - 1) * pageSize;
+        int endRow = page * pageSize;
+        int totalRequest = activeListMapper.countProReceiveReview(proId);
+        int totalPages = (int) Math.ceil((double) totalRequest / pageSize);
+        List <ProReviewListDTO> ProReceiveReviewList = activeListMapper.selectProReceiveReview(proId,startRow,endRow,sort);
+        return new PagedResponse<>(ProReceiveReviewList, page, totalPages, pageSize, totalRequest);
+    }
+
 }

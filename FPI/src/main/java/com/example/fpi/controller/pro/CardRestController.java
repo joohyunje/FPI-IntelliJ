@@ -13,7 +13,6 @@ public class CardRestController {
     private final ProService proService;
 
     @GetMapping("/{proId}")
-    // ok()안에 있는것과 ?가 자동 매칭됨
     public ResponseEntity<?> selectCardInfoFile(@PathVariable Long proId) {
         return  ResponseEntity.ok(proService.selectCard(proId));
     }

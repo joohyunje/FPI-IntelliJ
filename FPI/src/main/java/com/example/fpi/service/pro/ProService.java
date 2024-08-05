@@ -50,7 +50,7 @@ public interface ProService {
     List<ProCareerInfoListDTO> selectProCareerByReq(Long proRequestId);
 
     //    전문가 찾기
-    PagedResponse<ProUploadListDTO> selectProUploadList(int page, int pageSize, String search, String searchType);
+    PagedResponse<ProUploadListDTO> selectProUploadList(int page, int pageSize, String search, String searchType,String searchSubject);
 
 
     //    전문가 상세보기

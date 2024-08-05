@@ -8,6 +8,8 @@
   <link rel="stylesheet" th:href="@{/css/user/mypage/withdrawmodal.css}">
   <link rel="stylesheet" th:href="@{/css/main/common.css}">
   <link rel="stylesheet" th:href="@{/css/layout/header.css}">
+  <link rel="stylesheet" th:href="@{/css/layout/footer.css}">
+
 
 
 
@@ -92,7 +94,10 @@
           <div>
             <div class="fontSize15">받은 별점 </div>
             <p th:if="*{proStarRate == 0}">받은 별점이 없습니다.</p>
-            <p th:text="*{proStarRate}" th:unless="*{proStarRate == 0}">받은 별점 평균 뿌려줌</p>
+            <div th:unless="*{proStarRate == 0}" style="display: flex">
+              <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=" alt="">
+              <p th:text="*{proStarRate}">받은 별점 평균 뿌려줌</p>
+            </div>
           </div>
 
         </div>
@@ -140,7 +145,7 @@
 </div>
 
 <script th:src="@{/js/deletePro.js}"></script>
-
+<div th:replace="~{/layout/footer :: footer}"></div>
 </body>
 
 <!--이름불일치시 알림창-->
@@ -194,6 +199,7 @@
       }
     })
   }
+  //onclick에서 값이 두개 넘어옴
   function deleteCardPhotoFile(cardInfoFileId,totalPhotos){
     if (totalPhotos <= 1) {
       alert("사진은 한개이상 등록되어야합니다.");

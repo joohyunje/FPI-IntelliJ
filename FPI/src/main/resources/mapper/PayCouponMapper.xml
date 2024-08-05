@@ -36,12 +36,6 @@
 
 
     <!--                       회원이 작성한 글에 전문가가 보낸 요청에 대한 결제금액 주고받기-->
-    <!--    전문가에게 보낼 결제금액-->
-    <select id="cashRequest">
-        select PRO_REQUEST_PAY
-        from TBL_PRO_REQUEST
-        where PRO_REQUEST_ID=#{proRequestId}
-    </select>
     <!--    금액이 빠지는 회원정보-->
     <update id="UserMinusCash">
         update tbl_user
@@ -57,12 +51,6 @@
     </update>
 
     <!--          전문가가 작성한 글에 회원이 보낸 요청에 대한 결제금액 주고받기-->
-    <!--    전문가에게 보낼 결제금액-->
-    <select id="userCashRequest">
-        select USER_REQUEST_PAY
-        from HR.TBL_USER_REQUEST
-        where USER_REQUEST_ID=#{userRequestId}
-    </select>
     <!--    금액이 빠지는 회원정보-->
     <update id="UserRequestMinusCash">
         update tbl_user

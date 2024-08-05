@@ -94,26 +94,50 @@
         inner join TBL_CATEGORY tg
         on tg.CATEGORY_ID = ts.CATEGORY_ID
         <where>
-            <choose>
-                <when test="searchType == ''">
-                    and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%'
-                </when>
-                <when test='"1".equals(searchType)'>
-                    and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 1
-                </when>
-                <when test='"2".equals(searchType)'>
-                    and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 2
-                </when>
-                <when test='"3".equals(searchType)'>
-                    and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 3
-                </when>
-                <when test='"4".equals(searchType)'>
-                    and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 4
-                </when>
-                <when test='"5".equals(searchType)'>
-                    and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 5
-                </when>
-            </choose>
+            <if test="'title'.equals(searchSubject)">
+                <choose>
+                    <when test="searchType == ''">
+                        and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%'
+                    </when>
+                    <when test='"1".equals(searchType)'>
+                        and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 1
+                    </when>
+                    <when test='"2".equals(searchType)'>
+                        and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 2
+                    </when>
+                    <when test='"3".equals(searchType)'>
+                        and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 3
+                    </when>
+                    <when test='"4".equals(searchType)'>
+                        and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 4
+                    </when>
+                    <when test='"5".equals(searchType)'>
+                        and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 5
+                    </when>
+                </choose>
+            </if>
+            <if test="'name'.equals(searchSubject)">
+                <choose>
+                    <when test="searchType == ''">
+                        and TU.USER_NAME LIKE '%' || #{search} || '%'
+                    </when>
+                    <when test='"1".equals(searchType)'>
+                        and TU.USER_NAME LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 1
+                    </when>
+                    <when test='"2".equals(searchType)'>
+                        and TU.USER_NAME LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 2
+                    </when>
+                    <when test='"3".equals(searchType)'>
+                        and TU.USER_NAME LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 3
+                    </when>
+                    <when test='"4".equals(searchType)'>
+                        and TU.USER_NAME LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 4
+                    </when>
+                    <when test='"5".equals(searchType)'>
+                        and TU.USER_NAME LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 5
+                    </when>
+                </choose>
+            </if>
         </where>
         ORDER BY
         USER_UPLOAD_DATE DESC
@@ -132,27 +156,52 @@
         on TUU.SERVICE_ID = ts.SERVICE_ID
         inner join TBL_CATEGORY tg
         on tg.CATEGORY_ID = ts.CATEGORY_ID
+        join TBL_USER tu on tuu.USER_ID=tu.USER_ID
         <where>
-            <choose>
-                <when test="searchType == ''">
-                    and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%'
-                </when>
-                <when test='"1".equals(searchType)'>
-                    and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 1
-                </when>
-                <when test='"2".equals(searchType)'>
-                    and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 2
-                </when>
-                <when test='"3".equals(searchType)'>
-                    and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 3
-                </when>
-                <when test='"4".equals(searchType)'>
-                    and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 4
-                </when>
-                <when test='"5".equals(searchType)'>
-                    and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 5
-                </when>
-            </choose>
+            <if test="'title'.equals(searchSubject)">
+                <choose>
+                    <when test="searchType == ''">
+                        and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%'
+                    </when>
+                    <when test='"1".equals(searchType)'>
+                        and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 1
+                    </when>
+                    <when test='"2".equals(searchType)'>
+                        and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 2
+                    </when>
+                    <when test='"3".equals(searchType)'>
+                        and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 3
+                    </when>
+                    <when test='"4".equals(searchType)'>
+                        and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 4
+                    </when>
+                    <when test='"5".equals(searchType)'>
+                        and tuu.USER_UPLOAD_TITLE LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 5
+                    </when>
+                </choose>
+            </if>
+            <if test="'name'.equals(searchSubject)">
+                <choose>
+                    <when test="searchType == ''">
+                        and TU.USER_NAME LIKE '%' || #{search} || '%'
+                    </when>
+                    <when test='"1".equals(searchType)'>
+                        and TU.USER_NAME LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 1
+                    </when>
+                    <when test='"2".equals(searchType)'>
+                        and TU.USER_NAME LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 2
+                    </when>
+                    <when test='"3".equals(searchType)'>
+                        and TU.USER_NAME LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 3
+                    </when>
+                    <when test='"4".equals(searchType)'>
+                        and TU.USER_NAME LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 4
+                    </when>
+                    <when test='"5".equals(searchType)'>
+                        and TU.USER_NAME LIKE '%' || #{search} || '%' AND TG.CATEGORY_ID = 5
+                    </when>
+                </choose>
+            </if>
         </where>
     </select>
 

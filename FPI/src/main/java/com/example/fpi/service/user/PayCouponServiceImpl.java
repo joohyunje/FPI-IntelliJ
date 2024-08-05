@@ -85,19 +85,18 @@ public class PayCouponServiceImpl implements PayCouponService {
     }
 
 
-    //    회원이 받은 요청에서 작업완료 누르면 서로 포인트 주고받아짐
+    //    회원이 받은 요청에서 작업완료 누르면 전문가에게 보내졌다는 문구
     @Override
-    public void proRequsestPay(Long proRequestId, String userId,Long proId) {
-        Long proRequestPay = payCouponMapper.cashRequest(proRequestId);
+    public void proRequsestPay(Long proRequestPay, String userId,Long proId) {
         payCouponMapper.UserMinusCash(userId,proRequestPay); //회원의 포인트 빠져나감
 
         String payUserID = proMapper.selectProInfo(proId).getUserId(); //전문가 아이디로 그사람의 유저아이디 찾기
         payCouponMapper.ProPlusCash(payUserID,proRequestPay); //전문가포인트 추가
     }
 
+//    전문가가 받은 요청에서 작업완료 누르면 회원에게서 포인트빠져나감 문구
     @Override
-    public void userRequsestPay(Long userRequestId, String userId, Long proId) {
-        Long userRequestPay = payCouponMapper.userCashRequest(userRequestId);
+    public void userRequsestPay(Long userRequestPay, String userId, Long proId) {
         payCouponMapper.UserRequestMinusCash(userId,userRequestPay); //회원의 포인트 빠져나감
 
         String payUserID = proMapper.selectProInfo(proId).getUserId(); //전문가 아이디로 그사람의 유저아이디 찾기

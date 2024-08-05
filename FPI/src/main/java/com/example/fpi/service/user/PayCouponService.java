@@ -22,9 +22,9 @@ public interface PayCouponService {
     void useCoupon(Long couponId);
 
     // 유저가 올린글,전문가가 서비스 요청의 결제
-    void proRequsestPay(Long proRequestId,String userId,Long proId);
+    void proRequsestPay(Long proRequestPay,String userId,Long proId);
 
 //    전문가가 올린글,유저가 서비스 요청의 결제
-    void userRequsestPay(Long userRequestId,String userId,Long proId);
+    void userRequsestPay(Long userRequestPay,String userId,Long proId);
 
 }

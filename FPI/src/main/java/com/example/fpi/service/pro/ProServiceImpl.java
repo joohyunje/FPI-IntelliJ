@@ -96,11 +96,6 @@ public class ProServiceImpl implements ProService {
         return proMapper.detailPro(proId);
 
     }
-// 전문가 한명당 여러정보가 있어서 list형태
-//    @Override
-//    public List<CardInfoFileDTO> selectCardInfoFile(Long cardInfoId) {
-//        return proMapper.cardImg(cardInfoId);
-//    }
 
     //    자격증 파일 여러개 가져옴
     @Override
@@ -113,18 +108,6 @@ public class ProServiceImpl implements ProService {
     public List<CardInfoDTO> selectCard(Long proId) {
         return proMapper.selectCard(proId);
     }
-
-
-    //경력사항가져옴
-//    @Override
-//    public CareerInfoDTO selectCareer(Long proId) { return proMapper.selectCareer(proId);
-//    }
-//
-////    자격증 파일이 여러개임
-//    @Override
-//    public List<CardInfoDTO> cardFileList(Long proId) {
-//        return proMapper.cardFileList(proId);
-//    }
 
 
     //    전문가 수정하기에 정보 뿌려줌
@@ -271,11 +254,6 @@ public class ProServiceImpl implements ProService {
         }
     }
 
-//    @Override
-//    public Long selectCardFileId(Long proId) {
-//        return proMapper.selectCardFileId(proId);
-//    }
-
 
     // 전문가 삭제시 이름비교 위해 필요
     @Override
@@ -379,15 +357,15 @@ public class ProServiceImpl implements ProService {
 
     //  전문가 찾기
     @Override
-    public PagedResponse<ProUploadListDTO> selectProUploadList(int page, int pageSize, String search, String searchType) {
+    public PagedResponse<ProUploadListDTO> selectProUploadList(int page, int pageSize, String search, String searchType,String searchSubject) {
 
         int startRow = (page - 1) * pageSize;
         int endRow = page * pageSize;
 
-        int totalUploads = proMapper.countProUpload(search, searchType);
+        int totalUploads = proMapper.countProUpload(search,searchType,searchSubject);
         int totalPages = (int) Math.ceil((double) totalUploads / pageSize);
 
-        List<ProUploadListDTO> uploads = proMapper.selectProUploadList(startRow, endRow, search, searchType);
+        List<ProUploadListDTO> uploads = proMapper.selectProUploadList(startRow, endRow, search, searchType,searchSubject);
 
         return new PagedResponse<>(uploads, page, totalPages, pageSize, totalUploads);
     }
@@ -459,15 +437,6 @@ public class ProServiceImpl implements ProService {
         return proMapper.selectProIdByProUploadId(proUploadId);
     }
 
-//    @Override
-//    public Long selectProRate(Long proId) {
-//        return proMapper.selectProRate(proId);
-//    }
-//
-//    @Override
-//    public void updateProRate(Long proId, Long proStarRate) {
-//        proMapper.updateProRate(proId, proStarRate);
-//    }
 
     @Override
     public Long selectUserRate(String userId) {

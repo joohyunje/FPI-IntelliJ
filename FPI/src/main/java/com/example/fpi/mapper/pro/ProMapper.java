@@ -109,10 +109,10 @@ public interface ProMapper {
     void saveProUpload(ProUploadDTO proUpload);
 
     //    전뭄가 찾기 동적
-    List<ProUploadListDTO> selectProUploadList(int startRow, int endRow, String search, String searchType);
+    List<ProUploadListDTO> selectProUploadList(int startRow, int endRow, String search, String searchType,String searchSubject);
 
     //    전문가 찾기 갯수 동적
-    int countProUpload(String search, String searchType);
+    int countProUpload(String search, String searchType,String searchSubject);
 
     //    전문가 위치가져오기
     ProLocationDTO selectProLocation(Long proId);

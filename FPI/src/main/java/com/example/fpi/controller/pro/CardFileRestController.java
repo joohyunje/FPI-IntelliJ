@@ -15,11 +15,14 @@ public class CardFileRestController {
 
     private final ProService proService;
     private final FileService fileService;
+
+//    전문가 마이페이지에서 자격증 사진 select
     @GetMapping("/{proId}")
-    // ok()안에 있는것과 ?가 자동 매칭됨
     public ResponseEntity<?> selectCardInfoFile(@PathVariable Long proId) {
         return  ResponseEntity.ok(proService.selectCardInfoFile(proId));
     }
+
+//    클릭이벤트로 삭제구현
     @DeleteMapping("{cardInfoFileId}")
     public ResponseEntity<?> deleteCardPhotoFile(@PathVariable Long cardInfoFileId) throws IOException {
         fileService.deleteCardPhotoFile(cardInfoFileId);

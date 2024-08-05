@@ -18,79 +18,64 @@
 
 <div class="main">
     <div class="main-container">
-        <div class="main-container-title">
-            <div class="main-container-title-container">
-                <h2 class="title">
-                    <span class="title-content">
+        <div class="main-container-titles">
+            <div class="main-container-title-containers">
+                <h2 class="titles">
+                    <span class="title-contents">
                         커뮤니티
                     </span>
                 </h2>
-            </div>
-        </div>
-
-        <div class="search-container">
-            <div class="search-input">
-                <input  name="search" type="text" onkeyup="enterkey()" placeholder="검색해보세요!" >
-                <div class="delete-button">
-                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTAgMGgyNHYyNEgweiIvPgogICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDMgMykiPgogICAgICAgICAgICA8Y2lyY2xlIGZpbGw9IiNDNUM1QzUiIGN4PSI5IiBjeT0iOSIgcj0iOSIvPgogICAgICAgICAgICA8cGF0aCBzdHJva2U9IiNGRkYiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Im02IDYgNi4wMDUgNi4wMDZNMTIuMDA1IDYgNiAxMi4wMDYiLz4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPgo=" alt="검색어 삭제아이콘">
+                <div class="write-boxs">
+                    <input type="hidden" id="sortOption" th:value="${sortOption}">
+                    <label class="service-area">
+                        <select id="select-category" class="service-parts" name="sortOption"
+                                onchange="selectOption()">
+                            <option value="date">
+                                최신순
+                            </option>
+                            <option value="view">
+                                조회순
+                            </option>
+                            <option value="like">
+                                좋아요순
+                            </option>
+                            <option value="comment">
+                                댓글순
+                            </option>
+                        </select>
+                    </label>
                 </div>
-            </div>
-            <div>
-                <a class="write-box" sec:authorize ="isAuthenticated()"  th:href="@{/community/write}">글쓰기</a>
             </div>
         </div>
 
 
         <div class="community-container">
-            <div class="category-list aside">
+            <div class="category-list aside" style=" position: fixed;">
                 <div id="community" class="selected pointer">전체</div>
                 <div id="freeTalk" class="pointer"> 자유게시판</div>
                 <div id="proTip" class="pointer"> 전문가 팁</div>
+                <a class="write-box" sec:authorize ="isAuthenticated()"  th:href="@{/community/write}">글쓰기</a>
             </div>
             <div class="content-layout">
+                <div class="search-container">
+                    <div class="search-input">
+                        <input  name="search" id="searchInput" type="text" onkeyup="enterkey()" placeholder="제목이나 내용을 검색해보세요" >
+                        <div id="delete-button" class="delete-button">
+                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTAgMGgyNHYyNEgweiIvPgogICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDMgMykiPgogICAgICAgICAgICA8Y2lyY2xlIGZpbGw9IiNDNUM1QzUiIGN4PSI5IiBjeT0iOSIgcj0iOSIvPgogICAgICAgICAgICA8cGF0aCBzdHJva2U9IiNGRkYiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Im02IDYgNi4wMDUgNi4wMDZNMTIuMDA1IDYgNiAxMi4wMDYiLz4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPgo=" alt="검색어 삭제아이콘">
+                        </div>
+                    </div>
+                </div>
                 <div class="feed">
                     <ul class="feed-list">
-                        <!--                        <li class="feed-item">-->
-                        <!--                            <a th:href="@{/community/detail/{communityId}(communityId=*{communityId})}">-->
-                        <!--                                <div class="feed-container">-->
-                        <!--                                    <div class="item-wrapper">-->
-                        <!--                                        <h3 class="item-title" th:text="*{communityTitle}">-->
+<!--                           게시글 리스트               -->
+                    </ul>
+                    <ul class="pagination" style="padding-top: 2.5rem !important;">
 
-                        <!--                                        </h3>-->
-                        <!--                                        <div class="item-content" th:utext="*{communityContent}"></div>-->
-                        <!--                                    </div>-->
-
-                        <!--                                    <div th:unless="*{communityThumbnail == null or communityThumbnail == '' or communityThumbnail == 'dd'}">-->
-                        <!--                                        <img style="background-repeat: no-repeat;width: 150px;height: 150px" th:src="*{communityThumbnail}" alt="img">-->
-                        <!--                                    </div>-->
-                        <!--                                    <div th:if="*{communityThumbnail == null or communityThumbnail == '' or communityThumbnail == 'dd'}">-->
-                        <!--                                        <img style="background-repeat: no-repeat;width: 150px;height: 150px" th:src="@{/img/커뮤니티 기본.png}" alt="img">-->
-                        <!--                                    </div>-->
-
-                        <!--                                </div>-->
-                        <!--                            </a>-->
-                        <!--                            <div class="feed-footer">-->
-                        <!--                                <div>-->
-                        <!--                                    <div class="footer-like" th:text="*{likeCount}">-->
-
-                        <!--                                    </div>-->
-                        <!--                                    <div class="footer-comment">-->
-                        <!--                                        0-->
-                        <!--                                    </div>-->
-                        <!--                                </div>-->
-                        <!--                                <div>-->
-                        <!--                                    <div class="footer-date" style="margin-right: 2rem" th:text="'작성자 : '+ *{userName}"></div>-->
-                        <!--                                    <div class="footer-date" th:text="*{#temporals.format(communityUpdateDate, 'YY-MM-dd')}"></div>-->
-                        <!--                                </div>-->
-                        <!--                            </div>-->
-                        <!--                        </li>-->
                     </ul>
                 </div>
             </div>
-        </div>
-        <ul class="pagination">
 
-        </ul>
+        </div>
     </div>
 </div>
 <div th:replace="~{/layout/footer :: footer}"></div>
@@ -137,13 +122,20 @@
         }
     }
 
-    const pageSize = 5; //페이징 사이즈,ajax에 쓸것임
+    const pageSize = 8; //페이징 사이즈,ajax에 쓸것임
     let search = null;
     let subject ='';
+    let sortOption='date';
 
     <!--    페이지 시작시 해당 함수 실행-->
     window.onload = function(){
+        console.log(subject+'subject')
+        console.log(search+'search')
+        console.log(sortOption+'sortOption')
+
         search = $('input[name="search"]').val(); //input태그에 name이 search인곳 value를 ajax의 search에 넣을것임
+        sortOption= $("#select-category").val();
+
         getList(1);//해당 함수 실행,첫번째 페이지 뿌려줌
 
     }
@@ -155,7 +147,8 @@
                 page: page,
                 size: pageSize,
                 search: search,
-                subject:subject
+                subject:subject,
+                sort:sortOption
             },
             success:function (data){
                 // 성공시 리스트 뿌려주는 함수.
@@ -171,7 +164,6 @@
     }
 
 
-
     // 페이지 리스트 뿌려줌
     function renderUploadList(uploads){
         const uploadContainer = $('.feed ul');
@@ -180,9 +172,9 @@
         if(uploads.length === 0){
             const uploadRow = `
         <li class="feed-item">
-                <div class="feed-container">
-                    <div class="item-wrapper">
-                        <h3 class="item-title" style="text-align:center">해당 게시판에 게시글이 없습니다.</h3>
+                <div class="">
+                    <div class="item-wrapper" style="align-content: center">
+                        <h3 class="item-title" style="text-align:center">해당 게시판에 글이 없습니다.</h3>
                     </div>
                 </div>
         </li>
@@ -198,7 +190,10 @@
             const thumbnailSrc = (upload.communityContent && upload.communityContent.trim() !== ''  && upload.communityThumbnail)
                 ? upload.communityThumbnail
                 : '/img/basicIMG.png'; //나의 프로젝트폴더에 직접 저장되어있는 사진
-
+            const isUpdated = (upload.communityRegisterDate !== upload.communityUpdateDate )
+                ? upload.communityUpdateDate
+                : upload.communityRegisterDate;
+            const displayText = (upload.communityRegisterDate !== upload.communityUpdateDate ) ? '(수정)' : '(New)';
 
             //
             const uploadRow = `
@@ -217,13 +212,13 @@
             <div class="feed-footer">
                 <div>
                     <div class="footer-show">${upload.views}</div>
-                    <div class="footer-like">${upload.likeCount}</div>
+                    <div class="footer-like ">${upload.likeCount}</div>
                     <div class="footer-comment">${upload.commentCount}</div>
                 </div>
 
                 <div>
                     <div class="footer-date" style="margin-right: 2rem;">작성자: ${upload.author}</div>
-                    <div class="footer-date">${new Date(upload.communityRegisterDate).toLocaleDateString()}</div>
+                    <div class="footer-date">${new Date(isUpdated).toLocaleDateString()+displayText}</div>
                 </div>
             </div>
         </li>
@@ -284,35 +279,53 @@
         });
     }
 
-    //
+    // 검색창에 입력된값 getList함수에 적용
     function saveKeyword(){
         search = $('input[name="search"]').val();
         getList(1);
     }
 
+    // 정렬select선택
+    function selectOption(){
+        sortOption=$("#select-category option:selected").val();
+        getList(1)
+    }
+
     document.getElementById('freeTalk').addEventListener("click", function (){
         subject = '자유게시판'
+        sortOption= 'date' //컨트롤러로 넘겨줄 값
         document.getElementById('freeTalk').classList.add('selected');
         document.getElementById('proTip').classList.remove('selected');
         document.getElementById('community').classList.remove('selected');
-
-        getList(1);
+        $("#select-category").val('date'); //그래야지 페이지 이동시 select안이 최신순으로 선택됨, 아니면 기존값을 가지고 이동함
+        getList(1)
     });
     document.getElementById('proTip').addEventListener("click", function (){
         subject = '전문가팁'
+        sortOption= 'date'
         document.getElementById('freeTalk').classList.remove('selected');
         document.getElementById('proTip').classList.add('selected');
         document.getElementById('community').classList.remove('selected');
+        $("#select-category").val('date');
+        getList(1)
 
-        getList(1);
     });
     document.getElementById('community').addEventListener("click", function (){
         subject = ''
+        sortOption= 'date'
         document.getElementById('freeTalk').classList.remove('selected');
         document.getElementById('proTip').classList.remove('selected');
         document.getElementById('community').classList.add('selected');
-        getList(1);
+        $("#select-category").val('date');
+        getList(1)
     });
+
+    // 검색창의 x버튼 누르면 검색어 사라지고 다시 서치항목뜨게함
+    document.getElementById('delete-button').addEventListener("click",function (){
+        document.getElementById('searchInput').value = '';
+        saveKeyword();
+    });
+
 
 
 </script>

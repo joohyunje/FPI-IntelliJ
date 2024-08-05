@@ -32,16 +32,19 @@
             <input class="userId" type="hidden" th:value="${user.userId}" id="userId"  name="userId">
 
             <form id="pointForm" method="post">
-              <div class="title">충전하실 금액을 입력하세요</div>
-              <input class="input-box" type="number" id="userPlusCash" name="userPlusCash" placeholder="100원 이상 정확한 금액을 입력하세요">
-              <div class="col underline">
-                <label for="couponList" class="fontSize15 label">쿠폰사용</label>
-                <select name="count" id="couponList" aria-required="false" class="form-select coupon-select" onchange="selectOption()">
-                  <option value="0">쿠폰사용안함</option>
-                  <option th:each="coupon:${couponList}" th:id="*{couponId}" th:object="${coupon}" th:value="*{discount}" th:text="*{discount}+'원 할인 쿠폰'">
-                  </option>
-                </select>
+              <div onchange="selectOption()">
+                <div class="title">충전하실 금액을 입력하세요</div>
+                <input class="input-box" type="number" id="userPlusCash" name="userPlusCash" placeholder="100원 이상 정확한 금액을 입력하세요">
+                <div class="col underline">
+                  <label for="couponList" class="fontSize15 label">쿠폰사용</label>
+                  <select name="count" id="couponList" aria-required="false" class="form-select coupon-select" >
+                    <option value="0">쿠폰사용안함</option>
+                    <option th:each="coupon:${couponList}" th:id="*{couponId}" th:object="${coupon}" th:value="*{discount}" th:text="*{discount}+'원 할인 쿠폰'">
+                    </option>
+                  </select>
+                </div>
               </div>
+
 
               <div class="title" id="selectValue"></div>
 
@@ -130,23 +133,24 @@
       function selectOption(){
           var couponList = document.getElementById('couponList');
           var selectValue = document.getElementById('selectValue');
-          var couponId = document.querySelector("select[id=couponList] option:checked").id;
           // var userPlusCash = document.getElementById('userPlusCash');
           payCash = userPlusCash.value - couponList.value;
           // 충전금액이 0이거나 음수면 쿠폰사용불가, 입력한 금액으로 충전하게끔
           if(payCash<=0){
             confirm("할인금액이 충전금액보다 크거나 같습니다")
-            couponList.value = 0;
-            selectValue.textContent=`총 결제 금액은 ${userPlusCash.value}원 입니다.`;
+            // couponList.value = 0;
+            // selectValue.textContent=`총 결제 금액은 ${userPlusCash.value}원 입니다.`;
+            couponList.value=0;
+            userPlusCash.value='';
+            selectValue.textContent='';
             return;
           }
-          selectValue.textContent=`총 결제 금액은 ${payCash}원 입니다.`;
-
-          // console.log(document.querySelector("select[id=couponList] option:checked").id)
-
-
-          // couponId=`<input class="couponId" type="hidden" th:value="${coupon.couponId}" id="couponId"  name="couponId">`
-          // selectValue.appendChild(couponId)
+          else if(couponList.value===0){
+            selectValue.textContent=`총 결제 금액은 ${userPlusCash.value}원 입니다.`;
+          }
+          else{
+            selectValue.textContent=`총 결제 금액은 ${payCash}원 입니다.`;
+          }
 
 
       }

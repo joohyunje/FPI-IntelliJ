@@ -20,20 +20,15 @@ public class CommunityRestController {
     private final CommunityService communityService;
     @GetMapping("/community/list")
     public ResponseEntity<PagedResponse<CommunityDetailDTO>> getCommunityList(@RequestParam(defaultValue = "1") int page,
-                                                                              @RequestParam(defaultValue = "5") int size,
+                                                                              @RequestParam(defaultValue = "8") int size,
                                                                               @RequestParam String search,
-                                                                              @RequestParam(defaultValue = "") String subject){
+                                                                              @RequestParam(defaultValue = "") String subject,
+                                                                              @RequestParam String sort){
 
         System.out.println(search);
         System.out.println(subject);
-
-        return ResponseEntity.ok(communityService.getCommunityList(page, size, search, subject));
+        System.out.println(size+"dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
+        return ResponseEntity.ok(communityService.getCommunityList(page, size, search, subject,sort));
     }
-//    @GetMapping("/community")
-//    public ResponseEntity<PagedResponse<CommunityDTO>> getCommunityList( @RequestParam(defaultValue = "1") int page,
-//                                                                         @RequestParam(defaultValue = "5") int size,
-//                                                                         @RequestParam(defaultValue = "") String subject){
-//        return ResponseEntity.ok(communityService.getCommunityList(page, size, subject));
-//    }
 
 }

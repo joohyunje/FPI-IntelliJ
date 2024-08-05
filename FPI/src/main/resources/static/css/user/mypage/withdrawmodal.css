@@ -2,7 +2,7 @@
   position: fixed;
   width: 100vw;
   height: 100vh;
-    max-width: none !important;
+  max-width: none !important;
   top: 0;
   bottom: 0;
   left: 0;
@@ -12,7 +12,7 @@
   justify-content: center;
   background: rgba(71, 58, 58, 0.25);
   letter-spacing:3px;
-  z-index: 1000;
+  z-index: 2000;
 }
 .box-container{
   width: 520px;
@@ -95,16 +95,16 @@
   font-weight: 400;
   &:hover,&:focus{
     position: inherit;
-    font-weight: bolder !important;
+    /*font-weight: bolder !important;*/
     border: 2px solid #7a8eb5 !important;
   }
 }
 .pro-btn{
   background-color:#F8CACC;
-  color: #020202 !important;
+  color: #323232 !important;
   border: 1.3px solid #F8CACC;
   &:hover,&:focus{
-    position: inherit;
+    /*position: inherit;*/
     border-color: #F8CACC !important;
     border: 1.3px solid #d0aaac  !important;
   }

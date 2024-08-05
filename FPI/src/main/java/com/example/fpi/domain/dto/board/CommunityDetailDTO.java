@@ -27,6 +27,8 @@ public class CommunityDetailDTO {
     private String author;
     private int commentCount;
     private String loginName;
+    private String sort;
+    private Long LikeUse;
 
 
 }

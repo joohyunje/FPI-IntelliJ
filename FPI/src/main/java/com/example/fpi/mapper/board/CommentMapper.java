@@ -1,5 +1,6 @@
 package com.example.fpi.mapper.board;
 
+import com.example.fpi.domain.dto.board.CommentDTO;
 import com.example.fpi.domain.dto.board.CommentListDTO;
 import com.example.fpi.domain.vo.board.CommentVO;
 import org.apache.ibatis.annotations.Mapper;

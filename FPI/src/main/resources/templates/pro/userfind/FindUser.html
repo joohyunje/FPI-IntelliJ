@@ -22,30 +22,49 @@
                         고객 찾기
                     </span>
                 </h2>
-                <div class="write-box">
-                    <label class="service-area">
-                        <select id="select-category" class="service-part" name="search-type"
-                                onchange="selectCategory()">
-                            <option value="">
-                                카테고리
-                            </option>
-                            <option value="1">
-                                이사/청소
-                            </option>
-                            <option value="2">
-                                설치/수리
-                            </option>
-                            <option value="3">
-                                인테리어
-                            </option>
-                            <option value="4">
-                                취미/자기계발
-                            </option>
-                            <option value="5">
-                                기타
-                            </option>
-                        </select>
-                    </label>
+                <div style="display: flex">
+                    <!--                    selectbox, 제목인지 회원 이름으로 검색할 건지-->
+                    <div class="write-box">
+                        <label class="service-area">
+                            <select id="searchSubject" class="service-part" name="searchSubject"
+                                    onchange="selectSubject()">
+                                <option value="title">
+                                    제목
+                                </option>
+                                <option value="name">
+                                    회원 이름
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+                    <!--                    selectbox 서비스이름-->
+                    <div class="write-box">
+                        <label class="service-area">
+                            <select id="select-category" class="service-part" name="search-type"
+                                    onchange="selectCategory()">
+                                <option value="">
+                                    카테고리
+                                </option>
+                                <option value="1">
+                                    이사/청소
+                                </option>
+                                <option value="2">
+                                    설치/수리
+                                </option>
+                                <option value="3">
+                                    인테리어
+                                </option>
+                                <option value="4">
+                                    취미/자기계발
+                                </option>
+                                <option value="5">
+                                    기타
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+
+
                 </div>
             </div>
         </div>
@@ -88,6 +107,7 @@
 </div>
 
 <input type="hidden" id="test" th:value="${searchType}">
+<input type="hidden" id="searchUserName" th:value="${searchUserName}==null?'':${searchUserName}">
 
 <div th:replace="~{/layout/footer :: footer}"></div>
 
@@ -104,6 +124,8 @@
   let search = '';
   let searchType = '';
   let test = '';
+  let searchUserName = $('#searchUserName').val();
+  let searchSubject = 'title';
 
 
   // 날짜 포맷
@@ -138,17 +160,25 @@
   }
 
   window.onload = function () {
-
+    console.log(searchSubject)
     test = document.getElementById('test').value
 
     if (test !== '') {
       searchType = test
-      // $('#select-category[name="search-type"][value=test]').prop("selected", true).change();
-      $('#select-category').val(test);
+      $("#select-category").val(test);
+    }
+    if (searchUserName !== '') {
+      search = $('input[name="search"]').val(searchUserName)
+      searchSubject = 'name' //컨트롤러나 매퍼로 넘어가기위해 정함
+      $("#searchSubject").val('name'); //select옵션에서 해당값이선택됨
+      saveKeyword();
+      getList(1);
+      return;
     }
 
 
     search = $('input[name="search"]').val();
+    searchSubject = $("#searchSubject").val();
     getList(1);
   }
 
@@ -160,7 +190,9 @@
         page: page,
         size: pageSize,
         search: search,
-        searchType: searchType
+        searchType: searchType,
+        searchSubject: searchSubject
+
       },
       success: function (data) {
         // 리스트 뿌려주는 함수.
@@ -178,9 +210,24 @@
     const uploadContainer = $('.feed ul');
     uploadContainer.empty();
 
+
+    if (uploads.length === 0) {
+      const uploadRow = `
+        <li class="">
+                <div class="feed-container">
+                    <div class="item-wrapper">
+                        <h3 class="item-title" style="text-align:center">해당 하는 글이 없습니다.</h3>
+                    </div>
+                </div>
+        </li>
+    `;
+      uploadContainer.append(uploadRow);
+    }
+
+
     uploads.forEach(function (upload) {
       const userImgSrc = upload.userImg ? upload.userImg : '/img/basicIMG.png';
-
+      const starRateText = upload.userStarRate != 0 ? upload.userStarRate : '(New)'
       let uploadRow = `<li class="feed-item">
                             <a href="/pro/uploadDetail/${upload.userUploadId}">
                                 <div class="feed-container">
@@ -198,10 +245,11 @@
                                 <div class="feed-footer">
                                     <div class="star-icon">
                                         <div>
-                                            별점 : ${upload.userStarRate}
-                                        </div>
-                                         <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo="
+                                            별점 :
+                                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo="
                                              alt="">
+                                             ${starRateText}
+                                        </div>
                                     </div>
                                     <div class="footer-date">
                                         ${formatDate(upload.userUploadDate)}
@@ -216,6 +264,10 @@
   function renderPagination(pagination) {
     const PaginationContainer = $('.pagination');
     PaginationContainer.empty();
+
+    if (pagination.content.length === 0) {
+      return
+    }
 
     // 이전 버튼
     const prevDisabled = pagination.currentPage === 1 ? 'disabled' : '';
@@ -263,6 +315,11 @@
     searchType = $("#select-category option:selected").val();
     console.log(searchType)
     getList(1);
+  }
+
+  function selectSubject() {
+    searchSubject = $("#searchSubject option:selected").val();
+    getList(1)
   }
 </script>
 </html>

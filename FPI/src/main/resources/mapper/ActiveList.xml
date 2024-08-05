@@ -2,7 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.fpi.mapper.user.ActiveListMapper">
+
+
     <!--    내가 작성한 게시글 페이징-->
+<!--    #{myName}에 헤더의 이름들어감    -->
+<!--    <select id="selectUserCommuList" resultType="UserCommunityListDTO">-->
+<!--        select *-->
+<!--        from (select ROWNUM AS RN ,c.*-->
+<!--              from(-->
+<!--                      select *-->
+<!--                      from TBL_COMMUNITY-->
+<!--                      where USER_ID=#{userId} and author = #{myName}-->
+<!--                      order by COMMUNITY_REGISTER_DATE DESC,COMMUNITY_ID desc) c-->
+<!--              where ROWNUM &lt;= #{endRow})-->
+<!--        where RN &gt; #{startRow}-->
+<!--    </select>-->
+<!--    -->
     <select id="selectUserCommuList" resultType="UserCommunityListDTO">
         select *
         from (select ROWNUM AS RN ,c.*
@@ -10,7 +25,16 @@
                       select *
                       from TBL_COMMUNITY
                       where USER_ID=#{userId} and author = #{myName}
-                      order by COMMUNITY_REGISTER_DATE DESC,COMMUNITY_ID desc) c
+                      order by
+                          <choose>
+                            <when test="sort.equals('oldest')">
+                                COMMUNITY_REGISTER_DATE asc,COMMUNITY_ID asc
+                            </when>
+                            <otherwise>
+                                COMMUNITY_REGISTER_DATE desc,COMMUNITY_ID desc
+                            </otherwise>
+                          </choose>
+                          ) c
               where ROWNUM &lt;= #{endRow})
         where RN &gt; #{startRow}
     </select>
@@ -21,6 +45,35 @@
         from TBL_COMMUNITY
         where USER_ID=#{userId} and author = #{myName}
     </select>
+
+
+    <select id="selectLikeCommuList" resultType="UserCommunityListDTO">
+        select *
+        from (select ROWNUM AS RN ,c.*
+        from(
+        select *
+        from TBL_COMMUNITY c join TBL_LIKE l on c.USER_ID = l.USER_ID
+        where l.USER_ID=#{userId}
+        order by
+        <choose>
+            <when test="sort.equals('oldest')">
+                COMMUNITY_REGISTER_DATE asc,COMMUNITY_ID asc
+            </when>
+            <otherwise>
+                COMMUNITY_REGISTER_DATE desc,COMMUNITY_ID desc
+            </otherwise>
+        </choose>
+        ) c
+        where ROWNUM &lt;= #{endRow})
+        where RN &gt; #{startRow}
+    </select>
+    <select id="countLikeCommu">
+        select count(*)
+        from TBL_LIKE
+        where USER_ID=#{userId}
+    </select>
+
+
     <!--    내가 작성한 댓글 페이징-->
     <select id="selectUserCommentList" resultType="CommentListDTO">
         select *
@@ -29,7 +82,15 @@
                       select *
                       from TBL_Comment
                       where USER_ID=#{userId} and author = #{myName}
-                      order by Comment_REGISTER_DATE DESC,Comment_ID desc) c
+                      order by
+                        <choose>
+                            <when test="sort.equals('oldest')">
+                                Comment_REGISTER_DATE asc,Comment_ID asc
+                            </when>
+                            <otherwise>
+                                Comment_REGISTER_DATE desc,Comment_ID desc
+                            </otherwise>
+                        </choose>) c
               where ROWNUM &lt;= #{endRow})
         where RN &gt; #{startRow}
     </select>
@@ -50,7 +111,15 @@
                                      join TBL_PRO tp on pr.PRO_ID = tp.PRO_ID
                                      join TBL_USER tu on pr.USER_ID =tu.USER_ID
                    where pr.USER_ID=#{userId}
-                   order by pr.PRO_REVIEW_DATE DESC,pr.PRO_REVIEW_ID desc)ur
+                   order by
+                        <choose>
+                            <when test="sort.equals('oldest')">
+                                pr.PRO_REVIEW_DATE asc,pr.PRO_REVIEW_ID asc
+                            </when>
+                            <otherwise>
+                                pr.PRO_REVIEW_DATE DESC,pr.PRO_REVIEW_ID desc
+                            </otherwise>
+                        </choose>)ur
               where ROWNUM &lt;= #{endRow})
         where RN &gt; #{startRow}
     </select>
@@ -69,7 +138,15 @@
                         from TBL_USER_REVIEW TUR
                                  join TBL_PRO tp on TUR.PRO_ID = tp.PRO_ID
                         where TUR.USER_ID=#{userId}
-                        order by TUR.USER_REVIEW_DATE DESC,TUR.USER_REVIEW_ID desc)ur
+                        order by
+                            <choose>
+                                <when test="sort.equals('oldest')">
+                                    TUR.USER_REVIEW_DATE asc,TUR.USER_REVIEW_ID asc
+                                </when>
+                                <otherwise>
+                                    TUR.USER_REVIEW_DATE DESC,TUR.USER_REVIEW_ID desc
+                                </otherwise>
+                            </choose>)ur
               where ROWNUM &lt;= #{endRow})
         where RN &gt; #{startRow}
     </select>
@@ -78,6 +155,62 @@
         select count(*)
         from TBL_USER_REVIEW
         where USER_ID=#{userId}
+    </select>
+
+    <!--    전문가가 작성한 리뷰-->
+    <select id="selectProWriteReview" resultType="UserReviewListDTO">
+            select *
+            from(select  ROWNUM AS RN,pro.*
+                 from(select tu.USER_NAME,tur.*
+                     from TBL_USER_REVIEW tur
+                            join TBL_PRO tp on tur.PRO_ID= tp.PRO_ID
+                            join TBL_USER tu on tp.USER_ID = tu.USER_ID
+                     where tur.PRO_ID=#{proId}
+                     order by
+                        <choose>
+                            <when test="sort.equals('oldest')">
+                                tur.USER_REVIEW_DATE asc,tur.USER_REVIEW_ID asc
+                            </when>
+                            <otherwise>
+                                tur.USER_REVIEW_DATE desc,tur.USER_REVIEW_ID desc
+                            </otherwise>
+                        </choose>)pro
+                 where ROWNUM &lt;= #{endRow})
+            where RN &gt; #{startRow}
+    </select>
+    <!--    전문가가 작성한 리뷰 페이징 갯수-->
+    <select id="countProWriteReview">
+        select count(*)
+        from TBL_USER_REVIEW
+        where PRO_ID=#{proId}
+    </select>
+
+    <!--    전문가가 회원에게 받은 리뷰-->
+    <select id="selectProReceiveReview" resultType="ProReviewListDTO">
+        select *
+        from(select  ROWNUM AS RN,pro.*
+             from(select tu.USER_NAME,tpr.*
+                  from TBL_PRO_REVIEW tpr
+                           join TBL_PRO tp on tpr.PRO_ID= tp.PRO_ID
+                           join TBL_USER tu on tpr.USER_ID = tu.USER_ID
+                  where tpr.PRO_ID=#{proId}
+                  order by
+                        <choose>
+                            <when test="sort.equals('oldest')">
+                                tpr.PRO_REVIEW_DATE asc,tpr.PRO_REVIEW_ID asc
+                            </when>
+                            <otherwise>
+                                tpr.PRO_REVIEW_DATE desc,tpr.PRO_REVIEW_ID desc
+                            </otherwise>
+                        </choose>)pro
+             where ROWNUM &lt;= #{endRow})
+        where RN &gt; #{startRow}
+    </select>
+    <!--    전문가가 회원에게 받은 리뷰 페이징 갯수-->
+    <select id="countProReceiveReview">
+        select count(*)
+        from TBL_PRO_REVIEW
+        where PRO_ID=#{proId}
     </select>
 
 </mapper>
