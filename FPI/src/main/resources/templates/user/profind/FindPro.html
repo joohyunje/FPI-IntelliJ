@@ -137,7 +137,8 @@
 
     if (test !== '') {
       searchType = test
-      $('#select-category[name="search-type"][value=test]').prop("selected", true);
+      // $('#select-category[name="search-type"][value=test]').prop("selected", true);
+      $('#select-category').val(test);
     }
 
     search = $('input[name="search"]').val();

@@ -15,11 +15,11 @@ public class ProReviewRestController {
 
     private final ProService proService;
 
+    // 전문가가 받은 리뷰 가져오기
     @GetMapping("/{proId}")
     public ResponseEntity<?> getReviews(@PathVariable Long proId) {
         return ResponseEntity.ok(proService.selectProReview(proId));
     }
-
 
 
 }

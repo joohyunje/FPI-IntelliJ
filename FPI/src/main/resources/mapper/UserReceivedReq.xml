@@ -92,6 +92,7 @@
         WHERE rn &gt; #{startRow}
     </select>
 
+    <!--    회원이 보낸 요청 갯수-->
     <select id="countSendRequest">
         select count(*)
         from (SELECT USER_REQUEST_ID,

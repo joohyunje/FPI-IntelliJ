@@ -305,6 +305,7 @@
 
     <!--    </update>-->
 
+    <!--    전문가 별점 가져오기-->
     <select id="selectProRate" resultType="Long">
         select round(avg(PRO_REVIEW_RATE), 0)
         from TBL_PRO_REVIEW

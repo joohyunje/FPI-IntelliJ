@@ -60,34 +60,47 @@ public interface UserService {
     //    회원 위치가져오기
     UserLocationDTO selectUserLocation(String userId);
 
+    //    전문가 견적을 보고 요청 보내기
     void userRequest(UserRequestDTO userRequestDTO);
 
+    // 전문가 찾기를 했을때 이미 요청을 보낸 서비스 인지 확인
     Long checkUserRequest(Long proUploadId, String userId);
 
+    // 회원이 전문가의 리뷰 작성하기
     void userWriteProReview(ProReviewDTO proReview);
 
+    // 받은 요청 삭제
     void deleteProRequest(Long proRequestId);
 
+    // 받은 요청 수락하기 업데이트
     void updateUserAccept(Long proRequestId);
 
+    // 받은 요청 작업완료하기
     void updateUserComplete(Long proRequestId);
 
+    // 전문가 신고하기
     void userAccusePro(ProAccuseDTO proAccuseDTO);
 
+    //  전문가가 보낸 요청으로 proId 가져오기
     Long selectProIdByProRequestId(Long proRequestId);
 
+    //  회원이 보낸 요청으로 proId 가져오기
     Long selectProIdByUserRequestId(Long userRequestId);
 
 //    Long selectUserRate(String userId);
 //
 //    void updateUserRate(String userId, Long userStarRate);
 
+    // 전문가의 별점 가져오기
     Long selectProRate(Long proId);
 
+    // 전문가의 별점 업데이트
     void updateProRate(Long proId, Long proStarRate);
 
+    // 회원이 받은 요청에서 전문가 리뷰 업데이트
     void updateProRequestProReview(Long proRequestId);
 
+    // 회원이 보낸 요청에서 전문가 리뷰 업데이트
     void updateUserRequestProReview(Long userRequestId);
 
     Long selectUserReviewCnt(String userId);

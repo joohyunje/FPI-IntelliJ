@@ -23,6 +23,7 @@ public class UserRestController {
     private final UserService userService;
     private final ProService proService;
 
+    // 회원이 받은 요청 동적
     @GetMapping("/received")
     public ResponseEntity<PagedResponse<UserReceivedReqListDTO>> getReceivedRequestsList(@AuthenticationPrincipal CustomOAuth2User customOAuth2User,
                                                                                          @RequestParam(defaultValue = "1") int page,
@@ -36,6 +37,7 @@ public class UserRestController {
         return ResponseEntity.ok(userService.selectReceivedReq(userId, page, size, sort));
     }
 
+    // 회원이 보낸 요청 동적
     @GetMapping("/send")
     public ResponseEntity<PagedResponse<UserSendReqListDTO>> getSendRequestsList(@AuthenticationPrincipal CustomOAuth2User customOAuth2User,
                                                                                  @RequestParam(defaultValue = "1") int page,
@@ -53,6 +55,7 @@ public class UserRestController {
         return ResponseEntity.ok(userService.selectSendReq(userId, page, size, sort));
     }
 
+    // 전문가 찾기 동적
     @GetMapping("/ProFind")
     public ResponseEntity<PagedResponse<ProUploadListDTO>> getBoardList(@RequestParam(defaultValue = "1") int page,
                                                                         @RequestParam(defaultValue = "7") int size,

@@ -96,10 +96,12 @@ public class ProController {
                                @AuthenticationPrincipal CustomOAuth2User customOAuth2User,
                                Model model) {
         UserUploadDetailDTO Upload = userService.selectUserUploadDetail(userUploadId);
+        System.out.println(userUploadId);
 
         List<UserUploadFileDTO> userUploadFiles = fileMapper.selectUserUploadFileList(userUploadId);
 
         String userId = customOAuth2User.getUserId();
+        System.out.println(userId);
         Long proId = proService.selectProId(userId);
         ProLocationDTO proLocation = proService.selectProLocation(proId);
 
@@ -138,6 +140,7 @@ public class ProController {
         return "/pro/upload/pro_receiveform";
     }
 
+    //    전문가 견적 작성하기
     @PostMapping("/upload")
     public String upload(ProUploadDTO proUpload,
                          @AuthenticationPrincipal CustomOAuth2User customOAuth2User,
@@ -157,6 +160,7 @@ public class ProController {
         return "redirect:/main/pro";
     }
 
+    //    전문가가 회원에게 요청 보내기
     @PostMapping("/sendProRequest")
     public String sendRequest(@RequestParam Long userUploadId,
                               ProRequestDTO proRequest,
@@ -174,6 +178,7 @@ public class ProController {
 
     }
 
+    //    전문가가 받은 요청에서 회원의 리뷰 작성하기
     @GetMapping("/userReview/{userRequestId}")
     public String userReviewForm(@PathVariable Long userRequestId,
                                  Model model) {
@@ -192,6 +197,7 @@ public class ProController {
         return "/pro/req_list/reviewWrite";
     }
 
+    //    전문가가 보낸 요청에서 리뷰 작성하기
     @GetMapping("/userReview2/{proRequestId}")
     public String userReviewForm2(@PathVariable Long proRequestId,
                                   Model model) {
@@ -210,6 +216,7 @@ public class ProController {
         return "/pro/req_list/reviewWrite";
     }
 
+    //    전문가가쓴 리뷰 (회원이 받은 리뷰)
     @PostMapping("/userReview")
     public String userReview(UserReviewDTO userReview,
                              @AuthenticationPrincipal CustomOAuth2User customOAuth2User,
@@ -235,6 +242,7 @@ public class ProController {
 
     }
 
+    //  전문가가 받은 요청에서 삭제
     @PostMapping("/userDetail/delete/{userRequestId}")
     public String deleteUserRequest(@PathVariable Long userRequestId) {
         proService.deleteUserRequest(userRequestId);
@@ -242,15 +250,17 @@ public class ProController {
         return "redirect:/pro/requests";
     }
 
+    //  전문가가 받은 요청에서 수락하기 업데이트
     @PostMapping("/userDetail/updateAccept/{userRequestId}")
     public String updateAccept(@PathVariable Long userRequestId) {
 
         proService.updateProAccept(userRequestId);
         return "redirect:/pro/userDetail/" + userRequestId;
     }
-//전문가가 올린글에 회원이 요청 보냈음,캐시교환 이루어짐
+
+    //전문가가 올린글에 회원이 요청 보냈음,캐시교환 이루어짐
     @PostMapping("/userDetail/updateComplete/{userRequestId}")
-    public String updateComplete(@PathVariable Long userRequestId,@RequestParam("userId") String userId) {
+    public String updateComplete(@PathVariable Long userRequestId, @RequestParam("userId") String userId) {
 
         Long proId = userService.selectProIdByUserRequestId(userRequestId);
         Long empCnt = proService.empCount(proId);
@@ -258,10 +268,11 @@ public class ProController {
 
         proService.updateProComplete(userRequestId);
 
-      payCouponService.userRequsestPay(userRequestId,userId,proId); //캐쉬결제하는서비스
+        payCouponService.userRequsestPay(userRequestId, userId, proId); //캐쉬결제하는서비스
         return "redirect:/pro/userDetail/" + userRequestId;
     }
 
+    //  전문가가 받은 요청에서 회원을 신고하기
     @PostMapping("/accuseUser")
     public String accuseUser(@RequestParam Long userRequestId,
                              UserAccuseDTO userAccuse,

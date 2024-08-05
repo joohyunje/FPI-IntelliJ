@@ -3,6 +3,7 @@
 
 <mapper namespace="com.example.fpi.mapper.pro.ProMapper">
 
+    <!--    전문가가 보낸 요청 상세보기-->
     <select id="selectProReqDetail" resultType="ProRequestDetailDTO">
         SELECT TPR.PRO_REQUEST_ID
              , TPR.PRO_REQUEST_DATE

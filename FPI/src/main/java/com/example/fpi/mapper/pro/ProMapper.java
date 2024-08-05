@@ -46,17 +46,20 @@ public interface ProMapper {
 
     List<CardInfoFileDTO> selectCardFile(Long proId);
 
+    // 전문가 자격증 사진파일
     List<CardInfoDTO> selectCard(Long proId);
 
-
+    // 고용횟수
     Long empCount(Long proId);
 
+    // 고용횟수 늘리기
     void updateEmpCnt(Long proId, Long empCnt);
 
 
 //    마이페이지 전문가 수정하기에 뿌려줌
 
     ProEditDTO selectEditPro(Long proId);
+
 
     void editPro(ProVO vo);
 
@@ -117,38 +120,50 @@ public interface ProMapper {
     //    전문가 견적을 보고 요청 보내기
     void proRequest(ProRequestDTO proRequestDTO);
 
+    // 회원 찾기를 할때 이미 요청을 보낸 회원의 견적인지 체크
     Long checkProRequest(Long userUploadId, Long proId);
 
+    // 전문가가 회원의 리뷰 작성하기
     void proWriteUserReview(UserReviewDTO userReview);
 
+    // 회원의 요청을 삭제하기
     void deleteUserRequest(Long userRequestId);
 
-
+    // 회원의 요청을 수락하기
     void updateProAccept(Long userRequestId);
 
+    // 교용 횟수 업데이트
     void updateProComplete(Long userRequestId);
 
 //    조인테이블에서 전문가아이디를 통해 -> 자격증관리테이블 -> 파일아이디 가져옴
 //    Long selectCardFileId(Long proId);
 
+    // 회원 신고하기
     void proAccuseUser(UserAccuseVO userAccuseVO);
 
+    //    회원이 보낸 요청으로 userId 가져오기
     String selectUserIdByUserRequestId(Long userRequestId);
 
+    //    전문가가 올림 서비스로 proId 가져오기
     Long selectProIdByProUploadId(Long proUploadId);
 
 //    Long selectProRate(Long proId);
 //
 //    void updateProRate(Long proId, Long proStarRate);
 
+    // 회원의 별점 가져오기
     Long selectUserRate(String userId);
 
+    // 회원의 별점 업데이트
     void updateUserRate(String userId, Long userStarRate);
 
+    //    전문가가 보낸 요청으로 userId 가져오기
     String selectUserIdByProRequestId(Long proRequestId);
 
+    // 전문가가 받은 요청에서 회원 리뷰 업데이트
     void updateUserRequestUserReview(Long userRequestId);
 
+    // 전문가가 보낸 요청에서 회원 리뷰 업데이트
     void updateProRequestUserReview(Long proRequestId);
 
     void clickDeleteCard(Long cardInfoId);

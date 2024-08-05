@@ -1040,3 +1040,16 @@ FROM (select TPU.PRO_UPLOAD_ID,
       order by tpu.PRO_UPLOAD_DATE desc) pro
 WHERE ROWNUM <= 6
 
+SELECT tur.USER_ID,
+       tur.PRO_ID,
+       tp.PRO_NAME,
+       tur.USER_REVIEW_TITLE,
+       tur.USER_REVIEW_CONTENT,
+       tur.USER_REVIEW_RATE,
+       tur.USER_REVIEW_DATE
+FROM TBL_USER_REVIEW tur
+         INNER JOIN TBL_PRO tp
+                    ON TUR.PRO_ID = TP.PRO_ID
+WHERE TUR.USER_ID = 3619331702
+ORDER BY TUR.USER_REVIEW_DATE DESC
+

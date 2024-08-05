@@ -3,6 +3,7 @@
 
 <mapper namespace="com.example.fpi.mapper.user.UserMapper">
 
+    <!--    회원이 보낸 요청 상세보기-->
     <select id="selectUserReqDetail" resultType="UserRequestDetailDTO">
         SELECT TUR.USER_REQUEST_ID
              , TUR.USER_REQUEST_DATE
