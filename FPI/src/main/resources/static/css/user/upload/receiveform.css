@@ -121,7 +121,7 @@ table th {
 
 }
 /* 수정완료 버튼 디자인 */
-.left >button{
+.left >button,.pro-left >button{
   border-style: none;
   cursor: pointer;
   display: inline-block;
@@ -137,19 +137,24 @@ table th {
   font-size: 16px;
   line-height: 26px;
   font-weight:500;
-  
-  &:hover{
-    color: rgb(255, 255, 255);
-    font-weight: 700;
+
+  &:hover,&:focus{
+    position: inherit;
+    /*font-weight: bolder !important;*/
+    border: 1.3px solid #7a8eb5 ;
   }
+}
+.pro-left >button:hover{
+  border-color: #F8CACC !important;
+  border: 1.3px solid #d0aaac  !important;
 }
 #pro_recevieform .left >button,#pro_receviemodal .left >button{
   background-color:  #f8cacc;
   border: 1px solid  #f8cacc ;
   color: #323232 !important;
   &:hover{
-    font-weight: 600;
-    border: 1px solid #d0aaac ;
+    border-color: #F8CACC !important;
+    border: 1.3px solid #d0aaac  !important;
   }
 }
 .recive-textarea textarea{

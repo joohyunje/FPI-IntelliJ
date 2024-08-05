@@ -6,6 +6,7 @@
   <link rel="stylesheet" th:href="@{/css/user/mypage/mypage.css}">
   <link rel="stylesheet" th:href="@{/css/main/common.css}">
   <link rel="stylesheet" th:href="@{/css/layout/header.css}">
+  <link rel="stylesheet" th:href="@{/css/layout/footer.css}">
 
 
   <title>전문가 마이페이지</title>
@@ -69,7 +70,7 @@
       </li>
       <!-- 내가 쓴 리뷰목록 이동 -->
       <li class="li-padding">
-        <a href="#" class="oneline">
+        <a th:href="@{/activeList/writeReview}" class="oneline">
           <div class="auto">작성한 리뷰</div>
           <div>
             <img src="https://assets.cdn.soomgo.com/icons/icon-mypage-list-arrow.svg">
@@ -77,7 +78,7 @@
         </a>
       </li>
       <li class="li-padding">
-        <a href="#" class="oneline">
+        <a th:href="@{/activeList/receiveReview}" class="oneline">
           <div class="auto">받은 리뷰</div>
           <div>
             <img src="https://assets.cdn.soomgo.com/icons/icon-mypage-list-arrow.svg">
@@ -89,6 +90,6 @@
 
 </div>
 
-
+<div th:replace="~{/layout/footer :: footer}"></div>
 </body>
 </html>

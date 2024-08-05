@@ -119,6 +119,13 @@ public class UserController {
         return "user/profind/FindPro";
     }
 
+//    회원마이페이지에서 리뷰목록에서,, 전문가 이름클릭시 전문가 찾기의 해당 전문가가 작성한 글들 나열
+@GetMapping("/{proId}/proFind")
+public String uploadRest3(Model model, @PathVariable("proId") Long proId) {
+    String searchProName= proService.detailPro(proId).getProName();
+    model.addAttribute("searchProName", searchProName);
+    return "user/profind/FindPro";
+}
     //    전문가 찾기를 통해 전문가가 올리 견적 상세보기
     @GetMapping("/uploadDetail/{proUploadId}")
     public String uploadDetail(@PathVariable("proUploadId") Long proUploadId, Model model,
@@ -291,7 +298,7 @@ public class UserController {
 
     //회원이 올린 글에 전문가가 견적요청 보냈음,회원이 수락,작업완료
     @PostMapping("/proDetail/updateComplete/{proRequestId}")
-    public String updateComplete(@PathVariable Long proRequestId, @AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
+    public String updateComplete(@PathVariable Long proRequestId, @RequestParam String proRequestPay,@AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
         Long proId = userService.selectProIdByProRequestId(proRequestId); //전문가요청아이디로 전문가 아이디 찾기
         Long empCnt = proService.empCount(proId);
         String userId = customOAuth2User.getUserId();
@@ -301,7 +308,8 @@ public class UserController {
         System.out.println(empCnt);
 
         userService.updateUserComplete(proRequestId);
-        payCouponService.proRequsestPay(proRequestId, userId, proId); //캐쉬결제하는서비스
+
+        payCouponService.proRequsestPay(Long.parseLong(proRequestPay), userId, proId); //캐쉬결제하는서비스
 
         return "redirect:/user/proDetail/" + proRequestId;
     }
@@ -322,6 +330,5 @@ public class UserController {
 
         return "redirect:/user/requests";
     }
-
 
 }

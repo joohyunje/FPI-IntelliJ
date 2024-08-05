@@ -6,12 +6,16 @@
     <link rel="stylesheet" th:href="@{/css/layout/header.css}">
     <link rel="stylesheet" th:href="@{/css/main/common.css}">
     <link rel="stylesheet" th:href="@{/css/board/detail.css}">
+    <link rel="stylesheet" th:href="@{/css/layout/footer.css}">
+
 </head>
 <body>
 <div th:replace="~{/layout/header :: header}"></div>
 
 <div class="main" th:object="${commu}">
-    <h2 th:text="*{subject}" style="margin-top: 0"></h2>
+    <a th:href="@{/community}">
+        <h2 th:text="*{subject}" style="margin-top: 0"></h2>
+    </a>
     <div class="article" >
         <div class="article-title">
             <h3 th:text="*{communityTitle}"></h3>
@@ -36,7 +40,7 @@
                         <path d="M8 9.91273C8 9.55024 8.09852 9.19456 8.28501 8.88373L11.785 3.0504C12.8286 1.31102 15.5 2.05095 15.5 4.07939V8.35876C15.5 8.91104 15.9477 9.35876 16.5 9.35876H20.3415C21.6724 9.35876 22.632 10.6343 22.2632 11.9131L19.9555 19.9131C19.7085 20.7692 18.9249 21.3588 18.0338 21.3588H10C8.89543 21.3588 8 20.4633 8 19.3588V9.91273ZM20.8219 11.4973L18.5142 19.4973C18.4525 19.7114 18.2566 19.8588 18.0338 19.8588H10C9.72386 19.8588 9.5 19.6349 9.5 19.3588V9.91273C9.5 9.8221 9.52463 9.73318 9.57125 9.65548L13.0713 3.82214C13.1544 3.6835 13.2427 3.62915 13.3156 3.60284C13.4013 3.57184 13.514 3.56443 13.6335 3.59753C13.753 3.63063 13.8457 3.69493 13.9033 3.76565C13.9522 3.82568 14 3.91771 14 4.07939V8.35876C14 9.73947 15.1193 10.8588 16.5 10.8588H20.3415C20.6742 10.8588 20.9142 11.1777 20.8219 11.4973Z" stroke="black" stroke-width="0.5" fill="none"></path>
                         <path d="M2 11.3588C2 10.2542 2.89543 9.35876 4 9.35876H6C6.55228 9.35876 7 9.80648 7 10.3588V20.3588C7 20.911 6.55228 21.3588 6 21.3588H4C2.89543 21.3588 2 20.4633 2 19.3588V11.3588ZM4 10.8588H5.5V19.8588H4C3.72386 19.8588 3.5 19.6349 3.5 19.3588V11.3588C3.5 11.0826 3.72386 10.8588 4 10.8588Z" stroke="black" stroke-width="0.5" fill="none"></path>
                     </svg>
-                    <div th:text="'좋아요 ' + *{likeCount}">
+                    <div th:text="'좋아요 ' + *{likeCount}"  th:style="'font-weight: ' + (*{likeUse == null || likeUse == 0} ? 'normal' : 'bold')">
 
                     </div>
                 </div>
@@ -71,10 +75,10 @@
             <form id="commentForm" method="post">
                 <div class="comment-box">
                     <label for="commentContent"> 댓글 </label>
-                    <textarea  name="comment-input" id="commentContent"  onkeyup="enterkey()"  placeholder="본 게시판에서는 모든 사용자가 쾌적한 환경에서 소통할 수 있도록 비방, 모욕, 불쾌감을 주는 댓글은 관리자의 재량에 의해 삭제될 수 있습니다. "></textarea>
+                    <textarea  class="textarea" name="comment-input" id="commentContent"  onkeyup="enterkey()"  placeholder="본 게시판에서는 모든 사용자가 쾌적한 환경에서 소통할 수 있도록 비방, 모욕, 불쾌감을 주는 댓글은 관리자의 재량에 의해 삭제될 수 있습니다. "></textarea>
                 </div>
                 <div class="enter-box">
-                    <button type="button" onclick="updateComment()" id="enter-button" alt="댓글 등록">
+                    <button type="button" onclick="addComment()" id="enter-button" alt="댓글 등록">
                         등록
                     </button>
                 </div>
@@ -96,18 +100,19 @@
 <script th:src="@{/js/community.js}"></script>
 
 <script>
-    <!--    좋아요 기능-->
+    <!--    좋아요 기능, community.js 로드 이후에 실행, 게시판 수정 삭제없는경우 때문에 여기 배치-->
     document.getElementById('like').addEventListener('click',function(){
         var communityId = document.querySelector('input[name="communityId"]').value;
         var loginUserId = document.querySelector('input[name="loginUserId"]').value;
 
-        var iconColor = document.querySelector(".like-icon");
-        if(iconColor.style.color ==='black'){
-            iconColor.style.color ='rgb(106, 118, 133)';
-        }
-        else {
-            iconColor.style.color ='black';
-        }
+        // var iconColor = document.querySelector(".like-icon");
+        // if(iconColor.style.color ==='black'){
+        //     // iconColor.style.color ='rgb(106, 118, 133)';
+        //     iconColor.style.color ='red';
+        // }
+        // else {
+        //     iconColor.style.color ='black';
+        // }
 
         var likeForm = document.createElement('form');
         likeForm.method = 'post';
@@ -123,7 +128,13 @@
         likeForm.submit();
 
     })
-</script>
 
+
+
+
+
+
+</script>
+<div th:replace="~{/layout/footer :: footer}"></div>
 </body>
 </html>

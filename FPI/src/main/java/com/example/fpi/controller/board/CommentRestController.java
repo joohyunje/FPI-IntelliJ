@@ -33,12 +33,7 @@ public class CommentRestController {
             commentDTO.setAuthor(loginName);
         }
 
-
         commentService.saveComment(commentDTO);
-
-
-
-
 //         ResponseEntity.ok() 응답만들때사용
 //        build: 최종 객체 생성,
 //        완성된 http응답 객체 반환함
@@ -48,6 +43,7 @@ public class CommentRestController {
     //    댓글 수정
     @PutMapping("/{commentId}")
     public ResponseEntity<?> updateComment(@PathVariable Long commentId, @RequestBody CommentDTO commentDTO) {
+        commentDTO.setCommentId(commentId);
         commentService.updateComment(commentDTO);
 
         return ResponseEntity.ok().build();

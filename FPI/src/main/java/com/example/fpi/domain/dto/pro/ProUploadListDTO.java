@@ -19,5 +19,6 @@ public class ProUploadListDTO {
     private String proImg;
 
     private String proUploadFileRoute;
+    private Long reviewCount;
 
 }

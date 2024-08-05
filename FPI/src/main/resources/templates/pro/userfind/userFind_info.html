@@ -109,11 +109,11 @@
                     <div class="request-price">
                         <span th:text="${userUpload.userUploadPay}-${userUpload.userUploadPayRange}">10000원</span>
                         <span>~</span>
-                        <span th:text="${userUpload.userUploadPay}+${userUpload.userUploadPayRange}">30000원</span>
+                        <span id="plusUserUploadPay" th:text="${userUpload.userUploadPay}+${userUpload.userUploadPayRange}">30000원</span>
                     </div>
                     <div class="accept-cancle-btn">
                         <button th:if="${checkRequest == 0}"
-                                type="button" id="btn-modal" class="btn-accept">서비스 견적드리기</button>
+                                type="button" id="btn-modal" class="btn-accept btn-cancle">서비스 견적드리기</button>
                         <button
                                 th:unless="${checkRequest == 0}"
                                 type="button"
@@ -127,41 +127,37 @@
          </div>
      </div>
 
-<div id="modal" class="container">
-    <div class="container">
-        <div class="container">
-            <div class="box-container">
-                <div class="box-header">견적서</div>
-                <div class="box-content">
-                    <div class="description">
-                        <div class="pro-name user-name" th:text="${proLocation.proName}">주현제</div>
-                        <div class="address" style="margin-top: 10px;">
-                            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMCAyMGgyMFYwSDB6Ii8+PGcgc3Ryb2tlPSIjNzM3MzczIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiI+PHBhdGggZD0iTTE2LjIxOCA3LjI3NGMwIDQuOTQzLTUuODMzIDEwLjIyNi01LjgzMyAxMC4yMjZTNC41NSAxMi41NDIgNC41NSA3LjI3NGMwLTMuMDk3IDIuNjEyLTUuNjA3IDUuODM0LTUuNjA3IDMuMjIxIDAgNS44MzMgMi41MSA1LjgzMyA1LjYwN3oiLz48cGF0aCBkPSJNMTIuNjI4IDcuOTE3YTIuMDg0IDIuMDg0IDAgMTEtNC4xNjctLjAwMSAyLjA4NCAyLjA4NCAwIDAxNC4xNjcgMHoiLz48L2c+PC9nPjwvc3ZnPg=="
-                                 alt="">
-                            <span th:text="${proLocation.region} + ' ' + ${proLocation.city}"></span>
-                        </div>
-                    </div>
-                    <form th:action="@{/pro/sendProRequest}" name="pro_receviemodal" th:object="${proRequest}"
-                          id="pro_receviemodal" class="pro" method="post">
-                        <input type="hidden" th:value="${userUpload.userUploadId}" name="userUploadId">
-                        <div class="title">견적을 보내면 회원이 수락시 연락처가 공개됩니다.</div>
-                        <div class="col underline">
-                            <label for="pro_receive_modal" class="fontSize15 label">견적 금액 (원)</label>
-                            <input type="number" id="pro_receive_modal" th:field="*{proRequestPay}" name="price_input" class="form-control"
-                                   placeholder="정확한금액을 입력하세요">
-                        </div>
-                        <div class="">
-                            <textarea class="textarea" maxlength="65536" style="width:100%;height:300px" th:field="*{proRequestContent}"
-                                      placeholder="견적과 서비스에 대한 내용을 구체적으로 적으실 수록 회원의 수락률이 높습니다."></textarea>
-                        </div>
-
-
-                        <!--모달 창 닫음 -->
-                        <button type="submit" id="close-modal" class="btn">견적 보내기</button>
-
-                    </form>
+<div id="modal" class="container" style="margin-top: 0 !important;">
+    <div class="box-container">
+        <div class="box-header">견적서</div>
+        <div class="box-content">
+            <div class="description">
+                <div class="pro-name user-name" th:text="${proLocation.proName}">주현제</div>
+                <div class="address" style="margin-top: 10px;">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMCAyMGgyMFYwSDB6Ii8+PGcgc3Ryb2tlPSIjNzM3MzczIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiI+PHBhdGggZD0iTTE2LjIxOCA3LjI3NGMwIDQuOTQzLTUuODMzIDEwLjIyNi01LjgzMyAxMC4yMjZTNC41NSAxMi41NDIgNC41NSA3LjI3NGMwLTMuMDk3IDIuNjEyLTUuNjA3IDUuODM0LTUuNjA3IDMuMjIxIDAgNS44MzMgMi41MSA1LjgzMyA1LjYwN3oiLz48cGF0aCBkPSJNMTIuNjI4IDcuOTE3YTIuMDg0IDIuMDg0IDAgMTEtNC4xNjctLjAwMSAyLjA4NCAyLjA4NCAwIDAxNC4xNjcgMHoiLz48L2c+PC9nPjwvc3ZnPg=="
+                         alt="">
+                    <span th:text="${proLocation.region} + ' ' + ${proLocation.city}"></span>
                 </div>
             </div>
+            <form th:action="@{/pro/sendProRequest}" name="pro_receviemodal" th:object="${proRequest}"
+                  id="proreceviemodal" class="pro" method="post">
+                <input type="hidden" th:value="${userUpload.userUploadId}" name="userUploadId">
+                <div class="title">견적을 보내면 회원이 수락시 연락처가 공개됩니다.</div>
+                <div class="col underline">
+                    <label for="pro_receive_modal" class="fontSize15 label">견적 금액 (원)</label>
+                    <input type="number" id="pro_receive_modal" th:field="*{proRequestPay}" name="proRequestPay" class="form-control"
+                           placeholder="정확한금액을 입력하세요">
+                </div>
+                <div class="">
+                    <textarea class="textarea" maxlength="65536" style="width:100%;height:300px" th:field="*{proRequestContent}"
+                              placeholder="견적과 서비스에 대한 내용을 구체적으로 적으실 수록 회원의 수락률이 높습니다."></textarea>
+                </div>
+
+
+                <!--모달 창 닫음 -->
+                <button type="button" class="btn pro-btn"  onclick="proRecevieModalSubmit()">견적 보내기</button>
+                <button type="button" id="close-modal"  class="btn pro-btn">취소</button>
+            </form>
         </div>
     </div>
 </div>
@@ -268,5 +264,29 @@
     closeModal.addEventListener("click", e => {
       modalOff()
     })
+    function proRecevieModalSubmit(){
+        // value는 string으로 값이넘어가서, 숫자비교를 위해 형변환을 해준다
+        var proRequestPay = parseInt(document.querySelector('input[name="proRequestPay"]').value); //전문가 입력한 값
+
+        var plusUserUploadPay =parseInt(document.getElementById('plusUserUploadPay').textContent)//회원이 올린값 중 큰값
+
+
+        // 보유캐시보다 전문가에게 요청하는 금액이 크면 alert,입력창을 비워준다
+        if(plusUserUploadPay<proRequestPay){
+            console.log(proRequestPay)
+            console.log(plusUserUploadPay)
+            document.getElementById('proRequestContent').value ="";
+            document.querySelector('input[name="proRequestPay"]').value = "";
+            alert("회원이 원하는 금액보다 입력 금액이 많습니다.");
+        }
+
+        else {
+            document.getElementById('proreceviemodal').submit();
+        }
+
+    }
+
+
+
 </script>
 </html>

@@ -11,6 +11,7 @@ import com.example.fpi.domain.vo.board.LikeVO;
 import com.example.fpi.mapper.File.FileMapper;
 import com.example.fpi.mapper.board.CommentMapper;
 import com.example.fpi.mapper.board.CommunityMapper;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,20 +26,18 @@ import java.util.regex.Pattern;
 public class CommunityServiceImpl implements CommunityService {
 
     private final CommunityMapper communityMapper;
-    private final CommentMapper commentMapper;
-
 
 
     //    게시판 리스트,rest
     @Override
-    public PagedResponse<CommunityDetailDTO> getCommunityList(int page, int pageSize,String search ,String subject) {
+    public PagedResponse<CommunityDetailDTO> getCommunityList(int page, int pageSize,String search ,String subject,String sort) {
         int startRow = (page - 1) * pageSize;
         int endRow = page * pageSize;
 
         int totalLists = communityMapper.countCommunity(search,subject);
         int totalPages = (int) Math.ceil((double)totalLists/pageSize);
 
-        List<CommunityDetailDTO> lists = communityMapper.communitySelectAll(startRow,endRow,search,subject);
+        List<CommunityDetailDTO> lists = communityMapper.communitySelectAll(startRow,endRow,search,subject,sort);
         return new PagedResponse<>(lists, page, totalPages, pageSize, totalLists);
     }
 
@@ -47,8 +46,15 @@ public class CommunityServiceImpl implements CommunityService {
     //    게시판 상세페이지
     @Override
     @Transactional
-    public CommunityDetailDTO getCommunityDetail(Long communityId,CustomOAuth2User user) {
+    public CommunityDetailDTO getCommunityDetail(Long communityId, CustomOAuth2User user, HttpSession session) {
         CommunityDetailDTO community= communityMapper.selectCommunityDetail(communityId);
+//        로그인되어있는 사람의 이름을 가져옴(헤더이름)
+        if(session.getAttribute("loginName") == null){
+            community.setLoginName((String) session.getAttribute("proName"));
+        }
+        else if(session.getAttribute("proName") == null){
+            community.setLoginName((String) session.getAttribute("loginName"));
+        }
 
 //        로그인을 안했거나
         if (user ==null || !community.getAuthor().equals(community.getLoginName())) {
@@ -56,7 +62,13 @@ public class CommunityServiceImpl implements CommunityService {
             communityMapper.plusViews(communityId);
             System.out.println(community);
         }
-
+        if(user==null){
+            community.setLoginUserId("0");
+        }
+        else {
+            community.setLoginUserId(user.getUserId());
+        }
+        community.setLikeUse(selectMyLike(community.getLoginUserId(),communityId));
         return community;
     }
 
@@ -146,6 +158,11 @@ public class CommunityServiceImpl implements CommunityService {
         }
         System.out.println(likeDTO);
 
+    }
+
+    @Override //게시판 상세페이지에서 컬러효과위해 조회
+    public Long selectMyLike(String userId, Long communityId) {
+        return communityMapper.selectLike(userId,communityId);
     }
 
 

@@ -23,12 +23,10 @@ public interface PayCouponMapper {
     void useCoupon(Long couponId);
 
 //    유저가 올린글,전문가가 요청
-    Long cashRequest(Long proRequestId); //전문가에게 보낼금액
     void UserMinusCash(String userId,Long proRequestPay); //캐쉬차감
     void ProPlusCash(String userId,Long proRequestPay); //캐쉬받음
 
 //    전문가가 올린글,유저가 견적 요청
-    Long userCashRequest(Long userRequestId); //전문가에게 보낼금액
     void UserRequestMinusCash(String userId,Long userRequestPay); //캐쉬차감
     void UserRequestProPlusCash(String userId,Long userRequestPay); //캐쉬받음
 

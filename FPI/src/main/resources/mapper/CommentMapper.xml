@@ -9,7 +9,7 @@
         from tbl_user u join TBL_COMMENT c
                              on u.USER_ID =c.USER_ID
                                  and c.COMMUNITY_ID = #{community_Id}
-        order by COMMENT_UPDATE_DATE DESC
+        order by COMMENT_REGISTER_DATE desc
     </select>
 
     <!--    특정 게시글에 댓글 추가-->

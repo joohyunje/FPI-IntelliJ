@@ -975,68 +975,28 @@ from(select tpr.*,c.CATEGORY_NAME
      where USER_ID=3614057925
      order by ur.PRO_REVIEW_DATE DESC,ur.PRO_REVIEW_ID desc;
 
-SELECT ROWNUM , pro.*
-FROM (      SELECT TPU.PRO_UPLOAD_ID
-                 , TPU.PRO_UPLOAD_DATE
-                 , TC.CATEGORY_NAME
-                 , TS.SERVICE_NAME
-                 , TL.REGION
-                 , TL.CITY
-                 , TPU.PRO_UPLOAD_CONTENT
-                 , TP.PRO_STAR_RATE
-                 , TPU.PRO_UPLOAD_ADDRESS
-                 , TPU.PRO_UPLOAD_PAY_RANGE
-                 , TP.PRO_NAME
-                 , TP.PRO_ID
-                 , TPU.PRO_UPLOAD_TITLE
-                 , TP.EMP_CNT
-                 , puf.PRO_UPLOAD_FILE_ROUTE
-            FROM TBL_PRO_UPLOAD TPU
-                     INNER JOIN TBL_SERVICE ts
-                                ON TPU.SERVICE_ID = TS.SERVICE_ID
-                     INNER JOIN TBL_CATEGORY tc
-                                ON TS.CATEGORY_ID = TC.CATEGORY_ID
-                     INNER JOIN TBL_PRO TP
-                                ON TP.PRO_ID = TPU.PRO_ID
-                     INNER JOIN TBL_LOCATION tl
-                                ON TP.LOCATION_ID = TL.LOCATION_ID
-                     JOIN TBL_PRO_UPLOAD_FILE puf
-                          On TPU.PRO_UPLOAD_ID = puf.PRO_UPLOAD_ID
-            order by TPU.PRO_UPLOAD_DATE desc
-     ) pro
-WHERE ROWNUM <= 8
-
-SELECT ROWNUM , pro.*
-FROM (  select    TPU.PRO_UPLOAD_ID, TPU.PRO_ID, tpu.PRO_UPLOAD_TITLE, tpu.PRO_UPLOAD_DATE, tp.PRO_STAR_RATE, tp.PRO_NAME,
-        ts.SERVICE_NAME, tp.PRO_IMG
-        from TBL_PRO_UPLOAD TPU
-        inner join TBL_PRO TP
-        on TPU.PRO_ID = TP.PRO_ID
-        inner join TBL_SERVICE TS
-        on tpu.SERVICE_ID = ts.SERVICE_ID
-        inner join TBL_CATEGORY tg
-        on tg.CATEGORY_ID = ts.CATEGORY_ID
-            order by TPU.PRO_UPLOAD_DATE desc
-     ) pro
-WHERE ROWNUM <= 6
 
 
-SELECT ROWNUM, pro.*
-FROM (select TPU.PRO_UPLOAD_ID,
-             TPU.PRO_ID,
-             tpu.PRO_UPLOAD_TITLE,
-             tpu.PRO_UPLOAD_DATE,
-             tp.PRO_STAR_RATE,
-             tp.PRO_NAME,
-             ts.SERVICE_NAME,
-             tp.PRO_IMG
-      from TBL_PRO_UPLOAD TPU
-               inner join TBL_PRO TP
-                          on TPU.PRO_ID = TP.PRO_ID
-               inner join TBL_SERVICE TS
-                          on tpu.SERVICE_ID = ts.SERVICE_ID
-               inner join TBL_CATEGORY tg
-                          on tg.CATEGORY_ID = ts.CATEGORY_ID
-      order by tpu.PRO_UPLOAD_DATE desc) pro
-WHERE ROWNUM <= 6
+SELECT * FROM (
+                  SELECT
+                      TUU.USER_UPLOAD_ID,
+                      TUU.USER_ID,
+                      TUU.USER_UPLOAD_TITLE,
+                      TUU.USER_UPLOAD_DATE,
+                      TU.USER_NAME,
+                      TS.SERVICE_NAME,
+                      uuf.user_UPLOAD_FILE_ROUTE,
+                      ROW_NUMBER() OVER (PARTITION BY uuf.USER_UPLOAD_ID ORDER BY uuf.user_UPLOAD_FILE_ROUTE) AS rn
+                  FROM TBL_USER_UPLOAD TUU
+                           INNER JOIN TBL_USER TU ON TUU.USER_ID = TU.USER_ID
+                           INNER JOIN TBL_SERVICE TS ON TUU.SERVICE_ID = TS.SERVICE_ID
+                           INNER JOIN TBL_CATEGORY TC ON TS.CATEGORY_ID = TC.CATEGORY_ID
+                           JOIN TBL_USER_UPLOAD_FILE uuf ON TUU.USER_UPLOAD_ID = uuf.USER_UPLOAD_ID
+                  ORDER BY
+                      TUU.USER_UPLOAD_DATE DESC
+              )
+WHERE rn = 1
+  AND ROWNUM <= 8;
+
+
 
