@@ -15,11 +15,11 @@ public class UserReviewRestController {
 
     private final UserService userService;
 
+    // 회원이 받은 리뷰 동적
     @GetMapping("/{userId}")
     public ResponseEntity<?> getReviews(@PathVariable String userId) {
         return ResponseEntity.ok(userService.selectUserReview(userId));
     }
-
 
 
 }

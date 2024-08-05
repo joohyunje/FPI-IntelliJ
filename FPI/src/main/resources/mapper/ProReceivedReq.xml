@@ -73,6 +73,7 @@
         WHERE rn &gt; #{startRow}
     </select>
 
+    <!--    전문가가 보낸 요청 갯수-->
     <select id="countSendRequest">
         select count(*)
         from (SELECT PRO_REQUEST_ID,

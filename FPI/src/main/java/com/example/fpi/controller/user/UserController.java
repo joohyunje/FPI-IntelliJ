@@ -108,11 +108,13 @@ public class UserController {
 
     }
 
+    // 전문가 찾기
     @GetMapping("/proFind")
     public String uploadRest() {
         return "user/profind/FindPro";
     }
 
+    // 메인에서 카테고리 눌러서 전문가 찾기
     @GetMapping("/proFind/{searchType}")
     public String uploadRest2(Model model, @PathVariable("searchType") String searchType) {
         model.addAttribute("searchType", searchType);
@@ -189,6 +191,7 @@ public String uploadRest3(Model model, @PathVariable("proId") Long proId) {
         return "/user/upload/user_receiveform";
     }
 
+    // 회원 견적 작성하기
     @PostMapping("/upload")
     public String upload(UserUploadDTO userUpload,
                          @AuthenticationPrincipal CustomOAuth2User customOAuth2User,
@@ -208,6 +211,7 @@ public String uploadRest3(Model model, @PathVariable("proId") Long proId) {
         return "redirect:/main/user";
     }
 
+    // 회원이 요청 보내기
     @PostMapping("/sendUserRequest")
     public String sendRequest(@RequestParam Long proUploadId,
                               UserRequestDTO userRequest,
@@ -224,6 +228,7 @@ public String uploadRest3(Model model, @PathVariable("proId") Long proId) {
 
     }
 
+    // 회원이 받은 요청에서 전문가의 리뷰 쓰기
     @GetMapping("/proReview/{proRequestId}")
     public String proReviewForm(@PathVariable Long proRequestId,
                                 Model model) {
@@ -238,6 +243,7 @@ public String uploadRest3(Model model, @PathVariable("proId") Long proId) {
         return "/user/req_list/reviewWrite";
     }
 
+    // 회원이 보낸 요청에서 전문가의 리뷰 쓰기
     @GetMapping("/proReview2/{userRequestId}")
     public String proReviewForm2(@PathVariable Long userRequestId,
                                  Model model) {
@@ -252,6 +258,7 @@ public String uploadRest3(Model model, @PathVariable("proId") Long proId) {
         return "/user/req_list/reviewWrite";
     }
 
+    // 회원이 리뷰 작성(전문가가 받는 리뷰)
     @PostMapping("/proReview")
     public String proReview(ProReviewDTO proReview,
                             @AuthenticationPrincipal CustomOAuth2User customOAuth2User,
@@ -282,6 +289,7 @@ public String uploadRest3(Model model, @PathVariable("proId") Long proId) {
 
     }
 
+    // 회원이 받은 요청에서 삭제
     @PostMapping("/proDetail/delete/{proRequestId}")
     public String deleteProRequest(@PathVariable Long proRequestId) {
         userService.deleteProRequest(proRequestId);
@@ -289,6 +297,7 @@ public String uploadRest3(Model model, @PathVariable("proId") Long proId) {
         return "redirect:/user/requests";
     }
 
+    // 회원이 받은 요청에서 수락 업데이트 하기
     @PostMapping("/proDetail/updateAccept/{proRequestId}")
     public String updateAccept(@PathVariable Long proRequestId) {
 
@@ -314,6 +323,7 @@ public String uploadRest3(Model model, @PathVariable("proId") Long proId) {
         return "redirect:/user/proDetail/" + proRequestId;
     }
 
+    // 회원이 전문가 신고하기
     @PostMapping("/accusePro")
     public String accusePro(@RequestParam Long proRequestId,
                             ProAccuseDTO proAccuse,

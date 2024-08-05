@@ -124,7 +124,7 @@
   let search = '';
   let searchType = '';
   let test = '';
-  let searchUserName= $('#searchUserName').val();
+  let searchUserName = $('#searchUserName').val();
   let searchSubject = 'title';
 
 
@@ -160,26 +160,25 @@
   }
 
   window.onload = function () {
-      console.log(searchSubject)
+    console.log(searchSubject)
     test = document.getElementById('test').value
 
     if (test !== '') {
       searchType = test
-
-        $("#select-category").val(test);
+      $("#select-category").val(test);
     }
-      if(searchUserName !== ''){
-          search = $('input[name="search"]').val(searchUserName)
-          searchSubject='name' //컨트롤러나 매퍼로 넘어가기위해 정함
-          $("#searchSubject").val('name'); //select옵션에서 해당값이선택됨
-          saveKeyword();
-          getList(1);
-          return;
-      }
+    if (searchUserName !== '') {
+      search = $('input[name="search"]').val(searchUserName)
+      searchSubject = 'name' //컨트롤러나 매퍼로 넘어가기위해 정함
+      $("#searchSubject").val('name'); //select옵션에서 해당값이선택됨
+      saveKeyword();
+      getList(1);
+      return;
+    }
 
 
     search = $('input[name="search"]').val();
-    searchSubject= $("#searchSubject").val();
+    searchSubject = $("#searchSubject").val();
     getList(1);
   }
 
@@ -192,7 +191,7 @@
         size: pageSize,
         search: search,
         searchType: searchType,
-        searchSubject:searchSubject
+        searchSubject: searchSubject
 
       },
       success: function (data) {
@@ -212,8 +211,8 @@
     uploadContainer.empty();
 
 
-      if(uploads.length === 0){
-          const uploadRow = `
+    if (uploads.length === 0) {
+      const uploadRow = `
         <li class="">
                 <div class="feed-container">
                     <div class="item-wrapper">
@@ -222,12 +221,11 @@
                 </div>
         </li>
     `;
-          uploadContainer.append(uploadRow);
-      }
+      uploadContainer.append(uploadRow);
+    }
 
 
-
-      uploads.forEach(function (upload) {
+    uploads.forEach(function (upload) {
       const userImgSrc = upload.userImg ? upload.userImg : '/img/basicIMG.png';
       const starRateText = upload.userStarRate != 0 ? upload.userStarRate : '(New)'
       let uploadRow = `<li class="feed-item">
@@ -267,9 +265,9 @@
     const PaginationContainer = $('.pagination');
     PaginationContainer.empty();
 
-      if(pagination.content.length === 0){
-          return
-      }
+    if (pagination.content.length === 0) {
+      return
+    }
 
     // 이전 버튼
     const prevDisabled = pagination.currentPage === 1 ? 'disabled' : '';
@@ -319,9 +317,9 @@
     getList(1);
   }
 
-  function selectSubject(){
-      searchSubject=$("#searchSubject option:selected").val();
-      getList(1)
+  function selectSubject() {
+    searchSubject = $("#searchSubject option:selected").val();
+    getList(1)
   }
 </script>
 </html>

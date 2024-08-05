@@ -23,7 +23,7 @@
                     </span>
                 </h2>
                 <div style="display: flex">
-<!--                    selectbox, 제목인지 전문가 이름인지-->
+                    <!--                    selectbox, 제목인지 전문가 이름인지-->
                     <div class="write-box">
                         <label class="service-area">
                             <select id="searchSubject" class="service-part" name="searchSubject"
@@ -38,7 +38,7 @@
                         </label>
                     </div>
 
-<!--                    selectbox 서비스이름-->
+                    <!--                    selectbox 서비스이름-->
                     <div class="write-box">
                         <label class="service-area">
                             <select id="select-category" class="service-part" name="search-type"
@@ -119,7 +119,7 @@
   let search = '';
   let searchType = '';
   let test = '';
-  let searchProName= $('#searchProName').val();
+  let searchProName = $('#searchProName').val();
   let searchSubject = 'title';
 
   // 날짜 포맷
@@ -158,20 +158,21 @@
     test = document.getElementById('test').value
     console.log(searchProName)
     if (test !== '') {
-        searchType = test
-        $("#select-category").val(test);
+
+      searchType = test
+      $("#select-category").val(test);
     }
-    if(searchProName !== ''){
-        search = $('input[name="search"]').val(searchProName)
-        searchSubject='name' //컨트롤러나 매퍼로 넘어가기위해 정함
-        $("#searchSubject").val('name'); //select옵션에서 해당값이선택됨
-        saveKeyword();
-        getList(1);
-        return;
+    if (searchProName !== '') {
+      search = $('input[name="search"]').val(searchProName)
+      searchSubject = 'name' //컨트롤러나 매퍼로 넘어가기위해 정함
+      $("#searchSubject").val('name'); //select옵션에서 해당값이선택됨
+      saveKeyword();
+      getList(1);
+      return;
     }
 
     search = $('input[name="search"]').val();
-    searchSubject= $("#searchSubject").val();
+    searchSubject = $("#searchSubject").val();
     getList(1);
   }
 
@@ -184,7 +185,7 @@
         size: pageSize,
         search: search,
         searchType: searchType,
-        searchSubject:searchSubject
+        searchSubject: searchSubject
       },
       success: function (data) {
         // 리스트 뿌려주는 함수.
@@ -202,8 +203,8 @@
     const uploadContainer = $('.feed ul');
     uploadContainer.empty();
 
-      if(uploads.length === 0){
-          const uploadRow = `
+    if (uploads.length === 0) {
+      const uploadRow = `
         <li class="">
                 <div class="feed-container">
                     <div class="item-wrapper">
@@ -212,11 +213,11 @@
                 </div>
         </li>
     `;
-          uploadContainer.append(uploadRow);
-      }
+      uploadContainer.append(uploadRow);
+    }
 
 
-      uploads.forEach(function (upload) {
+    uploads.forEach(function (upload) {
       const proImgSrc = upload.proImg ? upload.proImg : '/img/basicIMG.png';
       const starRateText = upload.proStarRate != 0 ? upload.proStarRate : '(New)'
       let uploadRow = `<li class="feed-item">
@@ -259,9 +260,9 @@
     const PaginationContainer = $('.pagination');
     PaginationContainer.empty();
 
-      if(pagination.content.length === 0){
-          return
-      }
+    if (pagination.content.length === 0) {
+      return
+    }
 
     // 이전 버튼
     const prevDisabled = pagination.currentPage === 1 ? 'disabled' : '';
@@ -310,14 +311,16 @@
     console.log(searchType)
     getList(1);
   }
-  function selectSubject(){
-      searchSubject=$("#searchSubject option:selected").val();
-      getList(1)
+
+  function selectSubject() {
+    searchSubject = $("#searchSubject option:selected").val();
+    getList(1)
   }
+
   // 검색창의 x버튼 누르면 검색어 사라지고 다시 서치항목뜨게함
-  document.getElementById('delete-button').addEventListener("click",function (){
-      document.getElementById('searchInput').value = '';
-      saveKeyword();
+  document.getElementById('delete-button').addEventListener("click", function () {
+    document.getElementById('searchInput').value = '';
+    saveKeyword();
   });
 
 
