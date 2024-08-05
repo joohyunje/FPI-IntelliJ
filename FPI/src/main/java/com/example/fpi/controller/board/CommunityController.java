@@ -2,6 +2,7 @@ package com.example.fpi.controller.board;
 
 import com.example.fpi.domain.dto.board.CommunityDTO;
 import com.example.fpi.domain.dto.board.CommunityDetailDTO;
+import com.example.fpi.domain.dto.board.LikeDTO;
 import com.example.fpi.domain.oauth.CustomOAuth2User;
 import com.example.fpi.service.board.CommunityService;
 import com.example.fpi.service.pro.ProService;
@@ -29,7 +30,25 @@ public class CommunityController {
 
     //    커뮤니티 게시판상세보기
     @GetMapping("/community/detail/{communityId}")
-    public String detail(@PathVariable("communityId") Long communityId, Model model,
+    public String detail(@PathVariable("communityId") Long communityId,Long commentId, Model model,
+                         @AuthenticationPrincipal CustomOAuth2User customOAuth2User,HttpSession session) {
+
+        CommunityDetailDTO commu = communityService.getCommunityDetail(communityId,customOAuth2User,session);
+
+
+//        로그인했다면, 그 로그인값을 detail에 넣어줌
+        if(customOAuth2User != null && customOAuth2User.getUserId() != null){
+            commu.setLoginUserId(customOAuth2User.getUserId());
+        }
+
+        model.addAttribute("commu", commu);
+        model.addAttribute("commentId", commentId);
+
+        return "/community/detail";
+    }
+//마이페이지에서 댓글누르면 해당 댓글위치로 이동
+    @GetMapping("/community/detail/{communityId}/{commentId}")
+    public String detailComment(@PathVariable("communityId") Long communityId,@PathVariable("commentId") Long commentId, Model model,
                          @AuthenticationPrincipal CustomOAuth2User customOAuth2User,HttpSession session) {
 
         CommunityDetailDTO commu = communityService.getCommunityDetail(communityId,customOAuth2User,session);
@@ -39,6 +58,7 @@ public class CommunityController {
         }
 
         model.addAttribute("commu", commu);
+        model.addAttribute("commentId", commentId);
         System.out.println(commu.getLoginName());
         return "/community/detail";
     }
@@ -48,6 +68,7 @@ public class CommunityController {
     public String writeForm(Model model, @AuthenticationPrincipal CustomOAuth2User customOAuth2User,HttpSession session){
         CommunityDetailDTO communityInfo = new CommunityDetailDTO();
         communityInfo.setUserId(customOAuth2User.getUserId());
+
 
 //        해당값을 이용하여 카테고리 선택시 전문가팁 유무를 띄워줄것임
         if(session.getAttribute("loginName") == null){
@@ -89,7 +110,7 @@ public class CommunityController {
         String loginName = (String) session.getAttribute("loginName");
         String proName = (String) session.getAttribute("proName");
 
-//       게시글 아이디가 없고 작성자와 로그인된 사람이 같다면
+//       게시글 아이디가 있고 작성자와 로그인된 사람이 같다면 =>수정
         if(communityInfo.getCommunityId() !=null && ( communityInfo.getAuthor() == loginName || communityInfo.getAuthor() == proName)){
             communityService.updateCommunity(communityInfo);
 
@@ -105,7 +126,6 @@ public class CommunityController {
         }
 
 //        커뮤니티 글작성
-//        community.setUserId(userId);
         communityService.saveCommunity(communityInfo);
 
         return "redirect:/community";
@@ -122,7 +142,7 @@ public class CommunityController {
     @PostMapping("/community/like/{communityId}")
     public String like(@PathVariable Long communityId, @RequestParam("loginUserId") String loginUserId){
         communityService.selectLike(loginUserId,communityId);
-        System.out.println();
+
         return "redirect:/community/detail/{communityId}";
     }
 }

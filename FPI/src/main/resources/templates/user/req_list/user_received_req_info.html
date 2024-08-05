@@ -134,10 +134,9 @@
         <div class="request-price-side">
             <div class="side-wrapper">
                 <div class="request-price">
-                    <input type="hidden" name="proRequestPay" th:value="${proRequest.proRequestPay}">
                     <input type="hidden" name="userCash" th:value="${userCash}">
 
-                    <span th:text="${proRequest.proRequestPay}" ></span>
+                    <span id="proRequestPay" th:text="${proRequest.proRequestPay}" ></span>
                     <span>원에 요청을 보내주셨습니다. 수락하시겠습니까?</span>
 
                     <!-- 작업이 완료 되면 띄우도록 -->
@@ -210,7 +209,7 @@
 <script>
   const modal = document.getElementById("modal")
   // value는 string으로 값이넘어가서, 숫자비교를 위해 형변환을 해준다
-  var proRequestPay = parseInt(document.querySelector('input[name="proRequestPay"]').value);
+  var proRequestPay = parseInt(document.getElementById('proRequestPay').textContent);
   var userCash = parseInt(document.querySelector('input[name="userCash"]').value);
 
   console.log(typeof  proRequestPay+proRequestPay)
@@ -345,6 +344,7 @@
               var form = document.createElement('form');
               form.method = 'post';
               form.action = '/user/proDetail/updateAccept/' + proRequestId;
+
               document.body.appendChild(form);
               form.submit();
           }
@@ -361,6 +361,13 @@
     var form = document.createElement('form');
     form.method = 'post';
     form.action = '/user/proDetail/updateComplete/' + proRequestId;
+
+      // input hidden 태그를 폼에 담아서 같이 금액을 넘겨줌
+      const payInput = document.createElement('input')
+      payInput.type='hidden'
+      payInput.name='proRequestPay'
+      payInput.value=proRequestPay.toString()
+      form.appendChild(payInput)
     document.body.appendChild(form);
     form.submit();
   }

@@ -143,7 +143,7 @@
     border-radius: 8px;
 }
 
-.comment-box textarea{
+.comment-box .textarea{
     width: 100%;
     min-height: 2.575rem;
     padding: 0.4rem;
@@ -154,6 +154,19 @@
     height: 0;
     outline: none;
     word-wrap:break-word !important;
+}
+.editTextarea{
+    width: 100%;
+    min-height: 2.575rem;
+    padding: 0.4rem;
+    font-size: .875rem;
+    color: #2d2d2d;
+    resize:none ;
+    border: 0;
+    outline: none;
+    word-wrap:break-word !important;
+    text-align: left;
+
 }
 
 .enter-box{

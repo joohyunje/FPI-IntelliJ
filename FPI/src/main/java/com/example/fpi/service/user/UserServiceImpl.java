@@ -16,6 +16,7 @@ import com.example.fpi.mapper.pro.ProMapper;
 import com.example.fpi.mapper.user.PayCouponMapper;
 import com.example.fpi.mapper.user.UserMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,8 +36,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
     private final FileMapper fileMapper;
-    private final ProMapper proMapper;
-    private final PayCouponMapper payCouponMapper;
 
     //    받은 요청 목록
     @Override
@@ -115,15 +114,16 @@ public class UserServiceImpl implements UserService {
         userMapper.editApproval(userId);
     }
 
+//    전문가페이지에서 회원이 올린 글보기, 회원찾기 부분
     @Override
-    public PagedResponse<UserUploadListDTO> selectUserUploadList(int page, int pageSize, String search, String searchType) {
+    public PagedResponse<UserUploadListDTO> selectUserUploadList(int page, int pageSize, String search, String searchType,String searchSubject) {
         int startRow = (page - 1) * pageSize;
         int endRow = page * pageSize;
 
-        int totalUploads = userMapper.countUserUpload(search, searchType);
+        int totalUploads = userMapper.countUserUpload(search, searchType,searchSubject);
         int totalPages = (int) Math.ceil((double) totalUploads / pageSize);
 
-        List<UserUploadListDTO> uploads = userMapper.selectUserUploadList(startRow, endRow, search, searchType);
+        List<UserUploadListDTO> uploads = userMapper.selectUserUploadList(startRow, endRow, search, searchType,searchSubject);
 
         return new PagedResponse<>(uploads, page, totalPages, pageSize, totalUploads);
     }
@@ -274,7 +274,6 @@ public class UserServiceImpl implements UserService {
     public Long selectUserReviewCnt(String userId) {
         return userMapper.selectUserReviewCnt(userId);
     }
-
 
 
 }

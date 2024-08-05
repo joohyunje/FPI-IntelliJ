@@ -13,27 +13,29 @@ public interface ActiveListMapper {
 //    마이페이지 활동목록 가져오기
 
 //    작성한 게시글 목록
-    List<UserCommunityListDTO> selectUserCommuList(String userId,String myName, int startRow, int endRow);
+    List<UserCommunityListDTO> selectUserCommuList(String userId,String myName, int startRow, int endRow,String sort);
     int countUserCommu(String userId,String myName);
 
+
+
 //    작성한 댓글목록
-    List<CommentListDTO> selectUserCommentList(String userId, String myName, int startRow, int endRow);
+    List<CommentListDTO> selectUserCommentList(String userId, String myName, int startRow, int endRow,String sort);
     int countUserComment(String userId,String myName);
 
 //    회원이 작성한 리뷰
-    List<ProReviewListDTO> selectUserWriteReview(String userId, int startRow, int endRow);
+    List<ProReviewListDTO> selectUserWriteReview(String userId, int startRow, int endRow,String sort);
     int countUserWriteReview(String userId);
 
     //    회원이 전문가에게  받은 리뷰
-    List<UserReviewListDTO> selectUserReceiveReview(String userId, int startRow, int endRow);
+    List<UserReviewListDTO> selectUserReceiveReview(String userId, int startRow, int endRow,String sort);
     int countUserReceiveReview(String userId);
 
 
     //    전문가가 작성한 리뷰
-    List<UserReviewListDTO> selectProWriteReview(Long proId, int startRow, int endRow);
+    List<UserReviewListDTO> selectProWriteReview(Long proId, int startRow, int endRow,String sort);
     int countProWriteReview(Long ProId);
 
     //    전문가가 회원에게  받은 리뷰
-    List<ProReviewListDTO> selectProReceiveReview(Long proId, int startRow, int endRow);
+    List<ProReviewListDTO> selectProReceiveReview(Long proId, int startRow, int endRow,String sort);
     int countProReceiveReview(Long proId);
 }

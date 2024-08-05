@@ -9,8 +9,9 @@ $(document).ready(function () {
     $('#editBtn').click(function () {
         window.location.href = '/community/edit/' + communityId;
     });
+    const communityId = window.location.pathname.split('/')[3];
 
-    getCommentsList(communityId); //
+    getCommentsList(communityId);
 })
 
 // 게시글 삭제
@@ -24,32 +25,7 @@ document.getElementById('deleteBtn').addEventListener('click', function () {
     form.submit();
 })
 
-// 게시글 좋아요
-document.getElementById('like').addEventListener('click', function () {
-    // var communityId = document.querySelector('input[name="communityId"]').value;
-    // var loginUserId = document.querySelector('input[name="loginUserId"]').value;
 
-    var iconColor = document.querySelector(".like-icon");
-    if (iconColor.style.color === 'black') {
-        iconColor.style.color = 'rgb(106, 118, 133)';
-    } else {
-        iconColor.style.color = 'black';
-    }
-
-    var likeForm = document.createElement('form');
-    likeForm.method = 'post';
-    likeForm.action = '/community/like/' + communityId;
-
-    // input hidden으로 로그인유저아이디를 컨트롤러로 넘겨줌
-    var Input = document.createElement('input');
-    Input.type = 'hidden';
-    Input.name = 'loginUserId';
-    Input.value = loginUserId;
-    likeForm.appendChild(Input);
-    document.body.appendChild(likeForm);
-    likeForm.submit();
-
-})
 
 // 댓글 리스트 가져옴
 function getCommentsList(communityId) {
@@ -96,32 +72,47 @@ function getCommentsList(communityId) {
 
                 // 종합적으로 뿌려줄 html
                 let commentElement = `
-                    <li class="comment-box " id="comment-${comment.commentId}" style="display:flex;flex-direction: column;list-style-type: none;margin-bottom: 0.3rem;padding:0.625rem 1.875rem; ">
-                        <div class="comment-body">
-                            <strong class="comment-title">
-                            <img alt="#" src="https://static.cdn.soomgo.com/upload/profile-default/soomgo_65.jpg?h=320&w=320&webp=1">
-                            <span class="comment-nickname">${comment.author}</span>
-                            <span class="comment-date">${commentDate}${editStr}</span>
-                            </strong>
-<!--                        <img class="delete-icon" alt="#" width="10px" height="10px" src="https://w7.pngwing.com/pngs/447/77/png-transparent-computer-icons-x-mark-symbol-check-mark-symbol-miscellaneous-cross-sign.png">-->
-                            ${buttons}
-                            <div class="comment-text">
-                                ${comment.commentContent}
+                    <li class="comment-box" id="comment-${comment.commentId}" style="display:flex;flex-direction: column;list-style-type: none;margin-bottom: 0.3rem;padding:0.625rem 1.875rem; ">
+                        <div class="comment-body commentEdit ">
+                            <div class="comment-body">
+                                <strong class="comment-title">
+                                <img alt="#" src="https://static.cdn.soomgo.com/upload/profile-default/soomgo_65.jpg?h=320&w=320&webp=1">
+                                <span class="comment-nickname">${comment.author}</span>
+                                <span class="comment-date">${commentDate}${editStr}</span>
+                                </strong>
+                                ${buttons}
+                                <div class="comment-text">
+                                    ${comment.commentContent}
+                                </div>
                             </div>
                         </div>
-
                     </li>
                 `
                 // 해당 섹션에 댓글의 개수 만큼 차례대로 추가
                 commentListArea.append(commentElement);
-            })
+            });
+
+            // 주소창에서 해당 댓글아이디를 찾아서 이동
+            const commentId = window.location.pathname.split('/')[4];
+            if (commentId) {
+                const targetComment = $(`#comment-${commentId}`);
+                if (targetComment.length) {
+                    // 댓글을 위치로 딱 이동함
+                    const offset = targetComment.offset().top;
+                    $('html, body').scrollTop(offset);
+                    // 강조 스타일 추가
+                    targetComment.css({
+                        'background-color': '#F0F8FF'
+                    });
+                }
+            }
+
         },
         error: function (data) {
             console.error(data, "실패");
         }
     })
 }
-
 // 엔터키로 댓글 추가하기
 function enterkey() {
     if (window.event.keyCode == 13) {
@@ -185,9 +176,9 @@ function deleteComment(commentId) {
 function createEditForm(commentId, currentContent){
     return `
 <div style="display: flex">
-        <div style="display: flex;flex-wrap: wrap;width: 100%">
+        <div style="width: 100%">
             <label for="commentContent"> 댓글 </label>
-            <textarea  style=" text-align: left;" class="comment-edit-content" name="comment-input" id="commentContent"  onkeyup="enterkey()" >${currentContent}</textarea>
+            <textarea class="comment-edit-content editTextarea" name="comment-input" id="commentContent"  onkeyup="enterkey()" >${currentContent}</textarea>
         </div>
         <div style="display: flex;">
             <div class="enter-box" style="display:flex;">
@@ -196,13 +187,11 @@ function createEditForm(commentId, currentContent){
             <div class="enter-box" style="display:flex;">
                 <button class="btn btn-secondary" onClick="cancelEdit()">취소</button>
             </div>
-      
         </div>
 
+
 </div>
-
-
-    `;
+`;
 
 }
 
@@ -211,7 +200,7 @@ function updateComment(commentId) {
     // 기존 댓글 내용을 가지고 와서, 수정 폼에 넣는다.
     let comment = $(`#comment-${commentId}`);
     let content = comment.find('.comment-text').text()
-    comment.find('.comment-body').html(createEditForm(commentId, content))
+    comment.find('.commentEdit').html(createEditForm(commentId, content))
 }
 
 //수정 완료 버튼 눌렀을때

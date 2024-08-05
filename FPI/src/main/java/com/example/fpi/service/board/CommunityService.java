@@ -18,9 +18,7 @@ import java.util.List;
 public interface CommunityService {
 
     //    게시판리스트 select
-    PagedResponse<CommunityDetailDTO> getCommunityList(int page, int pageSize,String search,String subject); //전체게시판,페이징
-//    List<CommunityDTO> SelectBoardList(int page, int pageSize); //자유게시판
-//    List<CommunityDTO> SelectProTipList(int page, int pageSize); //전문가팁
+    PagedResponse<CommunityDetailDTO> getCommunityList(int page, int pageSize,String search,String subject,String sort); //전체게시판,페이징
 
 
 
@@ -32,6 +30,7 @@ public interface CommunityService {
 
     void deleteCommunity(Long communityId); //게시판 삭제
     void selectLike(String userId,Long communityId); //게시판 좋아요기능
+    Long selectMyLike(String userId,Long communityId); //좋아요한 게시판인지
 
 
 

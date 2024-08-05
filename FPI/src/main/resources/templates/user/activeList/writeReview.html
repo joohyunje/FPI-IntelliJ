@@ -8,6 +8,7 @@
     <link rel="stylesheet" th:href="@{/css/main/common.css}">
     <link rel="stylesheet" th:href="@{/css/layout/header.css}">
     <link rel="stylesheet" th:href="@{/css/layout/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/user/req_list/pagination.css}">
 
 </head>
 <body>
@@ -45,50 +46,227 @@
                     <th style="width: 10%">등록일</th>
                 </tr>
                 </thead>
-                <tbody id ="commuList">
-                <tr th:if="${session.proName}==null" th:each="list : ${lists}" th:object="${list}">
-                    <td th:text="*{RN}" class="list-num">1</td>
-                    <td th:text="*{proName}" class="list-num">전문가이름</td>
-                    <td th:text="*{proReviewContent}" class="list-num">리뷰내용</td>
-                    <td class="list-num" style="display: flex;justify-content: center">
-                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=" alt="">
-                        <div th:text="*{proReviewRate}"></div>
-                    </td>
-                    <td th:text="*{#temporals.format(proReviewDate, 'yy년 MM월 dd일')}" class="list-date">01-01</td>
-                </tr>
-                <tr th:unless="${session.proName}==null" th:each="list : ${lists}" th:object="${list}">
-                    <td th:text="*{RN}" class="list-num">1</td>
-                    <td th:text="*{userName}" class="list-num">전문가이름</td>
-                    <td th:text="*{userReviewContent}" class="list-num">리뷰내용</td>
-                    <td class="list-num" style="display: flex;justify-content: center">
-                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=" alt="">
-                        <div th:text="*{userReviewRate}"></div>
-                    </td>
-                    <td th:text="*{#temporals.format(userReviewDate, 'yy년 MM월 dd일')}" class="list-date">01-01</td>
-                </tr>
-                </tbody>
+                <div class="sorting-options" style="display: flex;justify-content: flex-end;margin-bottom: 10px">
+                    <label for="sort-send-newest" style="margin-right: 5px">
+                        <input type="radio" id="sort-send-newest" name="sort" value="newest" checked>
+                        최신순
+                    </label>
+                    <label for="sort-send-oldest">
+                        <input type="radio" id="sort-send-oldest" name="sort" value="oldest">
+                        오래된 순
+                    </label>
+                </div>
+                <tbody id ="userWriteReviewList" class="userWriteReviewList"> </tbody>
+                <tbody id ="proWriteReviewList" class="proWriteReviewList"> </tbody>
             </table>
-            <ul class="list-number ">
-                <li style="margin-right: 0.5rem" th:classappend="${startPage == 1} ? 'disabled' : ''" class="page-item">
-                    <a class="page-link" th:href="@{/activeList/writeReview(page=${startPage - 1}, pageSize=${pageSize})}" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-
-                <li th:each="i : ${#numbers.sequence(startPage, endPage)}" th:classappend="${currentPage == i} ? 'active' : ''" class="page-item" style="display: flex;">
-                    <a th:href="@{/activeList/writeReview(page=${i}, pageSize=${pageSize})}" class="page-link" th:text="${i}">1</a>
-                </li>
-                <li th:classappend="${endPage == totalPages} ? 'disabled' : ''" class="page-item" style="margin-left: 0.5rem">
-                    <a class="page-link" th:href="@{/activeList/writeReview(page=${startPage - 1}, pageSize=${pageSize})}" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
         </div>
+        <ul class="pagination">
+        </ul>
     </div>
 </div>
 <div th:replace="~{/layout/footer :: footer}"></div>
-<!--<script th:src="@{/js/activeList.js}"></script>-->
+<input type="hidden" th:value="${session.proName==null?'0':session.proName}" id="proName">
 
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    // 날짜 포맷
+    function formatDate(dateString) {
+        const now = new Date();
+        const commentDate = new Date(dateString); // 문자열을 Date 객체로 변환
+
+        const nowYear = now.getFullYear();
+        const nowMonth = now.getMonth();
+        const nowDate = now.getDate();
+
+        const commentYear = commentDate.getFullYear();
+        const commentMonth = commentDate.getMonth();
+        const commentDateDate = commentDate.getDate();
+
+        let displayText = "";
+
+        // 년, 월, 일이 모두 같은 경우 "오늘"로 표시
+        // if (nowYear === commentYear && nowMonth === commentMonth && nowDate === commentDateDate) {
+        //     displayText = "오늘";
+        // } else {
+        // 그 외의 경우, 정해진 포맷으로 표시
+        const yy = commentYear.toString().slice(-2); // 마지막 두 자리를 가지고 옴.
+        const MM = commentMonth + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
+        const dd = commentDateDate;
+        // const HH = commentDate.getHours().toString().padStart(2, '0');
+        // const mm = commentDate.getMinutes().toString().padStart(2, '0'); // 두자리 수 일 때 앞에 0을 붙임.
+
+        displayText = `${yy}년 ${MM}월 ${dd}일`;
+        // }
+        return displayText;
+    }
+
+    const pageSize = 8;
+    const proName = $('#proName').val();
+    let sortOption ='newest'
+
+
+    window.onload = function (){
+        if(proName ==='0'){
+            getUserWriteReviewList(1)
+        }
+        else{
+            getProWriteReviewList(1)
+        }
+
+    }
+
+    function getUserWriteReviewList(page){
+        $.ajax({
+            method: 'get',
+            url: '/active/user/writeReview',
+            data: {
+                page: page,
+                size: pageSize,
+                sort: sortOption
+            },
+            success: function (data) {
+                renderUserWriteReviewList(data.content);
+                renderPagination(data);
+            },
+            error: function () {
+                console.error('실패')
+            }
+        })
+    }
+    // 회원이 전문가에게 작성
+    function renderUserWriteReviewList(userWriteReviewList){
+        let userWriteReviewArea = $('.userWriteReviewList');
+        userWriteReviewArea.empty();
+        if (userWriteReviewList.length === 0) {
+            const uploadRow =`<h3>작성하신 게시글이 없습니다.</h3>`
+            userWriteReviewArea.append(uploadRow);
+        }
+        userWriteReviewList.forEach(userWriteReviewList=>{
+            const uploadRow =   `
+                <tr>
+                    <td class="list-num">${userWriteReviewList.rn}</td>
+                    <td class="list-num">
+                        <a href="/user/${userWriteReviewList.proId}/proFind">${userWriteReviewList.proName}</a>
+                    </td>
+                    <td class="list-num">${userWriteReviewList.proReviewContent}</td>
+                    <td class="list-num" style="display: flex;justify-content: center">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=" alt="">
+                        <div>${userWriteReviewList.proReviewRate}</div>
+                    </td>
+                    <td class="list-date">${formatDate(userWriteReviewList.proReviewDate)}</td>
+                </tr>`;
+            userWriteReviewArea.append(uploadRow);
+        });
+
+    }
+    // 전문가가 회원에게 작성
+    function getProWriteReviewList(page){
+        $.ajax({
+            method: 'get',
+            url: '/active/pro/writeReview',
+            data: {
+                page: page,
+                size: pageSize,
+                sort: sortOption
+            },
+            success: function (data) {
+                renderProWriteReviewList(data.content);
+                renderPagination(data);
+            },
+            error: function () {
+                console.error('실패')
+            }
+        })
+    }
+    function renderProWriteReviewList(proWriteReviewList){
+        let proWriteReviewArea = $('.proWriteReviewList');
+        proWriteReviewArea.empty();
+        if (proWriteReviewList.length === 0) {
+            const uploadRow =`<h3>작성하신 게시글이 없습니다.</h3>`
+            proWriteReviewArea.append(uploadRow);
+        }
+        proWriteReviewList.forEach(proWriteReviewList=>{
+            const uploadRow =   `
+                <tr>
+                    <td class="list-num">${proWriteReviewList.rn}</td>
+                    <td class="list-num">
+                        <a href="/pro/${proWriteReviewList.userId}/userFind">${proWriteReviewList.userName}</a>
+                    </td>
+                    <td class="list-num">${proWriteReviewList.userReviewContent}</td>
+                    <td class="list-num" style="display: flex;justify-content: center">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=" alt="">
+                        <div>${proWriteReviewList.userReviewRate}</div>
+                    </td>
+                    <td class="list-date">${formatDate(proWriteReviewList.userReviewDate)}</td>
+                </tr>`;
+            proWriteReviewArea.append(uploadRow);
+        });
+
+    }
+    // 페이징
+    function renderPagination(pagination) {
+        const PaginationContainer = $('.pagination'); //클래스이름
+        PaginationContainer.empty(); //비워줌
+
+        if(pagination.content.length === 0){
+            return
+        }
+
+        // 이전 버튼
+        const prevDisabled = pagination.currentPage === 1 ? 'disabled' : ''; //현재 페이지가 1이면 비활성화
+
+        PaginationContainer.append(`
+            <li class="page-item ${prevDisabled}">
+                <a class="page-link" href="#" aria-label="Previous" data-page="${pagination.currentPage - 1}">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        `); //해당요소들 추가
+
+        for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+            const activeClass = pagination.currentPage === i ? 'active' : ''; //값이 같으면 활성화
+
+            PaginationContainer.append(`
+            <li class="page-item ${activeClass} pageColor">
+                <a class="page-link" href="#" data-page="${i}">${i}</a>
+            </li>
+        `);
+        } //반복문 돌려서 해당값 추가
+
+        const nextDisabled = pagination.currentPage === pagination.totalPages ? 'disabled' : ''; //다음버튼
+
+        PaginationContainer.append(`
+            <li class="page-item ${nextDisabled}">
+                <a class="page-link" href="#" aria-label="Next" data-page="${pagination.currentPage + 1}">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        `);
+
+        // 클래스가 .page-link인 요소를 클릭했을때(a링크에 지정되어있고 위에서 append로 추가해주었음)
+        $('.page-link').click(function(event) {
+            event.preventDefault(); //기본동작 없앰
+            const selectedPage = $(this).data('page');
+            if(proName==='0'){
+                getUserWriteReviewList(selectedPage);
+            }
+            else {
+                getProWriteReviewList(selectedPage);
+            }
+        });
+    }
+    $('input[name="sort"]').change(function () {
+        sortOption = $(this).val();
+        if(proName==='0'){
+            getUserWriteReviewList(1);
+        }
+        else {
+            getProWriteReviewList(1);
+        }
+
+    })
+
+
+</script>
 </html>

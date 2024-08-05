@@ -11,9 +11,13 @@ import com.example.fpi.service.main.MainListService;
 import com.example.fpi.service.pro.ProService;
 import com.example.fpi.service.user.PayCouponService;
 import com.example.fpi.service.user.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -65,7 +69,7 @@ public class MainLoginController {
         return "main/OAuthform";
     }
 
-    //회원가입 폼
+    //간편회원가입 폼
     @PostMapping("/sign")
     public String sign(@RequestParam("userName") String userName, // form에서 입력한 이름
                        @RequestParam("phoneNumber") String phoneNumber,

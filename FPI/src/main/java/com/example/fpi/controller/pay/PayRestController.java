@@ -16,7 +16,7 @@ public class PayRestController {
 
     private final UserService userService;
     private final PayCouponService payCouponService;
-
+//포인트충전 입력 값 넘어와서 처리
     @PostMapping("/cash")
     public String point(@RequestBody CashDTO cash) {
 

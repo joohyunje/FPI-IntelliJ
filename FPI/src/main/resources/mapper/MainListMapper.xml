@@ -50,7 +50,8 @@
                     TU.USER_STAR_RATE,
                     TS.SERVICE_NAME,
                     uuf.user_UPLOAD_FILE_ROUTE,
-                    ROW_NUMBER() OVER (PARTITION BY uuf.USER_UPLOAD_ID ORDER BY uuf.user_UPLOAD_FILE_id) AS rn
+                    ROW_NUMBER() OVER (PARTITION BY uuf.USER_UPLOAD_ID ORDER BY uuf.user_UPLOAD_FILE_id) AS rn,
+                    (SELECT COUNT(*) FROM TBL_USER_REVIEW TPU WHERE TUU.USER_ID = TPU.USER_ID) AS review_count
             FROM TBL_USER_UPLOAD TUU
                 INNER JOIN TBL_USER TU ON TUU.USER_ID = TU.USER_ID
                 INNER JOIN TBL_SERVICE TS ON TUU.SERVICE_ID = TS.SERVICE_ID

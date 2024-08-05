@@ -321,6 +321,11 @@
     userIdInput.value = $('input[name="userId"]').val();
     form.appendChild(userIdInput);
 
+      var userRequestPayInput = document.createElement('input');
+      userRequestPayInput.type = 'hidden';
+      userRequestPayInput.name = 'userRequestPay';
+      userRequestPayInput.value =userRequestPay;
+      form.appendChild(userRequestPayInput);
 
     form.submit();
   }

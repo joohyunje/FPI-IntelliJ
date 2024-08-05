@@ -158,6 +158,15 @@
     outline: none;
   }
 }
+.pro .form-control{
+  &:hover,&:focus{
+    position: inherit;
+    border-color:  #F8CACC !important;
+  }
+  &:focus{
+    outline: none;
+  }
+}
 
 #proEdit .form-control{
   &:hover,&:focus{

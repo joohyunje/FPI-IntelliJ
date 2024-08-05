@@ -57,10 +57,12 @@ public class UserRestController {
     public ResponseEntity<PagedResponse<ProUploadListDTO>> getBoardList(@RequestParam(defaultValue = "1") int page,
                                                                         @RequestParam(defaultValue = "7") int size,
                                                                         @RequestParam String search,
-                                                                        @RequestParam String searchType) {
+                                                                        @RequestParam String searchType,
+                                                                        @RequestParam String searchSubject) {
 
         System.out.println(searchType + "djalkdsfjlkadsjfklajsdklfj");
         System.out.println(search + "djalkdsfjlkadsjfklajsdklfj");
+        System.out.println(searchSubject+ "djalkdsfjlkadsjfklajsdklfj");
 
 
 //        PagedResponse<BoardListDTO> sortedBoards = switch (sort){
@@ -69,7 +71,7 @@ public class UserRestController {
 //            default -> boardService.selectAllByDateDESC(page, size);
 //        };
 
-        return ResponseEntity.ok(proService.selectProUploadList(page, size, search, searchType));
+        return ResponseEntity.ok(proService.selectProUploadList(page, size, search, searchType,searchSubject));
     }
 
 

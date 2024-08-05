@@ -83,10 +83,18 @@ public class ProController {
     public String uploadRest() {
         return "pro/userfind/FindUser";
     }
-
+    // 메인카테고리 클릭시 회원 찾기
     @GetMapping("/userFind/{searchType}")
     public String uploadRest2(Model model, @PathVariable("searchType") String searchType) {
         model.addAttribute("searchType", searchType);
+        return "pro/userfind/FindUser";
+    }
+//     마이페이지 리뷰에서 회원 이름클릭시 회원 찾기
+    @GetMapping("/{userId}/userFind")
+    public String uploadRest3(Model model, @PathVariable("userId") String userId) {
+        String searchUserName=userService.detailUser(userId).getUserName();
+
+        model.addAttribute("searchUserName",searchUserName);
         return "pro/userfind/FindUser";
     }
 
@@ -250,7 +258,7 @@ public class ProController {
     }
 //전문가가 올린글에 회원이 요청 보냈음,캐시교환 이루어짐
     @PostMapping("/userDetail/updateComplete/{userRequestId}")
-    public String updateComplete(@PathVariable Long userRequestId,@RequestParam("userId") String userId) {
+    public String updateComplete(@PathVariable Long userRequestId,@RequestParam String userId,@RequestParam String userRequestPay) {
 
         Long proId = userService.selectProIdByUserRequestId(userRequestId);
         Long empCnt = proService.empCount(proId);
@@ -258,7 +266,7 @@ public class ProController {
 
         proService.updateProComplete(userRequestId);
 
-      payCouponService.userRequsestPay(userRequestId,userId,proId); //캐쉬결제하는서비스
+      payCouponService.userRequsestPay(Long.parseLong(userRequestPay),userId,proId); //캐쉬결제하는서비스
         return "redirect:/pro/userDetail/" + userRequestId;
     }
 

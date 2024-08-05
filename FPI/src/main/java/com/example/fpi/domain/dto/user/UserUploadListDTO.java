@@ -19,4 +19,5 @@ public class UserUploadListDTO {
     private String userImg;
 
     private String userUploadFileRoute;
+    private Long reviewCount;
 }
