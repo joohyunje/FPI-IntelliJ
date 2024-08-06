@@ -253,7 +253,8 @@
                     <!-- 슬라이드  -->
                     <div class="post" th:each="userUploadList:${userUploadLists}" th:object="${userUploadList}">
                         <a th:href="@{/pro/uploadDetail/{userUploadId}(userUploadId=*{userUploadId})}">
-                            <img th:src="*{userUploadFileRoute != null} ? *{userUploadFileRoute} : '/img/basicIMG.png'"
+                            <!--                            upload.userUploadFileRoute ? upload.userUploadFileRoute : '/img/basicIMG.png';-->
+                            <img th:src="*{userUploadFileRoute != null ? userUploadFileRoute : '/img/basicIMG.png'}"
                                  class="slider-image">
                             <div class="post-info">
                                 <h5 th:text="*{userUploadTitle}"></h5>
@@ -319,7 +320,7 @@
         <!-- 커뮤니티 -->
         <div class="post-slider">
             <h4 style="margin-top: 20px">오늘의 전문가 팁</h4>
-            <div th:if="${#lists.isEmpty(proList)}" style="text-align:center;">아직 올라온 글이 없습니다.</div>
+            <div th:if="${#lists.isEmpty(proList)}" style="text-align:center;">아직 오늘의 전문가 팁이 없습니다.</div>
 
             <!-- 커뮤니티 목록뿌려줌 -->
             <div class="row" th:if="${!#lists.isEmpty(proList)}">

@@ -1,6 +1,5 @@
 package com.example.fpi.mapper.board;
 
-import com.example.fpi.domain.dto.admin.NotiDTO;
 import com.example.fpi.domain.dto.board.CommunityDTO;
 import com.example.fpi.domain.dto.board.CommunityDetailDTO;
 import com.example.fpi.domain.vo.board.CommunityVO;
@@ -32,4 +31,8 @@ public interface CommunityMapper {
 
     //    조회수
     void plusViews(Long communityId);
+    void minusViews(Long communityId);
+
+    int countViews(Long communityId);
+
 }

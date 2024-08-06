@@ -106,7 +106,7 @@ public class CommunityController {
 
     //    게시글 수정,작성,,수정과 작성 폼 주소 같음
     @PostMapping("/community/write")
-    public String write(CommunityDTO communityInfo,@AuthenticationPrincipal CustomOAuth2User customOAuth2User,HttpSession session){
+    public String write(CommunityDTO communityInfo,HttpSession session){
         String loginName = (String) session.getAttribute("loginName");
         String proName = (String) session.getAttribute("proName");
 

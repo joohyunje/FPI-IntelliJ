@@ -17,7 +17,7 @@
     <div class="padding3" style="margin-bottom: 15px">
       <h1>쿠폰함</h1>
     </div>
-    <div class="center padding3" id="noCoupon" th:if="${coupons[0].count == 0}">
+    <div class="center padding3" id="noCoupon" th:if="${#lists.isEmpty(coupons)}">
       <i>
         <img src="https://assets.cdn.soomgo.com/icons/icon-coupon-empty.svg">
       </i>
@@ -31,7 +31,7 @@
 
 
       <!-- 사용할 수 있는 쿠폰이 있을때,count로 사용쿠폰 유무 확인-->
-      <div class="coupon-container" id="YesCoupon" th:unless="*{count == 0}" >
+      <div class="coupon-container" id="YesCoupon" th:unless="${#lists.isEmpty(coupons)}" >
         <div class="coupon">
           <div class="oneline">
             <h2 th:text="*{discount}">10000</h2>

@@ -21,8 +21,11 @@ public class PagedResponse<T> {
         this.pageSize = pageSize;
         this.totalElements = totalElements;
 
-        this.startPage = Math.max(1, currentPage - 5);
-        this.endPage = Math.min(totalPages, currentPage + 4);
+        int pageGroupSize = 5; // 페이지 그룹 크기
+        int groupNumber = (currentPage - 1) / pageGroupSize;
+
+        this.startPage = groupNumber * pageGroupSize + 1;
+        this.endPage = Math.min(startPage + pageGroupSize - 1, totalPages);
     }
 
 }

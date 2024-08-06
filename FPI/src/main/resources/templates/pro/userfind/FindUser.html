@@ -76,7 +76,7 @@
             <div class="search-container">
                 <div class="search-input">
                     <input name="search" type="text" onkeyup="enterkey()" placeholder="검색해보세요!" autocomplete="off">
-                    <div class="delete-button">
+                    <div class="delete-button" Id="delete-button">
                         <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTAgMGgyNHYyNEgweiIvPgogICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDMgMykiPgogICAgICAgICAgICA8Y2lyY2xlIGZpbGw9IiNDNUM1QzUiIGN4PSI5IiBjeT0iOSIgcj0iOSIvPgogICAgICAgICAgICA8cGF0aCBzdHJva2U9IiNGRkYiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Im02IDYgNi4wMDUgNi4wMDZNMTIuMDA1IDYgNiAxMi4wMDYiLz4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPgo="
                              alt="검색어 삭제아이콘">
                     </div>
@@ -323,5 +323,13 @@
     searchSubject = $("#searchSubject option:selected").val();
     getList(1)
   }
+
+  // 검색창의 x버튼 누르면 검색어 사라지고 다시 서치항목뜨게함
+  document.getElementById('delete-button').addEventListener("click", function () {
+      document.getElementById('searchInput').value = '';
+      saveKeyword();
+  });
+
+
 </script>
 </html>
