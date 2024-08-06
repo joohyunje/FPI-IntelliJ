@@ -18,7 +18,7 @@ import java.util.List;
 public interface CommunityService {
 
     //    게시판리스트 select
-    PagedResponse<CommunityDetailDTO> getCommunityList(int page, int pageSize,String search,String subject,String sort); //전체게시판,페이징
+    PagedResponse<CommunityDetailDTO> getCommunityList(int page, int pageSize,String search,String subject,String sort,CustomOAuth2User user); //전체게시판,페이징
 
 
 

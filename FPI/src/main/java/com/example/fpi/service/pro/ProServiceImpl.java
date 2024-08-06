@@ -8,6 +8,7 @@ import com.example.fpi.domain.dto.main.CategoryListDTO;
 import com.example.fpi.domain.dto.pro.*;
 import com.example.fpi.domain.dto.user.UserAccuseDTO;
 import com.example.fpi.domain.dto.user.UserReviewDTO;
+import com.example.fpi.domain.dto.user.UserUploadDetailDTO;
 import com.example.fpi.domain.util.PagedResponse;
 import com.example.fpi.domain.vo.certify.CardInfoVO;
 import com.example.fpi.domain.vo.certify.CareerInfoVO;
@@ -482,6 +483,19 @@ public class ProServiceImpl implements ProService {
     @Override
     public Long selectProReviewCnt(Long proId) {
         return proMapper.selectProReviewCnt(proId);
+    }
+
+    @Override
+    public PagedResponse<ProUploadDetailDTO> proUploadList(Long proId, int page, int pageSize) {
+        int startRow = (page - 1) * pageSize;
+        int endRow = page * pageSize;
+
+        int totalUploads = proMapper.countProUploadList(proId);
+        int totalPages = (int) Math.ceil((double) totalUploads / pageSize);
+
+        List<ProUploadDetailDTO> uploads = proMapper.proUploadList(proId,startRow, endRow);
+
+        return new PagedResponse<>(uploads, page, totalPages, pageSize, totalUploads);
     }
 
 

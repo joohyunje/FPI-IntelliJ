@@ -32,4 +32,24 @@ ul, ol {
   border: 1px solid #ddd;
 }
 
-.pro-pagination
+
+.pro-pagination .page-item .page-link {
+  padding: 8px 16px;
+  text-decoration: none;
+  color: #323230 !important;;
+  border: 1px solid  #ddd !important ;
+}
+.pro-pagination .page-item .page-link:hover {
+  background-color: #F8CACC  !important;
+  color: #323230 !important;
+}
+.pro-pagination .page-item.active .page-link {
+  background-color:#F8CACC !important;;
+  color: #323230 !important;
+  border: 1px solid #F8CACC !important;;
+}
+.pro-pagination .page-item.disabled .page-link {
+  color: #ddd !important;
+  pointer-events: none !important;
+  border: 1px solid #ddd !important;
+}

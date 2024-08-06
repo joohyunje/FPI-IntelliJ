@@ -107,6 +107,18 @@ public class ActiveRestController {
         return ResponseEntity.ok(activeService.selectProReceiveReview(proId, page, size, sort));
     }
 
+    @GetMapping("/likeCommu")
+    public ResponseEntity<PagedResponse<UserCommunityListDTO>> activeRestLikeCommunityList(@AuthenticationPrincipal CustomOAuth2User customOAuth2User,
+                                                                                       HttpSession session,
+                                                                                       @RequestParam(value="page", defaultValue = "1")int page,
+                                                                                       @RequestParam (value="pageSize", defaultValue = "8")int size,
+                                                                                       @RequestParam String sort){
+        String userId = customOAuth2User.getUserId();
+
+        return ResponseEntity.ok(activeService.selectLikeCommuList(userId,page, size, sort));
+    }
+
+
 
 
 }

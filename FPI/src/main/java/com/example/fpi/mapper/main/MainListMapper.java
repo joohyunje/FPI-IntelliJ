@@ -10,9 +10,9 @@ import java.util.List;
 
 @Mapper
 public interface MainListMapper {
-    List<CommunityDetailDTO> mainCommunityList(); //메인에서 뿌려주는 최근커뮤니티 리스트
+    List<CommunityDetailDTO> mainCommunityList(); //메인에서 뿌려주는 인기커뮤니티 리스트
+    List<CommunityDetailDTO> mainProList();//오늘의 전문가팁
     List<ProUploadListDTO> proUploadList();
     List<UserUploadListDTO> userUploadList();
-
 
 }

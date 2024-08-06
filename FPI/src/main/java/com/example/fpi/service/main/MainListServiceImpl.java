@@ -19,6 +19,11 @@ public class MainListServiceImpl implements MainListService {
     }
 
     @Override
+    public List<CommunityDetailDTO> mainProList() {
+        return mainListMapper.mainProList();
+    }
+
+    @Override
     public List<ProUploadListDTO> proUploadList() {
         return mainListMapper.proUploadList();
     }

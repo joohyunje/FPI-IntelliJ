@@ -266,6 +266,10 @@ input:focus-visible {
     background-color: #8da4d0;
     border-radius: 50%;
 }
+.pro-footer-like.bold::before {
+    background-color: #F8CACC !important;
+    border-radius: 50%;
+}
 .footer-show {
     color: #c5c5c5;
     font-size: .79rem;

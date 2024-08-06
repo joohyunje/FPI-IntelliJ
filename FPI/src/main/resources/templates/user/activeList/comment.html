@@ -18,19 +18,22 @@
     <div class="main-container">
         <div class="main-container-title">
             <div class="main-container-title-container">
-                <h2 class="title">
+                <a th:href="${session.proName == null ? '/user/mypage' : '/pro/mypage'}">
+                    <h2 class="title">
                         <span class="title-content">
                             활동내역 목록
                         </span>
-                </h2>
+                    </h2>
+                </a>
             </div>
         </div>
 
         <div class="tab-btn-container">
             <a class="btn" th:href="@{/activeList/community}">게시글</a>
+            <a class="btn" th:href="@{/activeList/likeCommu}">좋아요 한 게시글</a>
             <a class="btn active" th:href="@{/activeList/comment}">댓글</a>
-            <a class="btn" th:href="@{/activeList/writeReview}">작성한 리뷰</a>
-            <a class="btn" th:href="@{/activeList/received}">받은 리뷰</a>
+            <a class="btn" th:href="@{/activeList/writeReview}">작성 리뷰</a>
+            <a class="btn" th:href="@{/activeList/receiveReview}">받은 리뷰</a>
         </div>
         <div class="main-container-list community">
             <table class="list-container">
@@ -62,11 +65,14 @@
                 </tbody>
                 <div id="noCommentList"></div>
             </table>
+            <div class="noCommentList" style="text-align:center"></div>
         </div>
         <ul class="pagination">
         </ul>
     </div>
 </div>
+<input type="hidden" th:value="${session.proName==null?'0':session.proName}" id="proName">
+
 <div th:replace="~{/layout/footer :: footer}"></div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -104,9 +110,14 @@
 
   const pageSize = 8;
   let sortOption = 'newest'
-
+  const proName = document.getElementById('proName').value
 
   window.onload = function () {
+    if (proName !== '0') {
+      const PaginationContainer = $('.pagination');
+      // 클래스 추가
+      PaginationContainer.addClass('pro-pagination');
+    }
     getCommunityList(1)
 
   }
@@ -132,14 +143,16 @@
 
   function renderCommunityList(commentList) {
     let commentArea = $('.commentList');
+    let noCommentArea = $('.noCommentList')
     commentArea.empty();
-
+    noCommentArea.empty();
     if (commentList.length === 0) {
       const uploadRow = `<h3>작성하신 댓글이 없습니다.</h3>`
-      commentArea.next().append(uploadRow);
+      noCommentArea.append(uploadRow);
     }
     commentList.forEach(commentList => {
       const uploadRow = `
+>>>>>>> main
                     <tr>
                         <td class="list-num">${commentList.rn}</td>
                         <td class="list-num">${commentList.communityId}</td>
@@ -206,7 +219,6 @@
     sortOption = $(this).val();
     getCommunityList(1);
   })
-
-
+  
 </script>
 </html>

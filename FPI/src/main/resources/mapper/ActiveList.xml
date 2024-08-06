@@ -46,25 +46,25 @@
         where USER_ID=#{userId} and author = #{myName}
     </select>
 
-
+<!-- 좋아요 한 게시글-->
     <select id="selectLikeCommuList" resultType="UserCommunityListDTO">
         select *
-        from (select ROWNUM AS RN ,c.*
-        from(
-        select *
-        from TBL_COMMUNITY c join TBL_LIKE l on c.USER_ID = l.USER_ID
-        where l.USER_ID=#{userId}
-        order by
-        <choose>
-            <when test="sort.equals('oldest')">
-                COMMUNITY_REGISTER_DATE asc,COMMUNITY_ID asc
-            </when>
-            <otherwise>
-                COMMUNITY_REGISTER_DATE desc,COMMUNITY_ID desc
-            </otherwise>
-        </choose>
-        ) c
-        where ROWNUM &lt;= #{endRow})
+        from (select ROWNUM AS RN ,cl.*
+                from(
+                    select c.*
+                    from TBL_COMMUNITY c join TBL_LIKE l on c.USER_ID = l.USER_ID and c.COMMUNITY_ID=l.COMMUNITY_ID
+                    where c.USER_ID=#{userId}
+                    order by
+                    <choose>
+                        <when test="sort.equals('oldest')">
+                            c.COMMUNITY_REGISTER_DATE asc,c.COMMUNITY_ID asc
+                        </when>
+                        <otherwise>
+                            c.COMMUNITY_REGISTER_DATE desc,c.COMMUNITY_ID desc
+                        </otherwise>
+                    </choose>
+                    ) cl
+                where ROWNUM &lt;= #{endRow})
         where RN &gt; #{startRow}
     </select>
     <select id="countLikeCommu">

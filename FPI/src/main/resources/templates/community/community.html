@@ -78,6 +78,8 @@
         </div>
     </div>
 </div>
+<input type="hidden" th:value="${session.proName==null?'0':session.proName}" id="proName">
+
 <div th:replace="~{/layout/footer :: footer}"></div>
 </body>
 
@@ -126,12 +128,23 @@
     let search = null;
     let subject ='';
     let sortOption='date';
+    const proName = document.getElementById('proName').value
 
-    <!--    페이지 시작시 해당 함수 실행-->
+    // <!--    페이지 시작시 해당 함수 실행-->
     window.onload = function(){
+
         console.log(subject+'subject')
         console.log(search+'search')
         console.log(sortOption+'sortOption')
+        console.log(proName)
+
+        const PaginationContainer = $('.pagination');
+        if(proName !== '0'){
+            PaginationContainer.addClass('pro-pagination');
+        }
+        else{
+            PaginationContainer.removeClass('pro-pagination');
+        }
 
         search = $('input[name="search"]').val(); //input태그에 name이 search인곳 value를 ajax의 search에 넣을것임
         sortOption= $("#select-category").val();
@@ -194,6 +207,15 @@
                 ? upload.communityUpdateDate
                 : upload.communityRegisterDate;
             const displayText = (upload.communityRegisterDate !== upload.communityUpdateDate ) ? '(수정)' : '(New)';
+            const likeStyle = (upload.likeUse == null || upload.likeUse == 0) ?'normal' : 'bold';
+            const footerLike = $('.footer-like');
+            let likeColor=(upload.likeUse == null || upload.likeUse == 0) ?'' : '#323230';
+            if(proName !== '0' && proName !== 'null'){
+                footerLike.addClass('pro-footer-like')
+            }
+
+
+
 
             //
             const uploadRow = `
@@ -212,7 +234,7 @@
             <div class="feed-footer">
                 <div>
                     <div class="footer-show">${upload.views}</div>
-                    <div class="footer-like ">${upload.likeCount}</div>
+                    <div class="footer-like ${likeStyle}" style="font-weight: ${likeStyle};color:${likeColor}">${upload.likeCount}</div>
                     <div class="footer-comment">${upload.commentCount}</div>
                 </div>
 

@@ -38,4 +38,8 @@ public interface ActiveListMapper {
     //    전문가가 회원에게  받은 리뷰
     List<ProReviewListDTO> selectProReceiveReview(Long proId, int startRow, int endRow,String sort);
     int countProReceiveReview(Long proId);
+
+//    좋아요 목록
+    List<UserCommunityListDTO> selectLikeCommuList(String userId, int startRow, int endRow,String sort);
+    int countLikeCommu(String userId);
 }

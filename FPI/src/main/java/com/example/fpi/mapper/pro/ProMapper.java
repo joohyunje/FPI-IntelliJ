@@ -4,6 +4,7 @@ import com.example.fpi.domain.dto.certify.CardInfoDTO;
 import com.example.fpi.domain.dto.certify.CardInfoFileDTO;
 import com.example.fpi.domain.dto.pro.*;
 import com.example.fpi.domain.dto.user.UserReviewDTO;
+import com.example.fpi.domain.dto.user.UserUploadDetailDTO;
 import com.example.fpi.domain.vo.certify.CardInfoFileVO;
 import com.example.fpi.domain.vo.certify.CardInfoVO;
 import com.example.fpi.domain.vo.certify.CareerInfoVO;
@@ -169,6 +170,11 @@ public interface ProMapper {
     void clickDeleteCard(Long cardInfoId);
 
     Long selectProReviewCnt(Long proId);
+
+
+    List<ProUploadDetailDTO> proUploadList(Long proId, int startRow, int endRow);
+    int countProUploadList(Long proId);
+
 
 
 }
