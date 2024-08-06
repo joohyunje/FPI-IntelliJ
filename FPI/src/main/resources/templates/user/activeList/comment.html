@@ -36,7 +36,7 @@
             <a class="btn" th:href="@{/activeList/receiveReview}">받은 리뷰</a>
         </div>
         <div class="main-container-list community">
-            <table class="list-container" >
+            <table class="list-container">
                 <thead>
                 <tr>
                     <th style="width: 5%">번호</th>
@@ -55,14 +55,15 @@
                         오래된 순
                     </label>
                 </div>
-                <tbody id ="commentList" class="commentList">
-<!--                    <tr th:each="list : ${lists}" th:object="${list}">-->
-<!--                        <td th:text="*{RN}" class="list-num">1</td>-->
-<!--                        <td th:text="*{communityId}" class="list-num">1</td>-->
-<!--                        <td class="list-title"><a th:text="*{commentContent}" th:href="@{/community/detail/{communityId}/{commentId}(communityId=*{communityId},commentId=*{commentId})}">샘플용 제목입니다.</a></td>-->
-<!--                        <td th:text="*{#temporals.format(commentRegisterDate, 'yy년 MM월 dd일')}" class="list-date">01-01</td>-->
-<!--                    </tr>-->
+                <tbody id="commentList" class="commentList">
+                <!--                    <tr th:each="list : ${lists}" th:object="${list}">-->
+                <!--                        <td th:text="*{RN}" class="list-num">1</td>-->
+                <!--                        <td th:text="*{communityId}" class="list-num">1</td>-->
+                <!--                        <td class="list-title"><a th:text="*{commentContent}" th:href="@{/community/detail/{communityId}/{commentId}(communityId=*{communityId},commentId=*{commentId})}">샘플용 제목입니다.</a></td>-->
+                <!--                        <td th:text="*{#temporals.format(commentRegisterDate, 'yy년 MM월 dd일')}" class="list-date">01-01</td>-->
+                <!--                    </tr>-->
                 </tbody>
+                <div id="noCommentList"></div>
             </table>
             <div class="noCommentList" style="text-align:center"></div>
         </div>
@@ -76,80 +77,82 @@
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
-    // 날짜 포맷
-    function formatDate(dateString) {
-        const now = new Date();
-        const commentDate = new Date(dateString); // 문자열을 Date 객체로 변환
+  // 날짜 포맷
+  function formatDate(dateString) {
+    const now = new Date();
+    const commentDate = new Date(dateString); // 문자열을 Date 객체로 변환
 
-        const nowYear = now.getFullYear();
-        const nowMonth = now.getMonth();
-        const nowDate = now.getDate();
+    const nowYear = now.getFullYear();
+    const nowMonth = now.getMonth();
+    const nowDate = now.getDate();
 
-        const commentYear = commentDate.getFullYear();
-        const commentMonth = commentDate.getMonth();
-        const commentDateDate = commentDate.getDate();
+    const commentYear = commentDate.getFullYear();
+    const commentMonth = commentDate.getMonth();
+    const commentDateDate = commentDate.getDate();
 
-        let displayText = "";
+    let displayText = "";
 
-        // 년, 월, 일이 모두 같은 경우 "오늘"로 표시
-        // if (nowYear === commentYear && nowMonth === commentMonth && nowDate === commentDateDate) {
-        //     displayText = "오늘";
-        // } else {
-        // 그 외의 경우, 정해진 포맷으로 표시
-        const yy = commentYear.toString().slice(-2); // 마지막 두 자리를 가지고 옴.
-        const MM = commentMonth + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
-        const dd = commentDateDate;
-        // const HH = commentDate.getHours().toString().padStart(2, '0');
-        // const mm = commentDate.getMinutes().toString().padStart(2, '0'); // 두자리 수 일 때 앞에 0을 붙임.
+    // 년, 월, 일이 모두 같은 경우 "오늘"로 표시
+    // if (nowYear === commentYear && nowMonth === commentMonth && nowDate === commentDateDate) {
+    //     displayText = "오늘";
+    // } else {
+    // 그 외의 경우, 정해진 포맷으로 표시
+    const yy = commentYear.toString().slice(-2); // 마지막 두 자리를 가지고 옴.
+    const MM = commentMonth + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
+    const dd = commentDateDate;
+    // const HH = commentDate.getHours().toString().padStart(2, '0');
+    // const mm = commentDate.getMinutes().toString().padStart(2, '0'); // 두자리 수 일 때 앞에 0을 붙임.
 
-        displayText = `${yy}년 ${MM}월 ${dd}일`;
-        // }
-        return displayText;
+    displayText = `${yy}년 ${MM}월 ${dd}일`;
+    // }
+    return displayText;
+  }
+
+  const pageSize = 8;
+  let sortOption = 'newest'
+  const proName = document.getElementById('proName').value
+
+  window.onload = function () {
+    if (proName !== '0') {
+      const PaginationContainer = $('.pagination');
+      // 클래스 추가
+      PaginationContainer.addClass('pro-pagination');
     }
+    getCommunityList(1)
 
-    const pageSize = 8;
-    let sortOption ='newest'
-    const proName = document.getElementById('proName').value
+  }
 
-    window.onload = function (){
-        if(proName !== '0'){
-            const PaginationContainer = $('.pagination');
-            // 클래스 추가
-            PaginationContainer.addClass('pro-pagination');
-        }
-        getCommunityList(1)
+  function getCommunityList(page) {
+    $.ajax({
+      method: 'get',
+      url: '/active/comment',
+      data: {
+        page: page,
+        size: pageSize,
+        sort: sortOption
+      },
+      success: function (data) {
+        renderCommunityList(data.content);
+        renderPagination(data);
+      },
+      error: function () {
+        console.error('실패')
+      }
+    })
+  }
 
+  function renderCommunityList(commentList) {
+    let commentArea = $('.commentList');
+    let noCommentArea = $('.noCommentList')
+    commentArea.empty();
+    noCommentArea.empty();
+    if (commentList.length === 0) {
+      const uploadRow = `<h3>작성하신 댓글이 없습니다.</h3>`
+      noCommentArea.append(uploadRow);
     }
-
-    function getCommunityList(page){
-        $.ajax({
-            method: 'get',
-            url: '/active/comment',
-            data: {
-                page: page,
-                size: pageSize,
-                sort: sortOption
-            },
-            success: function (data) {
-                renderCommunityList(data.content);
-                renderPagination(data);
-            },
-            error: function () {
-                console.error('실패')
-            }
-        })
-    }
-    function renderCommunityList(commentList){
-        let commentArea = $('.commentList');
-        let noCommentArea = $('.noCommentList')
-        commentArea.empty();
-        noCommentArea.empty();
-        if (commentList.length === 0) {
-            const uploadRow =`<h3>작성하신 댓글이 없습니다.</h3>`
-            noCommentArea.append(uploadRow);
-        }
-        commentList.forEach(commentList=>{
-            const uploadRow =   `
+    commentList.forEach(commentList => {
+      const uploadRow = `
+>>>>>>> main
                     <tr>
                         <td class="list-num">${commentList.rn}</td>
                         <td class="list-num">${commentList.communityId}</td>
@@ -159,24 +162,24 @@
                         </td>
                         <td class="list-date">${formatDate(commentList.commentRegisterDate)}</td>
                     </tr>`;
-            commentArea.append(uploadRow);
-        });
+      commentArea.append(uploadRow);
+    });
 
+  }
+
+  // 페이징
+  function renderPagination(pagination) {
+    const PaginationContainer = $('.pagination'); //클래스이름
+    PaginationContainer.empty(); //비워줌
+
+    if (pagination.content.length === 0) {
+      return
     }
 
-    // 페이징
-    function renderPagination(pagination) {
-        const PaginationContainer = $('.pagination'); //클래스이름
-        PaginationContainer.empty(); //비워줌
+    // 이전 버튼
+    const prevDisabled = pagination.currentPage === 1 ? 'disabled' : ''; //현재 페이지가 1이면 비활성화
 
-        if(pagination.content.length === 0){
-            return
-        }
-
-        // 이전 버튼
-        const prevDisabled = pagination.currentPage === 1 ? 'disabled' : ''; //현재 페이지가 1이면 비활성화
-
-        PaginationContainer.append(`
+    PaginationContainer.append(`
             <li class="page-item ${prevDisabled}">
                 <a class="page-link" href="#" aria-label="Previous" data-page="${pagination.currentPage - 1}">
                     <span aria-hidden="true">&laquo;</span>
@@ -184,19 +187,19 @@
             </li>
         `); //해당요소들 추가
 
-        for (let i = pagination.startPage; i <= pagination.endPage; i++) {
-            const activeClass = pagination.currentPage === i ? 'active' : ''; //값이 같으면 활성화
+    for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+      const activeClass = pagination.currentPage === i ? 'active' : ''; //값이 같으면 활성화
 
-            PaginationContainer.append(`
+      PaginationContainer.append(`
             <li class="page-item ${activeClass} pageColor">
                 <a class="page-link" href="#" data-page="${i}">${i}</a>
             </li>
         `);
-        } //반복문 돌려서 해당값 추가
+    } //반복문 돌려서 해당값 추가
 
-        const nextDisabled = pagination.currentPage === pagination.totalPages ? 'disabled' : ''; //다음버튼
+    const nextDisabled = pagination.currentPage === pagination.totalPages ? 'disabled' : ''; //다음버튼
 
-        PaginationContainer.append(`
+    PaginationContainer.append(`
             <li class="page-item ${nextDisabled}">
                 <a class="page-link" href="#" aria-label="Next" data-page="${pagination.currentPage + 1}">
                     <span aria-hidden="true">&raquo;</span>
@@ -204,18 +207,18 @@
             </li>
         `);
 
-        // 클래스가 .page-link인 요소를 클릭했을때(a링크에 지정되어있고 위에서 append로 추가해주었음)
-        $('.page-link').click(function(event) {
-            event.preventDefault(); //기본동작 없앰
-            const selectedPage = $(this).data('page');
-            getCommunityList(selectedPage);
-        });
-    }
-    $('input[name="sort"]').change(function () {
-        sortOption = $(this).val();
-        getCommunityList(1);
-    })
+    // 클래스가 .page-link인 요소를 클릭했을때(a링크에 지정되어있고 위에서 append로 추가해주었음)
+    $('.page-link').click(function (event) {
+      event.preventDefault(); //기본동작 없앰
+      const selectedPage = $(this).data('page');
+      getCommunityList(selectedPage);
+    });
+  }
 
-
+  $('input[name="sort"]').change(function () {
+    sortOption = $(this).val();
+    getCommunityList(1);
+  })
+  
 </script>
 </html>
