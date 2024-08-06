@@ -217,7 +217,8 @@
                     <!-- 슬라이드  -->
                     <div class="post" th:each="proUploadList:${proUploadLists}" th:object="${proUploadList}">
                         <a th:href="@{/user/uploadDetail/{proUploadId}(proUploadId=*{proUploadId})}">
-                            <img th:src="*{proUploadFileRoute}" class="slider-image">
+                            <img th:src="*{proUploadFileRoute != null ? proUploadFileRoute : '/img/basicIMG.png'}" class="slider-image">
+
                             <div class="post-info">
                                 <h5 th:text="*{proUploadTitle}"></h5>
                                 <h6 style="margin-top: 10px" th:text="'제공서비스 : '+*{serviceName}"></h6>
@@ -248,7 +249,8 @@
                     <!-- 슬라이드  -->
                     <div class="post" th:each="userUploadList:${userUploadLists}" th:object="${userUploadList}">
                         <a th:href="@{/pro/uploadDetail/{userUploadId}(userUploadId=*{userUploadId})}">
-                            <img th:src="*{userUploadFileRoute}" class="slider-image">
+<!--                            upload.userUploadFileRoute ? upload.userUploadFileRoute : '/img/basicIMG.png';-->
+                            <img th:src="*{userUploadFileRoute != null ? userUploadFileRoute : '/img/basicIMG.png'}" class="slider-image">
                             <div class="post-info">
                                 <h5 th:text="*{userUploadTitle}"></h5>
                                 <h6 style="margin-top: 10px" th:text="'원하는 서비스 : '+*{serviceName}"></h6>
@@ -309,7 +311,7 @@
         <!-- 커뮤니티 -->
         <div class="post-slider">
             <h4 style="margin-top: 20px">오늘의 전문가 팁</h4>
-            <div th:if="${#lists.isEmpty(proList)}" style="text-align:center;">아직 올라온 글이 없습니다.</div>
+            <div th:if="${#lists.isEmpty(proList)}" style="text-align:center;">아직 오늘의 전문가 팁이 없습니다.</div>
 
             <!-- 커뮤니티 목록뿌려줌 -->
             <div class="row" th:if="${!#lists.isEmpty(proList)}">

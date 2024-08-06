@@ -159,10 +159,23 @@
 
     <!--    조회수-->
     <update id="plusViews">
+    update TBL_COMMUNITY
+    set views = views + 1
+    where COMMUNITY_ID = #{communityId}
+    </update>
+
+    <update id="minusViews">
         update TBL_COMMUNITY
-        set views = views + 1
+        set views = views - 1
         where COMMUNITY_ID = #{communityId}
     </update>
+
+<!--    디테일에서 바로 반영위해-->
+    <select id="countViews">
+        select VIEWS
+        from TBL_COMMUNITY
+        where COMMUNITY_ID =#{communityId}
+    </select>
 
 
 </mapper>

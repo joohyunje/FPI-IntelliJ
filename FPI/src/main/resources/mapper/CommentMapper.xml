@@ -30,4 +30,8 @@
         delete from TBL_COMMENT
         where COMMENT_ID= #{commentId}
     </delete>
+
+    <select id="countComment">
+        SELECT COUNT(*) FROM TBL_COMMENT  WHERE  COMMUNITY_ID = #{communityId}
+    </select>
 </mapper>

@@ -44,8 +44,7 @@
                 LEFT JOIN TBL_PRO_UPLOAD_FILE puf ON TPU.PRO_UPLOAD_ID = puf.PRO_UPLOAD_ID
             order by
                 TPU.PRO_UPLOAD_DATE desc)
-        WHERE rn = 1
-        AND ROWNUM &lt;= 8
+        where ROWNUM &lt;=8 and (rn=1 or PRO_UPLOAD_FILE_ROUTE is null)
 
     </select>
 
@@ -66,10 +65,10 @@
                 INNER JOIN TBL_USER TU ON TUU.USER_ID = TU.USER_ID
                 INNER JOIN TBL_SERVICE TS ON TUU.SERVICE_ID = TS.SERVICE_ID
                 INNER JOIN TBL_CATEGORY TC ON TS.CATEGORY_ID = TC.CATEGORY_ID
-                JOIN TBL_USER_UPLOAD_FILE uuf ON TUU.USER_UPLOAD_ID = uuf.USER_UPLOAD_ID
+                LEFT JOIN TBL_USER_UPLOAD_FILE uuf ON TUU.USER_UPLOAD_ID = uuf.USER_UPLOAD_ID
             ORDER BY
                 TUU.USER_UPLOAD_DATE DESC)
-        where rn=1 and ROWNUM &lt;=8
+        where ROWNUM &lt;=8 and (rn=1 or user_UPLOAD_FILE_ROUTE is null)
 
     </select>
 
