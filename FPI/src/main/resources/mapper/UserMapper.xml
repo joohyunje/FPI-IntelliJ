@@ -376,35 +376,33 @@
         where USER_ID = #{userId}
     </select>
 
-<!--    <update id="updateUserUpload">-->
-<!--        update TBL_USER_UPLOAD-->
-<!--        set USER_UPLOAD_TITLE=#{userUploadTitle},USER_UPLOAD_CONTENT=#{userUploadContent},USER_UPLOAD_PAY=#{userUploadPay}-->
-<!--        where user_uploadID =#{userUploadId}-->
-<!--&#45;&#45;         values (#{userUploadId}, #{userUploadTitle}, #{userUploadContent}, #{userUploadPay},-->
-<!--&#45;&#45;                 #{userUploadPayRange}, sysdate, #{userUploadAddress}, #{userId}, #{serviceId})-->
-<!--    </update>-->
+    <!--    <update id="updateUserUpload">-->
+    <!--        update TBL_USER_UPLOAD-->
+    <!--        set USER_UPLOAD_TITLE=#{userUploadTitle},USER_UPLOAD_CONTENT=#{userUploadContent},USER_UPLOAD_PAY=#{userUploadPay}-->
+    <!--        where user_uploadID =#{userUploadId}-->
+    <!--&#45;&#45;         values (#{userUploadId}, #{userUploadTitle}, #{userUploadContent}, #{userUploadPay},-->
+    <!--&#45;&#45;                 #{userUploadPayRange}, sysdate, #{userUploadAddress}, #{userId}, #{serviceId})-->
+    <!--    </update>-->
     <select id="userUploadList">
         SELECT *
-        FROM (
-                SELECT ROWNUM AS RN, upload.*
-                FROM (
-                        SELECT TUU.*, ts.SERVICE_NAME,
-                        UUF.USER_UPLOAD_FILE_ROUTE,
-                        ROW_NUMBER() OVER (PARTITION BY uuf.user_UPLOAD_ID ORDER BY uuf.user_UPLOAD_FILE_ROUTE) AS route
-                        FROM TBL_USER_UPLOAD TUU
-                            INNER JOIN TBL_USER TU
-                            ON TUU.USER_ID = TU.USER_ID
-                            INNER JOIN TBL_SERVICE TS
-                            ON TUU.SERVICE_ID = TS.SERVICE_ID
-                            INNER JOIN TBL_CATEGORY TG
-                            ON TG.CATEGORY_ID = TS.CATEGORY_ID
-                            LEFT JOIN TBL_USER_UPLOAD_FILE UUF
-                            ON TUU.USER_UPLOAD_ID = UUF.USER_UPLOAD_ID
-                        WHERE TUU.USER_ID = #{userId}
-                        ORDER BY TUU.USER_UPLOAD_ID DESC
-
-                        ) upload
-                WHERE ROWNUM &lt;= #{endRow} AND route = 1)
+        FROM (SELECT ROWNUM AS RN, upload.*
+              FROM (SELECT TUU.*,
+                           ts.SERVICE_NAME,
+                           UUF.USER_UPLOAD_FILE_ROUTE,
+                           ROW_NUMBER() OVER (PARTITION BY uuf.user_UPLOAD_ID ORDER BY uuf.user_UPLOAD_FILE_ROUTE) AS route
+                    FROM TBL_USER_UPLOAD TUU
+                             INNER JOIN TBL_USER TU
+                                        ON TUU.USER_ID = TU.USER_ID
+                             INNER JOIN TBL_SERVICE TS
+                                        ON TUU.SERVICE_ID = TS.SERVICE_ID
+                             INNER JOIN TBL_CATEGORY TG
+                                        ON TG.CATEGORY_ID = TS.CATEGORY_ID
+                             LEFT JOIN TBL_USER_UPLOAD_FILE UUF
+                                       ON TUU.USER_UPLOAD_ID = UUF.USER_UPLOAD_ID
+                    WHERE TUU.USER_ID = #{userId}
+                    ORDER BY TUU.USER_UPLOAD_ID DESC) upload
+              WHERE ROWNUM &lt;= #{endRow}
+                AND (route = 1 or USER_UPLOAD_FILE_ROUTE is null))
         WHERE RN &gt; #{startRow}
     </select>
     <select id="countUserUploadList">

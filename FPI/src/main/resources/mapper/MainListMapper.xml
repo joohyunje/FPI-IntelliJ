@@ -8,7 +8,7 @@
         FROM (SELECT c.*,
                      (SELECT COUNT(*) FROM TBL_LIKE L WHERE L.COMMUNITY_ID = C.COMMUNITY_ID) AS LIKE_COUNT
               FROM TBL_COMMUNITY C
-              where c.SUBJECT ='자유게시판'
+              where c.SUBJECT = '자유게시판'
               ORDER BY c.VIEWS DESC, LIKE_COUNT DESC) COMMUNITY
         WHERE ROWNUM &lt;= 4
 
@@ -18,7 +18,8 @@
         SELECT ROWNUM AS RN, COMMUNITY.*
         FROM (SELECT c.*
               FROM TBL_COMMUNITY C
-              where TRUNC(c.COMMUNITY_REGISTER_DATE)=TRUNC(SYSDATE) and c.SUBJECT ='전문가팁'
+              where TRUNC(c.COMMUNITY_REGISTER_DATE) = TRUNC(SYSDATE)
+                and c.SUBJECT = '전문가팁'
               ORDER BY c.COMMUNITY_REGISTER_DATE DESC, c.COMMUNITY_ID DESC) COMMUNITY
         WHERE ROWNUM &lt;= 4
 
@@ -34,42 +35,43 @@
                      tp.PRO_NAME,
                      ts.SERVICE_NAME,
                      puf.PRO_UPLOAD_FILE_ROUTE,
-                     ROW_NUMBER() OVER (PARTITION BY puf.pro_UPLOAD_ID ORDER BY puf.pro_UPLOAD_FILE_ROUTE) AS rn,
-                    (SELECT COUNT(*) FROM TBL_PRO_REVIEW TPR WHERE TPU.PRO_ID = TPR.PRO_ID) AS review_count
+                     ROW_NUMBER() OVER (PARTITION BY puf.pro_UPLOAD_ID ORDER BY puf.pro_UPLOAD_FILE_ROUTE) AS rn, (SELECT COUNT(*)
+                                                                                                                   FROM TBL_PRO_REVIEW TPR
+                                                                                                                   WHERE TPU.PRO_ID = TPR.PRO_ID) AS review_count
 
-            from TBL_PRO_UPLOAD TPU
-                inner join TBL_PRO TP on TPU.PRO_ID = TP.PRO_ID
-                inner join TBL_SERVICE TS on tpu.SERVICE_ID = ts.SERVICE_ID
-                inner join TBL_CATEGORY tg on tg.CATEGORY_ID = ts.CATEGORY_ID
-                LEFT JOIN TBL_PRO_UPLOAD_FILE puf ON TPU.PRO_UPLOAD_ID = puf.PRO_UPLOAD_ID
-            order by
-                TPU.PRO_UPLOAD_DATE desc)
-        WHERE rn = 1
-        AND ROWNUM &lt;= 8
+              from TBL_PRO_UPLOAD TPU
+                       inner join TBL_PRO TP on TPU.PRO_ID = TP.PRO_ID
+                       inner join TBL_SERVICE TS on tpu.SERVICE_ID = ts.SERVICE_ID
+                       inner join TBL_CATEGORY tg on tg.CATEGORY_ID = ts.CATEGORY_ID
+                       LEFT JOIN TBL_PRO_UPLOAD_FILE puf ON TPU.PRO_UPLOAD_ID = puf.PRO_UPLOAD_ID
+              order by TPU.PRO_UPLOAD_DATE desc)
+        WHERE (rn = 1 or PRO_UPLOAD_FILE_ROUTE is null)
+          AND ROWNUM &lt;= 8
 
     </select>
 
     <select id="userUploadList" resultType="UserUploadListDTO">
         select *
-        from(
-            SELECT TUU.USER_UPLOAD_ID
-                   ,TUU.USER_ID,
-                    TUU.USER_UPLOAD_TITLE,
-                    TUU.USER_UPLOAD_DATE,
-                    TU.USER_NAME,
-                    TU.USER_STAR_RATE,
-                    TS.SERVICE_NAME,
-                    uuf.user_UPLOAD_FILE_ROUTE,
-                    ROW_NUMBER() OVER (PARTITION BY uuf.USER_UPLOAD_ID ORDER BY uuf.user_UPLOAD_FILE_id) AS rn,
-                    (SELECT COUNT(*) FROM TBL_USER_REVIEW TPU WHERE TUU.USER_ID = TPU.USER_ID) AS review_count
-            FROM TBL_USER_UPLOAD TUU
-                INNER JOIN TBL_USER TU ON TUU.USER_ID = TU.USER_ID
-                INNER JOIN TBL_SERVICE TS ON TUU.SERVICE_ID = TS.SERVICE_ID
-                INNER JOIN TBL_CATEGORY TC ON TS.CATEGORY_ID = TC.CATEGORY_ID
-                JOIN TBL_USER_UPLOAD_FILE uuf ON TUU.USER_UPLOAD_ID = uuf.USER_UPLOAD_ID
-            ORDER BY
-                TUU.USER_UPLOAD_DATE DESC)
-        where rn=1 and ROWNUM &lt;=8
+        from (SELECT TUU.USER_UPLOAD_ID
+                      ,
+                     TUU.USER_ID,
+                     TUU.USER_UPLOAD_TITLE,
+                     TUU.USER_UPLOAD_DATE,
+                     TU.USER_NAME,
+                     TU.USER_STAR_RATE,
+                     TS.SERVICE_NAME,
+                     uuf.user_UPLOAD_FILE_ROUTE,
+                     ROW_NUMBER() OVER (PARTITION BY uuf.USER_UPLOAD_ID ORDER BY uuf.user_UPLOAD_FILE_id) AS rn, (SELECT COUNT(*)
+                                                                                                                  FROM TBL_USER_REVIEW TPU
+                                                                                                                  WHERE TUU.USER_ID = TPU.USER_ID) AS review_count
+              FROM TBL_USER_UPLOAD TUU
+                       INNER JOIN TBL_USER TU ON TUU.USER_ID = TU.USER_ID
+                       INNER JOIN TBL_SERVICE TS ON TUU.SERVICE_ID = TS.SERVICE_ID
+                       INNER JOIN TBL_CATEGORY TC ON TS.CATEGORY_ID = TC.CATEGORY_ID
+                       left JOIN TBL_USER_UPLOAD_FILE uuf ON TUU.USER_UPLOAD_ID = uuf.USER_UPLOAD_ID
+              ORDER BY TUU.USER_UPLOAD_DATE DESC)
+        where (rn = 1 or USER_UPLOAD_FILE_ROUTE is null)
+          and ROWNUM &lt;= 8
 
     </select>
 

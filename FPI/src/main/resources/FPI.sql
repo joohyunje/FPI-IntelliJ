@@ -1013,3 +1013,47 @@ FROM TBL_USER_REVIEW tur
 WHERE TUR.USER_ID = 3619331702
 ORDER BY TUR.USER_REVIEW_DATE DESC;
 
+SELECT ROWNUM AS RN, upload.*
+FROM (
+         SELECT TUU.*, ts.SERVICE_NAME,
+                UUF.pro_UPLOAD_FILE_ROUTE,
+                ROW_NUMBER() OVER (PARTITION BY uuf.pro_UPLOAD_ID ORDER BY uuf.pro_UPLOAD_FILE_ROUTE) AS route
+         FROM TBL_pro_UPLOAD TUU
+                  INNER JOIN TBL_pro TU
+                             ON TUU.pro_ID = TU.pro_ID
+                  INNER JOIN TBL_SERVICE TS
+                             ON TUU.SERVICE_ID = TS.SERVICE_ID
+                  INNER JOIN TBL_CATEGORY TG
+                             ON TG.CATEGORY_ID = TS.CATEGORY_ID
+                  left JOIN TBL_pro_UPLOAD_FILE UUF
+                            ON TUU.pro_UPLOAD_ID = UUF.pro_UPLOAD_ID
+         WHERE TUU.pro_ID = 1
+         ORDER BY TUU.pro_UPLOAD_ID DESC
+     ) upload
+where route = 1 or PRO_UPLOAD_FILE_ROUTE is null ;
+
+select *
+from TBL_pro_UPLOAD
+where pro_Id = 1
+
+select *
+from (SELECT TUU.USER_UPLOAD_ID
+              ,
+             TUU.USER_ID,
+             TUU.USER_UPLOAD_TITLE,
+             TUU.USER_UPLOAD_DATE,
+             TU.USER_NAME,
+             TU.USER_STAR_RATE,
+             TS.SERVICE_NAME,
+             uuf.user_UPLOAD_FILE_ROUTE,
+             ROW_NUMBER() OVER (PARTITION BY uuf.USER_UPLOAD_ID ORDER BY uuf.user_UPLOAD_FILE_id) AS rn, (SELECT COUNT(*)
+                                                                                                          FROM TBL_USER_REVIEW TPU
+                                                                                                          WHERE TUU.USER_ID = TPU.USER_ID) AS review_count
+      FROM TBL_USER_UPLOAD TUU
+               INNER JOIN TBL_USER TU ON TUU.USER_ID = TU.USER_ID
+               INNER JOIN TBL_SERVICE TS ON TUU.SERVICE_ID = TS.SERVICE_ID
+               INNER JOIN TBL_CATEGORY TC ON TS.CATEGORY_ID = TC.CATEGORY_ID
+               left JOIN TBL_USER_UPLOAD_FILE uuf ON TUU.USER_UPLOAD_ID = uuf.USER_UPLOAD_ID
+      ORDER BY TUU.USER_UPLOAD_DATE DESC)
+where (rn = 1 or USER_UPLOAD_FILE_ROUTE is null)
+

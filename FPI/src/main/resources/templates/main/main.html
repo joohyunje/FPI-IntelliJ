@@ -206,8 +206,8 @@
         </div> <!-- 서치& 카테고리 나열 끝 -->
 
 
-    <!-- 견적요청 슬라이드 -->
-    <!--     비로그인 또는 회원임, 전문가가 쓴 글이 보여짐-->
+        <!-- 견적요청 슬라이드 -->
+        <!--     비로그인 또는 회원임, 전문가가 쓴 글이 보여짐-->
         <div class="page-wrapper">
             <div class="post-slider" th:if="${session.proName}==null">
                 <h4>최근 올라온 제공 서비스</h4>
@@ -217,19 +217,24 @@
                     <!-- 슬라이드  -->
                     <div class="post" th:each="proUploadList:${proUploadLists}" th:object="${proUploadList}">
                         <a th:href="@{/user/uploadDetail/{proUploadId}(proUploadId=*{proUploadId})}">
-                            <img th:src="*{proUploadFileRoute}" class="slider-image">
+                            <img th:src="*{proUploadFileRoute != null ? proUploadFileRoute : '/img/basicIMG.png'}"
+                                 class="slider-image">
                             <div class="post-info">
                                 <h5 th:text="*{proUploadTitle}"></h5>
                                 <h6 style="margin-top: 10px" th:text="'제공서비스 : '+*{serviceName}"></h6>
                                 <div style="display: flex;align-items: center">
                                     <i class="far fa-user post-icon" th:text="*{proName}"></i>
-                                    <div  th:if="*{reviewCount!=0}" style="display: flex;align-items: center; margin-left: 10px">
-                                        <img  src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=" alt="">
+                                    <div th:if="*{reviewCount!=0}"
+                                         style="display: flex;align-items: center; margin-left: 10px">
+                                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo="
+                                             alt="">
                                         <span th:text="*{proStarRate}"></span>
                                         <span th:text="'('+*{reviewCount}+')'"></span>
                                     </div>
-                                    <div th:if="*{reviewCount==0}" style="display: flex;align-items: center; margin-left: 10px">
-                                        <img  src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=" alt="">
+                                    <div th:if="*{reviewCount==0}"
+                                         style="display: flex;align-items: center; margin-left: 10px">
+                                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo="
+                                             alt="">
                                         <span>(신규)</span>
                                     </div>
                                 </div>
@@ -248,18 +253,22 @@
                     <!-- 슬라이드  -->
                     <div class="post" th:each="userUploadList:${userUploadLists}" th:object="${userUploadList}">
                         <a th:href="@{/pro/uploadDetail/{userUploadId}(userUploadId=*{userUploadId})}">
-                            <img th:src="*{userUploadFileRoute}" class="slider-image">
+                            <img th:src="*{userUploadFileRoute != null} ? *{userUploadFileRoute} : '/img/basicIMG.png'"
+                                 class="slider-image">
                             <div class="post-info">
                                 <h5 th:text="*{userUploadTitle}"></h5>
                                 <h6 style="margin-top: 10px" th:text="'원하는 서비스 : '+*{serviceName}"></h6>
                                 <div style="display: flex;align-items: center">
                                     <i class="far fa-user post-icon" th:text="*{userName}"></i>
-                                    <div th:if="*{reviewCount!=0}"style="display: flex;align-items: center; margin-left: 10px">
-                                        <img  src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=" alt="">
+                                    <div th:if="*{reviewCount!=0}"
+                                         style="display: flex;align-items: center; margin-left: 10px">
+                                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Im03LjQ5NiAxLjU5NiAxLjQwNyAyLjc0MiAzLjE0NS40NGMuOTEuMTI3IDEuMjc1IDEuMjA0LjYxNSAxLjgyMmwtMi4yNzYgMi4xMzQuNTM4IDMuMDE1Yy4xNTUuODcyLS43OTcgMS41MzgtMS42MTIgMS4xMjZMNi41IDExLjQ1MmwtMi44MTMgMS40MjNjLS44MTUuNDEyLTEuNzY3LS4yNTQtMS42MTItMS4xMjZsLjUzOC0zLjAxNUwuMzM3IDYuNmMtLjY2LS42MTgtLjI5Ni0xLjY5NS42MTUtMS44MjJsMy4xNDUtLjQ0IDEuNDA3LTIuNzQyQzUuOTEyLjggNy4wODguOCA3LjQ5NiAxLjU5NiIgZmlsbD0iI0ZGQ0UyMSIgZmlsbC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo="
+                                             alt="">
                                         <span th:text="*{userStarRate}"></span>
                                         <span th:text="'('+*{reviewCount}+')'"></span>
                                     </div>
-                                    <div th:if="*{reviewCount==0}" style="display: flex;align-items: center; margin-left: 10px">
+                                    <div th:if="*{reviewCount==0}"
+                                         style="display: flex;align-items: center; margin-left: 10px">
                                         <span>(신규)</span>
                                     </div>
                                 </div>
@@ -270,42 +279,43 @@
             </div>
         </div> <!-- 견적요청슬라이드 끝 -->
 
-            <!-- 커뮤니티 -->
-            <div class="post-slider">
-                <h4>인기 커뮤니티글</h4>
-                <div th:if="${#lists.isEmpty(communityList)}" style="text-align:center;">아직 올라온 커뮤니티 글이 없습니다.</div>
+        <!-- 커뮤니티 -->
+        <div class="post-slider">
+            <h4>인기 커뮤니티글</h4>
+            <div th:if="${#lists.isEmpty(communityList)}" style="text-align:center;">아직 올라온 커뮤니티 글이 없습니다.</div>
 
-                <!-- 커뮤니티 목록뿌려줌 -->
-                <div class="row" th:if="${!#lists.isEmpty(communityList)}">
-                    <div class="col-sm-6 mb-3 mb-sm-0" th:each="community:${communityList}" th:object="${community}">
-                        <div class="card">
-                            <div class="card-body" style="display: flex">
-                                <div style="width: 70%;">
-                                    <h5 class="card-title" th:text="*{communityTitle}">글 제목 </h5>
-                                    <p class="card-text" th:text="*{subject}">자유게시판</p>
-                                    <i class="far fa-user post-icon" th:text="*{author}" style="margin-top: 8px"></i>
-                                    <div style="display: flex;justify-content: space-between">
-                                        <p  th:text="*{communityRegisterDate == communityUpdateDate ?
+            <!-- 커뮤니티 목록뿌려줌 -->
+            <div class="row" th:if="${!#lists.isEmpty(communityList)}">
+                <div class="col-sm-6 mb-3 mb-sm-0" th:each="community:${communityList}" th:object="${community}">
+                    <div class="card">
+                        <div class="card-body" style="display: flex">
+                            <div style="width: 70%;">
+                                <h5 class="card-title" th:text="*{communityTitle}">글 제목 </h5>
+                                <p class="card-text" th:text="*{subject}">자유게시판</p>
+                                <i class="far fa-user post-icon" th:text="*{author}" style="margin-top: 8px"></i>
+                                <div style="display: flex;justify-content: space-between">
+                                    <p th:text="*{communityRegisterDate == communityUpdateDate ?
                                         #temporals.format(communityRegisterDate, 'yy년 M월 d일 '):
-                                        #temporals.format(communityUpdateDate, 'yy년 M월 d일')+'(수정)'}" style="margin:10px 0 0 0"></p>
-                                        <div style="display: flex; align-items: center;margin:10px 20px 0 0">
-                                            <div class="footer-show" th:text="*{views}"></div>
-                                            <div class="footer-like" th:text="*{likeCount}" ></div>
-                                        </div>
+                                        #temporals.format(communityUpdateDate, 'yy년 M월 d일')+'(수정)'}"
+                                       style="margin:10px 0 0 0"></p>
+                                    <div style="display: flex; align-items: center;margin:10px 20px 0 0">
+                                        <div class="footer-show" th:text="*{views}"></div>
+                                        <div class="footer-like" th:text="*{likeCount}"></div>
                                     </div>
+                                </div>
 
-                                    <a th:href="@{/community/detail/{communityId}(communityId=*{communityId})}"
-                                       class="btn btn-light" style="width: 95%;margin-top: 18px">보러가기</a>
-                                </div>
-                                <div th:unless="*{communityThumbnail == null or communityThumbnail == '' or communityThumbnail == 'dd'}">
-                                    <img style="background-repeat: no-repeat;width: 150px;height: 150px"
-                                         th:src="*{communityThumbnail}" alt="img">
-                                </div>
+                                <a th:href="@{/community/detail/{communityId}(communityId=*{communityId})}"
+                                   class="btn btn-light" style="width: 95%;margin-top: 18px">보러가기</a>
                             </div>
-                        </div> <!-- 커뮤니티 나열 끝 -->
-                    </div>
+                            <div th:unless="*{communityThumbnail == null or communityThumbnail == '' or communityThumbnail == 'dd'}">
+                                <img style="background-repeat: no-repeat;width: 150px;height: 150px"
+                                     th:src="*{communityThumbnail}" alt="img">
+                            </div>
+                        </div>
+                    </div> <!-- 커뮤니티 나열 끝 -->
                 </div>
             </div>
+        </div>
         <!-- 커뮤니티 -->
         <div class="post-slider">
             <h4 style="margin-top: 20px">오늘의 전문가 팁</h4>
@@ -320,9 +330,10 @@
                                 <h5 class="card-title" th:text="*{communityTitle}">글 제목 </h5>
                                 <p class="card-text" th:text="*{subject}">자유게시판</p>
                                 <i class="far fa-user post-icon" th:text="*{author}" style="margin-top: 8px"></i>
-                                <p  th:text="*{communityRegisterDate == communityUpdateDate ?
+                                <p th:text="*{communityRegisterDate == communityUpdateDate ?
                                         #temporals.format(communityRegisterDate, 'yy년 M월 d일 '):
-                                        #temporals.format(communityUpdateDate, 'yy년 M월 d일')+'(수정)'}" style="margin:10px 0 0 0"></p>
+                                        #temporals.format(communityUpdateDate, 'yy년 M월 d일')+'(수정)'}"
+                                   style="margin:10px 0 0 0"></p>
                                 <a th:href="@{/community/detail/{communityId}(communityId=*{communityId})}"
                                    class="btn btn-light" style="width: 95%;margin-top: 18px">보러가기</a>
                             </div>
