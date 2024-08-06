@@ -30,14 +30,24 @@ public class CommunityServiceImpl implements CommunityService {
 
     //    게시판 리스트,rest
     @Override
-    public PagedResponse<CommunityDetailDTO> getCommunityList(int page, int pageSize,String search ,String subject,String sort) {
+    public PagedResponse<CommunityDetailDTO> getCommunityList(int page, int pageSize,String search ,String subject,String sort,CustomOAuth2User user) {
         int startRow = (page - 1) * pageSize;
         int endRow = page * pageSize;
 
         int totalLists = communityMapper.countCommunity(search,subject);
         int totalPages = (int) Math.ceil((double)totalLists/pageSize);
 
+
         List<CommunityDetailDTO> lists = communityMapper.communitySelectAll(startRow,endRow,search,subject,sort);
+        for (CommunityDetailDTO list : lists) {
+            if(user==null){
+                list.setLoginUserId("0");
+            }
+            else {
+                list.setLoginUserId(user.getUserId());
+            }
+            list.setLikeUse(selectMyLike(list.getLoginUserId(),list.getCommunityId()));
+        }
         return new PagedResponse<>(lists, page, totalPages, pageSize, totalLists);
     }
 

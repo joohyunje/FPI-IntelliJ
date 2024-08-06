@@ -12,6 +12,7 @@ import java.util.List;
 public interface MainListService {
     //    메인화면에 뿌려주는 최신 리스트
     List<CommunityDetailDTO> mainCommunityList();
+    List<CommunityDetailDTO> mainProList();//오늘의 전문가팁
     List<ProUploadListDTO> proUploadList();
     List<UserUploadListDTO> userUploadList();
 }

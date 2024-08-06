@@ -2,6 +2,8 @@ package com.example.fpi.controller.pro;
 
 import com.example.fpi.domain.dto.pro.ProReceivedReqListDTO;
 import com.example.fpi.domain.dto.pro.ProSendReqListDTO;
+import com.example.fpi.domain.dto.pro.ProUploadDetailDTO;
+import com.example.fpi.domain.dto.user.UserUploadDetailDTO;
 import com.example.fpi.domain.dto.user.UserUploadListDTO;
 import com.example.fpi.domain.oauth.CustomOAuth2User;
 import com.example.fpi.domain.util.PagedResponse;
@@ -80,5 +82,11 @@ public class ProRestController {
         return ResponseEntity.ok(userService.selectUserUploadList(page, size, search, searchType, searchSubject));
     }
 
-
+    @GetMapping("/proUploadList")
+    public ResponseEntity<PagedResponse<ProUploadDetailDTO>> getUploadList(@RequestParam(defaultValue = "1") int page,
+                                                                           @RequestParam(defaultValue = "7") int size,
+                                                                           @RequestParam Long proId
+    ){
+        return ResponseEntity.ok(proService.proUploadList(proId, page, size));
+    }
 }

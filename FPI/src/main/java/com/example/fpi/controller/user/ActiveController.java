@@ -33,4 +33,10 @@ public class ActiveController {
     public String activeListReceiveReview(){
         return "/user/activeList/receiveReview";
     }
+
+    //    마이페이지 좋아요게시글
+    @GetMapping("/likeCommu")
+    public String activeLikeCommunityList(){
+        return "/user/activeList/likeList";
+    }
 }

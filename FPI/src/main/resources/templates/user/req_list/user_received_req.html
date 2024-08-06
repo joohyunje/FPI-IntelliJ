@@ -20,7 +20,7 @@
             <span>받은 요청</span>
         </h1>
         <div class="sorting-options">
-            <input type="radio" id="sort-received-newest" name="sort-received-option" value="newest">
+            <input type="radio" id="sort-received-newest" name="sort-received-option" value="newest" checked>
             <label for="sort-received-newest">최신순</label>
 
             <input type="radio" id="sort-received-oldest" name="sort-received-option" value="oldest">
@@ -47,7 +47,7 @@
             <span>보낸 요청</span>
         </h1>
         <div class="sorting-options">
-            <input type="radio" id="sort-send-newest" name="sort-send-option" value="newest">
+            <input type="radio" id="sort-send-newest" name="sort-send-option" value="newest" checked>
             <label for="sort-send-newest">최신순</label>
 
             <input type="radio" id="sort-send-oldest" name="sort-send-option" value="oldest">
@@ -166,7 +166,7 @@
                         <div class="requests-header">
                             <div>${requests.userUploadTitle}</div>
                             <div class="userInfo">
-                                <div>${requests.proName}</div>
+                                <div style="margin-right: 5px;">${requests.proName}</div>
                                 <img src="${requests.proImg}">
                             </div>
                         </div>
@@ -322,7 +322,7 @@
                         <div class="requests-header">
                             <div>${requests.proUploadTitle}</div>
                             <div class="userInfo">
-                                <div>${requests.proName}</div>
+                                <div style="margin-right: 5px;">${requests.proName}</div>
                                 <img src="${requests.proImg}">
                             </div>
                         </div>

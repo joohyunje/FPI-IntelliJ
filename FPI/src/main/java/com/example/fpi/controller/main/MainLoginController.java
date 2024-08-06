@@ -55,6 +55,7 @@ public class MainLoginController {
         System.out.println(mainListService.proUploadList().toString());
 
         model.addAttribute("communityList", mainListService.mainCommunityList());
+        model.addAttribute("proList", mainListService.mainProList());
         model.addAttribute("proUploadLists", mainListService.proUploadList());
         model.addAttribute("userUploadLists", mainListService.userUploadList());
 

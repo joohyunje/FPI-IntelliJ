@@ -27,7 +27,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserMypageController {
     private final UserService userService;
-    private final PayCouponService couponService;
+    private final PayCouponService payCouponService;
     private final CertifyService certifyService;
     private final FormService formService;
     private final ActiveService activeService;
@@ -59,10 +59,10 @@ public class UserMypageController {
         String userId = customOAuth2User.getUserId();
         System.out.println();
 
-        List<CouponDTO> coupons = couponService.couponlist(userId);
+        List<CouponDTO> coupons = payCouponService.couponlist(userId);
 
         for(CouponDTO coupon : coupons){
-            coupon.setCount(couponService.useCouponCount(userId));
+            coupon.setCount(payCouponService.useCouponCount(userId));
         }
 
 

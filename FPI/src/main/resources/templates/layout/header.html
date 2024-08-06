@@ -19,7 +19,7 @@
                     </a>
                     <div class="nav-list">
                         <span class="nav-item"> <a
-                                th:href="${session.loginName}==null ? @{/main/login} : @{/user/upload}">견적요청 </a></span>
+                                th:href="${session.loginName ==null ? '/main/login' : '/user/userUploadList' }">견적요청 </a></span>
                         <span class="nav-item left-items"><a th:href="@{/user/proFind}">전문가찾기</a></span>
                         <span class="nav-item left-items"><a th:href="@{/community}">커뮤니티</a></span>
                     </div>
@@ -59,8 +59,8 @@
                              style="width: 100px;height: 80px; margin:1px  8px 0px 0 ;vertical-align: middle;">
                     </a>
                     <div class="nav-list">
-                        <span class="nav-item-pro"><a th:href="@{/pro/upload}">서비스 올리기</a></span>
-                        <span class="nav-item-pro left-items"><a th:href="@{/pro/userFind}">회원 찾기</a></span>
+                        <span class="nav-item-pro"><a th:href="@{/pro/proUploadList}">서비스 올리기</a></span>
+                        <span class="nav-item-pro left-items"><a th:href="@{/pro/userFind}">고객 찾기</a></span>
                         <span class="nav-item-pro left-items"><a th:href="@{/community}">커뮤니티</a></span>
                     </div>
                 </div>

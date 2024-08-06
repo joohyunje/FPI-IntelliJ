@@ -491,4 +491,37 @@
         from TBL_PRO_REVIEW
         where PRO_ID = #{proId}
     </select>
+
+    <select id="proUploadList">
+        SELECT *
+        FROM (
+                 SELECT ROWNUM AS RN, upload.*
+                 FROM (
+                          SELECT TUU.*, ts.SERVICE_NAME,
+                                 UUF.pro_UPLOAD_FILE_ROUTE,
+                                 ROW_NUMBER() OVER (PARTITION BY uuf.pro_UPLOAD_ID ORDER BY uuf.pro_UPLOAD_FILE_ROUTE) AS route
+                          FROM TBL_pro_UPLOAD TUU
+                                   INNER JOIN TBL_pro TU
+                                              ON TUU.pro_ID = TU.pro_ID
+                                   INNER JOIN TBL_SERVICE TS
+                                              ON TUU.SERVICE_ID = TS.SERVICE_ID
+                                   INNER JOIN TBL_CATEGORY TG
+                                              ON TG.CATEGORY_ID = TS.CATEGORY_ID
+                                   LEFT JOIN TBL_pro_UPLOAD_FILE UUF
+                                             ON TUU.pro_UPLOAD_ID = UUF.pro_UPLOAD_ID
+                          WHERE TUU.pro_ID = #{proId}
+                          ORDER BY TUU.pro_UPLOAD_ID DESC
+
+                      ) upload
+                 WHERE ROWNUM &lt;= #{endRow} AND route = 1)
+        WHERE RN &gt; #{startRow}
+    </select>
+    <select id="countProUploadList">
+        select count(*)
+        from TBL_pro_UPLOAD
+        where pro_Id = #{proId}
+    </select>
+
+
+
 </mapper>

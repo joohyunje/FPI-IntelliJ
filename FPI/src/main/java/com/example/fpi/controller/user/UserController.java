@@ -341,4 +341,11 @@ public String uploadRest3(Model model, @PathVariable("proId") Long proId) {
         return "redirect:/user/requests";
     }
 
+
+    @GetMapping("/userUploadList")
+    public String userUpload(@AuthenticationPrincipal CustomOAuth2User customOAuth2User,Model model){
+        model.addAttribute("userId",customOAuth2User.getUserId());
+            return"/user/upload/userReceiveList";
+        }
+
 }

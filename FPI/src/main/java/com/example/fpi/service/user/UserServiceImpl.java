@@ -275,5 +275,19 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectUserReviewCnt(userId);
     }
 
+    @Override
+    public PagedResponse<UserUploadDetailDTO> userUploadList(String userId, int page, int pageSize) {
+        int startRow = (page - 1) * pageSize;
+        int endRow = page * pageSize;
+
+        int totalUploads = userMapper.countUserUploadList(userId);
+        int totalPages = (int) Math.ceil((double) totalUploads / pageSize);
+
+        List<UserUploadDetailDTO> uploads = userMapper.userUploadList(userId,startRow, endRow);
+
+        return new PagedResponse<>(uploads, page, totalPages, pageSize, totalUploads);
+    }
+
+
 
 }

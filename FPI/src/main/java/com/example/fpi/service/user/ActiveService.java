@@ -29,4 +29,8 @@ public interface ActiveService {
 
     //    전문가가 회원에게  받은 리뷰
     PagedResponse<ProReviewListDTO> selectProReceiveReview(Long proId, int page, int pageSize,String sort);
+
+//    좋아요 목록
+    PagedResponse<UserCommunityListDTO> selectLikeCommuList(String userId,int page, int pageSize,String sort);
+
 }

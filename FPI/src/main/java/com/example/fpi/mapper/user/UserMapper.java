@@ -124,4 +124,11 @@ public interface UserMapper {
 
     Long selectUserReviewCnt(String userId);
 
+
+//    회원 본인이 올린 견적 리스트
+    List<UserUploadDetailDTO> userUploadList(String userId, int startRow, int endRow);
+    int countUserUploadList(String userId);
+
+
+
 }
