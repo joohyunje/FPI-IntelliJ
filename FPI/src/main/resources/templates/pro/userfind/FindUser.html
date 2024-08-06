@@ -32,7 +32,7 @@
                                     제목
                                 </option>
                                 <option value="name">
-                                    회원 이름
+                                    고객 이름
                                 </option>
                             </select>
                         </label>
@@ -175,7 +175,9 @@
       getList(1);
       return;
     }
-
+      //  전문가 페이지,페이징 색상변경
+      const PaginationContainer = $('.pagination');
+      PaginationContainer.addClass('pro-pagination');
 
     search = $('input[name="search"]').val();
     searchSubject = $("#searchSubject").val();
@@ -227,7 +229,7 @@
 
     uploads.forEach(function (upload) {
       const userImgSrc = upload.userImg ? upload.userImg : '/img/basicIMG.png';
-      const starRateText = upload.userStarRate != 0 ? upload.userStarRate : '(New)'
+      const starRateText = upload.userStarRate != null ? upload.userStarRate : '(신규)'
       let uploadRow = `<li class="feed-item">
                             <a href="/pro/uploadDetail/${upload.userUploadId}">
                                 <div class="feed-container">

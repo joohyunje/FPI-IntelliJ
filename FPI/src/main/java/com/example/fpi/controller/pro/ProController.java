@@ -304,4 +304,11 @@ public class ProController {
         return "redirect:/pro/requests";
     }
 
+    @GetMapping("/proUploadList")
+    public String userUpload(@AuthenticationPrincipal CustomOAuth2User customOAuth2User,Model model){
+        Long proId= proService.selectProId(customOAuth2User.getUserId());
+        model.addAttribute("proId",proId);
+        return"/pro/upload/proReceiveList";
+    }
+
 }

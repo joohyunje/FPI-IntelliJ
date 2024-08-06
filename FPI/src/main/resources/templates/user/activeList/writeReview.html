@@ -17,17 +17,20 @@
     <div class="main-container">
         <div class="main-container-title">
             <div class="main-container-title-container">
-                <h2 class="title">
+                <a th:href="${session.proName == null ? '/user/mypage' : '/pro/mypage'}">
+                    <h2 class="title">
                         <span class="title-content">
                             활동내역 목록
                         </span>
-                </h2>
+                    </h2>
+                </a>
             </div>
 
         </div>
 
         <div class="tab-btn-container">
             <a class="btn" th:href="@{/activeList/community}">게시글</a>
+            <a class="btn" th:href="@{/activeList/likeCommu}">좋아요 한 게시글</a>
             <a class="btn" th:href="@{/activeList/comment}">댓글</a>
             <a class="btn active" th:href="@{/activeList/writeReview}">작성한 리뷰</a>
             <a class="btn" th:href="@{/activeList/receiveReview}">받은 리뷰</a>
@@ -59,6 +62,7 @@
                 <tbody id ="userWriteReviewList" class="userWriteReviewList"> </tbody>
                 <tbody id ="proWriteReviewList" class="proWriteReviewList"> </tbody>
             </table>
+            <div class="noWriteReviewList" style="text-align:center"></div>
         </div>
         <ul class="pagination">
         </ul>
@@ -105,12 +109,13 @@
     const proName = $('#proName').val();
     let sortOption ='newest'
 
-
     window.onload = function (){
         if(proName ==='0'){
             getUserWriteReviewList(1)
         }
         else{
+            const PaginationContainer = $('.pagination');
+            PaginationContainer.addClass('pro-pagination');
             getProWriteReviewList(1)
         }
 
@@ -137,10 +142,13 @@
     // 회원이 전문가에게 작성
     function renderUserWriteReviewList(userWriteReviewList){
         let userWriteReviewArea = $('.userWriteReviewList');
+        let noWriteReviewListArea = $('.noWriteReviewList');
+
         userWriteReviewArea.empty();
+        noWriteReviewListArea.empty();
         if (userWriteReviewList.length === 0) {
-            const uploadRow =`<h3>작성하신 게시글이 없습니다.</h3>`
-            userWriteReviewArea.append(uploadRow);
+            const uploadRow =`<h3>작성하신 리뷰가 없습니다.</h3>`
+            noWriteReviewListArea.append(uploadRow);
         }
         userWriteReviewList.forEach(userWriteReviewList=>{
             const uploadRow =   `
@@ -181,10 +189,12 @@
     }
     function renderProWriteReviewList(proWriteReviewList){
         let proWriteReviewArea = $('.proWriteReviewList');
+        let noWriteReviewListArea = $('.noWriteReviewList');
+
         proWriteReviewArea.empty();
         if (proWriteReviewList.length === 0) {
-            const uploadRow =`<h3>작성하신 게시글이 없습니다.</h3>`
-            proWriteReviewArea.append(uploadRow);
+            const uploadRow =`<h3>작성하신 리뷰가 없습니다.</h3>`
+            noWriteReviewListArea.append(uploadRow);
         }
         proWriteReviewList.forEach(proWriteReviewList=>{
             const uploadRow =   `

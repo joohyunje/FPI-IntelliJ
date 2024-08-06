@@ -16,6 +16,7 @@
 }
 
 .article-title{
+    width: 103%;
     display: flex;
     justify-content: space-between;
     margin: 20px 0 20px 0;
@@ -30,14 +31,14 @@
 
 .article-title div{
     display: flex;
-    width: 30%;
     align-items: center;
     justify-content: right;
     font-size: 13px;
 }
-
+.article-writer{
+    margin-right: 10px;
+}
 .article-date{
-    width: 40%;
     text-align: right;
     font-size: 13px;
     align-content: center;
@@ -78,6 +79,16 @@
 }
 
 .comment-icon{
+    display: flex;
+    gap: .25rem;
+    align-items: center;
+    padding: 1.0625rem 0;
+    margin-right: 1.75rem;
+    font-size: .875rem;
+    font-weight: 500;
+    color: #6a7685;
+}
+.view{
     display: flex;
     gap: .25rem;
     align-items: center;

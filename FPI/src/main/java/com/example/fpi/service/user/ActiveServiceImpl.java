@@ -88,4 +88,16 @@ public class ActiveServiceImpl implements ActiveService {
         return new PagedResponse<>(ProReceiveReviewList, page, totalPages, pageSize, totalRequest);
     }
 
+    @Override
+    public PagedResponse<UserCommunityListDTO> selectLikeCommuList(String userId, int page, int pageSize, String sort) {
+        int startRow = (page - 1) * pageSize;
+        int endRow = page * pageSize;
+        int totalRequest = activeListMapper.countLikeCommu(userId);
+        int totalPages = (int) Math.ceil((double) totalRequest / pageSize);
+        List<UserCommunityListDTO> communityList = activeListMapper.selectLikeCommuList(userId,startRow,endRow,sort);
+
+        return new PagedResponse<>(communityList, page, totalPages, pageSize, totalRequest);
+    }
+
+
 }

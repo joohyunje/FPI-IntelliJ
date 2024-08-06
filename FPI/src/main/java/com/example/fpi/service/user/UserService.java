@@ -105,4 +105,7 @@ public interface UserService {
 
     Long selectUserReviewCnt(String userId);
 
+    PagedResponse<UserUploadDetailDTO> userUploadList(String userId, int page, int pageSize);
+
+
 }

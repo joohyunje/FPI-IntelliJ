@@ -5,6 +5,7 @@ import com.example.fpi.domain.dto.certify.CardInfoFileDTO;
 import com.example.fpi.domain.dto.pro.*;
 import com.example.fpi.domain.dto.user.UserAccuseDTO;
 import com.example.fpi.domain.dto.user.UserReviewDTO;
+import com.example.fpi.domain.dto.user.UserUploadDetailDTO;
 import com.example.fpi.domain.util.PagedResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -156,5 +157,10 @@ public interface ProService {
     void clickDeleteCard(Long cardInfoId);
 
     Long selectProReviewCnt(Long proId);
+
+
+    PagedResponse<ProUploadDetailDTO> proUploadList(Long proId, int page, int pageSize);
+
+
 
 }

@@ -219,7 +219,7 @@
 
     uploads.forEach(function (upload) {
       const proImgSrc = upload.proImg ? upload.proImg : '/img/basicIMG.png';
-      const starRateText = upload.proStarRate != 0 ? upload.proStarRate : '(New)'
+      const starRateText = upload.proStarRate != 0 ? upload.proStarRate : '(신규)'
       let uploadRow = `<li class="feed-item">
                             <a href="/user/uploadDetail/${upload.proUploadId}">
                                 <div class="feed-container">

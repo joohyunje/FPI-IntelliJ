@@ -24,5 +24,7 @@ public class UserUploadDetailDTO {
     private String userUploadAddress;
     private Long userUploadPay;
     private Long userUploadPayRange;
+    private String userUploadFileRoute;
+
 
 }

@@ -150,6 +150,34 @@
   
   .post-icon{
     height:10%;
+    font-size: 14px;
   }
-  
+  .footer-like{
+    color: #888888;
+    font-size: .99rem;
+    letter-spacing: -.0125rem;
+  }
+
+  .footer-like::before{
+    padding-right: 1.25rem;
+    content: "";
+    background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTkuOTQyIDYuMjkzVjMuNzZjMC0xLjA1LS44MjYtMS45LTEuODQ0LTEuOWwtMi40NiA1Ljd2Ni45NjZoNi45MzZhMS4yNDEgMS4yNDEgMCAwMDEuMjMtMS4wNzZsLjg0OS01LjdhMS4yOTMgMS4yOTMgMCAwMC0uMjg4LTEuMDIyIDEuMjE1IDEuMjE1IDAgMDAtLjk0Mi0uNDM1aC0zLjQ4ek0zLjkzIDE0LjUyNkgyLjU2M2MtLjY3OSAwLTEuMjMtLjU2Ny0xLjIzLTEuMjY2VjguODI2YzAtLjcuNTUxLTEuMjY2IDEuMjMtMS4yNjZIMy45M3Y2Ljk2NnoiIGZpbGw9IiNDNUM1QzUiIGZpbGwtcnVsZT0iZXZlbm9kZCIvPjwvc3ZnPg==) no-repeat 0;
+  }
+  .footer-show {
+    color: #888888;
+    font-size: .99rem;
+    letter-spacing: -.0125rem;
+    position: relative;
+    padding-left: 2.5rem; /* 아이콘과 텍스트 사이의 간격을 조정합니다 */
+    padding-right :0.5rem;
+  }
+
+  .footer-show::before {
+    content: "조회수 : ";
+    position: absolute;
+    left: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-size: contain;
+  }
 }
