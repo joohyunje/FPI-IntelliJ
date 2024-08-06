@@ -6,11 +6,14 @@ import com.example.fpi.domain.dto.pro.ProReceivedReqListDTO;
 import com.example.fpi.domain.oauth.CustomOAuth2User;
 import com.example.fpi.domain.util.PagedResponse;
 import com.example.fpi.service.board.CommunityService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collections;
 
 
 @RestController
@@ -31,6 +34,15 @@ public class CommunityRestController {
         System.out.println(subject);
         System.out.println(size+"dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
         return ResponseEntity.ok(communityService.getCommunityList(page, size, search, subject,sort,customOAuth2User));
+    }
+
+    //    디테일에서 조회수 바로 반영하기 위해서
+    @GetMapping("/countViews/{communityId}")
+    public ResponseEntity<?> getCountViews(@PathVariable Long communityId, @AuthenticationPrincipal CustomOAuth2User customOAuth2User, HttpSession session) {
+
+
+        int countViews = communityService.countViews(communityId,customOAuth2User,session);
+        return ResponseEntity.ok().body(Collections.singletonMap("countViews", countViews));
     }
 
 }

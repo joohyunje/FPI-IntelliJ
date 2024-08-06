@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/comments")
@@ -54,5 +56,13 @@ public class CommentRestController {
     public ResponseEntity<?> deleteComment(@PathVariable Long commentId) {
         commentService.deleteComment(commentId);
         return  ResponseEntity.ok().build();
+    }
+
+//    디테일에서 댓글수 바로 반영하기 위해서
+    @GetMapping("/countComment/{communityId}")
+    public ResponseEntity<?> getCommentCount(@PathVariable Long communityId) {
+        // 현재 댓글 수를 가져옴
+        int commentCount = commentService.countComment(communityId);
+        return ResponseEntity.ok().body(Collections.singletonMap("commentCount", commentCount));
     }
 }

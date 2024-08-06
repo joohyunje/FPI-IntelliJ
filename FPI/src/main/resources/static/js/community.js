@@ -10,7 +10,7 @@ $(document).ready(function () {
         window.location.href = '/community/edit/' + communityId;
     });
     const communityId = window.location.pathname.split('/')[3];
-
+    countViews(communityId)
     getCommentsList(communityId);
 })
 
@@ -26,13 +26,13 @@ document.getElementById('deleteBtn').addEventListener('click', function () {
 })
 
 
-
 // 댓글 리스트 가져옴
 function getCommentsList(communityId) {
     $.ajax({
         method: 'get',
         url: '/comments/' + communityId,
         success: function (data) {
+            countComment(communityId)
             let commentListArea = $('.comment-list')
 
             // 댓글이 작성될 해당 섹션 비우기.
@@ -222,7 +222,7 @@ function editComment(commentId){
             getCommentsList($('input[name="communityId"]').val());
         },
         error: function(data) {
-            console.log('수정 삭제')
+            console.log('수정 실패')
         }
     })
 
@@ -232,8 +232,35 @@ function cancelEdit(){
     getCommentsList($('input[name="communityId"]').val());
 }
 
+// 댓글카운트 가져오기
+function countComment(communityId){
+$.ajax({
+    url:'/comments/countComment/'+ communityId,
+    type:'GET',
+    success : function (response){
+        var commentCount = response.commentCount;
+        $('#commentCount').text('댓글 '+ commentCount);
+    },
+    error: function() {
+        console.log('실패slslsl')
+    }
+})
+}
 
-
+// 조회수 가져오기
+function countViews(communityId){
+    $.ajax({
+        url:'/countViews/'+ communityId,
+        type:'GET',
+        success : function (response){
+            var countViews = response.countViews;
+            $('#countViews').text('조회수 '+ countViews);
+        },
+        error: function() {
+            console.log('실패slslsl')
+        }
+    })
+}
 
 // 날짜 포맷
 function formatDate(dateString) {

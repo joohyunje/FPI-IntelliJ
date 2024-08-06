@@ -206,7 +206,7 @@
             const isUpdated = (upload.communityRegisterDate !== upload.communityUpdateDate )
                 ? upload.communityUpdateDate
                 : upload.communityRegisterDate;
-            const displayText = (upload.communityRegisterDate !== upload.communityUpdateDate ) ? '(수정)' : '(New)';
+            const displayText = (upload.communityRegisterDate !== upload.communityUpdateDate ) ? '(수정)' : '';
             const likeStyle = (upload.likeUse == null || upload.likeUse == 0) ?'normal' : 'bold';
             const footerLike = $('.footer-like');
             let likeColor=(upload.likeUse == null || upload.likeUse == 0) ?'' : '#323230';

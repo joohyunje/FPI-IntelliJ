@@ -58,20 +58,7 @@ public class CommunityServiceImpl implements CommunityService {
     @Transactional
     public CommunityDetailDTO getCommunityDetail(Long communityId, CustomOAuth2User user, HttpSession session) {
         CommunityDetailDTO community= communityMapper.selectCommunityDetail(communityId);
-//        로그인되어있는 사람의 이름을 가져옴(헤더이름)
-        if(session.getAttribute("loginName") == null){
-            community.setLoginName((String) session.getAttribute("proName"));
-        }
-        else if(session.getAttribute("proName") == null){
-            community.setLoginName((String) session.getAttribute("loginName"));
-        }
-
-//        로그인을 안했거나
-        if (user ==null || !community.getAuthor().equals(community.getLoginName())) {
-//            조회수가 플러스 1이되는 update쿼리문
-            communityMapper.plusViews(communityId);
-            System.out.println(community);
-        }
+//        조회수와 댓글수는 ajax
         if(user==null){
             community.setLoginUserId("0");
         }
@@ -155,6 +142,7 @@ public class CommunityServiceImpl implements CommunityService {
     @Override
     public void selectLike(String userId,Long communityId) {
         LikeDTO likeDTO = new LikeDTO();
+        CommunityDetailDTO dto =communityMapper.selectCommunityDetail(communityId);
 //        해당게시글에 본인의 like가 조회된다면 해당 좋아요 취소,
         Long likeId = communityMapper.selectLike(userId,communityId);
         if(likeId == null || likeId == 0){
@@ -162,9 +150,11 @@ public class CommunityServiceImpl implements CommunityService {
             likeDTO.setUserId(userId);
             likeDTO.setCommunityId(communityId);
             communityMapper.insertLike(LikeVO.toEntity(likeDTO));
+            communityMapper.minusViews(communityId); //페이지 재 실행되면서 카운트 올라가서 코드 추가함
         }
         else {
             communityMapper.deleteLike(likeId);
+            communityMapper.minusViews(communityId);//페이지 재 실행되면서 카운트 올라가서 코드 추가함
         }
         System.out.println(likeDTO);
 
@@ -173,6 +163,25 @@ public class CommunityServiceImpl implements CommunityService {
     @Override //게시판 상세페이지에서 컬러효과위해 조회
     public Long selectMyLike(String userId, Long communityId) {
         return communityMapper.selectLike(userId,communityId);
+    }
+
+    @Override
+    public int countViews(Long communityId,CustomOAuth2User user, HttpSession session) {
+        CommunityDetailDTO community= communityMapper.selectCommunityDetail(communityId);
+//        로그인되어있는 사람의 이름을 가져옴(헤더이름)
+        if(session.getAttribute("loginName") == null){
+            community.setLoginName((String) session.getAttribute("proName"));
+        }
+        else if(session.getAttribute("proName") == null){
+            community.setLoginName((String) session.getAttribute("loginName"));
+        }
+        //        로그인을 안했거나
+        if (user ==null || !community.getAuthor().equals(community.getLoginName())) {
+//            조회수가 플러스 1이되는 update쿼리문
+            communityMapper.plusViews(communityId);
+            System.out.println(community);
+        }
+        return communityMapper.countViews(communityId);
     }
 
 

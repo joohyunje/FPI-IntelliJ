@@ -45,4 +45,9 @@ public class CommentServiceImpl implements CommentService {
         commentMapper.deleteComment(commentId);
     }
 
+    @Override
+    public int countComment(Long communityId) {
+        return commentMapper.countComment(communityId);
+    }
+
 }

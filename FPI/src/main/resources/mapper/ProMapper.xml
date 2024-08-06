@@ -513,7 +513,7 @@
                           ORDER BY TUU.pro_UPLOAD_ID DESC
 
                       ) upload
-                 WHERE ROWNUM &lt;= #{endRow} AND route = 1)
+                 WHERE ROWNUM &lt;= #{endRow} AND (route = 1 or pro_UPLOAD_FILE_ROUTE is null ) )
         WHERE RN &gt; #{startRow}
     </select>
     <select id="countProUploadList">
